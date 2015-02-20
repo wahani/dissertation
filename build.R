@@ -14,4 +14,3 @@ opts_chunk$set(fig.height=4)
 
 knit(input = args[1], output = args[2])
 
-system("cp -f -r figs Rmd")

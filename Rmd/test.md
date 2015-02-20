@@ -12,7 +12,6 @@ x_i + y_i &= y_i
 \end{aligned}
 $$
 
-
 cite me: @Abb97
 
 
@@ -26,3 +25,4 @@ plot(1:10)
 ```
 
 ![plot of chunk unnamed-chunk-2](figs/test/unnamed-chunk-2-1.png) 
+

@@ -26,7 +26,7 @@ $(RMDDIR)/%.md: $(RMDDIR)/%.Rmd
 	Rscript build.R $< $@
 
 $(RMDDIR)/%.tex	: $(RMDDIR)/%.md
-	pandoc --biblatex -o $@ $<
+	pandoc --biblatex --data-dir=./ -o $@ $<
 
 # Compile main tex file and show errors
 $(TEXFILE).pdf: ./*.tex ./*.bib $(TEX_FILES) $(TEX_RMD_FILES) $(OUT_FILES)

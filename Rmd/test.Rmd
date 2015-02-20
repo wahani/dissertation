@@ -12,7 +12,6 @@ x_i + y_i &= y_i
 \end{aligned}
 $$
 
-
 cite me: @Abb97
 
 ```{r}
@@ -22,3 +21,4 @@ x <- 1
 ```{r}
 plot(1:10)
 ```
+
