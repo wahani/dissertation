@@ -56,7 +56,7 @@
  
  %------------------------------------------------
 
-%\PassOptionsToPackage{ngerman,american}{babel}  % Change this to your language(s)
+\PassOptionsToPackage{american}{babel}  % Change this to your language(s)
 % Spanish languages need extra options in order to work with this template
 %\PassOptionsToPackage{spanish,es-lcroman}{babel}
 \usepackage{babel}
@@ -102,7 +102,7 @@ style=authoryear
 %------------------------------------------------
 
 %\renewcommand*{\acsfont}[1]{\textssc{#1}} % For MinionPro
-\newcommand{\bflabel}[1]{{#1}\hfill} % Fix the list of acronyms
+%\newcommand{\bflabel}[1]{{#1}\hfill} % Fix the list of acronyms
 
 %------------------------------------------------
 

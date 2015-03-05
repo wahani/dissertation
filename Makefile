@@ -43,6 +43,5 @@ clean:
 	rm -fv *.fdb_latexmk *.fls
 	rm -fv $(RMDDIR)/*.aux $(RMDDIR)/*.tex.aux
 	rm -fv $(TEXDIR)/*.aux $(TEXDIR)/*.tex.aux
-	rm -fv -r Rmd/figs
 
 .PHONY: clean watch
