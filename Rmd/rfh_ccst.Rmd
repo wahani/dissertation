@@ -45,4 +45,60 @@ $$
 \mathbf{A} = \left(\mathbf{X} \mathbf{V}^{-1} \mathbf{X} \right)^{-1} \mathbf{X}^\top \mathbf{V}^{-1}
 $$
 
+This whole thing can also be addapted to define the random effects. If we define the model in an alternative way:
+
+\begin{align}
+\theta_i = x_i^\top \beta + u_i
+\end{align}
+
+we can restate it similarly to the above as:
+
+$$
+\theta_i = w_{s, i}^\top y
+$$
+
+with 
+
+$$
+w_{s, i}^\top = x_i^\top \mathbf{A} + \mathbf{B}
+$$
+
+where $\mathbf{A}$ is defined as above and 
+
+$$
+\mathbf{B} = 
+\left(
+  \mathbf{V}_e^{-\frac{1}{2}} \mathbf{W}_2 \mathbf{V}_e^{-\frac{1}{2}} +
+  \mathbf{V}_u^{-\frac{1}{2}} \mathbf{W}_3 \mathbf{V}_u^{-\frac{1}{2}}
+\right)^{-1} 
+\mathbf{V}_e^{-\frac{1}{2}} \mathbf{W}_2 \mathbf{V}_e^{-\frac{1}{2}}
+$$
+
+with $\mathbf{W}_2$ as diagonal matrix with ith component:
+
+$$
+w_{2i} = 
+\frac{
+  \psi\{\sigma^{-1}_{e, i} (y_i - x_i^\top \beta - u_i)\}
+}{
+  \sigma^{-1}_{e, i} (y_i - x_i^\top \beta - u_i)
+}
+$$
+
+and with $\mathbf{W}_3$ as diagonal matrix with ith component:
+
+$$
+w_{3i} = \frac{
+  \psi\{\sigma_u^{-1} u_i\}
+}{
+  \sigma_u^{-1} u_i
+}
+$$
+
+
+
+
+
+
+
 

@@ -31,9 +31,11 @@
                 footinclude=true,cleardoublepage=empty,
                 BCOR=5mm,paper=a4,fontsize=11pt, % Binding correction, paper type
                 american, % Languages
-                ]{scrreprt} 
+                ]{scrreprt}
 
-% Includes the file which contains all the document configurations and packages - make sure to edit this file
+% Includes the file which contains all the document configurations and packages
+% - make sure to edit this file
+
 \input{classicthesis-config}
 \input{highlighting}
 
@@ -52,9 +54,9 @@
 
 \pagestyle{plain} % Suppress headers for the pre-content pages
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 %	PRE-CONTENT THESIS PAGES
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
 \include{tex/Titlepage} % Main title page
 
@@ -98,27 +100,38 @@
 \ctparttext{This is the chapter where I want to present the theoretical concepts underpinning the development of software and application. Most notably is the robust version of a Fay-Herriot Type model with different variance-covariance structures.} % Text on the Part 2 page describing the content in Part 2
 
 \part{Theory}
+
 \chapter{Review of Robust Methods in Small Area Estimation}
-\include{Rmd/test}
-\chapter{The Robust Fay-Herriot Model}
+\section{Unit-Level Models}
+\section{Area-Level Models}
 \include{Rmd/rfh_ccst}
+\include{Rmd/test}
+
+\chapter{Algorithms}
+\section{Review of Numerical Methods for Non-Linear Optimizations in Statistics and Related Fields}
+\section{Algorithms for Robust Estimators in Statistics}
+\section{Propositions}
 
 %------------------------------------------------
 
 \ctparttext{This is the part where I want to introduce the software where the theoretical concepts find implementation.}
 
-\part{Software}
-\chapter{Simulation Tools for Small Area Estimation}
-\chapter{Implementation of Algorithms}
-\chapter{Robust Area-Level Models in Small Area Estimation}
+\part{Implementation}
+\chapter{Verification of Results}
+\chapter{Performance of Algorithms, a Statisticians Perspective}
+\chapter{Validation of Point Estimates, a Users Perspective}
+\chapter{Software}
 
 %------------------------------------------------
 
 \ctparttext{This is the part where I will present all results. Most certainly they will contain a lot of model- and design-based simulation studies for various settings. Maybe there will be more data available and I can present some applications.}
 
-\part{Simulation Studies}
-\chapter{Model-Based Simulations}
-\chapter{Design-Based Simulations}
+\part{Results}
+\chapter{Numerical Accuracy}
+\chapter{Stability}
+\chapter{Speed of Convergence}
+\chapter{Computational Complexity}
+
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES

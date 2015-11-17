@@ -18,7 +18,7 @@
 % Adding 'dottedtoc' will make page numbers in the table of contents flushed right with dots leading to them
 
 \newcommand{\myTitle}{Dissertation\xspace}
-\newcommand{\mySubtitle}{Robust Area-Level Models in Small Area Estimation: \\ Theory, Software and Simulation Studies\xspace}
+\newcommand{\mySubtitle}{Robust Methods in Small Area Estimation: \\ Numerical Solutions and Their Implementations\xspace}
 \newcommand{\myDegree}{Dr. rer. pol. (rerum politicarum)\xspace}
 \newcommand{\myName}{Sebastian Warnholz\xspace}
 \newcommand{\myProf}{Prof. Dr. Timo Schmid\xspace}
@@ -38,7 +38,7 @@
 \newcommand{\ie}{i.\,e.}
 \newcommand{\Ie}{I.\,e.}
 \newcommand{\eg}{e.\,g.}
-\newcommand{\Eg}{E.\,g.} 
+\newcommand{\Eg}{E.\,g.}
 
 \newcounter{dummy} % Necessary for correct hyperlinks (to index, bib, etc.)
 \providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
@@ -50,10 +50,10 @@
 \usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
 
 %------------------------------------------------
- 
+
 \PassOptionsToPackage{utf8}{inputenc}
 \usepackage{inputenc}
- 
+
  %------------------------------------------------
 
 \PassOptionsToPackage{american}{babel}  % Change this to your language(s)
@@ -61,7 +61,7 @@
 %\PassOptionsToPackage{spanish,es-lcroman}{babel}
 \usepackage{babel}
 
-%------------------------------------------------			
+%------------------------------------------------
 
 %\PassOptionsToPackage{square,numbers}{natbib}
 %\usepackage{natbib}
@@ -71,12 +71,12 @@ backend=biber,
 style=authoryear
 ]{biblatex}
 \addbibresource[datatype=bibtex]{Bibliography.bib}
- 
+
  %------------------------------------------------
 
-\PassOptionsToPackage{fleqn}{amsmath} % Math environments and more by the AMS 
+\PassOptionsToPackage{fleqn}{amsmath} % Math environments and more by the AMS
  \usepackage{amsmath}
- 
+
  %------------------------------------------------
 
 \PassOptionsToPackage{T1}{fontenc} % T2A for cyrillics
@@ -92,7 +92,7 @@ style=authoryear
 
 %------------------------------------------------
 
-\usepackage{fixltx2e} % Fixes some LaTeX stuff 
+\usepackage{fixltx2e} % Fixes some LaTeX stuff
 
 %------------------------------------------------
 
@@ -107,7 +107,7 @@ style=authoryear
 %------------------------------------------------
 
 \PassOptionsToPackage{pdftex}{graphicx}
-\usepackage{graphicx} 
+\usepackage{graphicx}
 
 %----------------------------------------------------------------------------------------
 %	FLOATS: TABLES, FIGURES AND CAPTIONS SETUP
@@ -119,13 +119,13 @@ style=authoryear
 \newcommand{\myfloatalign}{\centering} % To be used with each float for alignment
 \usepackage{caption}
 \captionsetup{format=hang,font=small}
-\usepackage{subfig}  
+\usepackage{subfig}
 
 %----------------------------------------------------------------------------------------
 %	CODE LISTINGS SETUP
 %----------------------------------------------------------------------------------------
 
-\usepackage{listings} 
+\usepackage{listings}
 %\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
 \lstset{language=[LaTeX]Tex, % Specify the language for listings here
 keywordstyle=\color{RoyalBlue}, % Add \bfseries for bold
@@ -155,10 +155,10 @@ belowcaptionskip=.75\baselineskip % Space after the "Listing #: Desciption" text
 
 \hypersetup{
 % Uncomment the line below to remove all links (to references, figures, tables, etc)
-%draft, 
+%draft,
 colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,
 % Uncomment the line below if you want to have black links (e.g. for printing black and white)
-%colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV, 
+%colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV,
 breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,
 plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,
 hypertexnames=true, pdfhighlight=/O, urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen,
@@ -171,7 +171,7 @@ pdfkeywords={},
 pdfcreator={pdfLaTeX},
 pdfproducer={LaTeX with hyperref and classicthesis}
 %------------------------------------------------
-}   
+}
 
 %----------------------------------------------------------------------------------------
 %	BACKREFERENCES
@@ -187,23 +187,23 @@ pdfproducer={LaTeX with hyperref and classicthesis}
 \ifthenelse{\boolean{enable-backrefs}} % If backrefs were enabled
 {
 \PassOptionsToPackage{hyperpageref}{backref}
-\usepackage{backref} % to be loaded after hyperref package 
+\usepackage{backref} % to be loaded after hyperref package
 \renewcommand{\backreftwosep}{ and~} % separate 2 pages
 \renewcommand{\backreflastsep}{, and~} % separate last of longer list
 \renewcommand*{\backref}[1]{}  % disable standard
 \renewcommand*{\backrefalt}[4]{% detailed backref
-\ifcase #1 
+\ifcase #1
 \backrefnotcitedstring
 \or
 \backrefcitedsinglestring{#2}
 \else
 \backrefcitedmultistring{#2}
 \fi}
-}{\relax} 
+}{\relax}
 
 %----------------------------------------------------------------------------------------
 %	AUTOREFERENCES SETUP
-%	Redefines how references in text are prefaced for different 
+%	Redefines how references in text are prefaced for different
 %	languages (e.g. "Section 1.2" or "section 1.2")
 %----------------------------------------------------------------------------------------
 
@@ -235,10 +235,10 @@ pdfproducer={LaTeX with hyperref and classicthesis}
 
 %----------------------------------------------------------------------------------------
 
-\usepackage{classicthesis} 
+\usepackage{classicthesis}
 
 %----------------------------------------------------------------------------------------
-%	CHANGING TEXT AREA 
+%	CHANGING TEXT AREA
 %----------------------------------------------------------------------------------------
 
 %\linespread{1.05} % a bit more for Palatino
