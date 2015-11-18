@@ -50,6 +50,12 @@ function with a large smoothing constant, \ie $\inf$:
 \mathbf{A} = \left(\mathbf{X} \mathbf{V}^{-1} \mathbf{X} \right)^{-1} \mathbf{X}^\top \mathbf{V}^{-1}
 \]
 
+The fixed point function derived from these formulas are the following:
+
+\[
+\beta = \mathbf{A}(\beta) y
+\]
+
 This whole thing can also be addapted to define the random effects. If
 we define the model in an alternative way:
 
@@ -100,3 +106,10 @@ w_{3i} = \frac{
   \sigma_u^{-1} u_i
 }
 \]
+
+The fixed point function derived from these formulas are the following:
+
+\begin{align*}
+u &= \mathbf{B}(u)\left(\mathbf{I} - \mathbf{X}\mathbf{A}\right)y \\
+  &= \mathbf{B}(u)\left(y - \mathbf{X}\beta\right)
+\end{align*}

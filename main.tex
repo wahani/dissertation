@@ -38,6 +38,7 @@
 
 \input{classicthesis-config}
 \input{highlighting}
+\input{tex/mathOperators}
 
 \begin{document}
 
@@ -101,16 +102,23 @@
 
 \part{Theory}
 
-\chapter{Review of Robust Methods in Small Area Estimation}
+\chapter{Methods in Small Area Estimation}
 \section{Unit-Level Models}
-\section{Area-Level Models}
-\include{Rmd/rfh_ccst}
+\input{Rmd/areaLevelModels}
+\input{Rmd/theory_compare_unit_and_area}
+\input{Rmd/theory_spatio_temporal_fh}
+
+\chapter{Review of Robust Methods in Small Area Estimation}
+\input{Rmd/theory_robust_rao}
+\input{Rmd/rfh_ccst}
 \include{Rmd/test}
 
 \chapter{Algorithms}
 \section{Review of Numerical Methods for Non-Linear Optimizations in Statistics and Related Fields}
 \section{Algorithms for Robust Estimators in Statistics}
 \section{Propositions}
+\input{Rmd/theory_algorithm_nr_rfh}
+\input{Rmd/theory_algorithm_fp_rfh}
 
 %------------------------------------------------
 

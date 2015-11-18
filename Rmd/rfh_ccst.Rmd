@@ -1,9 +1,11 @@
 # Mean squared error
 ## pseudo linear FH
 
-This is the representation of the pseudo linear representation of the FH model. As it is introduced in @Cha11 and @Cha14.
+This is the representation of the pseudo linear representation of the FH model.
+As it is introduced in @Cha11 and @Cha14.
 
-Presenting the FH in pseudo linear form means to present the area means as a weighted sum of the response vector $y$. The FH model is given by
+Presenting the FH in pseudo linear form means to present the area means as a
+weighted sum of the response vector $y$. The FH model is given by
 
 \begin{align}
 \theta_i = \gamma_i y_i + (1 - \gamma_i) x_i^\top \beta 
@@ -44,6 +46,13 @@ Note that if $\psi$ is the identity or equally a huber influence function with a
 $$
 \mathbf{A} = \left(\mathbf{X} \mathbf{V}^{-1} \mathbf{X} \right)^{-1} \mathbf{X}^\top \mathbf{V}^{-1}
 $$
+
+The fixed point function derived from these formulas are the following:
+
+$$
+\beta = \mathbf{A}(\beta) y
+$$
+
 
 This whole thing can also be addapted to define the random effects. If we define the model in an alternative way:
 
@@ -95,6 +104,12 @@ w_{3i} = \frac{
 }
 $$
 
+The fixed point function derived from these formulas are the following:
+
+\begin{align*}
+u &= \mathbf{B}(u)\left(\mathbf{I} - \mathbf{X}\mathbf{A}\right)y \\
+  &= \mathbf{B}(u)\left(y - \mathbf{X}\beta\right)
+\end{align*}
 
 
 

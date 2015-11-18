@@ -1,0 +1,33 @@
+# Area Level Models
+
+## The Fay Herriot Model
+
+The model is introduced by @Fay79 and is used in small area estimation for
+research on area-level. It is build on a sampling model:
+$$
+\directStat_{\indexDomain} = \trueStat_{\indexDomain} + \samplingError_{\indexDomain},
+$$
+where $\directStat_{\indexDomain}$ is a direct estimator of a statistic of
+interest $\trueStat_{\indexDomain}$ for an area $\indexDomain$ with
+$\indexDomain = 1, \dots, \nDomains$ and $\nDomains$ being the total number of
+areas. The sampling error $\samplingError_{\indexDomain}$ is assumed to be
+independent and normally distributed with known variances
+$\samplingVarianceIndexed$, i.e.
+$\samplingError_{\indexDomain}|\trueStat_{\indexDomain} \sim \mathit{N}(0,
+\samplingVarianceIndexed)$. The model is modified with the linking model by
+assuming a linear relationship between the true area statistic
+$\trueStat_{\indexDomain}$ and some auxiliary variables $\xArea$:
+$$
+\trueStat_{\indexDomain} = \xArea^\top \beta + \randomEffectIndexed\text{, } \indexDomain=1,\dots, \nDomains.
+$$
+Note that $\xArea$ is a vector containing area-level (aggregated) information
+for $\nRegressor$ variables and $\beta$ is a vector ($1\times \nRegressor$) of
+regression coefficients describing the (linear) relationship. The model errors
+$\randomEffectIndexed$ are assumed to be independent and normally distributed,
+i.e. $\randomEffectIndexed \sim \mathit{N}(0, \randomEffectVariance)$
+furthermore $\samplingErrorIndexed$ and $\randomEffectIndexed$ are assumed to be
+independent. Combining the sampling and linking model leads to:
+\begin{align}
+\label{eq:FH}
+\directStatIndexed = \xArea^\top \beta + \randomEffectIndexed + \samplingErrorIndexed.
+\end{align}
