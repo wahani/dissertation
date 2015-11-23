@@ -1,4 +1,4 @@
 
-![Boxplot with Relative Root Mean Squared Error (RRMSE)](figs/area_level_mc_rrmse_all.pdf)
+![\textrrmse](figs/area_level_mc_rrmse_all.pdf)
 
-![Boxplot with Relative Bias (RBIAS)](figs/area_level_mc_rbias_all.pdf)
+![\textrbias](figs/area_level_mc_rbias_all.pdf)
