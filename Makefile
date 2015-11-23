@@ -7,6 +7,8 @@ FIGDIR= ./figs
 
 # list R files
 RFILES := $(wildcard $(RDIR)/*.R)
+RDEPS := $(wildcard $(RDIR)/comp/*.R) $(wildcard $(RDIR)/generators/*.R) $(wildcard $(RDIR)/graphics/*.R)
+
 # Indicator files to show R file has run
 OUT_FILES:= $(RFILES:.R=.Rout)
 # list R-markdown files
@@ -18,7 +20,7 @@ TEX_FILES:= $(wildcard $(TEXDIR)/*.tex)
 all: $(TEXFILE).pdf $(OUT_FILES) $(TEX_FILES) $(TEX_RMD_FILES) $(MD_FILES)
 
 # RUN EVERY R FILE
-$(RDIR)/%.Rout: $(RDIR)/%.R
+$(RDIR)/%.Rout: $(RDIR)/%.R $(RDEPS)
 	R CMD BATCH $< $@
 
 # Run Rmd>md>tex

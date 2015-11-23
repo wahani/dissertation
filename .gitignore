@@ -24,3 +24,6 @@
 *.synctex.gz
 *.fls
 Rmd/figs/*
+figs/*.pdf
+Rmd/*.md
+Rmd/*.tex

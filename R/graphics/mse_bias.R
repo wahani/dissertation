@@ -1,18 +1,17 @@
 module::import("ggplot2")
 module::use("R/graphics/themes.R")
 
-plotRBIAS <- function(dat) {
+bias <- function(dat, x = "method", y = "RBIAS") {
   ggplot(dat) +
-    geom_boxplot(aes(x = method, y = RBIAS)) +
-    coord_flip() + facet_grid(simName ~ .) +
-    geom_hline(aes(yintercept = 0), colour = "grey", linetype = 2) +
-    theme_thesis() +
-    labs(x = NULL)
+    geom_boxplot(aes_string(x = x, y = y)) +
+    coord_flip() +
+    facet_grid(simName ~ .) +
+    geom_hline(aes(yintercept = 0), colour = "black", linetype = 2) +
+    theme_thesis_boxplot()
 }
 
-plotRRMSE <- function(dat) {
+mse <- function(dat, x = "method", y = "RRMSE") {
   ggplot(dat, aes(x = method, y = RRMSE)) +
     geom_boxplot() + coord_flip() + facet_grid(simName ~ .) +
-    theme_thesis() +
-    labs(x = NULL)
+    theme_thesis_boxplot()
 }

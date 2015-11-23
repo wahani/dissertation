@@ -1,7 +1,12 @@
+# Monte Carlo simulation starting from area level data for the standard fh
+
+module::import("ggplot2")
 module::import("saeSim")
 module::use("R/generators/gen_x.R")
 module::use("R/comp/direct_estimators.R")
 module::use("R/comp/area_level.R")
+ggPlot <- module::as.module("./R/graphics/mse_bias.R")
+gg <- module::as.module("./R/graphics/save.R")
 
 # Constants:
 D <- 100
@@ -33,3 +38,36 @@ simFun <- . %>%
   do.call(what = rbind)
 
 lapply(list(setup, setupV), simFun)
+
+# Graphics:
+
+simData <- sim_read_data("./R/data/areaLevel")
+
+simData$popMean <- simData$y - simData$e
+
+ggDat <- reshape2::melt(
+  simData,
+  id.vars = c("idD", "popMean", "simName"),
+  measure.vars = c("y", "FH", "RFH"),
+  variable.name = "method",
+  value.name = "prediction"
+)
+
+ggDat %<>%
+  dplyr::group_by(idD, method, simName) %>%
+  dplyr::summarise(RBIAS = mean((prediction - popMean) / popMean),
+                   RRMSE = sqrt(mean(((prediction - popMean) / popMean)^2)))
+
+"area_level_mc_rrmse_00" <- ggPlot$mse(subset(ggDat, simName == "(0, 0)"))
+"area_level_mc_rrmse_v0" <- ggPlot$mse(subset(ggDat, simName == "(v, 0)")) + ggplot2::scale_y_log10()
+"area_level_mc_rbias_00" <- ggPlot$bias(subset(ggDat, simName == "(0, 0)"))
+"area_level_mc_rbias_v0" <- ggPlot$bias(subset(ggDat, simName == "(v, 0)"))
+"area_level_mc_rrmse_all" <- ggPlot$mse(ggDat) + ggplot2::scale_y_log10()
+"area_level_mc_rbias_all" <- ggPlot$bias(ggDat)
+
+gg$save_default("area_level_mc_rrmse_00")
+gg$save_default("area_level_mc_rrmse_v0")
+gg$save_default("area_level_mc_rbias_00")
+gg$save_default("area_level_mc_rbias_v0")
+gg$save_default("area_level_mc_rrmse_all")
+gg$save_default("area_level_mc_rbias_all")
