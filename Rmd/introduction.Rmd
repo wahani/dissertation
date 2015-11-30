@@ -1,0 +1,42 @@
+This thesis introduces extensions to the Fay-Herriot Model, a frequentist
+approach to Empirical Bayes estimators (i.e. James-Stein estimators) frequently
+used in Small Area Estimation which is a sub-field within the field of
+Statistics. In the three parts of this thesis I provide methodological
+extensions to existing statistical models (\ref{part:theory} *Theory*),
+considerations for implementing the findings as software
+(\ref{part:implementation} *Implementation*) and results on numerical stability
+as well as statistical properties of the introduced estimators as well as a
+short case study (\ref{part:results} *Results*).
+
+
+Small Area Estimation ...
+
+
+Robust Methods in Small Area Estimation ...
+
+
+Software in stats ...
+
+
+The thesis is seperated into three main parts. \ref{part:theory} *Theory*
+introduces the underlying esimation methodology, i.e. linear mixed models, a
+review of model based methods in Small Area Estimation as well as outlier robust
+extensions within the field. Given these results extensions to existing
+methodology is introduced in the form of a robustified Fay-Herriot estimator
+with optional spatial and temporal correlated random effects. A special interest
+lies in the concrete implementation of such (robust) estimators, and to meet
+this focus several algorithms are proposed. (MSE, bias-correction)
+
+\ref{part:implementation} *Implementation* introduces three main aspects: The 
+verification that the implementation (in terms of software) is correct; How to 
+evaluate the numerical accuracy and stability of the introduced algorithms; And 
+which results to report to judge the quality of the numerical solution.
+
+In \ref{part:results} *Results* the properties of the estimators are 
+investigated in simulations and in the context of part 
+\ref{part:implementation}. The numerical properties are devided into accuracy
+and stability. Statistical properties are shown for the most reliable
+implementations using model and design based simulation studies.
+
+
+

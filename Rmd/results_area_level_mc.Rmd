@@ -1,3 +1,32 @@
+## The Area-Level Perspective
+
+In this section we present some results of a simulation study. To make the
+results comparable to other model based simulations on area level models we
+begin in this section with a simulation study on area level. Thus we can discuss
+area level outliers which is what all the others do. Section? will then
+introduce then a simulation study in which we start with a unit-level population
+and can thus introduce both, outlying observations and areas.
+
+To begin with we define the area level model from which we draw the data:
+
+  $$\bar{y}_i = 100 + 1 \cdot x_i + v_i + \bar{e}_i$$
+
+- The single regressor, $x$, is a deterministic sequence defined as $x_i = 
+\frac{i}{2D} + 1$ where $D$ is the number of domains (taken from spatio temporal
+FH).
+- The random effect, $v$, is drawn from a normal distribution, i.e. $v_i\sim
+\Distr{N}(0, \sigv)$ where $\sigv$ is defined with respect to the scenario.
+- The sampling error, $e$, is drawn from $e_i\sim \Distr{N}(0, \sige)$ where
+$\sige$ is an equidistant sequence from $0.8$ to $1.2$ with $D$ elements.
+- General characteristics: $D = 100$ and $R = 500$ being the sumber of Monte Carlo repetitions.
+
+To illustrate the greatness of the model we investigate two different scenarios:
+
+1. *(0, 0)* This is the scenario where the Fay Herriot model holds. In this
+scenario $\sigv = 1$.
+2. *(v, 0)* This is the scenario with area level outliers. $\sigv = 1$ for 95 \%
+of the areas, i.e. for $i \in \{1, \dots, 95\}$, and $\sigv = 20^2$ for $i \in
+\{96, \dots, 100\}$.
 
 ![\textrrmse](figs/area_level_mc_rrmse_all.pdf)
 

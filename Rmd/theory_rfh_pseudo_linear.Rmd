@@ -1,5 +1,4 @@
-# Mean squared error
-## pseudo linear FH
+### Pseudo Linearization
 
 This is the representation of the pseudo linear representation of the FH model.
 As it is introduced in @Cha11 and @Cha14.
@@ -11,7 +10,8 @@ weighted sum of the response vector $y$. The FH model is given by
 \theta_i = \gamma_i y_i + (1 - \gamma_i) x_i^\top \beta 
 \end{align}
 
-where $\gamma_i = \frac{\sigma^2_u}{\sigma^2_u + \sigma^2_e}$, so it can be represented as
+where $\gamma_i = \frac{\sigma^2_u}{\sigma^2_u + \sigma^2_e}$, so it can be
+represented as
 
 $$
 \theta_i = w_i^\top y
@@ -41,7 +41,8 @@ $$
 w_j = \frac{\psi\left( u_j^{-\frac{1}{2}} ( y_j - x_j^\top\beta ) \right)}{ u_j^{-\frac{1}{2}} ( y_j - x_j^\top\beta }
 $$
 
-Note that if $\psi$ is the identity or equally a huber influence function with a large smoothing constant, \ie $\inf$:
+Note that if $\psi$ is the identity or equally a huber influence function with a
+large smoothing constant, \ie $\inf$:
 
 $$
 \mathbf{A} = \left(\mathbf{X} \mathbf{V}^{-1} \mathbf{X} \right)^{-1} \mathbf{X}^\top \mathbf{V}^{-1}
@@ -54,7 +55,8 @@ $$
 $$
 
 
-This whole thing can also be addapted to define the random effects. If we define the model in an alternative way:
+This whole thing can also be addapted to define the random effects. If we define
+the model in an alternative way:
 
 \begin{align}
 \theta_i = x_i^\top \beta + u_i
@@ -110,10 +112,4 @@ The fixed point function derived from these formulas are the following:
 u &= \mathbf{B}(u)\left(\mathbf{I} - \mathbf{X}\mathbf{A}\right)y \\
   &= \mathbf{B}(u)\left(y - \mathbf{X}\beta\right)
 \end{align*}
-
-
-
-
-
-
 

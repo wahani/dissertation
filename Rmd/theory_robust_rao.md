@@ -1,4 +1,4 @@
-# Robust ML Score Functions
+## Robust ML Score Functions
 
 In @Fel86 studied the robust estimation of linear mixed model parameters.
 However, the proposed approach is based on given variance parameters $\theta$

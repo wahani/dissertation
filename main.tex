@@ -62,17 +62,17 @@
 
 \include{tex/Titlepage} % Main title page
 
-%\include{tex/Titleback} % Back of the title page
+\include{tex/Titleback} % Back of the title page
 
-%\cleardoublepage\include{tex/Dedication} % Dedication page
+% \cleardoublepage\include{tex/Dedication} % Dedication page
 
-%\cleardoublepage\include{FrontBackMatter/Foreword} % Uncomment and create a Foreword.tex to include a foreword
+% \cleardoublepage\include{FrontBackMatter/Foreword} % Uncomment and create a Foreword.tex to include a foreword
 
-%\cleardoublepage\include{tex/Abstract} % Abstract page
+% \cleardoublepage\include{tex/Abstract} % Abstract page
 
-%\cleardoublepage\include{tex/Publication} % Publications from the thesis page
+% \cleardoublepage\include{tex/Publication} % Publications from the thesis page
 
-%\cleardoublepage\include{tex/Acknowledgments} % Acknowledgements page
+% \cleardoublepage\include{tex/Acknowledgments} % Acknowledgements page
 
 \pagestyle{scrheadings} % Show chapter titles as headings
 
@@ -99,54 +99,71 @@
 
 %------------------------------------------------
 
-\ctparttext{This is the chapter where I want to present the theoretical concepts underpinning the development of software and application. Most notably is the robust version of a Fay-Herriot Type model with different variance-covariance structures.} % Text on the Part 2 page describing the content in Part 2
+\include{Rmd/test}
 
-\part{Theory}
+\chapter{Introduction}
+\input{Rmd/introduction}
 
-\chapter{Methods in Small Area Estimation}
-\section{Unit-Level Models}
+\ctparttext{This is the chapter where I want to present the theoretical concepts underpinning the development of software and application.} % Text on the Part 2 page describing the content in Part 2
+
+\part{Review}\label{part:theory}
+
+\chapter{Mixed Models}
+
+\chapter{Algorithms and Statistics}
+\section{Non-Linear Optimizations in Statistics}
+\section{Algorithms for Robust Estimators in Statistics}
+
+\chapter{Small Area Estimation}
+\section{Unit Level Models}
 \input{Rmd/theory_area_level_models}
 \input{Rmd/theory_compare_unit_and_area}
 \input{Rmd/theory_spatio_temporal_fh}
 
-\chapter{Review of Robust Methods in Small Area Estimation}
+\section{Robust Methods in Small Area Estimation}
 \input{Rmd/theory_robust_rao}
+\subsection{Mean squared error}
+\subsubsection{Bootstrap}
 \input{Rmd/theory_rfh_pseudo_linear}
-\include{Rmd/test}
 
-\chapter{Algorithms}
-\section{Review of Numerical Methods for Non-Linear Optimizations in Statistics and Related Fields}
-\section{Algorithms for Robust Estimators in Statistics}
-\section{Propositions}
+%------------------------------------------------
+
+\part{Propositions}
+
+\chapter{Robust Area Level Models}
+\section{Formulation}
+\subsection{Standard}
+\subsection{Spatio Temporal}
+\section{Mean Squared Error}
+\section{Algorithm}
 \input{Rmd/theory_algorithm_nr_rfh}
 \input{Rmd/theory_algorithm_fp_rfh}
 
-%------------------------------------------------
-
-\ctparttext{This is the part where I want to introduce the software where the theoretical concepts find implementation.}
-
-\part{Implementation}
-\chapter{Verification of Results}
-\chapter{Performance of Algorithms, a Statisticians Perspective}
-\chapter{Validation of Point Estimates, a Users Perspective}
-\chapter{Software}
+\chapter{Implementation}\label{part:implementation}
+\section{Software}
+\section{Verification of Results}
+\section{Accuracy of Results}
+\section{Validation of Results}
 
 %------------------------------------------------
 
-\ctparttext{This is the part where I will present all results. Most certainly they will contain a lot of model- and design-based simulation studies for various settings. Maybe there will be more data available and I can present some applications.}
+\ctparttext{This is the part where I will present all results.}
+\part{Results}\label{part:results}
 
-\part{Results}
-\chapter{Numerical Accuracy}
-\chapter{Stability}
-\chapter{Speed of Convergence}
-\chapter{Computational Complexity}
+\chapter{Numerical Properties}
+\section{Accuracy}
+\section{Stability}
+\section{Speed of Convergence}
+
 \chapter{Simulation Studies}
-\section{Area Level Models}
-\subsection{The Area-Level Perspective}
+\section{Model Based Simulation Studies}
 \input{Rmd/results_area_level_mc}
-
 \subsection{From Unit to Area Level Data}
 \input{Rmd/results_unit_to_area_level_mc}
+
+\section{Design Based Simulation Studies}
+
+\chapter{CaseStudy}
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES

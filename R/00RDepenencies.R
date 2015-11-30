@@ -16,4 +16,5 @@ installPackages(c(
   "saeSim", "sae", "aoos", "MASS", "dplyr", "reshape2", "ggplot2", "devtools"
 ))
 devtools::install_github("wahani/module")
+devtools::install_github("wahani/dat")
 # devtools::install_github("wahani/saeRobustTools") needed but not public
