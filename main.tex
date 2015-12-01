@@ -99,20 +99,17 @@
 
 %------------------------------------------------
 
-\include{Rmd/test}
+% \include{Rmd/test}
 
 \chapter{Introduction}
 \input{Rmd/introduction}
 
-\ctparttext{This is the chapter where I want to present the theoretical concepts underpinning the development of software and application.} % Text on the Part 2 page describing the content in Part 2
+\ctparttext{This is the chapter where I want to present the theoretical concepts
+underpinning the development of software and application.}
 
-\part{Review}\label{part:theory}
+\part{Theory}\label{part:theory}
 
 \chapter{Mixed Models}
-
-\chapter{Algorithms and Statistics}
-\section{Non-Linear Optimizations in Statistics}
-\section{Algorithms for Robust Estimators in Statistics}
 
 \chapter{Small Area Estimation}
 \section{Unit Level Models}
@@ -128,8 +125,6 @@
 
 %------------------------------------------------
 
-\part{Propositions}
-
 \chapter{Robust Area Level Models}
 \section{Formulation}
 \subsection{Standard}
@@ -138,12 +133,20 @@
 \section{Algorithm}
 \input{Rmd/theory_algorithm_nr_rfh}
 \input{Rmd/theory_algorithm_fp_rfh}
+\section{Unit Level Outliers and Area Level Models}
+
+\part{Implementation}\label{part:implementation}
+
+\chapter{Algorithms and Statistics}
+\section{Non-Linear Optimizations in Statistics}
+\section{Algorithms for Robust Estimators in Statistics}
 
 \chapter{Implementation}\label{part:implementation}
 \section{Software}
 \section{Verification of Results}
 \section{Accuracy of Results}
 \section{Validation of Results}
+\input{Rmd/implementation_validation}
 
 %------------------------------------------------
 
@@ -165,9 +168,9 @@
 
 \chapter{CaseStudy}
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
 \appendix
 

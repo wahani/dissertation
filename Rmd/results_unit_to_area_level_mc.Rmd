@@ -45,13 +45,13 @@ across simulation scenarios. We want to emphasise how unit and area level
 outliers can influence area level predictions.
 
 1. *(0, 0)* This is the scenario in which the area level model as described in 
-section? holds, i.e. there are no outliers. Here $\sigma_e^2 = 4^2$ and $\sigv =
+section? holds, i.e. there are no outliers. Here $\sigma_e^2 = 4^2$ and $\sigre =
 1$ for all domains. However, the sampling variances ($\sige =
 \frac{\sigma_e^2}{n_i}$) derived under the unit level population model range
-from 1 to 3.2 for their respective sample size. $\sigv = 1$.
+from 1 to 3.2 for their respective sample size. $\sigre = 1$.
 2. *(v, 0)* This scenario is close to the area level data generation in the 
 previous section where we induced area level outliers. For that purpose we 
-choose $\sigv = 1$ for the areas where $i \in \{1, \dots, 95\}$ and $\sigv = 
+choose $\sigre = 1$ for the areas where $i \in \{1, \dots, 95\}$ and $\sigre = 
 20^2$ for $i \in \{96, \dots, 100\}$
 3. *(0, e)* In this scenario unit level outliers do exist. To make the magnitude
 comparable to simulation studies in the literature we choose $\sigma_e^2 = 
