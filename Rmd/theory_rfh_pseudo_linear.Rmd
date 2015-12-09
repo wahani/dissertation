@@ -71,7 +71,8 @@ $$
 with 
 
 $$
-w_{s, i}^\top = x_i^\top \mathbf{A} + \mathbf{B}
+w_{s, i}^\top = x_i^\top \mathbf{A} + 
+  z_i^\top \mathbf{B} \Paran{\mat{I} - x_i^\top \mathbf{A}}
 $$
 
 where $\mathbf{A}$ is defined as above and 

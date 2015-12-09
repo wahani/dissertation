@@ -22,7 +22,7 @@ $$
   and
 
 $$
-\mat{A}_s = \Paran{\mat{X}_s \mat{V}_s^{-1} \mat{U}_s^\frac{1}{2} \mat{W}_{1s} \mat{U}_s^{-\frac{1}{2}} \mat{X}_s }^{-1} \mat{X}_s^\top \mat{V}_s^{-1} \mat{U}_s^\frac{1}{2} \mat{W}_{1s} \mat{U}_s^{-\frac{1}{2}}
+\mat{A}_s = \Paran{\mat{X}_s^\top \mat{V}_s^{-1} \mat{U}_s^\frac{1}{2} \mat{W}_{1s} \mat{U}_s^{-\frac{1}{2}} \mat{X}_s }^{-1} \mat{X}_s^\top \mat{V}_s^{-1} \mat{U}_s^\frac{1}{2} \mat{W}_{1s} \mat{U}_s^{-\frac{1}{2}}
 $$
 
 with
