@@ -64,7 +64,23 @@ we define the model in an alternative way:
 we can restate it similarly to the above as:
 
 \[
-\theta_i = w_{s, i}^\top y
+\theta_i = w_{s, i}^\top \mat{y}
+\]
+
+\[
+\theta = \mat{W}\mat{y}
+\]
+
+where $\mat{W}$ is the matrix containing the weights, i.e.
+
+\[
+\mat{W} = \Paran{
+  \begin{matrix}
+  w_{s, 1}^\top\\
+  \vdots \\
+  w_{s, D}^\top\\
+  \end{matrix}
+} = \mat{X}\mat{A} + \mat{B} \Paran{\mat{I} - \mat{X} \mat{A}}
 \]
 
 with
@@ -112,3 +128,25 @@ The fixed point function derived from these formulas are the following:
 u &= \mathbf{B}(u)\left(\mathbf{I} - \mathbf{X}\mathbf{A}\right)y \\
   &= \mathbf{B}(u)\left(y - \mathbf{X}\beta\right)
 \end{align*}
+
+Given the weights we have a weighted mean, for which we need the MSE:
+
+\[
+\Exp{MSE}\Paran{\hat{\theta}|\mat{X}, \beta, \mat{\re}} 
+  = \Exp{E}\Paran{\Paran{\hat{\theta} - \theta}^2}
+  = \Exp{V}\Paran{\hat{\theta}} + \Exp{E}\Paran{\hat{\theta} - \theta}^2
+\]
+
+\[
+\Exp{V}\Paran{\hat{\theta}} 
+  = \Exp{V}\Paran{\mat{Wy}}
+  = \mat{W}^2 \Exp{V}\Paran{\mat{y}}
+  = \mat{W}^2 \Paran{\sigma_{e, 1}^2, \dots, \sigma_{e, D}^2}^\top
+\]
+
+\[
+\Exp{E}\Paran{\hat{\theta} - \theta}
+  = \Exp{E}\Paran{\mat{Wy}} - \Exp{E}\Paran{\theta}
+  = \mat{W} \Exp{E}\Paran{\mat{y}} - \Exp{E}\Paran{\theta}
+  = \mat{W} \theta - \theta
+\]
