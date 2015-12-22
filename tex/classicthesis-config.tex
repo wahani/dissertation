@@ -12,10 +12,16 @@
 %	Each of the commands can be cited anywhere in the thesis
 %----------------------------------------------------------------------------------------
 
-% Remove drafting to get rid of the '[ Date - classicthesis version 4.0 ]' text at the bottom of every page
-\PassOptionsToPackage{eulerchapternumbers,listings,drafting, pdfspacing, subfig,beramono,eulermath,parts}{classicthesis}
-% Available options: drafting parts nochapters linedheaders eulerchapternumbers beramono eulermath pdfspacing minionprospacing tocaligned dottedtoc manychapters listings floatperchapter subfig
-% Adding 'dottedtoc' will make page numbers in the table of contents flushed right with dots leading to them
+% Remove drafting to get rid of the '[ Date - classicthesis version 4.0 ]' text
+% at the bottom of every page
+\PassOptionsToPackage{eulerchapternumbers, listings, drafting, pdfspacing,
+subfig, beramono, eulermath, parts, dottedtoc, floatperchapter}{classicthesis}
+% Available options: drafting parts nochapters linedheaders eulerchapternumbers
+% beramono eulermath pdfspacing minionprospacing tocaligned dottedtoc
+% manychapters listings floatperchapter subfig
+% floatperchapter: numbering in equations, figures, etc per section
+% Adding 'dottedtoc' will make page numbers in the table of contents flushed
+% right with dots leading to them
 
 \newcommand{\myTitle}{Robust Extensions of the Fay Herriot Model in Small Area Estimation\xspace}
 \newcommand{\mySubtitle}{Theory, Implementation and Simulation Studies\xspace}
@@ -75,7 +81,8 @@ style=authoryear
  %------------------------------------------------
 
 \PassOptionsToPackage{fleqn}{amsmath} % Math environments and more by the AMS
- \usepackage{amsmath}
+\usepackage{amsmath}
+% \numberwithin{equation}{section}
 
  %------------------------------------------------
 
@@ -250,10 +257,10 @@ pdfproducer={LaTeX with hyperref and classicthesis}
 %	USING DIFFERENT FONTS
 %----------------------------------------------------------------------------------------
 
-%\usepackage[oldstylenums]{kpfonts} % oldstyle notextcomp
-%\usepackage[osf]{libertine}
-%\usepackage{hfoldsty} % Computer Modern with osf
-%\usepackage[light,condensed,math]{iwona}
-%\renewcommand{\sfdefault}{iwona}
-%\usepackage{lmodern} % <-- no osf support :-(
-%\usepackage[urw-garamond]{mathdesign} <-- no osf support :-(
+% \usepackage[oldstylenums]{kpfonts} % oldstyle notextcomp
+% \usepackage[osf]{libertine}
+% \usepackage{hfoldsty} % Computer Modern with osf
+% \usepackage[light,condensed,math]{iwona}
+% \renewcommand{\sfdefault}{iwona}
+% \usepackage{lmodern} % <-- no osf support :-(
+% \usepackage[urw-garamond]{mathdesign} <-- no osf support :-(

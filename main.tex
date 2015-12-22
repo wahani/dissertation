@@ -14,7 +14,8 @@
 %
 % General Tips:
 % 1) Make sure to edit the classicthesis-config.file
-% 2) New enumeration (A., B., C., etc in small caps): \begin{aenumerate} \end{aenumerate}
+% 2) New enumeration (A., B., C., etc in small caps): \begin{aenumerate}
+% \end{aenumerate}
 % 3) For margin notes: \marginpar or \graffito{}
 % 4) Do not use bold fonts in this style, it is designed around them
 % 5) Use tables as in the examples
@@ -22,9 +23,9 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
 \documentclass[
 		twoside,openright,titlepage,numbers=noenddot,headinclude,1headlines,
@@ -81,7 +82,9 @@
 \cleardoublepage
 
 \pagenumbering{arabic} % Arabic page numbering for thesis content (1, 2, 3, etc)
-%\setcounter{page}{90} % Uncomment to manually start the page counter at an arbitrary value (for example if you wish to count the pre-content pages in the page count)
+%\setcounter{page}{90} % Uncomment to manually start the page counter at an
+%arbitrary value (for example if you wish to count the pre-content pages in the
+%page count)
 
 \cleardoublepage % Avoids problems with pdfbookmark
 
@@ -89,7 +92,8 @@
 %	THESIS CONTENT - CHAPTERS
 %----------------------------------------------------------------------------------------
 
-%\ctparttext{You can put some informational part preamble text here.} % Text on the Part 1 page describing  the content in Part 1
+%\ctparttext{You can put some informational part preamble text here.} % Text on
+%the Part 1 page describing  the content in Part 1
 
 %\part{Some Kind of Manual} % First part of the thesis
 
@@ -166,6 +170,7 @@ tors* \\
 \chapter{Simulation Studies}
 \section{Model Based Simulation Studies}
 \input{Rmd/results_area_level_mc}
+\input{Rmd/results_area_level_mse}
 \subsection{From Unit to Area Level Data}
 \input{Rmd/results_unit_to_area_level_mc}
 
@@ -184,9 +189,9 @@ tors* \\
 %\include{Chapters/Chapter0A} % Appendix A
 %\include{Chapters/Chapter0B} % Appendix B - empty template
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 %	POST-CONTENT THESIS PAGES
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
 \cleardoublepage\include{tex/Bibliography} % Bibliography
 
@@ -194,6 +199,6 @@ tors* \\
 
 %\cleardoublepage\include{tex/Declaration} % Declaration
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
 \end{document}
