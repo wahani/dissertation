@@ -21,7 +21,7 @@ all: $(TEXFILE).pdf $(OUT_FILES) $(TEX_FILES) $(TEX_RMD_FILES) $(MD_FILES)
 
 # RUN EVERY R FILE
 $(RDIR)/%.Rout: $(RDIR)/%.R $(RDEPS)
-	R CMD BATCH $< $@
+	R CMD BATCH --vanilla $< $@
 
 # Run Rmd>md>tex
 $(RMDDIR)/%.md: $(RMDDIR)/%.Rmd
