@@ -1,5 +1,5 @@
-module::import("ggplot2")
-module::use("R/graphics/themes.R")
+modules::import("ggplot2")
+modules::use("R/graphics/themes.R", TRUE)
 
 bias <- function(dat, x = "method", y = "RBIAS") {
   ggplot(dat) +

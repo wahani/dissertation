@@ -1,6 +1,6 @@
-module::import("saeSim")
-module::import(stats, median)
-module::import(MASS, huber)
+modules::import("saeSim")
+modules::import(stats, median)
+modules::import(MASS, huber)
 
 sim_comp_sampleMean <- . %>%
   # sample mean and standard deviation

@@ -1,4 +1,4 @@
-module::import("ggplot2")
+modules::import("ggplot2")
 
 theme_thesis <- function(base_size = 12, base_family = "serif") {
     theme_minimal(base_size, base_family) %+replace%

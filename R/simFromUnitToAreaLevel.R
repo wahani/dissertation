@@ -1,10 +1,10 @@
-module::import("saeSim")
-module::use("R/generators/gen_x.R")
-module::use("R/comp/direct_estimators.R")
-module::use("R/comp/area_level.R")
+library("saeSim")
+modules::use("./R/generators/gen_x.R", TRUE)
+modules::use("./R/comp/direct_estimators.R", TRUE)
+modules::use("./R/comp/area_level.R", TRUE)
 
-ggPlot <- module::as.module("./R/graphics/mse_bias.R")
-gg <- module::as.module("./R/graphics/save.R")
+ggPlot <- modules::use("./R/graphics/mse_bias.R")
+gg <- modules::use("./R/graphics/save.R")
 
 
 # Constants:

@@ -1,12 +1,13 @@
 # Monte Carlo simulation starting from area level data for the standard fh
 
-module::import("ggplot2")
-module::import("saeSim")
-module::use("R/generators/gen_x.R")
-module::use("R/comp/direct_estimators.R")
-module::use("R/comp/area_level.R")
-ggPlot <- module::as.module("./R/graphics/mse_bias.R")
-gg <- module::as.module("./R/graphics/save.R")
+library("ggplot2")
+library("saeSim")
+modules::use("R/generators/gen_x.R", TRUE)
+modules::use("R/comp/direct_estimators.R", TRUE)
+modules::use("R/comp/area_level.R", TRUE)
+
+ggPlot <- modules::use("./R/graphics/mse_bias.R")
+gg <- modules::use("./R/graphics/save.R")
 
 # Constants:
 D <- 100
@@ -34,7 +35,9 @@ setupV <- setup %>%
   sim_simName("(v, 0)")
 
 simFun <- . %>%
-  sim(500, mode = "multicore", cpus = 3, path = "./R/data/areaLevel", overwrite = FALSE) %>%
+  sim(100,
+      mode = "multicore", cpus = 3,
+      path = "./R/data/areaLevel", overwrite = FALSE) %>%
   do.call(what = rbind)
 
 lapply(list(setup, setupV), simFun)
