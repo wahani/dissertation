@@ -17,7 +17,7 @@ comp_rfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
-    dat[[pred_name]] <- predict(saeRobustTools::rfh(formula, dir_var_name, data = dat))
+    dat[[pred_name]] <- predict(saeRobustTools::rfh(formula, dir_var_name, data = dat))$REBLUP
     dat
   }
 }
@@ -28,9 +28,9 @@ comp_rfh_mse <- function(dir_name, dir_var_name, pred_name = "rfh") {
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
     modelFit <- saeRobustTools::rfh(formula, dir_var_name, data = dat)
-    prediction <- predict(modelFit, "pseudo")
-    dat[[pred_name]] <- as.numeric(prediction)
-    dat[[paste0(pred_name, "PseudoMse")]] <- attr(prediction, "pseudo")
+    prediction <- predict(modelFit, mse = "pseudo")
+    dat[[pred_name]] <- prediction$REBLUP
+    dat[[paste0(pred_name, "PseudoMse")]] <- prediction$pseudo
     dat
   }
 }
