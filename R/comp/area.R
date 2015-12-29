@@ -1,6 +1,6 @@
 modules::import(stats)
 
-comp_fh <- function(dir_name, dir_var_name, pred_name = "fh") {
+fh <- function(dir_name, dir_var_name, pred_name = "fh") {
   force(dir_var_name)
   force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
@@ -12,7 +12,7 @@ comp_fh <- function(dir_name, dir_var_name, pred_name = "fh") {
   }
 }
 
-comp_rfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
+rfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   force(dir_var_name)
   force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
@@ -22,15 +22,16 @@ comp_rfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   }
 }
 
-comp_rfh_mse <- function(dir_name, dir_var_name, pred_name = "rfh") {
+rfh_mse <- function(dir_name, dir_var_name, pred_name = "rfh") {
   force(dir_var_name)
   force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
     modelFit <- saeRobustTools::rfh(formula, dir_var_name, data = dat)
-    prediction <- predict(modelFit, mse = "pseudo")
+    prediction <- predict(modelFit, mse = c("pseudo", "boot"), B = 100)
     dat[[pred_name]] <- prediction$REBLUP
     dat[[paste0(pred_name, "PseudoMse")]] <- prediction$pseudo
+    dat[[paste0(pred_name, "BootMse")]] <- prediction$boot
     dat
   }
 }

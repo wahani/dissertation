@@ -4,10 +4,8 @@ library("saeSim")
 library("saeRobustTools")
 library("ggplot2")
 
-comp <- modules::use("R/comp/area_level.R")
-gen <- modules::use("R/generators/gen_x.R")
-ggThemes <- modules::use("R/graphics/themes.R")
-ggSave <- modules::use("R/graphics/save.R")
+comp <- modules::use("R/comp")
+gg <- modules::use("R/graphics/")
 
 D <- 40
 ssd <- sqrt(seq(16, 16, length.out = D))
@@ -20,7 +18,7 @@ makeSim <- function(D, ssd, vsd) {
     sim_gen_e(sd = ssd) %>%
     sim_comp_pop(function(dat) {dat$samplingVar <- ssd^2; dat}) %>%
     sim_resp_eq(y = 100 + 2 * x + v + e, trueVal = 100 + 2 * x + v) %>%
-    sim_comp_agg(comp$comp_rfh_mse("y", "samplingVar")) %>%
+    sim_comp_agg(comp$area$rfh_mse("y", "samplingVar")) %>%
     sim_simName(paste0(vsd, "-4"))
 }
 
@@ -29,7 +27,7 @@ startSim <- function(setup) {
       path = "R/data/areaLevelMSE", overwrite = FALSE)
 }
 
-map(1:4, ~ makeSim(D, ssd, .)) %>% map(startSim)
+map(4, ~ makeSim(D, ssd, .)) %>% map(startSim)
 
 simDat <- sim_read_data("R/data/areaLevelMSE/")
 
@@ -38,22 +36,25 @@ simDat <- sim_read_data("R/data/areaLevelMSE/")
 ggDat <- simDat %>%
   mutar(MCRFH ~ mean((rfh - mean(trueVal))^2),
         PseudoRFH ~ mean(rfhPseudoMse),
+        BootRFH ~ mean(rfhBootMse),
         by = c("idD", "simName")) %>%
   tidyr::gather(estimator, mse, -idD, -simName)
 
 areaLevelMse <- ggplot(ggDat, aes(x = idD, y = mse, colour = estimator)) +
-  geom_line() + facet_wrap(~simName, ncol = 4) + ggThemes$theme_thesis_nogrid()
+  geom_line() + facet_wrap(~simName, ncol = 4) + gg$themes$theme_thesis_nogrid()
 
-ggSave$save_default("areaLevelMse")
+gg$save$default(areaLevelMse)
 
 # ggplot(ggDat, aes(x = mse, fill = estimator)) +
 #   geom_density(alpha = 0.2) +
 #   facet_wrap(~simName, ncol = 4)
-#
-# ggDat <- simDat %>%
-#   map(mutar, By(c("idD", "simName")), MCRFH ~ mean((rfh - mean(trueVal))^2)) %>%
-#   mutar(RBIAS ~ mean((rfhPseudoMse - MCRFH) / MCRFH),
-#         RRMSE ~ sqrt(mean(((rfhPseudoMse - MCRFH) / MCRFH)^2)),
-#         by = c("idD", "simName")) %>%
-#   tidyr::gather(estimator, mse, -idD, -simName) %>%
-#   mutar(m ~ mean(mse), by = c("estimator", "simName"))
+
+ggDat <- simDat %>%
+  map(mutar, By(c("idD", "simName")), MCRFH ~ mean((rfh - mean(trueVal))^2)) %>%
+  mutar(RBIAS ~ mean((rfhPseudoMse - MCRFH) / MCRFH),
+        RRMSE ~ sqrt(mean(((rfhPseudoMse - MCRFH) / MCRFH)^2)),
+        RBIASBoot ~ mean((rfhBootMse - MCRFH) / MCRFH),
+        RRMSEBoot ~ sqrt(mean(((rfhBootMse - MCRFH) / MCRFH)^2)),
+        by = c("idD", "simName")) %>%
+  tidyr::gather(estimator, mse, -idD, -simName) %>%
+  mutar(m ~ mean(mse), by = c("estimator", "simName"))

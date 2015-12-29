@@ -2,12 +2,10 @@
 
 library("ggplot2")
 library("saeSim")
-modules::use("R/generators/gen_x.R", TRUE)
-modules::use("R/comp/direct_estimators.R", TRUE)
-modules::use("R/comp/area_level.R", TRUE)
 
-ggPlot <- modules::use("./R/graphics/mse_bias.R")
-gg <- modules::use("./R/graphics/save.R")
+gen <- modules::use("R/generators")
+comp <- modules::use("R/comp")
+gg <- modules::use("./R/graphics")
 
 # Constants:
 D <- 100
@@ -18,13 +16,13 @@ setup <- base_id(D, Ud) %>%
   # Area-Level Data
   sim_gen_e(sd = sqrt(trueVar)) %>%
   sim_gen_v(sd = 1) %>%
-  sim_gen_generic(gen_x, groupVars = "idD", name = "x") %>%
+  sim_gen_generic(gen$x$fixed_sequence, groupVars = "idD", name = "x") %>%
   sim_resp_eq(y = 100 + 10 * x + v + e) %>%
   sim_comp_agg(comp_var(trueVar = trueVar))
 
 setup %<>%
-  sim_comp_agg(comp_fh("y", "trueVar", "FH")) %>%
-  sim_comp_agg(comp_rfh("y", "trueVar", "RFH"))
+  sim_comp_agg(comp$area$fh("y", "trueVar", "FH")) %>%
+  sim_comp_agg(comp$area$rfh("y", "trueVar", "RFH"))
 
 setup <- setup %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
@@ -61,16 +59,16 @@ ggDat %<>%
   dplyr::summarise(RBIAS = mean((prediction - popMean) / popMean),
                    RRMSE = sqrt(mean(((prediction - popMean) / popMean)^2)))
 
-"area_level_mc_rrmse_00" <- ggPlot$mse(subset(ggDat, simName == "(0, 0)"))
-"area_level_mc_rrmse_v0" <- ggPlot$mse(subset(ggDat, simName == "(v, 0)")) + ggplot2::scale_y_log10()
-"area_level_mc_rbias_00" <- ggPlot$bias(subset(ggDat, simName == "(0, 0)"))
-"area_level_mc_rbias_v0" <- ggPlot$bias(subset(ggDat, simName == "(v, 0)"))
-"area_level_mc_rrmse_all" <- ggPlot$mse(ggDat) + ggplot2::scale_y_log10()
-"area_level_mc_rbias_all" <- ggPlot$bias(ggDat)
+area_level_mc_rrmse_00 <- gg$plots$mse(subset(ggDat, simName == "(0, 0)"))
+area_level_mc_rrmse_v0 <- gg$plots$mse(subset(ggDat, simName == "(v, 0)")) + ggplot2::scale_y_log10()
+area_level_mc_rbias_00 <- gg$plots$bias(subset(ggDat, simName == "(0, 0)"))
+area_level_mc_rbias_v0 <- gg$plots$bias(subset(ggDat, simName == "(v, 0)"))
+area_level_mc_rrmse_all <- gg$plots$mse(ggDat) + ggplot2::scale_y_log10()
+area_level_mc_rbias_all <- gg$plots$bias(ggDat)
 
-gg$save_default("area_level_mc_rrmse_00")
-gg$save_default("area_level_mc_rrmse_v0")
-gg$save_default("area_level_mc_rbias_00")
-gg$save_default("area_level_mc_rbias_v0")
-gg$save_default("area_level_mc_rrmse_all")
-gg$save_default("area_level_mc_rbias_all")
+gg$save$default(area_level_mc_rrmse_00)
+gg$save$default(area_level_mc_rrmse_v0)
+gg$save$default(area_level_mc_rbias_00)
+gg$save$default(area_level_mc_rbias_v0)
+gg$save$default(area_level_mc_rrmse_all)
+gg$save$default(area_level_mc_rbias_all)

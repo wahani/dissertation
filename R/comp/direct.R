@@ -9,7 +9,7 @@ sim_comp_sampleMean <- . %>%
     sMVar = var(y) / n
   ), by = "idD")
 
-comp_globalVar <- function(dat) {
+global_var <- function(dat) {
   # global variance. i.e. within domain variance
   varDat <- dplyr::group_by(dat, idD, n) %>%
     dplyr::summarise(var = var(y))
@@ -17,7 +17,7 @@ comp_globalVar <- function(dat) {
   dat
 }
 
-comp_robustMean <- function(dat) {
+robust_mean <- function(dat) {
   # robust mean and variance
   dat$mMean <- median(dat$y)
   dat$rMean <- huber(dat$y, k = 1.345)$mu

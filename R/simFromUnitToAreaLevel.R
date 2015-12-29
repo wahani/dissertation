@@ -1,10 +1,10 @@
 library("saeSim")
-modules::use("./R/generators/gen_x.R", TRUE)
-modules::use("./R/comp/direct_estimators.R", TRUE)
-modules::use("./R/comp/area_level.R", TRUE)
+library("dat")
+modules::import(magrittr, "%<>%")
 
-ggPlot <- modules::use("./R/graphics/mse_bias.R")
-gg <- modules::use("./R/graphics/save.R")
+gen <- modules::use("./R/generators/")
+comp <- modules::use("./R/comp")
+gg <- modules::use("./R/graphics")
 
 
 # Constants:
@@ -16,7 +16,7 @@ setup <- base_id(D, Ud) %>%
   # Population
   sim_gen_e(sd = 4) %>%
   sim_gen_v(sd = 1) %>%
-  sim_gen_generic(gen_x, groupVars = "idD", name = "x") %>%
+  sim_gen_generic(gen$x$fixed_sequence, groupVars = "idD", name = "x") %>%
   sim_resp_eq(y = 100 + 10 * x + v + e) %>%
   sim_comp_N %>%
   sim_comp_popMean %>%
@@ -25,21 +25,21 @@ setup <- base_id(D, Ud) %>%
   sim_comp_n
 
 setup %<>%
-  sim_comp_sampleMean %>%
-  sim_comp_sample(comp_globalVar) %>%
+  comp$direct$sim_comp_sampleMean() %>%
+  sim_comp_sample(comp$direct$global_var) %>%
   sim_comp_sample(comp_var(sMGVF = globalVar / n)) %>%
-  sim_comp_sample(comp_robustMean, "idD") %>%
+  sim_comp_sample(comp$direct$robust_mean, "idD") %>%
   sim_agg
 
 setup %<>%
-  sim_comp_agg(comp_fh("sMean", "sMVar", "FH")) %>%
-  sim_comp_agg(comp_fh("sMean", "sMGVF", "FHGVF")) %>%
-  sim_comp_agg(comp_fh("rMean", "rMVar", "FHRMean")) %>%
-  sim_comp_agg(comp_fh("mMean", "rMVar", "FHMMean")) %>%
-  sim_comp_agg(comp_rfh("sMean", "sMVar", "RFH")) %>%
-  sim_comp_agg(comp_rfh("sMean", "sMGVF", "RFHGVF")) %>%
-  sim_comp_agg(comp_rfh("rMean", "rMVar", "RFHRMean")) %>%
-  sim_comp_agg(comp_rfh("mMean", "rMVar", "RFHMMean"))
+  sim_comp_agg(comp$area$fh("sMean", "sMVar", "FH")) %>%
+  sim_comp_agg(comp$area$fh("sMean", "sMGVF", "FHGVF")) %>%
+  sim_comp_agg(comp$area$fh("rMean", "rMVar", "FHRMean")) %>%
+  sim_comp_agg(comp$area$fh("mMean", "rMVar", "FHMMean")) %>%
+  sim_comp_agg(comp$area$rfh("sMean", "sMVar", "RFH")) %>%
+  sim_comp_agg(comp$area$rfh("sMean", "sMGVF", "RFHGVF")) %>%
+  sim_comp_agg(comp$area$rfh("rMean", "rMVar", "RFHRMean")) %>%
+  sim_comp_agg(comp$area$rfh("mMean", "rMVar", "RFHMMean"))
 
 setup <- setup %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
@@ -60,39 +60,38 @@ simFun <- . %>%
 
 lapply(list(setup, setupE, setupV), simFun)
 
-simData <- sim_read_data("./R/data/fromUnitToAreaLevel")
+simData <- sim_read_data("./R/data/fromUnitToAreaLevel") %>%
+  mutar(c("idD", "popMean", "simName", "sMean", "rMean", "FH", "FHGVF",
+          "FHRMean", "RFH", "RFHGVF", "RFHRMean"))
 
-ggDat <- reshape2::melt(
+ggDat <- tidyr::gather(
   simData,
-  id.vars = c("idD", "popMean", "simName"),
-  measure.vars = c("sMean", "rMean", "FH", "FHGVF", "FHRMean", "RFH", "RFHGVF", "RFHRMean"),
-  variable.name = "method",
-  value.name = "prediction"
+  method, prediction,
+  -idD, -popMean, -simName
 )
 
-ggDat %<>% dplyr::group_by(idD, method, simName) %>%
-  dplyr::summarise(RBIAS = mean((prediction - popMean) / popMean),
-                   RRMSE = sqrt(mean(((prediction - popMean) / popMean)^2)))
+ggDat %<>% mutar(RBIAS ~ mean((prediction - popMean) / popMean),
+                 RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)),
+                 by = c("idD", "method", "simName"))
 
-"unit_to_area_level_mc_rrmse_00" <- ggPlot$mse(subset(ggDat, simName == "(0, 0)"))
-"unit_to_area_level_mc_rrmse_0e" <- ggPlot$mse(subset(ggDat, simName == "(0, e)"))
-"unit_to_area_level_mc_rrmse_v0" <- ggPlot$mse(subset(ggDat, simName == "(v, 0)")) + ggplot2::scale_y_log10()
+unit_to_area_level_mc_rrmse_00 <- gg$plots$mse(subset(ggDat, simName == "(0, 0)"))
+unit_to_area_level_mc_rrmse_0e <- gg$plots$mse(subset(ggDat, simName == "(0, e)"))
+unit_to_area_level_mc_rrmse_v0 <- gg$plots$mse(subset(ggDat, simName == "(v, 0)")) + ggplot2::scale_y_log10()
 
-"unit_to_area_level_mc_rbias_00" <- ggPlot$bias(subset(ggDat, simName == "(0, 0)"))
-"unit_to_area_level_mc_rbias_0e" <- ggPlot$bias(subset(ggDat, simName == "(0, e)"))
-"unit_to_area_level_mc_rbias_v0" <- ggPlot$bias(subset(ggDat, simName == "(v, 0)"))
+unit_to_area_level_mc_rbias_00 <- gg$plots$bias(subset(ggDat, simName == "(0, 0)"))
+unit_to_area_level_mc_rbias_0e <- gg$plots$bias(subset(ggDat, simName == "(0, e)"))
+unit_to_area_level_mc_rbias_v0 <- gg$plots$bias(subset(ggDat, simName == "(v, 0)"))
 
-"unit_to_area_level_mc_rrmse_all" <- ggPlot$mse(ggDat) + ggplot2::scale_y_log10()
-"unit_to_area_level_mc_rbias_all" <- ggPlot$bias(ggDat)
+unit_to_area_level_mc_rrmse_all <- gg$plots$mse(ggDat) + ggplot2::scale_y_log10()
+unit_to_area_level_mc_rbias_all <- gg$plots$bias(ggDat)
 
-gg$save_default("unit_to_area_level_mc_rrmse_00")
-gg$save_default("unit_to_area_level_mc_rrmse_0e")
-gg$save_default("unit_to_area_level_mc_rrmse_v0")
+gg$save$default(unit_to_area_level_mc_rrmse_00)
+gg$save$default(unit_to_area_level_mc_rrmse_0e)
+gg$save$default(unit_to_area_level_mc_rrmse_v0)
 
-gg$save_default("unit_to_area_level_mc_rbias_00")
-gg$save_default("unit_to_area_level_mc_rbias_0e")
-gg$save_default("unit_to_area_level_mc_rbias_v0")
+gg$save$default(unit_to_area_level_mc_rbias_00)
+gg$save$default(unit_to_area_level_mc_rbias_0e)
+gg$save$default(unit_to_area_level_mc_rbias_v0)
 
-gg$save_default("unit_to_area_level_mc_rrmse_all", height = 5)
-gg$save_default("unit_to_area_level_mc_rbias_all", height = 5)
-
+gg$save$default(unit_to_area_level_mc_rrmse_all, height = 5)
+gg$save$default(unit_to_area_level_mc_rbias_all, height = 5)
