@@ -1,4 +1,4 @@
-### Pseudo Linearization
+## Pseudo Linearization
 
 This is the representation of the pseudo linear representation of the FH model.
 As it is introduced in @Cha11 and @Cha14.

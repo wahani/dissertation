@@ -1,0 +1,137 @@
+# The Problem of Outlying Observations for Area-Level Models
+
+This section provides some motivation for the study of robust area-level models.
+It mainly lays out under which scenarios a robust estimation may proove to be
+beneficial and how these points are addressed in later chapters. Most importantly
+you can find insights on what outlying observations are from an area-level
+perspective. And if such data points exist, what is the source of this abnormal
+behaviour?
+
+In the following I want to distinguish between three types of outlying 
+observations. Unit-level outliers and how they may effect the area-level 
+analysis are discussed in \ref{sec:unit-level-outliers}. Area-level outliers can
+be described as outlying domains, which means that an entire domain - or all 
+units in that domain - behaves differently than all others and are further 
+discussed in section \ref{sec:area-level-outliers}. A third kind can be best 
+described as overly influential observations. The effect of such observations on
+the area-level is more subtle. A first intuition and possible sources of this
+type is given in section \ref{sec:overly-influencial-observations}.
+
+## Unit-Level Outliers
+\label{sec:unit-level-outliers}
+
+Unit-level outliers can be representative or non-representative values but in
+most cases it is beyond our reach to judge which kind they are because we only
+see aggregates. They will influence the direct estimator in that this quntity
+may have unexpected high or low values. But they also influence the estimation
+of the standard error of the direct estimator which in turn can be used as the
+true or rather given variance parameters in a Fay-Herriot type model.
+
+In the situation where the direct variance estimators are used, two conflicting
+effects need to be considered. First, we use an obviously unreliable estimator
+for the sampling error and assume that such values can be used as the *true* 
+variance parameters in the Fay-Herriot model. Such estimators will have poor 
+properties when the target is the *true* sampling error especially in the 
+context of outliers. This problem stimulates the recent discussion around 
+smoothing the variance estimates prior to using them in a Fay-Herriot model (see
+? for reference of this discussion and section 
+\ref{sec:overly-influencial-observations} for how the robust estimator relates 
+to this discussion).
+
+Second, we may consider the direct variance estimators not as an informative
+quantity for the *true* sampling error, but as informative about the unit-level
+sample. This is an important aspect because the variance becomes a reliablility
+index. The estimated sampling variance is large if outliers are present or in
+general the sample is heterogenous; and it is low for areas in which we have a 
+reliable direct estimator. In this case the direct variance estimation will 
+weight down unreliable direct estimators, which is why the Fay-Herriot model can
+be considered to be robust against unit-level outliers.
+
+When we consider unit-level outliers it is relevant to ask why we would not use 
+a robust direct estimator. From a practical point of view we may only have
+access to non-robust estimators. On the other hand it may be crucial feedback to
+a data provider to instead report robust estimates, e.g. a robust mean or 
+median. Also it is unclear how this relates to the *self-adjusting* effect of 
+the Fay-Herriot model. This aspect is addressed by model-based simulations in
+section (?).
+
+
+## Area-Level Outliers
+\label{sec:area-level-outliers}
+
+Area-level outliers are domains or areas which are far away from the bulk of the
+observations. The source of such observations are not single units influencing
+the direct estimator, but the fact that there exist domains which are
+substantially different from the majority.
+
+If we take the standpoint of a mixed-model perspective this means that there are
+outliers in the random effect. From a model perspective where we treat the
+random effect as i.i.d. random variable following a normal distribution such
+values may arise by chance alone. This would mean that in truth the distribution
+is indeed normal but we are in one of those rare cases in which we observe
+abnormal behaviour of single domains. 
+
+This argumentation seems to be unrealistic because under repeated sampling we
+would expect the same domains to be abnormal which stimulates a more fundamental
+discussion of mixed-models in Small Area Estimation (see ?); and it gives reason
+to frame a random effect as fixed but unknown quntity which is approximated by a
+normal distribution. In this setting the existance of outliers means that the 
+normal distribution may well be a good approximation for the majority of areas 
+but not for all them. This will raise the question if a different distribution
+should be used to approximate the random effect, e.g. a mixture distribution of
+normals or a scewed distribution.
+
+Regardless of the perspective, in the application in which such values are 
+observed a robust estimation technique can be beneficial. The main effect of a 
+misspecified distributional assumption is that the variance parameter of the 
+random effect will be overestimated - at least this is what we should expect in 
+the presence of outliers. Also the parameter estimates of the fixed effects part
+can be influenced by such observations, allthough it is unclear how they are
+unfluenced specifically (under- or over-estimated).
+
+Looking at the shrinkage estimator it can be derived how an overestimation of
+the estimated variance parameter of the random effect influences area-level 
+predictions. The larger the estimated variance compared to the area-specific 
+sampling variance the stronger the prediction relies on the direct estimator.
+However, the robust prediction will turn out not to be the shrinkage estimator
+but instead a robustified best linear unbiased predictor for which the influence
+is more subtle. The intuition of the effect, however, remains the same.
+
+
+## The Creation of Overly Influencial Observations
+\label{sec:overly-influencial-observations}
+
+In this section I want to introduce a third kind of outlying observation. Such
+values are better understood as overly influencial observations as they do not
+necessarily are far away from the center of the data. Furthermore they can not
+be understood by looking at the direct estimator alone but must be seen as pairs
+of direct estimator and sampling variance. Together they determine the impact of
+a single observation on the overall predictions.
+
+To distinguish them from area- and unit-level outliers consider two hypothetical
+scenarios from which these values can arise:
+
+- There are no outliers present and the unit-level population model is that of 
+(?). However, the sample sizes for most areas are very small - say between 5 and
+50 - and only for very few domains we have sufficient sample size of say 500. 
+This will inevitably result in a very heterogenous picture on the 
+area-level where domains with sample size 500 will appear to be extremely 
+reliable. The effect can be that such observations will dominate the global mean
+and thus effectively become the value we are shrinking against.
+- We have unit-level outliers influencing domain specific direct estimators. 
+However, instead of using the estimated sampling variance we smooth the 
+variances against a global parameter - essentially shrinking both means and 
+variances as suggested in (?). This results in outlying domains for which, after
+smoothing, the direct estimators appear to be more reliable than they truly are.
+Effectively this reduces the self adjusting effect described in section 
+\ref{sec:unit-level-outliers}.
+
+Especially the second scenario should not be misunderstood as an argument
+against smoothing, or that we should not care about unstable variance
+estimation. Allthogh the variances are not directly smoothed the influence of
+observations is bounded in a robust estimation procedure. In fact the introduced
+robust area-level model can be considered to have a positive effect with respect
+to both scenarios because single observations are restricted in their influence.
+Furthermore the robust model may present an alternative to smoothing strategies,
+although that has not been the initial intention, without the danger of creating
+overly influencial observations.

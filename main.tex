@@ -134,15 +134,16 @@ tors* \\
 %------------------------------------------------
 
 \chapter{Robust Area Level Models}
-\section{Formulation}
-\subsection{Standard}
-\subsection{Spatio Temporal}
-\section{Mean Squared Error}
+\input{Rmd/theory_rfh_framework}
+\section{The Robust Fay-Herriot Model and Extensions}
+\input{Rmd/theory_rfh_bias_correction}
+\section{Mean Squared Error Estimation}
+\subsection{Bootstrap}
 \input{Rmd/theory_rfh_pseudo_linear}
 \section{Algorithm}
 \input{Rmd/theory_algorithm_nr_rfh}
 \input{Rmd/theory_algorithm_fp_rfh}
-\section{Unit Level Outliers and Area Level Models}
+
 
 \part{Implementation}\label{part:implementation}
 
@@ -176,7 +177,6 @@ tors* \\
 
 \section{Design Based Simulation Studies}
 
-\chapter{CaseStudy}
 
 %-------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES

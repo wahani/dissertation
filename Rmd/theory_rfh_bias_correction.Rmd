@@ -1,0 +1,34 @@
+# Bias correction
+
+The two existing methodologies which are available to do bias correction for
+robust models in SAE are not easily adapted to the general context of the
+discussed area level models. Both approaches are based on a robust scale
+estimate of the residuals within in a domain. In the standard RFH and SRFH there
+is only one observation per domain, such that these estimates can not be
+directly transfered.
+
+However, the general problem remains. In the setting of the robustified score
+functions and a misspecified distribution in the sense that outlying
+observations have a different mean, the model can introduce a severe bias to
+those outlying estimations.
+
+Independet of this question @Fay79 refer to @Efr71 and @Efr72 who argue that the
+Bayes Estimator and and the Emperical Bayes Estimator may improve the overall
+prediction performance but can be ill suited for specific domains. In essence
+this describes also the situation with the RFH models which introduce a bias to
+the prediction of outlying domains.
+
+Efron and Morris also suggest a simple correction to the prediction which can be
+directly applied to the robust models under study. They suggest to restrict the 
+prediction by an interval around the direct estimator. The width of this 
+intervall can be constructed as a multiple of the known standard errors under
+the model:
+
+$$
+\theta^{BC}_i = 
+  \begin{cases}
+    \tilde{y}_i - c & \text{if } \theta^{RFH}_i < \tilde{y}_i - c  \\
+    \theta^{RFH}_i & \text{if } \tilde{y}_i - c \leq \theta^{RFH}_i \leq \tilde{y}_i + c \\
+    \tilde{y}_i + c & \text{if } \theta^{RFH}_i > \tilde{y}_i + c \\
+  \end{cases}
+$$
