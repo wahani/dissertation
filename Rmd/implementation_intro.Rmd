@@ -1,0 +1,29 @@
+- Zielke (1973): *Testmatrizen mit maximaler Konditionszahl*, Computing
+    - Testmatrizen für LLS Probleme.
+
+- Weihs / Mersmann / Ligges (2014): *Foundations of Statistical Algorithms*,
+    CRC
+    - Chapter 3 (Varification): How to test the results of a LLS solver.
+        Generation of Test Data
+
+- Kennedy / Gentle (1980): *Statistical Computing*
+    - Chapter 10 (Unconstrained Optimization and Nonlinear Regression):
+    Basic algorithms for solving nonlinear regression problem (e.g.
+    Newton-Raphson)
+    - Chapter 11.3 (Robust Estimators): Algorithms to solve robust
+    estimators. Only a brief description of the status quo.
+
+- Thisted (1988): *Elements of Statistical Computing*
+    - Chapter 4 (Nonlinear Statistical Methods): All about solving ML
+        problems
+    
+- Altman / Gill / McDonald (2004): *Numerical Issues in Statistical
+    Computing for the Social Scientist*
+    - Chapter 8 (Some Details of Nonlinear Estimation): How to evaluate the
+    numerical results of a solution (Very important!)
+    - Chapter 3 (Evaluating Statistical Software): How to verify the
+    correctness of a statistical algorithm. Not as promising as it sounds.
+
+- Sugasawa / Kubokawa (2015): *Parametric transformed Fay–Herriot model for
+    small area estimation*, Journal of Multivariate Analysis
+    - Box-Cox und vergleichbare Transformationen für Fay-Herriot Modelle

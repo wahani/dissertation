@@ -1,5 +1,11 @@
 # Area Level Models
 
+- Namazi-Rad / Steel (2015): *What Level of Statistical Model Should We Use
+    in Small Area Estimation?*, Australian Journal of Statistics
+    - Area Level vs. Unit Level Models. Main finding: When a model with
+        contextual variables is the population model, using a area level model
+        better than a unit level without contextual variables.
+        
 Area Level Models in Small Area Estimation play an important role in the
 production of reliable domain estimates.
 

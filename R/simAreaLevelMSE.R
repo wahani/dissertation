@@ -23,7 +23,7 @@ makeSim <- function(D, ssd, vsd) {
 }
 
 startSim <- function(setup) {
-  sim(setup, 100, mode = "multicore", cpus = 3,
+  sim(setup, 30, mode = "multicore", cpus = 3,
       path = "R/data/areaLevelMSE", overwrite = FALSE)
 }
 

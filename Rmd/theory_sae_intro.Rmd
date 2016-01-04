@@ -1,0 +1,15 @@
+- Clement (2014): *Small Area Estimation with Application to Disease 
+Mapping*
+    - Desease mapping has specific metrics to measure deseases, like poverty
+mapping has its own metrics for that.   
+    - It is a review of SAE methods applied on that topic. Because the field 
+is mostly concerned with counting the prevalence of deseases it is
+concerned with poisson models and variations on such models, used with
+EB and HB.
+    - Some examples can be found.
+- Lopez-Vicaino / et. al. (2015): *Small area estimation of labour force
+indicators under a multinomial model with correlated time and area effects*
+    - An application of small area estimation with a multinomial mixed
+effects model. The random effect is modelled using a AR(1) process.
+    - The study predictes unemplayment and employment rates for subgroups in
+the Spanisch province Galicia.

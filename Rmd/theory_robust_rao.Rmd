@@ -58,3 +58,10 @@ $\beta$ and $\theta$:
 where $K$ is a diagonal matrix of the same order as $\mat{V}$ with diagonal
 elements $c = \Exp{E}[\psi^2(r)|b]$ where $r$ follows a standard normal
 distribution.
+
+
+## Bias Correction
+
+- Tzavidis and Chambers (2005): BIAS ADJUSTED SMALL AREA ESTIMATION WITH M-QUANTILE MODELS
+- Jiongo, Haziza and Duchesne (2013): Controlling the bias of robust small-area estimators
+

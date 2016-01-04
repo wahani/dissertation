@@ -13,7 +13,7 @@ installPackages <- function(pkgs) {
 
 # overall package dependencies
 installPackages(c(
-  "saeSim", "sae", "aoos", "MASS", "dplyr", "reshape2", "ggplot2", "devtools"
+  "saeSim", "sae", "aoos", "MASS", "dplyr", "reshape2", "ggplot2", "devtools", "tidyr"
 ))
 devtools::install_github("wahani/modules")
 devtools::install_github("wahani/dat")
