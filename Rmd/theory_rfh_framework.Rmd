@@ -11,7 +11,9 @@
 in Survey Data, 247 ff.
     - Winzorization des HT-Schätzers
     - Buaumont
-
+- Chakraborty, Datta and Mandal (2015): A two-component normal mixture
+alternative to the Fay-Herriot model
+- Fabrizi, Trivisano (2010): Robust linear mixed modles for Small Area Estimation
 
 This section provides some motivation for the study of robust area-level models.
 It mainly lays out under which scenarios a robust estimation may proove to be

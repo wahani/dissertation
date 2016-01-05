@@ -1,0 +1,3 @@
+# The Robust Fay-Herriot Model and Extensions
+
+- Chakraborty, Datta and Mandal (2015): A two-component normal mixture alternative to the Fay-Herriot model

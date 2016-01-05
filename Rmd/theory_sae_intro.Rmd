@@ -13,3 +13,11 @@ indicators under a multinomial model with correlated time and area effects*
 effects model. The random effect is modelled using a AR(1) process.
     - The study predictes unemplayment and employment rates for subgroups in
 the Spanisch province Galicia.
+
+- Chen, Lahiri (2008): On Mean Squared Prediction Error Estimation in Small Area Estimation Problems
+- Jiang and Lahiri (2006): Mixed Model Prediction and Small Area Estimation
+- Hall and Maiti (2005): On parametric bootstrap methods for small area prediction
+- Chandra, Sud and Gharde (2014): Small Area Estimation Using Estimated Population Level Auxiliary Data
+- Pfeffermann (2013): New Important Developments in Small Area Estimation
+- Guadarrama, Molina and Rao (2015): A Comparison of Small Area Estimation Methods for Poverty Mapping
+

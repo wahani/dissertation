@@ -27,3 +27,6 @@
 - Sugasawa / Kubokawa (2015): *Parametric transformed Fay–Herriot model for
     small area estimation*, Journal of Multivariate Analysis
     - Box-Cox und vergleichbare Transformationen für Fay-Herriot Modelle
+
+- Alfons, Templ and Filzmoser (2010): An Object-Oriented Framework for Statistical Simulation: The R Package simFrame
+- Alfons et.al. (2010): Simulation of synthetic population data for houshold surveyes with application to EU-SILC

@@ -1,0 +1,198 @@
+# Robust Methods in Small Area Estimation
+
+- Sinha and Rao (2008): Robust Small Area Estimation Under Unit Level Models
+- Richardson and Welsh (1995): Robust Restricted Maximum Likelihood in Mixed Linear Models
+- Yau and Kuk (2002): Robust Estimation in Generalized Linear Mixed Models
+- Hulliger (2010): Simple and Robust Estimators for Sampling
+- Lange, Little and Taylor (1989): Robust Statistical Modeling Using the t Distribution
+- Peel and McLachlan (2000): Robust mixture modelling using the t distribution
+- Bell and Huang (2006): Using the t-distribution to Deal with Outliers in Small Area Estimation
+- Huang and Bell (): Using the t-distribution in Small Area Estimation: An Application to SAIPE State Poverty Models
+- Schoch (2012): Robust Unit-Level Small Area Estimation: A Fast Algorithm for Large Datasets
+- Xie, Raghunathan and Lepkowski (2007): Estimation of the proportion of overweight individuals in small areas - a robust extension of the Fay-Herriot model
+- Gershunskaya (2010): Robust Small Area Estimation Using a Mixture Model
+- Datta and Lahiri (1995): Robust Hierarchical Bayes Estimation of Small Area Characteristics in the Presence of Covariates and Outliers
+- Rao, Sinha and Dumitrescu (2014): Robust Small area estimation under semi-parametric mixed models
+- Salvati et.al. (2012): Small area estimation via M-quantile geographically weighted regression
+- Salvati et.al. (2009): Spatial M-Quantile Modles for Small Area Estimation
+- Shmid and Münnich (2012): Spatial robust small area estimation
+- Tzavidis et.al. (2010): Robust Prediction of Small Area Means and Distributions
+
+## Robust ML Score Functions
+
+
+@Fel86 studied the robust estimation of linear mixed model parameters.
+However, the proposed approach is based on given variance parameters $\theta$
+which is why @Sin09 propose an estimation procedure in which robust estimators
+for $\beta$ and $\theta$ are solved iteratively. With given robust estimates for
+$\beta$ and $\theta$ the estimation of the random effects is straight forward,
+the main concern, however, lies with the estimation of robust variance
+parameters. Starting from a mixed model:
+$$
+\mat{y} = \mat{X} \beta + \mat{Z} \re + \mat{e}
+$$
+where $\mat{y}$ is the response vector with elements $y_i$, $\mat{X}$ the
+design matrix, $\re$ the vector of random effects and $\mat{e}$ the
+vector of sampling errors. Both error components are assumed to be normally
+distributed with $\mat{\re} \sim \Distr{N}(0, \mat{G})$ and $\mat{e}
+\sim \Distr{N}(0, \mat{R})$ where $\mat{G}$ and $\mat{R}$ typically
+depend on some variance parameters $\theta$. Thus the variance of y is given by
+$\mat{V}(\mat{y}) = \mat{V}(\theta) =
+\mat{Z}\mat{G}\mat{Z}^\top + \mat{R}$. Maximizing the likelihood of
+$\mat{y}$ with respect to $\beta$ and $\theta$ leads to the following
+equations:
+\begin{align*}
+\mat{X}^\top\mat{V}^{-1}\left(\mat{y}-\mat{X}\beta\right) =& 0 \\
+\left(\mat{y} - \mat{X}\beta\right)^\top\mat{V}^{-1}          %(y-Xb)'V^-1
+\frac{\partial\mat{V}}{\partial\theta_l}                      % dV/dx
+\mat{V}^{-1}\left(\mat{y} - \mat{X}\beta\right) -             %V^-1 (y-Xb)
+\tr\left(\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}\right) =& 0
+\end{align*}
+
+where $q$ denotes the number of unknown variance parameters with $l = 1, \dots,
+q$. Solving the above equations leads to the ML-estimates for $\beta$ and
+$\theta$. To robustify against outliers in the response variable, the residuals 
+$\left(\mat{y}-\mat{X}\beta\right)$ are standardized and restricted by some
+influence function $\psi(\cdot)$. The standardized residuals are given by
+$$
+\mat{r} = \mat{U}^{-\frac{1}{2}}
+\left(\mat{y}-\mat{X}\beta\right)
+$$
+where $\mat{U}$ is the matrix of diagonal elements of $\mat{V}$ and thus
+also depends on the variance parameters $\theta$. A typical choice for
+$\psi(\cdot)$ is Hubers influence function:
+$$
+\psi(u) = u \min\left(1, \frac{b}{|u|}\right).
+$$
+A typical choice for $b$ is 1.345. The vector of robustified residuals is
+denoted by $\mat{\psi}(\mat{r}) = (\psi(r_1), \dots, \psi(r_{n}))$.
+Solving the following robust ML-equations leads to robustified estimators for
+$\beta$ and $\theta$:
+\begin{align}
+\label{eq:rml_beta}
+\mat{X}^\top\mat{V}^{-1} \mat{U}^{\frac{1}{2}} \psi(\mat{r}) =& 0 \\
+\label{eq:rml_theta}
+\Phi_l(\theta) = \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}
+\frac{\partial\mat{V}}{\partial\theta_l}
+\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) - \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}\right) =& 0 
+\end{align}
+where $K$ is a diagonal matrix of the same order as $\mat{V}$ with diagonal
+elements $c = \Exp{E}[\psi^2(r)|b]$ where $r$ follows a standard normal
+distribution.
+
+
+## Bias Correction
+
+- Tzavidis and Chambers (2005): BIAS ADJUSTED SMALL AREA ESTIMATION WITH M-QUANTILE MODELS
+- Jiongo, Haziza and Duchesne (2013): Controlling the bias of robust small-area estimators
+
+
+## Mean Squared Error Estimation
+
+### Bootstrap
+
+- Jiiongo, Nguimekeu (2014): Bootstrapping Mean Squared Errors of Robust Small
+Area Estimators
+
+### Pseudo Linearization
+
+@Cha11 and @Cha14 deal with the estimation of the MSE of robust area predictors
+  in the context of Small Area Estimation. In this section I review their
+  results. Later in section ? I will, firt, adapt their findings to estimate the
+  MSE of the robustified Fay Herriot model, and second use the linearization of
+  robust mixed models to derive a fixed point algorithm to find solutions for
+  the model parameters.
+
+The central idea is to formulate the RBLUP as wigthed sum of the response vector:
+
+$$
+\si{\theta}^{RBLUP} = \sum_{j \in s} \sij{w}^{RBLUP} \sij{y} = \Paran{\mat{w}_{is}^{RBLUP}}^\top \mat{y}_s
+$$
+
+where
+
+$$
+\Paran{\mat{w}_{is}^{RBLUP}}^\top = N_i^{-1} \Paran{\mat{1}_s^\top + (N_i - n_i) \Paran{\bar{x}_{ir}^\top \mat{A}_s + \bar{z}_{ir}^\top \mat{B}_s \Paran{\mat{I}_s - \mat{X}_s \mat{A}_s }}}
+$$
+
+  and
+
+$$
+\mat{A}_s = \Paran{\mat{X}_s^\top \mat{V}_s^{-1} \mat{U}_s^\frac{1}{2} \mat{W}_{1s} \mat{U}_s^{-\frac{1}{2}} \mat{X}_s }^{-1} \mat{X}_s^\top \mat{V}_s^{-1} \mat{U}_s^\frac{1}{2} \mat{W}_{1s} \mat{U}_s^{-\frac{1}{2}}
+$$
+
+with
+
+$$
+\mat{W}_{1s} = \Diag{w_j}_{n \times n}
+$$
+
+and
+
+$$
+w_{1j} = \frac{\psi\Paran{ U_j^{-\frac{1}{2}} \Paran{ y_j - x_j^\top\hat{\beta}^\psi } }}{ U_j^{-\frac{1}{2}} \Paran{ y_j - x_j^\top\hat{\beta}^\psi }}
+$$
+
+$$
+  \mat{B}_s =
+  \Paran{
+    \mat{Z}_s^\top \mat{V}_{es}^{-\frac{1}{2}} \mat{W}_{2s} \mat{V}_{es}^{-\frac{1}{2}} \mat{Z}_s +
+      \mat{V}_u^{-\frac{1}{2}} \mat{W}_{3s} \mat{V}_u^{-\frac{1}{2}}
+    }^{-1}
+\mat{Z}_s^\top \mat{V}_e^{-\frac{1}{2}} \mat{W}_{2s} \mat{V}_e^{-\frac{1}{2}}
+$$
+
+  with $\mat{W}_{2s}$ as diagonal matrix with ith component:
+
+  $$
+  w_{2i} =
+  \frac{
+    \psi\Paran{\Paran{\sigma^\psi_{e, i}}^{-1} \Paran{y_i - x_i^\top \hat{\beta}^\psi - \hat{u}^\psi_i}}
+  }{
+    \Paran{\sigma^\psi_{e, i}}^{-1} \Paran{y_i - x_i^\top \hat{\beta}^\psi - \hat{u}^\psi_i}
+  }
+$$
+
+and with $\mat{W}_{3s}$ as $\Paran{m \times m}$ diagonal matrix with ith component:
+
+  $$
+  w_{3i} = \frac{
+    \psi\Paran{\Paran{\sigma_u^\psi}^{-1} \hat{u}^\psi_i}
+  }{
+    \Paran{\sigma_u^\psi}^{-1} \hat{u}^\psi_i
+  }
+$$
+
+This all assumes known variance parameters. When the variance parameters are
+unknown, they are estimated and instead of $\mat{w}_{is}^{RBLUP}$ we have to use
+$\mat{w}_{is}^{REBLUP}$. Then the estimator of the conditional MSE is given by:
+
+$$
+\widehat{MSE}\Paran{\si{\widehat{\theta}}^{REBLUP}} = 
+  \widehat{\Exp{V}}\Paran{\si{\widehat{\theta}}^{REBLUP}} + 
+  \widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{REBLUP}}^2
+$$
+
+$$
+\widehat{\Exp{V}}\Paran{\si{\widehat{\theta}}^{REBLUP}} =
+  N_i^{-2} \sum_{j \in s} \Paran{a_{ij}^2 + \Paran{N_i - n_i} n^{-1}} \lambda_j^{-1}\Paran{y_j - \hat{\mu}_j}^2
+$$
+
+with 
+
+$$
+a_{ij} = N_i w_{ij}^{REBLUP} - I\Paran{j \in i}
+$$
+
+and
+
+$$
+\widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{REBLUP}} =
+  \sum_{j \in s} w_{ij}^{REBLUP} \hat{\mu}_j - N_i^{-1} \sum_{j \in \Paran{r_i \cup s_i}} \hat{\mu}_j
+$$
+
+Note that $\hat{\mu}_j$ is an unbiased estimator of the the conditional expectation $\mu_j = \Exp{E}\Paran{y_j | \mat{x}_j, \mat{\re}^\psi}$. $\lambda_j = 1 - 2\phi_{jj} + \sum_{k \in s}\phi^2_{kj}$.
+
+
+
+
