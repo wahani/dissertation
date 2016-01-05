@@ -1,3 +1,26 @@
+# Overview
+
+The underlying problem which small area estimation tries to solve, is to produce
+*reliable predictions* of a *target statistic* for *small domains*. A *target
+statistic* can be simple statistics such as means, counts or quantiles but can
+take any form such as inequality measures like the Gini coefficient for poverty
+mapping. Such statistics are produced for *small domains*, where domain can
+define a veriety of different groups, e.g. sector of industry or groups defined 
+by socio-economic characteristics. Because of the frequent application to 
+administrative data domains are often defined by areas as a geographical unit.
+They are small in the sense of few or no sampled units within these domains.
+This means that a direct estimation, i.e. an estimation which only relies on the 
+information available within domains, is not reliable. *Reliability* is here 
+measured by the variance or mean squared error of the predictions.
+
+Small area estimation tries to improove, often in terms of mean squared error, 
+such domain estimates by borrowing strength from other domains. This can happen 
+by taking additional information from other data sources, like census and
+register information, into account. Also structures in the data like spatial or
+temporal correlation can be exploited to improve a prediction.
+
+
+
 - Clement (2014): *Small Area Estimation with Application to Disease 
 Mapping*
     - Desease mapping has specific metrics to measure deseases, like poverty

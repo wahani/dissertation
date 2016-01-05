@@ -17,6 +17,8 @@
 - Salvati et.al. (2009): Spatial M-Quantile Modles for Small Area Estimation
 - Shmid and Münnich (2012): Spatial robust small area estimation
 - Tzavidis et.al. (2010): Robust Prediction of Small Area Means and Distributions
+- Gervini / Yohai (2002): A Class of Robust and Fully Efficient Regression Estimators
+
 
 ## Robust ML Score Functions
 
