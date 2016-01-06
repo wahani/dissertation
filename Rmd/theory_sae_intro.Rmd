@@ -1,23 +1,44 @@
 # Overview
 
-The underlying problem which small area estimation tries to solve, is to produce
-*reliable predictions* of a *target statistic* for *small domains*. A *target
-statistic* can be simple statistics such as means, counts or quantiles but can
-take any form such as inequality measures like the Gini coefficient for poverty
-mapping. Such statistics are produced for *small domains*, where domain can
-define a veriety of different groups, e.g. sector of industry or groups defined 
-by socio-economic characteristics. Because of the frequent application to 
-administrative data domains are often defined by areas as a geographical unit.
-They are small in the sense of few or no sampled units within these domains.
-This means that a direct estimation, i.e. an estimation which only relies on the 
-information available within domains, is not reliable. *Reliability* is here 
-measured by the variance or mean squared error of the predictions.
+In the following I want to give a general overview of the field of small area 
+estimation to the extent that it is possible to frame this thesis within the 
+field. @Rao03 as well as @Rao15 give a comprehensive overview of established 
+methods and research fields. @Gho94, @Rao99, @Pfe02 and @Pfe13 focus on the
+status quo and main lines of discussion within the field at their given point in
+time.
+
+The problem small area estimation tries to solve, is to produce *reliable 
+predictions* of a *target statistic* for *small domains*. A *target statistic* 
+can be simple statistics such as means, counts or quantiles but can take any 
+form, e.g. an inequality measures like the Gini coefficient for poverty mapping.
+Such statistics are produced for *small domains*, where domain refers to
+specific groups, e.g. sector of industry or groups defined by socio-economic
+characteristics. Because of the frequent application to administrative data
+domains are often defined by areas as a geographical unit. They are small in the
+sense of few or no sampled units within these domains. This means that a direct
+estimation, i.e. an estimation which only relies on the information available
+within domains, is not reliable. *Reliability* is here measured by the variance
+or mean squared error of the predictions.
 
 Small area estimation tries to improove, often in terms of mean squared error, 
-such domain estimates by borrowing strength from other domains. This can happen 
-by taking additional information from other data sources, like census and
-register information, into account. Also structures in the data like spatial or
+such domain predictions by borrowing strength from other domains. This can
+happen by taking additional information from other data sources, like census and
+register information, into account. Also structures in the data like spatial or 
 temporal correlation can be exploited to improve a prediction.
+
+The importance of the field can be explained by the increasing demand for
+reliable estimates by policy makers and official statistics. Results are used
+for fund allocation, health programs, agriculture or poverty mapping to name
+only a few fields of application. Traditionally such estimates rely on survey
+data but as the target domains become more diverse, reliable estimates are
+connected to an increasing demand of sampled units within domains. The conflict 
+between the demand of predictions for more diverse domains and the costs and 
+feasibility for larger samples stimulates the progress within the field; as it 
+is the promise to optimize the ratio between sampled units and the reliability
+of estimates.
+
+Two very different approaches to statistical analysis are commonly considered to characterize different research streams. Design- and model-based methods. 
+
 
 
 
