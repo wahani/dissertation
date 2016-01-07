@@ -10,7 +10,7 @@ time.
 The problem small area estimation tries to solve, is to produce *reliable 
 predictions* of a *target statistic* for *small domains*. A *target statistic* 
 can be simple statistics such as means, counts or quantiles but can take any 
-form, e.g. an inequality measures like the Gini coefficient for poverty mapping.
+form, e.g. an inequality measure like the Gini coefficient for poverty mapping.
 Such statistics are produced for *small domains*, where domain refers to
 specific groups, e.g. sector of industry or groups defined by socio-economic
 characteristics. Because of the frequent application to administrative data
@@ -37,20 +37,55 @@ feasibility for larger samples stimulates the progress within the field; as it
 is the promise to optimize the ratio between sampled units and the reliability
 of estimates.
 
-Two very different approaches to statistical analysis are commonly considered to characterize different research streams. Design- and model-based methods. 
+Commonly small area methods are devided into two different streams, design- and 
+model-based methods. Design-based methods can be considered the traditional 
+methodology for analyzing survey data and a comprehensive overview of these 
+methods for SAE can be found in @Leh09. Design-based methods summarise different
+direct and indirect techniques. The Horvitz-Thompson (HT) estimator (@Hor52) 
+which only uses sampled units within domains, and synthetic regression estimates
+as well model-assisted methods like generelized regression (GREG) estimators
+(@Saer92) are examples for such estimators. What these methods have in common is
+that they incorporate information of the sampling design into the estimation.
+
+Conceptually disgn- and model-based methods differ in that design-based methods 
+are used to optimally estimate a target parameter of a fixed and finite 
+population. Model-based methods instead rely on the idea that an observed sample
+is drawn from a population which is but one possible realization of a 
+super-population model, and it is the parameters of that super-population which 
+are targeted. This difference leads to a trade-off when choosing between
+methods: Model-based methods can improve domain estimation in terms of variance
+even with small samples, however, they can not be considered design-unbiased.
+Design-based methods on the other hand are design-unbiased but have larger and
+possibly unacceptable high variances for small samples (see @Leh09).
+
+Generally model-based methods are devided into area- and unit-level models.
+Observations which can be ascociated to a specific domain are referred to as
+units. This can be companies within an industry sector or individuals within a
+muniscipality. The Area-level describes models which use information such as
+direct estimates for domains and thus rely on area-level information. A
+situation in which these models are considered is when data can only be provided
+as aggregates due to confidentiatlity.
+
+One class of models in particular is favored in different variations: Mixed
+Models. I use a general term of mixed models here because it summarizes the
+commonality accross the many variations in the fields. Underlying is the idea to
+use auxiliary information in a regression to estimate a global conditional mean
+and add an extra component to describe the domain specific difference from that
+global mean. This general idea can be found in combination with different
+estimation methodologies, i.e. General Linear Mixed Models which is typically
+ascociated with restricted Maximum Likelihood, Empirical Bayes and Hirarchical
+Bayes.
+
+Although these different frameworks for estimation differ with respect to optimality criteria, e.g. MSE and squared error loss, equivalence of the different derived estimators can be shown for special cases. 
+
+Extensions take into account different distributional assumptions about the response variable 
+@Rao03 as well as @Rao15 give a comprehensive overview on model-based methods in 
+SAE. One 
 
 
 
+@Cle14 and @Gua15 are examples for reviews appearing for 
 
-- Clement (2014): *Small Area Estimation with Application to Disease 
-Mapping*
-    - Desease mapping has specific metrics to measure deseases, like poverty
-mapping has its own metrics for that.   
-    - It is a review of SAE methods applied on that topic. Because the field 
-is mostly concerned with counting the prevalence of deseases it is
-concerned with poisson models and variations on such models, used with
-EB and HB.
-    - Some examples can be found.
 - Lopez-Vicaino / et. al. (2015): *Small area estimation of labour force
 indicators under a multinomial model with correlated time and area effects*
     - An application of small area estimation with a multinomial mixed
@@ -62,6 +97,5 @@ the Spanisch province Galicia.
 - Jiang and Lahiri (2006): Mixed Model Prediction and Small Area Estimation
 - Hall and Maiti (2005): On parametric bootstrap methods for small area prediction
 - Chandra, Sud and Gharde (2014): Small Area Estimation Using Estimated Population Level Auxiliary Data
-- Pfeffermann (2013): New Important Developments in Small Area Estimation
 - Guadarrama, Molina and Rao (2015): A Comparison of Small Area Estimation Methods for Poverty Mapping
 
