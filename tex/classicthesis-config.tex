@@ -53,6 +53,10 @@ subfig, beramono, eulermath, parts, dottedtoc, floatperchapter}{classicthesis}
 %	PACKAGES
 %----------------------------------------------------------------------------------------
 
+\usepackage{hyphenat} % for \hyp hyphenation stuff
+
+%------------------------------------------------
+
 \usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
 
 %------------------------------------------------
@@ -74,7 +78,8 @@ subfig, beramono, eulermath, parts, dottedtoc, floatperchapter}{classicthesis}
 \usepackage[
 natbib=true,
 backend=biber,
-style=authoryear
+style=authoryear, % author (2000)
+maxcitenames=2
 ]{biblatex}
 \addbibresource[datatype=bibtex]{Bibliography.bib}
 

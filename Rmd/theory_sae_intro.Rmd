@@ -20,7 +20,7 @@ estimation, i.e. an estimation which only relies on the information available
 within domains, is not reliable. *Reliability* is here measured by the variance
 or mean squared error of the predictions.
 
-Small area estimation tries to improove, often in terms of mean squared error, 
+Small area estimation tries to improve, often in terms of mean squared error, 
 such domain predictions by borrowing strength from other domains. This can
 happen by taking additional information from other data sources, like census and
 register information, into account. Also structures in the data like spatial or 
@@ -37,65 +37,93 @@ feasibility for larger samples stimulates the progress within the field; as it
 is the promise to optimize the ratio between sampled units and the reliability
 of estimates.
 
-Commonly small area methods are devided into two different streams, design- and 
-model-based methods. Design-based methods can be considered the traditional 
-methodology for analyzing survey data and a comprehensive overview of these 
+Commonly small area methods are divided into two streams, design\hyp{ }and 
+model\hyp{}based methods. Design-based methods can be considered the traditional
+methodology for analysing survey data and a comprehensive overview of these 
 methods for SAE can be found in @Leh09. Design-based methods summarise different
 direct and indirect techniques. The Horvitz-Thompson (HT) estimator (@Hor52) 
 which only uses sampled units within domains, and synthetic regression estimates
-as well model-assisted methods like generelized regression (GREG) estimators
-(@Saer92) are examples for such estimators. What these methods have in common is
-that they incorporate information of the sampling design into the estimation.
+as well as model\hyp{}assisted methods like generalized regression (GREG)
+estimators (@Saer92) are examples for such estimators. What these methods have
+in common is that they incorporate information of the sampling design into the
+estimation.
 
-Conceptually disgn- and model-based methods differ in that design-based methods 
-are used to optimally estimate a target parameter of a fixed and finite 
-population. Model-based methods instead rely on the idea that an observed sample
-is drawn from a population which is but one possible realization of a 
-super-population model, and it is the parameters of that super-population which 
-are targeted. This difference leads to a trade-off when choosing between
-methods: Model-based methods can improve domain estimation in terms of variance
-even with small samples, however, they can not be considered design-unbiased.
-Design-based methods on the other hand are design-unbiased but have larger and
+Conceptually design- and model-based methods differ in that design\hyp{}based
+methods are used to optimally estimate a target parameter of a fixed and finite 
+population. Model\hyp{}based methods instead rely on the idea that an observed
+sample is drawn from a population which is but one possible realization of a 
+*superpopulation* model, and it is the parameters of that superpopulation which 
+are targeted. This difference leads to a trade-off when choosing between 
+methods: Model-based methods can improve domain estimation in terms of variance 
+even with small samples, however, they can not be considered design-unbiased. 
+Design-based methods on the other hand are design-unbiased but have larger and 
 possibly unacceptable high variances for small samples (see @Leh09).
 
-Generally model-based methods are devided into area- and unit-level models.
-Observations which can be ascociated to a specific domain are referred to as
-units. This can be companies within an industry sector or individuals within a
-muniscipality. The Area-level describes models which use information such as
-direct estimates for domains and thus rely on area-level information. A
-situation in which these models are considered is when data can only be provided
-as aggregates due to confidentiatlity.
+Model-based methods can be seperated into area\hyp{ }and unit\hyp{}level models.
+Observations which can be associated to a specific domain are referred to as 
+units. This can be companies within an industry sector or individuals within a 
+municipality. The Area-level describes models which use information such as 
+direct estimates for domains and rely on area-level information. A situation in
+which these models are considered is when data can only be provided as
+aggregates due to confidentiality.
 
-One class of models in particular is favored in different variations: Mixed
-Models. I use a general term of mixed models here because it summarizes the
-commonality accross the many variations in the fields. Underlying is the idea to
+One class of models in particular is favoured in different variations: Mixed 
+Models. I use the general term of mixed models because it summarizes the
+commonality across the many variations in the field. Underlying is the idea to
 use auxiliary information in a regression to estimate a global conditional mean
-and add an extra component to describe the domain specific difference from that
+and add an extra component to capture the domain specific difference from that
 global mean. This general idea can be found in combination with different
 estimation methodologies, i.e. General Linear Mixed Models which is typically
-ascociated with restricted Maximum Likelihood, Empirical Bayes and Hirarchical
-Bayes.
+associated with restricted Maximum Likelihood, Empirical Bayes and Hierarchical
+Bayes. Although these different frameworks for estimation differ with respect to
+optimality criteria, e.g. MSE and squared error loss, equivalence of the 
+different derived estimators can be shown for special cases. A more general 
+discussion of misxed models in SAE can be found in @Jia06; @Rao03 and @Rao15
+provide a comprohensive overview and comparisson of the different frameworks.
 
-Although these different frameworks for estimation differ with respect to optimality criteria, e.g. MSE and squared error loss, equivalence of the different derived estimators can be shown for special cases. 
+A general property of model-based methods is that a lot their benefits in terms
+of efficiency rely on strong distributional assumptions. Hence, not only in the 
+field of SAE have robust methods been exploited to reduce the negative effect of
+a potential violation of these assumptions. The general problem here is that
+single observations can have unwanted and overly large impact on results and
+such observations are typically called outliers. Such values need to be
+distinguished from measurement errors; ...
 
-Extensions take into account different distributional assumptions about the response variable 
-@Rao03 as well as @Rao15 give a comprehensive overview on model-based methods in 
-SAE. One 
+To summarize robust methods in SAE I want distinguish between three different 
+lines of discussion. First, if the distributional assumption - often a gaussian
+distribution - appears to be implausible then it is only intuitive to replace
+it. This often leads to the use of non-symmetric or heavy-tailed distributions
+for the model error or random effect. Due to their flexibility Baysian modelling
+strategies are used but also frequntist approaches can be found. Secondly,
+methods are applied which are *naturally* more robust against outlying
+observations. This includes methods where instead of a conditional global mean a
+median - or more generally a quantile - is modelled; but can also mean to use
+semi-parametric methods to reduce dependency of the assumptions. The third
+approach is to remain with the original model, which often depends on the normal
+distribution, and robustify the estimation equations. In this context @Sin09
+develop a robustified EBLUP and Buaumont (? Handbook of Statistics 29a) refers
+to a winzorization of the Horvitz-Thompson estimator.
 
+Given this background; in this thesis I introduce extensions to the Fay-Herriot
+area-level model using a model-based perspective. More precisely an EBLUP based
+approach is taken to derive predictions with the possibility to model spatial
+and temporal covariance structures. The introduced models are closely related to
+the results presented by @Mar13, who introduce spatial and temporal extensions
+to the Fay-Herriot model. However, the methods in this thesis are based on an 
+estimation procedure which is robust against outliers following the methodology 
+introduced by @Sin09. Introduced extensions in the literature around robust 
+EBLUPs (REBLUPs) have been focused on unit-level models, thus especially results
+to MSE estimation and Bias Correction are extended for area-level models.
 
+Besides contributing to the robust methodology of the field, several
+contributions in terms of software are published alongside this dissertation.
+@War15 introduces tools for simulation studies for the special case of small
+area estimation and (?) implements the methods introduced in this thesis. All
+results in this thesis rely on these two packages and a more detailed discussion
+can be found in chapter (?).
 
-@Cle14 and @Gua15 are examples for reviews appearing for 
-
-- Lopez-Vicaino / et. al. (2015): *Small area estimation of labour force
-indicators under a multinomial model with correlated time and area effects*
-    - An application of small area estimation with a multinomial mixed
-effects model. The random effect is modelled using a AR(1) process.
-    - The study predictes unemplayment and employment rates for subgroups in
-the Spanisch province Galicia.
-
-- Chen, Lahiri (2008): On Mean Squared Prediction Error Estimation in Small Area Estimation Problems
-- Jiang and Lahiri (2006): Mixed Model Prediction and Small Area Estimation
-- Hall and Maiti (2005): On parametric bootstrap methods for small area prediction
-- Chandra, Sud and Gharde (2014): Small Area Estimation Using Estimated Population Level Auxiliary Data
-- Guadarrama, Molina and Rao (2015): A Comparison of Small Area Estimation Methods for Poverty Mapping
+Extensions take into account different distributional assumptions about the
+response variable
+@Rao03 as well as @Rao15 give a comprehensive overview on model-based methods in
+  SAE. @Cle14 and @Gua15 are examples for reviews appearing for
 
