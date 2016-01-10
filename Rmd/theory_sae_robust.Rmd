@@ -1,5 +1,7 @@
 # Robust Methods in Small Area Estimation
 
+> *"[Outliers:] observations obtained under seemingly normal circumstances, but that turn out to be extremely deviant from the main body of observations."* -- @Abe95[69]
+
 - Sinha and Rao (2008): Robust Small Area Estimation Under Unit Level Models
 - Richardson and Welsh (1995): Robust Restricted Maximum Likelihood in Mixed Linear Models
 - Yau and Kuk (2002): Robust Estimation in Generalized Linear Mixed Models

@@ -68,18 +68,20 @@ which these models are considered is when data can only be provided as
 aggregates due to confidentiality.
 
 One class of models in particular is favoured in different variations: Mixed 
-Models. I use the general term of mixed models because it summarizes the
-commonality across the many variations in the field. Underlying is the idea to
-use auxiliary information in a regression to estimate a global conditional mean
-and add an extra component to capture the domain specific difference from that
-global mean. This general idea can be found in combination with different
-estimation methodologies, i.e. General Linear Mixed Models which is typically
-associated with restricted Maximum Likelihood, Empirical Bayes and Hierarchical
-Bayes. Although these different frameworks for estimation differ with respect to
-optimality criteria, e.g. MSE and squared error loss, equivalence of the 
-different derived estimators can be shown for special cases. A more general 
-discussion of misxed models in SAE can be found in @Jia06; @Rao03 and @Rao15
-provide a comprohensive overview and comparisson of the different frameworks.
+Models. The Fay-Herriot (FH) model introduced by @Fay79 and the
+Battese-Harter-Fuller (BHF) model which was introduced by @Bat88 are the two
+basic models which are used for area\hyp{} and unit\hyp{}level models
+respectively. Underlying is the idea to use auxiliary information in a
+regression to estimate a global conditional mean and add an extra component to
+capture the domain specific difference from that global mean. This general idea
+can be found in combination with different estimation methodologies, i.e.
+General Linear Mixed Models which is typically associated with restricted
+Maximum Likelihood, Empirical Bayes and Hierarchical Bayes. Although these
+different frameworks for estimation differ with respect to optimality criteria,
+e.g. MSE and squared error loss, equivalence of the different derived estimators
+can be shown for special cases. A more general discussion of misxed models in
+SAE can be found in @Jia06; @Rao03 and @Rao15 provide a comprohensive overview
+and comparisson of the different frameworks.
 
 A general property of model-based methods is that a lot their benefits in terms
 of efficiency rely on strong distributional assumptions. Hence, not only in the 

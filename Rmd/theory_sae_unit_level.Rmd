@@ -1,3 +1,25 @@
+# Best Linear Unbiased Prediction
+
 # Unit Level Models
 
-Content
+Although the model which will be extended is an area-level model, crucial
+developments, especially for robust small area estimation, have been made with a
+focus on unit-level models. This section introduces the basic and non-robust
+unit-level model such that methodology reviewed in later sections can be
+discussed consistently.
+
+The unit level model \citep{Bat88} can be expressed as:
+
+\begin{align}
+	 y_{ij} =& \si{x}^\top\beta + \si{\re} + \si{e} \label{eq:bhf}
+\end{align}
+
+$\si{\re} \stackrel{iid}{\sim} N(0, \sigre)$, $\sij{e} \stackrel{iid}{\sim} N(0, \sige)$ with $\re \perp e$. $i = 1, \dots, D$ and $j = 1, \dots, \si{n}$ and $\sij{y}$ is the dependent variable for unit $j$ in domain $i$. $\si{x}$ are the corresponding auxiliary variables for that unit. Let the set of $n$ sampled and $N-n$ non-sampled units be denoted by $s$ and $r$ respectivey. 
+
+Let $\hat{\beta}$ denote the best linear unbiased estimator (BLUE) of $\beta$ and $\si{\hat{\re}}$ the best linear unbiased predictor (BLUP) (cf.\ \citealp{Hen50} or \citealp{Sea71}). The empirical best linear unbiased predictor (EBLUP) for the mean in small area $i$ under the Battese-Harter-Fuller model is then given by
+
+\begin{align}
+\label{eq:BHFEBLUP}
+\hat{\theta}_i^{BHF} = N_i^{-1} \Paran{\sum_{j \in s_i} y_{ij} + \sum_{j\in r_i}(\si{x}^\top\hat{{\beta}} + \hat{\si{\re}})}.
+\end{align}
+
