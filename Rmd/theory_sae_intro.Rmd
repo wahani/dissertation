@@ -72,50 +72,52 @@ Models. The Fay-Herriot (FH) model introduced by @Fay79 and the
 Battese-Harter-Fuller (BHF) model which was introduced by @Bat88 are the two
 basic models which are used for area\hyp{} and unit\hyp{}level models
 respectively. Underlying is the idea to use auxiliary information in a
-regression to estimate a global conditional mean and add an extra component to
-capture the domain specific difference from that global mean. This general idea
-can be found in combination with different estimation methodologies, i.e.
-General Linear Mixed Models which is typically associated with restricted
-Maximum Likelihood, Empirical Bayes and Hierarchical Bayes. Although these
-different frameworks for estimation differ with respect to optimality criteria,
-e.g. MSE and squared error loss, equivalence of the different derived estimators
-can be shown for special cases. A more general discussion of misxed models in
-SAE can be found in @Jia06; @Rao03 and @Rao15 provide a comprohensive overview
-and comparisson of the different frameworks.
+regression to estimate a global conditional mean and add an extra component to 
+capture the domain specific difference from that global mean. This general idea 
+can be found in combination with different estimation methodologies, i.e. 
+General Linear Mixed Models which are typically associated with best linear 
+unbiased predictors (BLUPs), Empirical Bayes and Hierarchical Bayes. Although 
+these different frameworks for estimation differ with respect to optimality 
+criteria, equivalence of the different derived estimators can be shown for
+special cases. A more general discussion of misxed models in SAE can be found in
+@Jia06; @Rao03 and @Rao15 provide a comprohensive overview and comparisson of
+the different frameworks.
 
-A general property of model-based methods is that a lot their benefits in terms
-of efficiency rely on strong distributional assumptions. Hence, not only in the 
-field of SAE have robust methods been exploited to reduce the negative effect of
-a potential violation of these assumptions. The general problem here is that
-single observations can have unwanted and overly large impact on results and
-such observations are typically called outliers. Such values need to be
-distinguished from measurement errors; ...
+A general property of model-based methods is that a lot of their benefits in
+terms of efficiency rely on strong distributional assumptions. Hence, not only
+in the field of SAE have robust methods been exploited to reduce the negative
+effect of a potential violation of these assumptions. The general problem here
+is that single observations can have unwanted and overly large impact on results
+and such observations are typically called outliers. @Cha86 uses the term
+*representative* outliers to describe observations which are correctly recorded
+and can not be ussumed to be unique. Nonrepresentative outliers, on the other
+hand, may be best described as *not correctly recorded* and should be imputed or
+generally delt with during the editing process of survey data.
 
 To summarize robust methods in SAE I want distinguish between three different 
 lines of discussion. First, if the distributional assumption - often a gaussian
 distribution - appears to be implausible then it is only intuitive to replace
 it. This often leads to the use of non-symmetric or heavy-tailed distributions
-for the model error or random effect. Due to their flexibility Baysian modelling
-strategies are used but also frequntist approaches can be found. Secondly,
-methods are applied which are *naturally* more robust against outlying
-observations. This includes methods where instead of a conditional global mean a
-median - or more generally a quantile - is modelled; but can also mean to use
-semi-parametric methods to reduce dependency of the assumptions. The third
-approach is to remain with the original model, which often depends on the normal
-distribution, and robustify the estimation equations. In this context @Sin09
-develop a robustified EBLUP and Buaumont (? Handbook of Statistics 29a) refers
-to a winzorization of the Horvitz-Thompson estimator.
+for the model error or random effect. Due to their flexibility often Baysian
+modelling strategies are used in this context; see for example @Dat95 and
+@Bel06. Secondly, methods are applied which are *naturally* more robust against
+outlying observations. @Tza10 model instead of a conditional global mean a 
+median - or more generally a quantile. The third approach is to remain with the 
+original model or method and robustify the estimation equations. In this context
+@Sin09 develop a robustified EBLUP and @Bea09 refer to a winzorization of the
+Horvitz-Thompson estimator.
 
-Given this background; in this thesis I introduce extensions to the Fay-Herriot
-area-level model using a model-based perspective. More precisely an EBLUP based
-approach is taken to derive predictions with the possibility to model spatial
-and temporal covariance structures. The introduced models are closely related to
-the results presented by @Mar13, who introduce spatial and temporal extensions
-to the Fay-Herriot model. However, the methods in this thesis are based on an 
-estimation procedure which is robust against outliers following the methodology 
-introduced by @Sin09. Introduced extensions in the literature around robust 
-EBLUPs (REBLUPs) have been focused on unit-level models, thus especially results
-to MSE estimation and Bias Correction are extended for area-level models.
+Given this background; in this thesis I introduce extensions to the Fay-Herriot 
+area-level model using a model-based perspective. More precisely an EBLUP based 
+approach is taken to derive predictions with the possibility to model spatial 
+and temporal covariance structures in the random effects. These models
+are closely related to the results presented by @Mar13, who introduce spatial
+and temporal extensions to the Fay-Herriot model. However, the methods in this
+thesis are based on an estimation procedure which is robust against outliers
+following the methodology introduced by @Sin09. Introduced extensions in the
+literature around robust EBLUPs (REBLUPs) have been focused on unit-level
+models, thus especially results to MSE estimation and Bias Correction are
+extended for area-level models.
 
 Besides contributing to the robust methodology of the field, several
 contributions in terms of software are published alongside this dissertation.
