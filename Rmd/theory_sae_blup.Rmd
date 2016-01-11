@@ -1,0 +1,88 @@
+# Best Linear Unbiased Prediction
+
+This section gives a general overview of mixed linear models and the best linear
+unbiased prediction (BLUP) and empirical BLUP (EBLUP). The introduced unit\hyp{
+} and area\hyp{}level models are based on this class of models and the robust
+methodology is based on a robustified EBLUP. The original model dates back to
+@Hen50 and an early comprehensive overview can be found in @Sea71. @Jia06
+review liner mixed models in the context of SAE and main results can also be
+found in @Rao03 and @Rao15.
+
+A linear mixed model can be expressed by:
+\empty{
+\begin{align}
+\label{eq:lmm}
+\mat{y} = \mat{X}\beta + \mat{Z}\mat{\re} + \mat{e}
+\end{align}
+}where 
+$\mat{y}$ is the $(n \times 1)$ vector of response values; $\mat{X}$ is a 
+$(n \times P)$ matrix containing auxiliary and deterministic information; 
+$\beta$ is the $(P \times 1)$ vector of regression coefficients; $\mat{Z}$ is a
+known matrix and $\mat{\re}$ is a vector of random effects, such that $\mat{Z\re}$ is
+of dimension $(n \times 1)$; $\mat{e}$ is the $(n \times 1)$ vector of model
+errors. Note that $\mat{\re}$ and $\mat{e}$ are both random variables where a
+basic assumption is, that both have mean zero and finite variances. Furthermore
+they are assumed to be independent.
+
+If, in addition, $\mat{\re}$ and $\mat{e}$ are assumed to follow a normal
+distribution, the model is called a Gaussian Linear Mixed Model. Furthermore the
+distribution of $\mat{y}$ can be derived as a multivariate normal of the form:
+\empty{
+\begin{align*}
+\mat{y} &\sim \Distr{N}\Paran{\mat{X}\beta, \mat{V}} \\
+\mat{y} | \mat{\re} &\sim \Distr{N}\Paran{\mat{X}\beta + \mat{Z}\mat{\re}, \mat{V}_e}
+\end{align*}
+}where 
+$\mat{V} = \mat{Z}\mat{V}_\re\mat{Z}^\top + \mat{V}_e$ with $\mat{V}_\re$
+and $\mat{V}_e$ being the variance covariance matrices of $\mat{\re}$ and
+$\mat{e}$ respectively. Such variance structure typically depend on some unknown
+dispersion parameters; so to be more precise: $\mat{V}_\re =
+\mat{V}_\re(\delta_\re)$ and $\mat{V}_e = \mat{V}_e(\delta_e)$ such that
+$\mat{V} = \mat{V}(\delta)$ with $\delta = (\delta_\re, \delta_e)$.
+
+Given model \eq{eq:lmm} in SAE problems we are generally interested in
+estimating the expected value of $\mat{y}$ given $\mat{\re}$:
+\empty{
+\begin{align*}
+\mu = \mat{l}^\top \beta + \mat{m}^\top \mat{\re}
+\end{align*}
+}for specified values of $\mat{l}$ and $\mat{m}$. An estimator for $\mu$ can be
+optained by replacing $\beta$ and $\mat{\re}$ with suitable estimators. For known
+variance components, $\delta$, the best linear unbiased estimator (BLUE) is given by:
+\empty{
+\begin{align*}
+\tilde{\beta} = \tilde{\beta}(\delta) = \Paran{\mat{X}^\top \mat{V}^{-1}\mat{X}}^{-1} \mat{X}^\top \mat{V}^{-1}\mat{y}
+\end{align*}
+}and the BLUP for $\mat{\re}$ by:
+\empty{
+\begin{align*}
+\tilde{\mat{\re}} = \tilde{\mat{\re}}(\delta) = \mat{V}_\re\mat{Z}^\top\mat{V}^{-1}\Paran{\mat{y} - \mat{X}\tilde{\beta}}
+\end{align*}
+}such that the BLUP estimator for $\mu$ can be stated as:
+\empty{
+\begin{align}
+\label{eq:blup}
+\tilde{\mu} = \mat{l}^\top \tilde{\beta} + \mat{m}^\top \tilde{\mat{\re}}
+\end{align}
+}The BLUP estimator \eq{eq:blup} of $\mu$ depends on known variance components
+$\delta$. These values are typically unknown in applications and itself subject
+to estimation. If we replace $\delta$ with a suitable estimator, $\hat{\delta}$,
+the empirical BLUP (EBLUP) is obtained:
+\empty{
+\begin{align}
+\label{eq:eblup}
+\hat{\mu} = \mat{l}^\top \hat{\beta} + \mat{m}^\top \hat{\mat{\re}}
+\end{align}
+}where $\hat{\beta} = \tilde{\beta}(\hat{\delta})$ and $\hat{\re} =
+\tilde{\re}(\hat{\delta})$. To estimate $\delta$ different estimators have been
+proposed. Most commonly used estimators are based on maximum likelihood (ML) and
+restricted maximum likelihood (REML). The standard procedures in the literature
+are not directly feasible for the robust estimators introduced in chapter (?),
+instead different algorithms are proposed. For a detailed discussion of the
+estimation of the variance parameters see @Jia06[9-11] and the literature
+therein.
+
+
+
+
+

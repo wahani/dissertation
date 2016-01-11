@@ -1,13 +1,13 @@
 # Direct Estimators
 
-In this section I introduce a simple direct estimators and some notation which
+In this section I introduce a simple direct estimator and some notation which
 will be used throughout the thesis. The estimator is of interest as it
 will be used in the simulation studies in chapter (?). @Leh09 give a more
 comprehesive overview of direct estimators and design-based methods.
 
-Let a population be denoted by $U$ consisting of $N$ units which can be devided
+Let a population be denoted by $U$, consisting of $N$ units, which can be devided
 into $D$ distinct domains or areas $U_1 \cup \dots \cup U_D$. Each area is of
-size $N_i$ with $i = 1, \dots, D$ denoting area $i$ such that $N = \sum_{i =
+size $N_i$, with $i = 1, \dots, D$ denoting area $i$, such that $N = \sum_{i =
   1}^D N_i$. $S$ denotes a sample from $U$ which in turn can be devided into $S_1
 \cup \dots \cup S_D$, where $n$ is the sample size of $S$ and $n_i$ of $S_i$
   such that $n = \sum_{i = 1}^D n_i$.
