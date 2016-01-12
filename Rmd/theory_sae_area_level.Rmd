@@ -1,36 +1,63 @@
 # Area Level Models
 
-- Namazi-Rad / Steel (2015): *What Level of Statistical Model Should We Use
-    in Small Area Estimation?*, Australian Journal of Statistics
-    - Area Level vs. Unit Level Models. Main finding: When a model with
-        contextual variables is the population model, using a area level model
-        better than a unit level without contextual variables.
-- You and Chapman (2006): Small Area Estimation Using Area Level Models and Estimated Sampling Variances
-- Porter, Holan, Wikle, Cressie (2014): Spatial Fay-Herriot models for small area estimation with functional covariates
-- Rivest, Vandal (): Mean Squared Error Estimation for Small Areas when the Small Area Variances Are Estimated
-- Chen and Lahiri (2008): On Mean Squared Prediction Error Estimation in Small Area Estimation Problems
-- Wang and Fuller (2003): The Mean Squared Error of Small Area Predictors Constructed With Estimated Area Variances
-- López-Vizcaíno, Lombardía and Morales (2015): Small area estimation of labour force indicators under multinomial models with correlated time and area effects
-- Rao and Yu (1994): Small-Area Estimation by Combining Time-Series and Cross-Sectional Data
-- Benedetti, Pratesi and Salvati (2013): Local stationarity in small area estimation models
-- Sugasawa et.al. (2015): Bayesian Estimators for Small Area Models Shrinking Both Means and Variances
-- Datta, Rao Smith: On measuring the variability of small area estimators under a basic area level model
-- Sugasawa and Kubokawa (2015): Parametric transformed Fay-Herriot model for small area estimation
-- Namazi-Rad and Steel (2015): What Level of Statistical Modle Should we use in Small Area Estimation
-- Maiti, Ren and Sinha (2014): Prediction Error of Small Area Predictors Shrinking Both Means and Variances
-- Sugasawa and Kubokawa (2015): Transforming Response Values in Small Area Prediction
-- Benavent and Morales (2015): Multivariate Fay-Herriot models for small area estimation
-- Lopez-Vicaino / et. al. (2015): *Small area estimation of labour force
-indicators under a multinomial model with correlated time and area effects*
-    - An application of small area estimation with a multinomial mixed
-effects model. The random effect is modelled using a AR(1) process.
-    - The study predictes unemplayment and employment rates for subgroups in
-the Spanisch province Galicia.
-- Chen, Lahiri (2007): On Mean Squared Prediction Error Estimation in Small Area Estimation Problems
-- Hall and Maiti (2005): On parametric bootstrap methods for small area prediction
-- Chandra, Sud and Gharde (2014): Small Area Estimation Using Estimated Population Level Auxiliary Data
+In SAE mixed models are generally devided into area\hyp{ } und unit\hyp{}level
+models. In this section a review of some of the most important results is given
+with respect to area\hyp{}level models. Section (?) then presents the basic
+unit\hyp{}level model.
 
-Area Level Models in Small Area Estimation play an important role in the
+## The Fay-Herriot Model
+
+The basic area\hyp{}level model was introduced by @Fay79 and has been used in
+applications and is also subject to various extensions. Some of which are
+discussed in more detail later. The general setting is that only information on
+the area\hyp{}level is available, i.e. direct estimates for the domains. The
+model is then built around two stages. The first stage is the sampling model:
+$$
+\si{\tilde{y}} = \si{\theta} + \si{e}
+$$
+where $\si{\tilde{y}}$ is a direct estimator for a statistic of interest,
+$\si{\theta}$, for an area $i$ with $i = 1, \dots, D$ and $D$ being the number
+of areas. The sampling error $\si{e}$ is assumed to be independent and normally
+distributed with known variances $\sige$, i.e. $\si{e} \sim \Distr{N}(0,
+\sige)$. The model is modified with a second stage, the linking model, by 
+assuming a linear relationship between the true area statistic, $\si{\theta}$,
+and some diterministic auxiliary variables $\si{x}$:
+$$
+\si{\theta} = \si{x}^\top \beta + \si{\re}
+$$
+where $\si{x}$ is a vector containing area-level (aggregated) information for
+$P$ variables and $\beta$ is a vector ($1\times P$) of regression coefficients.
+The model errors $\si{\re}$ are assumed to be independent and identically
+distributed following normal distribution: $\re_i \sim \Distr{N}(0, \sigre)$.
+Furthermore $e_i$ and $\re_i$ are assumed to be independent. Combining the 
+sampling and linking model leads to:
+\begin{align}
+\tilde{y}_i = x_i^\top \beta + \re_i + e_i \label{eq:FH}
+\end{align}
+
+### Best Linear Unbiased Prediction
+
+With respect to the Fay-Herriot model \eq{eq:FH} some remarks need to made. A
+closely related form is that closely realated to the James-Stein and emperical
+Bayes estimator in that:
+
+$$
+\si{\theta} = \si{\gamma}\si{\tilde{y}} + \Paran{1 - \si{\gamma}} \si{x}^\top\beta
+$$
+$\si{\gamma} = \sigre / (\sigre + \sige)$
+$$
+\si{\hat{\theta}} = \si{\hat{\gamma}}\si{\tilde{y}} + \Paran{1 - \si{\hat{\gamma}}} \si{x}^\top\hat{\beta}
+$$
+$\si{\hat{\gamma}} = \hat{\sigma}_\re^2 / (\hat{\sigma}_\re^2 + \sige)$
+
+### Mean Squared Prediction Error
+
+### Remarks
+
+
+
+
+in Small Area Estimation play an important role in the
 production of reliable domain estimates.
 
 - They can be used even if unit level observations are not accessible. 
@@ -50,74 +77,6 @@ a decission given the available information. And given the availability of unit
 level data, the obvious choice is to consider a model which can use such
 information. Only if that fails for one of the above reasons can an area level
 model be of interest.
-
-
-## The Fay Herriot Model
-
-A frequently used model in Small Area Estimation is a model introduced by
-@Fay79. It starts on the area level and is used in small area estimation for
-research on area-level. It is build on a sampling model:
-$$
-\si{\tilde{y}} = \si{\theta} + \si{e},
-$$
-where $\si{\tilde{y}}$ is a direct estimator of a statistic of
-interest $\si{\theta}$ for an area $i$ with
-$i = 1, \dots, D$ and $D$ being the number of areas. The sampling error $\si{e}$ 
-is assumed to be independent and normally distributed with known variances $\sige$, i.e.
-$\si{e}|\si{\theta} \sim \Distr{N}(0, \sige)$. The model is modified with the linking model by
-assuming a linear relationship between the true area statistic
-$\si{\theta}$ and some diterministic auxiliary variables $\si{x}$:
-$$
-\si{\theta} = \si{x}^\top \beta + \si{\re}
-$$
-Note that $\si{x}$ is a vector containing area-level (aggregated) information
-for $P$ variables and $\beta$ is a vector ($1\times P$) of
-regression coefficients describing the (linear) relationship. The model errors
-$\re$ are assumed to be independent and normally distributed,
-i.e. $\re_i \sim \Distr{N}(0, \sigre)$
-furthermore $e_i$ and $\re_i$ are assumed to be
-independent. Combining the sampling and linking model leads to:
-\begin{align}
-\label{eq:FH}
-\tilde{y}_i = x_i^\top \beta + \re_i + e_i.
-\end{align}
-
-
-## From Unit to Area Level Models
-
-In later simulation studies we will consider data in which area level statistics
-are computed from individual information. From a contextual point of view, 
-starting from individual information is advantageous in the sense that outlying 
-areas can be motivated more easily. Also the question for a good estimator for 
-the sampling variances can be motivated when knowing the underlying individual 
-model. Hence, I will derive the Fay-Herriot model starting from unit-level. 
-Consider the following model:
-$$
-\sij{y} = x_i^\top\beta + \re + e_i \text{ ,}
-$$
-where $\sij{y}$ is the response in domain $i$ of unit $j$ with $i = 1, \dots,
-\si{n}$, where $\si{n}$ is the number of units in domain $i$. $\re$ is an area
-specific random effect following (i.i.d.) a normal distribution with zero mean
-and $\sigre$ as variance parameter. $\sij{e}$ is the remaining deviation from
-the model, following (i.i.d.) a normal distribution with zero mean and $\sige$
-as variance parameter. This unit level model is defined under strong
-assumptions, still, assumptions most practitioner are willing to make which
-could simplify the identification of the sampling variances under the area level
-model.
-
-From this model consider the area statistics $\tilde{y}_i = \frac{1}{n_j}
-\sum_{j = 1}^{\si{n}}\sij{y}$, for which an area level model can be derived as:
-$$
-\tilde{y}_i = \si{x}^\top\beta + \si{\re} + \si{e}
-$$
-Considering the mean in a linear model, it can be expressed as $\bar{y} = 
-\bar{x}\beta$; the random effect was defined for each area, hence it remains 
-unaltered for the area level model. The error term in this model can be 
-expressed as the sampling error and its standard deviation as the (conditional) 
-standard deviation of the aggregated area statistic, which in this case is a 
-mean. Hence, $\si{e} \sim \Distr{N}(0, \sige = \sigma^2_e / \si{n})$. Under this
-unit level model a sufficient estimator for $\sige$ can be derived from
-estimating $\sige$, which can be done robust and non-robust in many ways.
 
 
 ## Spatio-Temporal Fay Harriot model
@@ -224,4 +183,73 @@ $$
   independently of $\beta$. An open question is if this approach can be applied
   for the robust spatio-temporal model. Thus we will continue with the
   discussion of robust small area methods.
+
+
+## From Unit to Area Level Models
+
+
+
+In later simulation studies we will consider data in which area level statistics
+are computed from individual information. From a contextual point of view, 
+starting from individual information is advantageous in the sense that outlying 
+areas can be motivated more easily. Also the question for a good estimator for 
+the sampling variances can be motivated when knowing the underlying individual 
+model. Hence, I will derive the Fay-Herriot model starting from unit-level. 
+Consider the following model:
+$$
+\sij{y} = x_i^\top\beta + \re + e_i \text{ ,}
+$$
+where $\sij{y}$ is the response in domain $i$ of unit $j$ with $i = 1, \dots,
+\si{n}$, where $\si{n}$ is the number of units in domain $i$. $\re$ is an area
+specific random effect following (i.i.d.) a normal distribution with zero mean
+and $\sigre$ as variance parameter. $\sij{e}$ is the remaining deviation from
+the model, following (i.i.d.) a normal distribution with zero mean and $\sige$
+as variance parameter. This unit level model is defined under strong
+assumptions, still, assumptions most practitioner are willing to make which
+could simplify the identification of the sampling variances under the area level
+model.
+
+From this model consider the area statistics $\tilde{y}_i = \frac{1}{n_j}
+\sum_{j = 1}^{\si{n}}\sij{y}$, for which an area level model can be derived as:
+$$
+\tilde{y}_i = \si{x}^\top\beta + \si{\re} + \si{e}
+$$
+Considering the mean in a linear model, it can be expressed as $\bar{y} = 
+\bar{x}\beta$; the random effect was defined for each area, hence it remains 
+unaltered for the area level model. The error term in this model can be 
+expressed as the sampling error and its standard deviation as the (conditional) 
+standard deviation of the aggregated area statistic, which in this case is a 
+mean. Hence, $\si{e} \sim \Distr{N}(0, \sige = \sigma^2_e / \si{n})$. Under this
+unit level model a sufficient estimator for $\sige$ can be derived from
+estimating $\sige$, which can be done robust and non-robust in many ways.
+
+
+
+
+- Namazi-Rad / Steel (2015): *What Level of Statistical Model Should We Use
+    in Small Area Estimation?*, Australian Journal of Statistics
+    - Area Level vs. Unit Level Models. Main finding: When a model with
+        contextual variables is the population model, using a area level model
+        better than a unit level without contextual variables.
+- Chandra, Sud and Gharde (2014): Small Area Estimation Using Estimated Population Level Auxiliary Data
+
+- You and Chapman (2006): Small Area Estimation Using Area Level Models and Estimated Sampling Variances
+- Rivest, Vandal (): Mean Squared Error Estimation for Small Areas when the Small Area Variances Are Estimated
+- Chen and Lahiri (2008): On Mean Squared Prediction Error Estimation in Small Area Estimation Problems
+- Wang and Fuller (2003): The Mean Squared Error of Small Area Predictors Constructed With Estimated Area Variances
+- Datta, Rao Smith: On measuring the variability of small area estimators under a basic area level model
+
+- Porter, Holan, Wikle, Cressie (2014): Spatial Fay-Herriot models for small area estimation with functional covariates
+- López-Vizcaíno, Lombardía and Morales (2015): Small area estimation of labour force indicators under multinomial models with correlated time and area effects
+- Rao and Yu (1994): Small-Area Estimation by Combining Time-Series and Cross-Sectional Data
+- Benedetti, Pratesi and Salvati (2013): Local stationarity in small area estimation models
+
+- Sugasawa et.al. (2015): Bayesian Estimators for Small Area Models Shrinking Both Means and Variances
+
+- Sugasawa and Kubokawa (2015): Parametric transformed Fay-Herriot model for small area estimation
+- Sugasawa and Kubokawa (2015): Transforming Response Values in Small Area Prediction
+- Benavent and Morales (2015): Multivariate Fay-Herriot models for small area estimation
+
+
+
 

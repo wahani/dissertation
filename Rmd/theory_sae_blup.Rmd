@@ -116,7 +116,10 @@ MSPE(\mu) &= g_1(\delta) + g_2(\delta)                          \\
 g_1(\delta) &= \mat{m}^\top\Paran{\mat{V}_\re - \mat{V}_\re\mat{Z}^\top\mat{V}^{-1}\mat{Z}\mat{V}_\re}\mat{m}\\
 g_2(\delta) &= \mat{d}^\top \Paran{\mat{X}^\top\mat{V}^{-1}\mat{X}} \mat{d}
 \end{align*}
-}with $\mat{d}^\top = \mat{l}^\top - \mat{b}^\top\mat{X}$ and $\mat{b}^\top = \mat{m}^\top\mat{V}_\re\mat{Z}^\top\mat{V}^{-1}$. The second term in equation \eq{eq:mspe_eblup} was approximated by @Kac84 using a Taylor series approximation. @Pra90 used an approximation by
+}with $\mat{d}^\top = \mat{l}^\top - \mat{b}^\top\mat{X}$ and $\mat{b}^\top =
+\mat{m}^\top\mat{V}_\re\mat{Z}^\top\mat{V}^{-1}$. The second term in equation
+\eq{eq:mspe_eblup} was approximated by @Kac84 using a Taylor series
+approximation. @Pra90 used an approximation by
 \empty{
 \begin{align*}
 \Exp{E}\Paran{\hat{\mu} - \mu}^2 &\approx g_3(\delta) \\
