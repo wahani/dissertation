@@ -147,11 +147,6 @@ As an alternative a wide range of different resampling strategies have been
 proposed. @Jia02 introduced a jackknife method to estimate the MSPE in the 
 context of longitudinal mixed linear models and was modified by @Loh09 into a 
 simpler form. Also important is the proposed double\hyp{}bootstrap method by
-@Hal06. However, of special interest are methods in the context of robust
-predictions under linear mixed models which is why the approach by @Sin09 and
-@Jio14 are reviewed in more detail in section (?).
-
-
-
-
-
+@Hal06. However, of special interest are methods in the context of robust 
+predictions under linear mixed models which is why the bootstrap methods by
+@Sin09 and @Jio14 are reviewed in more detail in section (?).
