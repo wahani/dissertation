@@ -1,4 +1,4 @@
-# Best Linear Unbiased Prediction
+# Small Area Prediction using Linear Mixed Models
 
 This section gives a general overview of mixed linear models and the best linear
 unbiased prediction (BLUP) and empirical BLUP (EBLUP). The introduced unit\hyp{
@@ -7,6 +7,8 @@ methodology is based on a robustified EBLUP. The original model dates back to
 @Hen50 and an early comprehensive overview can be found in @Sea71. @Jia06
 review liner mixed models in the context of SAE and main results can also be
 found in @Rao03 and @Rao15.
+
+## Linear Mixed Models
 
 A linear mixed model can be expressed by:
 \empty{
@@ -40,6 +42,8 @@ dispersion parameters; so to be more precise: $\mat{V}_\re =
 \mat{V}_\re(\delta_\re)$ and $\mat{V}_e = \mat{V}_e(\delta_e)$ such that
 $\mat{V} = \mat{V}(\delta)$ with $\delta = (\delta_\re, \delta_e)$.
 
+## Best Linear Unbiased Prediction
+
 Given model \eq{eq:lmm} in SAE problems we are generally interested in
 estimating the expected value of $\mat{y}$ given $\mat{\re}$:
 \empty{
@@ -62,7 +66,7 @@ variance components, $\delta$, the best linear unbiased estimator (BLUE) is give
 \empty{
 \begin{align}
 \label{eq:blup}
-\tilde{\mu} = \mat{l}^\top \tilde{\beta} + \mat{m}^\top \tilde{\mat{\re}}
+\tilde{\mu} = \tilde{\mu}(\delta) = \mat{l}^\top \tilde{\beta} + \mat{m}^\top \tilde{\mat{\re}}
 \end{align}
 }The BLUP estimator \eq{eq:blup} of $\mu$ depends on known variance components
 $\delta$. These values are typically unknown in applications and itself subject
@@ -71,7 +75,7 @@ the empirical BLUP (EBLUP) is obtained:
 \empty{
 \begin{align}
 \label{eq:eblup}
-\hat{\mu} = \mat{l}^\top \hat{\beta} + \mat{m}^\top \hat{\mat{\re}}
+\hat{\mu} = \hat{\mu}(\hat{\delta}) = \mat{l}^\top \hat{\beta} + \mat{m}^\top \hat{\mat{\re}}
 \end{align}
 }where $\hat{\beta} = \tilde{\beta}(\hat{\delta})$ and $\hat{\re} =
 \tilde{\re}(\hat{\delta})$. To estimate $\delta$ different estimators have been
@@ -81,6 +85,71 @@ are not directly feasible for the robust estimators introduced in chapter (?),
 instead different algorithms are proposed. For a detailed discussion of the
 estimation of the variance parameters see @Jia06[9-11] and the literature
 therein.
+
+## Mean Squared Prediction Error
+
+One of the main reasons to rely on small area methods is to reduce the mean 
+squared error of domain predictions. Since domain predictions under a linear 
+mixed model are derived as the EBLUP, we are generally interested in the mean 
+squared prediction error (MSPE) of the EBLUP. Note that I directly present
+results for the EBLUP instead of the BLUP, since the latter has little practical
+relevance and the results are mainly needed to give a comprehensive context in
+which the existing literature can be extended. In general the estimation of the 
+MSPE can be identified as one of the challenging problems in model\hyp{}based 
+SAE (cf. @Pfe13). Two approaches are taken in the literature: The analytical 
+identification of the MSPE and different resampling strategies. A more detailed 
+review of these strategies can be found in @Rao03[p. 95 ff], @Jia06[p. 13
+ff] and @Dat09.
+
+Early results can be found in @Kac84 who proposed an approximation to the MSPE 
+of the EBLUP of a gaussian linear mixed model. In particular they showed that:
+\empty{
+\begin{align}
+\label{eq:mspe_eblup}
+MSPE(\hat{\mu}) = MSPE(\mu) + \Exp{E}\Paran{\hat{\mu} - \mu}^2.
+\end{align}
+}The MSPE of $\mu$ can be decomposed such that (cf. @Rao03[p. 98 ff])
+\empty{
+\begin{align*}
+MSPE(\mu) &= g_1(\delta) + g_2(\delta)                          \\
+\intertext{where}
+g_1(\delta) &= \mat{m}^\top\Paran{\mat{V}_\re - \mat{V}_\re\mat{Z}^\top\mat{V}^{-1}\mat{Z}\mat{V}_\re}\mat{m}\\
+g_2(\delta) &= \mat{d}^\top \Paran{\mat{X}^\top\mat{V}^{-1}\mat{X}} \mat{d}
+\end{align*}
+}with $\mat{d}^\top = \mat{l}^\top - \mat{b}^\top\mat{X}$ and $\mat{b}^\top = \mat{m}^\top\mat{V}_\re\mat{Z}^\top\mat{V}^{-1}$. The second term in equation \eq{eq:mspe_eblup} was approximated by @Kac84 using a Taylor series approximation. @Pra90 used an approximation by
+\empty{
+\begin{align*}
+\Exp{E}\Paran{\hat{\mu} - \mu}^2 &\approx g_3(\delta) \\
+\intertext{where}
+g_3(\delta) &= \tr\Paran{\frac{\partial \mat{b}^\top}{\partial \delta} \mat{V}\Paran{\frac{\partial \mat{b}^\top}{\partial \delta}}\mat{V}_{\hat{\delta}}}
+\end{align*}
+}with $\mat{V}_{\hat{\delta}}$ being the asymptotic covariance matrix of
+$\hat{\delta}$. The derived MSPE depends on the unknown parameter vector
+$\delta$. @Pra90 used a moment estimator for $\delta$ and replaced above
+formulae such that an estimator of the MSPE can be defined as
+$\widehat{MSPE}(\hat{\mu}) = g_1(\hat{\delta}) + g_2(\hat{\delta}) +
+g_3(\hat{\delta})$. @Dat00 extended this approach for a wider range of models in
+SAE including ML and REML estimators. A good overview and comparison of the
+slightly different approaches can be found in @Dat05 which is more specific in
+the sense that it focuses on area\hyp{}level models.
+
+A different approach has been taken by @Cha11, which is to define the EBLUP as a
+weighted sum of the sampled values and derive an MSPE estimator under the 
+assumption of independence between weights and sampled values. An advantage of 
+this method is the wide applicability as the approach is not restricted to 
+predictions under mixed linear models but to any predictor which can be
+represented as weighted sum of sampled values. The approach has been extended in
+@Cha14 to robust methods in SAE and is of special interest to derive an MSPE
+estimator for the proposed methods of this thesis. Hence these results are
+reviewed in more detail in section (?).
+
+As an alternative a wide range of different resampling strategies have been 
+proposed. @Jia02 introduced a jackknife method to estimate the MSPE in the 
+context of longitudinal mixed linear models and was modified by @Loh09 into a 
+simpler form. Also important is the proposed double\hyp{}bootstrap method by
+@Hal06. However, of special interest are methods in the context of robust
+predictions under linear mixed models which is why the approach by @Sin09 and
+@Jio14 are reviewed in more detail in section (?).
 
 
 

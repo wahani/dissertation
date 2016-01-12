@@ -34,6 +34,7 @@ $(RMDDIR)/%.tex	: $(RMDDIR)/%.md
 $(TEXFILE).pdf: ./*.tex ./*.bib $(TEX_FILES) $(TEX_RMD_FILES) $(OUT_FILES)
 	latexmk -pdf -quiet $(TEXFILE)
 	latexmk -c
+	rm -fv *.fls
 
 watch:
 	Rscript -e 'wahaniMiscs::watch()'
