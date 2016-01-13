@@ -21,40 +21,106 @@ of areas. The sampling error $\si{e}$ is assumed to be independent and normally
 distributed with known variances $\sige$, i.e. $\si{e} \sim \Distr{N}(0,
 \sige)$. The model is modified with a second stage, the linking model, by 
 assuming a linear relationship between the true area statistic, $\si{\theta}$,
-and some diterministic auxiliary variables $\si{x}$:
+and some diterministic auxiliary variables $\si{\mat{x}}$:
 $$
-\si{\theta} = \si{x}^\top \beta + \si{\re}
+\si{\theta} = \si{\mat{x}}^\top \beta + \si{\re}
 $$
-where $\si{x}$ is a vector containing area-level (aggregated) information for
-$P$ variables and $\beta$ is a vector ($1\times P$) of regression coefficients.
-The model errors $\si{\re}$ are assumed to be independent and identically
-distributed following normal distribution: $\re_i \sim \Distr{N}(0, \sigre)$.
-Furthermore $e_i$ and $\re_i$ are assumed to be independent. Combining the 
-sampling and linking model leads to:
+where $\si{\mat{x}}$ is a $(P \times 1)$ vector containing area\hyp{}level
+information for $P$ variables and $\beta$ is a ($P \times 1$) vector of
+regression coefficients. The model errors $\si{\re}$ are assumed to be
+independent and identically distributed following a normal distribution: $\re_i
+\sim \Distr{N}(0, \sigre)$. Furthermore $e_i$ and $\re_i$ are assumed to be
+independent. Combining the sampling and linking model leads to:
 \begin{align}
-\tilde{y}_i = x_i^\top \beta + \re_i + e_i \label{eq:FH}
+\tilde{y}_i = \si{\mat{x}}^\top \beta + \re_i + e_i \label{eq:FH}
 \end{align}
 
 ### Best Linear Unbiased Prediction
 
-With respect to the Fay-Herriot model \eq{eq:FH} some remarks need to made. A
-closely related form is that closely realated to the James-Stein and emperical
-Bayes estimator in that:
+To obtain small area predictions under model \eq{eq:FH} it can be defined as a 
+linear mixed model and a BLUP and EBLUP can be derived. Basically model 
+\eq{eq:FH} can be directly viewed as a mixed model as it was introduced in
+equation \eq{eq:lmm} where $\mat{Z} = \mat{I}_D$, $\mat{V}_\re =
+\sigre\mat{I}_D$ and $\mat{V}_e = \diag(\sigma_{e, 1}^2, \dots, \sigma_{e,
+D}^2)$ with $\mat{I}_D$ being a $(D\times D)$ identity matrix. The vector of
+unknown variance parameter in this case is a scalar, such that $\delta = \sigre$
+since $\sige$ is assumed to be known. The BLUP, defined in equation
+\eq{eq:blup}, for the Fay-Herriot model can then be obtained by setting
+$\tilde{\mu}_i = \tilde{\theta}_i^{FH}$,
+$\mat{l}_i^\top = \mat{x}_i^\top$, $\mat{m}^\top_i = 1$ and $y_i = \tilde{y}_i$:
+\empty{
+\begin{align}
+\tilde{\theta}_i^{FH} = 
+\tilde{\theta}_i^{FH}(\sigma_\re^2) &= \si{\mat{x}}^\top\tilde{\beta} + \si{\tilde{\re}} \nonumber\\
+                              &= \si{\mat{x}}^\top\tilde{\beta} + \frac{\sigma_\re^2}{\sigma_\re^2 + \sige} \Paran{\tilde{y}_i - \si{\mat{x}}^\top\tilde{\beta}} \nonumber\\
+                              &= \gamma_i\tilde{y}_i + (1 - \gamma_i)\si{\mat{x}}^\top\tilde{\beta}
+\end{align}
+}with $\si{\gamma} = \sigre / (\sigre + \sige)$. The BLUP depends on the
+variance parameter of the random effects, $\sigre$, which is unknown. To obtain
+the EBLUP under the Fay-Herriot model we can replace the unknown parameter with
+an estimate leading to:
+$$
+\si{\hat{\theta}}^{FH} = \si{\hat{\gamma}}\si{\tilde{y}} + \Paran{1 - \si{\hat{\gamma}}} \si{\mat{x}}^\top\hat{\beta}
+$$
+where $\si{\hat{\gamma}} = \hat{\sigma}_\re^2 / (\hat{\sigma}_\re^2 + \sige)$.
+Note that the regression parameters are still estimated using the weighted least
+squares estimator of equation \eq{eq:blue} with $\delta =
+\hat{\sigma}_\re^2$. For the estimation of $\sigre$ different approaches exist.
+@Fay79 proposed a moment estimator from which they derived an algorithm to 
+  estimate $\sigre$. @Rao03[118-119] reviews several other ideas. Also based on 
+  a moment estimator he derives the estimator also used in @Pra90. Both moment 
+  estimators have the property that they do not rely on a normal distribution, 
+  which is also true for the estimation of the regression coefficients. 
+  Alternatively $\sigre$ can be estimated using maximum likelihood or 
+  restricted maximum likelihood, which, in contrast, relies on the distributional 
+  assumptions. For details see also @Dat00.
 
-$$
-\si{\theta} = \si{\gamma}\si{\tilde{y}} + \Paran{1 - \si{\gamma}} \si{x}^\top\beta
-$$
-$\si{\gamma} = \sigre / (\sigre + \sige)$
-$$
-\si{\hat{\theta}} = \si{\hat{\gamma}}\si{\tilde{y}} + \Paran{1 - \si{\hat{\gamma}}} \si{x}^\top\hat{\beta}
-$$
-$\si{\hat{\gamma}} = \hat{\sigma}_\re^2 / (\hat{\sigma}_\re^2 + \sige)$
 
 ### Mean Squared Prediction Error
 
+The MSPE of the EBLUP under the Fay-Herriot model, $\si{\hat{\theta}}^{FH}$, is
+subject of several studies. However, it needs to be noted that, interestingly,
+@Fay79 did not asses the qunatification of uncertainty associated with their
+predictions. In principle the MSPE can be defined for an EBLUP as it was
+discussed in section \ref{sec:eblup_mspe}. @Dat05 study the MSPE estimation
+using the results of @Pra90 for different estimations of the variance component
+$\sigre$. They compare the method of moment method by @Pra90 with the original
+estimator by @Fay79 and the maximum likelihood estimator by @Dat00. The main
+finding is that regarding the properties of the MSPE estimation the estimator by
+@Fay79 performs best overall.
+
+A jackknife MSPE estimator for linear mixed models was introduced by @Jia02 and
+later subject to several refinements; see for example @Che03. @Che08 then
+introduced a jackknife estimator based on the results of @Jia02 and explicitly
+targeted the MSPE estimation of the prediction under a Fay-Herriot model. They
+find satisfying results for the MSPE estimation using their method, however, the
+conclusion with respect to the estimation of $\sigre$ is not as clear as by
+@Dat05, when they compare a method of moment estimator to the method proposed by
+@Fay79.
+
+A different line of discussion is stimulated by the fact that it is assumed that
+the sampling variances, $\sige$, are known parameters. In practice this is not 
+the case and these parameters are estimated using the sample data. This can mean
+that they are themselfes direct estimators; but if a direct mean is considered 
+unreliable then its variance estimation cannot be considered reliable. @Fay79 
+used generalized variance functions - see @Wol07[pp. 272 ff] for a discussion of
+these methods - instead of direct estimators. @Mai14 suggest instead to shrink
+both means and variances to account for the possibly of unstable direct variance
+estimates and also provide an estimator of the MSPE of the predictions. 
+This approach is based on a Baysian modelling strategy. @You06 provide results
+for the case that direct variance estimates are used in a hirarchical Bayes
+approach and can account for that extra variability in the MSPE estimation.
+Results for an EBLUP based on estimated sampling variances can be found in
+@Wan03 and @Riv03. @Wan03 derive an MSPE using asymptotic properties of the
+EBLUP. @Riv03 instead extend the results of @Pra90 and add an extra term to
+account for the additional variability assciciated to the estimation of direct
+sampling variances.
+
 ### Remarks
 
-
+With respect to the Fay-Herriot model \eq{eq:FH} some remarks need to made. A
+closely related form is that closely realated to the James-Stein and emperical
+Bayes estimator in that:
 
 
 in Small Area Estimation play an important role in the

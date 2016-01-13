@@ -54,9 +54,10 @@ estimating the expected value of $\mat{y}$ given $\mat{\re}$:
 optained by replacing $\beta$ and $\mat{\re}$ with suitable estimators. For known
 variance components, $\delta$, the best linear unbiased estimator (BLUE) is given by:
 \empty{
-\begin{align*}
+\begin{align}
+\label{eq:blue}
 \tilde{\beta} = \tilde{\beta}(\delta) = \Paran{\mat{X}^\top \mat{V}^{-1}\mat{X}}^{-1} \mat{X}^\top \mat{V}^{-1}\mat{y}
-\end{align*}
+\end{align}
 }and the BLUP for $\mat{\re}$ by:
 \empty{
 \begin{align*}
@@ -87,7 +88,7 @@ estimation of the variance parameters see @Jia06[9-11] and the literature
 therein.
 
 ## Mean Squared Prediction Error
-
+\label{sec:eblup_mspe}
 One of the main reasons to rely on small area methods is to reduce the mean 
 squared error of domain predictions. Since domain predictions under a linear 
 mixed model are derived as the EBLUP, we are generally interested in the mean 
