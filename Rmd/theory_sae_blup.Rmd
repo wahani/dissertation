@@ -1,12 +1,12 @@
 # Small Area Prediction using Linear Mixed Models
 
 This section gives a general overview of mixed linear models and the best linear
-unbiased prediction (BLUP) and empirical BLUP (EBLUP). The introduced unit\hyp{
-} and area\hyp{}level models are based on this class of models and the robust
-methodology is based on a robustified EBLUP. The original model dates back to
-@Hen50 and an early comprehensive overview can be found in @Sea71. @Jia06
-review liner mixed models in the context of SAE and main results can also be
-found in @Rao03 and @Rao15.
+unbiased prediction (BLUP) and empirical BLUP (EBLUP). The introduced unit and
+area level models are based on this class of models and the robust methodology 
+is based on a robustified EBLUP. The original model dates back to @Hen50 and an 
+early comprehensive overview can be found in @Sea71. @Jia06 review liner mixed 
+models in the context of SAE and main results can also be found in @Rao03 and
+@Rao15.
 
 ## Linear Mixed Models
 
@@ -16,9 +16,9 @@ A linear mixed model can be expressed by:
 \label{eq:lmm}
 \mat{y} = \mat{X}\beta + \mat{Z}\mat{\re} + \mat{e}
 \end{align}
-}where 
-$\mat{y}$ is the $(n \times 1)$ vector of response values; $\mat{X}$ is a 
-$(n \times P)$ matrix containing auxiliary and deterministic information; 
+}where
+$\mat{y}$ is the $(n \times 1)$ vector of response values; $\mat{X}$ is a
+$(n \times P)$ matrix containing auxiliary and deterministic information;
 $\beta$ is the $(P \times 1)$ vector of regression coefficients; $\mat{Z}$ is a
 known matrix and $\mat{\re}$ is a vector of random effects, such that $\mat{Z\re}$ is
 of dimension $(n \times 1)$; $\mat{e}$ is the $(n \times 1)$ vector of model
@@ -34,7 +34,7 @@ distribution of $\mat{y}$ can be derived as a multivariate normal of the form:
 \mat{y} &\sim \Distr{N}\Paran{\mat{X}\beta, \mat{V}} \\
 \mat{y} | \mat{\re} &\sim \Distr{N}\Paran{\mat{X}\beta + \mat{Z}\mat{\re}, \mat{V}_e}
 \end{align*}
-}where 
+}where
 $\mat{V} = \mat{Z}\mat{V}_\re\mat{Z}^\top + \mat{V}_e$ with $\mat{V}_\re$
 and $\mat{V}_e$ being the variance covariance matrices of $\mat{\re}$ and
 $\mat{e}$ respectively. Such variance structure typically depend on some unknown
@@ -82,27 +82,28 @@ the empirical BLUP (EBLUP) is obtained:
 \tilde{\re}(\hat{\delta})$. To estimate $\delta$ different estimators have been
 proposed. Most commonly used estimators are based on maximum likelihood (ML) and
 restricted maximum likelihood (REML). The standard procedures in the literature
-are not directly feasible for the robust estimators introduced in chapter (?),
-instead different algorithms are proposed. For a detailed discussion of the
-estimation of the variance parameters see @Jia06[9-11] and the literature
+are not directly feasible for the robust estimators introduced in chapter
+\ref{chap:rfh}, instead different algorithms are proposed. For a detailed
+discussion of the estimation of the variance parameters see @Jia06[9-11] and the
+literature
 therein.
 
 ## Mean Squared Prediction Error
 \label{sec:eblup_mspe}
-One of the main reasons to rely on small area methods is to reduce the mean 
-squared error of domain predictions. Since domain predictions under a linear 
-mixed model are derived as the EBLUP, we are generally interested in the mean 
+One of the main reasons to rely on small area methods is to reduce the mean
+squared error of domain predictions. Since domain predictions under a linear
+mixed model are derived as the EBLUP, we are generally interested in the mean
 squared prediction error (MSPE) of the EBLUP. Note that I directly present
 results for the EBLUP instead of the BLUP, since the latter has little practical
 relevance and the results are mainly needed to give a comprehensive context in
-which the existing literature can be extended. In general the estimation of the 
-MSPE can be identified as one of the challenging problems in model\hyp{}based 
-SAE (cf. @Pfe13). Two approaches are taken in the literature: The analytical 
-identification of the MSPE and different resampling strategies. A more detailed 
-review of these strategies can be found in @Rao03[p. 95 ff], @Jia06[p. 13
+which the existing literature can be extended. In general the estimation of the
+MSPE can be identified as one of the challenging problems in model based
+SAE (cf. @Pfe13). Two approaches are taken in the literature: The analytical
+identification of the MSPE and different resampling strategies. More detailed
+reviews of these strategies can be found in @Rao03[p. 95 ff], @Jia06[p. 13
 ff] and @Dat09.
 
-Early results can be found in @Kac84 who proposed an approximation to the MSPE 
+Early results can be found in @Kac84 who proposed an approximation to the MSPE
 of the EBLUP of a gaussian linear mixed model. In particular they showed that:
 \empty{
 \begin{align}
@@ -138,19 +139,20 @@ slightly different approaches can be found in @Dat05 which is more specific in
 the sense that it focuses on area\hyp{}level models.
 
 A different approach has been taken by @Cha11, which is to define the EBLUP as a
-weighted sum of the sampled values and derive an MSPE estimator under the 
-assumption of independence between weights and sampled values. An advantage of 
-this method is the wide applicability as the approach is not restricted to 
+weighted sum of the sampled values and derive an MSPE estimator under the
+assumption of independence between weights and sampled values. An advantage of
+this method is the wide applicability as the approach is not restricted to
 predictions under mixed linear models but to any predictor which can be
 represented as weighted sum of sampled values. The approach has been extended in
 @Cha14 to robust methods in SAE and is of special interest to derive an MSPE
 estimator for the proposed methods of this thesis. Hence these results are
-reviewed in more detail in section (?).
+reviewed in more detail in section \ref{sec:theory_sae_robust_mspe}.
 
-As an alternative a wide range of different resampling strategies have been 
-proposed. @Jia02 introduced a jackknife method to estimate the MSPE in the 
-context of longitudinal mixed linear models and was modified by @Loh09 into a 
-simpler form. Also important is the proposed double\hyp{}bootstrap method by
-@Hal06. However, of special interest are methods in the context of robust 
+As an alternative a wide range of different resampling strategies have been
+proposed. @Jia02 introduced a jackknife method to estimate the MSPE in the
+context of longitudinal mixed linear models and was modified by @Loh09 into a
+simpler form. Also important is the proposed double bootstrap method by
+@Hal06. However, of special interest are methods in the context of robust
 predictions under linear mixed models which is why the bootstrap methods by
-@Sin09 and @Jio14 are reviewed in more detail in section (?).
+@Sin09 and @Jio14 are reviewed in more detail in section
+  \ref{sec:theory_sae_robust_bootstrap}.

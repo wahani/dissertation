@@ -95,10 +95,14 @@ distribution.
 
 ### Bootstrap
 
+\label{sec:theory_sae_robust_bootstrap}
+
 - Jiiongo, Nguimekeu (2014): Bootstrapping Mean Squared Errors of Robust Small
 Area Estimators
 
+
 ### Pseudo Linearization
+\label{sec:theory_sae_robust_mspe}
 
 @Cha11 and @Cha14 deal with the estimation of the MSE of robust area predictors
   in the context of Small Area Estimation. In this section I review their

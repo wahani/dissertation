@@ -37,20 +37,20 @@ feasibility for larger samples stimulates the progress within the field; as it
 is the promise to optimize the ratio between sampled units and the reliability
 of estimates.
 
-Commonly small area methods are divided into two streams, design\hyp{ }and 
-model\hyp{}based methods. Design-based methods can be considered the traditional
+Commonly small area methods are divided into two streams, design and 
+model based methods. Design based methods can be considered the traditional
 methodology for analysing survey data and a comprehensive overview of these 
 methods for SAE can be found in @Leh09. Design-based methods summarise different
-direct and indirect techniques. The Horvitz-Thompson (HT) estimator (@Hor52) 
+direct and indirect techniques. The Horvitz\hyp{}Thompson (HT) estimator (@Hor52) 
 which only uses sampled units within domains, and synthetic regression estimates
-as well as model\hyp{}assisted methods like generalized regression (GREG)
+as well as model assisted methods like generalized regression (GREG)
 estimators (@Saer92) are examples for such estimators. What these methods have
 in common is that they incorporate information of the sampling design into the
 estimation.
 
-Conceptually design- and model-based methods differ in that design\hyp{}based
+Conceptually design- and model-based methods differ in that design based
 methods are used to optimally estimate a target parameter of a fixed and finite 
-population. Model\hyp{}based methods instead rely on the idea that an observed
+population. Model based methods instead rely on the idea that an observed
 sample is drawn from a population which is but one possible realization of a 
 *superpopulation* model, and it is the parameters of that superpopulation which 
 are targeted. This difference leads to a trade-off when choosing between 
@@ -59,31 +59,31 @@ even with small samples, however, they can not be considered design-unbiased.
 Design-based methods on the other hand are design-unbiased but have larger and 
 possibly unacceptable high variances for small samples (see @Leh09).
 
-Model-based methods can be seperated into area\hyp{ }and unit\hyp{}level models.
+Model-based methods can be seperated into area and unit level models.
 Observations which can be associated to a specific domain are referred to as 
 units. This can be companies within an industry sector or individuals within a 
-municipality. The Area-level describes models which use information such as 
-direct estimates for domains and rely on area-level information. A situation in
+municipality. The Area level describes models which use information such as 
+direct estimates for domains and rely on area level information. A situation in
 which these models are considered is when data can only be provided as
 aggregates due to confidentiality.
 
 One class of models in particular is favoured in different variations: Mixed 
-Models. The Fay-Herriot (FH) model introduced by @Fay79 and the
-Battese-Harter-Fuller (BHF) model which was introduced by @Bat88 are the two
-basic models which are used for area\hyp{} and unit\hyp{}level models
-respectively. Underlying is the idea to use auxiliary information in a
-regression to estimate a global conditional mean and add an extra component to 
-capture the domain specific difference from that global mean. This general idea 
-can be found in combination with different estimation methodologies, i.e. 
-General Linear Mixed Models which are typically associated with best linear 
-unbiased predictors (BLUPs), Empirical Bayes and Hierarchical Bayes. Although 
-these different frameworks for estimation differ with respect to optimality 
-criteria, equivalence of the different derived estimators can be shown for
-special cases. A more general discussion of misxed models in SAE can be found in
-@Jia06; @Rao03 and @Rao15 provide a comprohensive overview and comparisson of
-the different frameworks.
+Models. The Fay-Herriot (FH) model introduced by @Fay79 and the 
+Battese\hyp{}Harter\hyp{}Fuller (BHF) model which was introduced by @Bat88 are 
+the two basic models which are used for area and unit level models respectively.
+Underlying is the idea to use auxiliary information in a regression to estimate 
+a global conditional mean and add an extra component to capture the domain 
+specific difference from that global mean. This general idea can be found in 
+combination with different estimation methodologies, i.e. General Linear Mixed 
+Models which are typically associated with best linear unbiased predictors 
+(BLUPs), Empirical Bayes and Hierarchical Bayes. Although these different 
+frameworks for estimation differ with respect to optimality criteria, 
+equivalence of the different derived estimators can be shown for special cases. 
+A more general discussion of mixed models in SAE can be found in @Jia06; @Rao03
+and @Rao15 provide a comprohensive overview and comparisson of the different
+frameworks.
 
-A general property of model-based methods is that a lot of their benefits in
+A general property of model based methods is that a lot of their benefits in
 terms of efficiency rely on strong distributional assumptions. Hence, not only
 in the field of SAE have robust methods been exploited to reduce the negative
 effect of a potential violation of these assumptions. The general problem here
@@ -104,11 +104,12 @@ modelling strategies are used in this context; see for example @Dat95 and
 outlying observations. @Tza10 model instead of a conditional global mean a 
 median - or more generally a quantile. The third approach is to remain with the 
 original model or method and robustify the estimation equations. In this context
-@Sin09 develop a robustified EBLUP and @Bea09 refer to a winzorization of the
-Horvitz-Thompson estimator.
+@Sin09 develop a robustified EBLUP, @Bea09 refer to a winzorization of the 
+Horvitz-Thompson estimator and @Bea04 introduces a robust extension to
+generalized regression estimation.
 
-Given this background; in this thesis I introduce extensions to the Fay-Herriot 
-area-level model using a model-based perspective. More precisely an EBLUP based 
+Given this background; in this thesis I introduce extensions to the Fay\hyp{}Herriot 
+area level model using a model based perspective. More precisely an EBLUP based 
 approach is taken to derive predictions with the possibility to model spatial 
 and temporal covariance structures in the random effects. These models
 are closely related to the results presented by @Mar13, who introduce spatial
@@ -125,9 +126,3 @@ contributions in terms of software are published alongside this dissertation.
 area estimation and (?) implements the methods introduced in this thesis. All
 results in this thesis rely on these two packages and a more detailed discussion
 can be found in chapter (?).
-
-Extensions take into account different distributional assumptions about the
-response variable
-@Rao03 as well as @Rao15 give a comprehensive overview on model-based methods in
-  SAE. @Cle14 and @Gua15 are examples for reviews appearing for
-

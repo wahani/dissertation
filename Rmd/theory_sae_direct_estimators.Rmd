@@ -2,7 +2,7 @@
 
 In this section I introduce a simple direct estimator and some notation which
 will be used throughout the thesis. The estimator is of interest as it
-will be used in the simulation studies in chapter (?). @Leh09 give a more
+will be used in the simulation studies in part \ref{part:results}. @Leh09 give a more
 comprehesive overview of direct estimators and design-based methods.
 
 Let a population be denoted by $U$, consisting of $N$ units, which can be devided
@@ -21,11 +21,11 @@ mean but can be any statistic in the population.
 Given that the sample is drawn with simple random sampling without replacement
 (SRSWOR) a design unbiased estimator is given by
 
+\empty{
 \begin{align}
 \bar{y}_i = \frac{1}{n_i}\sum_{j = 1}^{n_i} y_{ij}\label{eq:sampleMean}
 \end{align}
-
-with its design variance $\Exp{V}(\bar{y}_i|n_i) = (S_i^2 / n_i) \Paran{1 - n_i 
+}with its design variance $\Exp{V}(\bar{y}_i|n_i) = (S_i^2 / n_i) \Paran{1 - n_i 
 / N_i}$ where $S_i^2 = 1 / (N_i - 1) \sum_{j = 1}^{N_i} \Paran{y_{ij} - 
 \bar{Y}_i}^2$. To estimate the sampling variance, $S^2_i$ can be replaced by 
 $s_i^2$ being an estimator using the sampled data, i.e. $s_i^2 = 1 / (n_i - 1) 

@@ -1,4 +1,5 @@
 # Unit Level Models
+\label{sec:unit_level}
 
 Although the model which will be extended is an area-level model, crucial
 developments, especially for robust small area estimation, have been made with a

@@ -1,17 +1,17 @@
 # Area Level Models
 
-In SAE mixed models are generally devided into area\hyp{ } und unit\hyp{}level
-models. In this section a review of some of the most important results is given
-with respect to area\hyp{}level models. Section (?) then presents the basic
-unit\hyp{}level model.
+In SAE mixed models are generally devided into area and unit level models. In
+this section a review of some of the most important results is given with
+respect to area level models. Section \ref{sec:unit_level} then presents the
+basic unit level model.
 
 ## The Fay-Herriot Model
 
-The basic area\hyp{}level model was introduced by @Fay79 and has been used in
-applications and is also subject to various extensions. Some of which are
-discussed in more detail later. The general setting is that only information on
-the area\hyp{}level is available, i.e. direct estimates for the domains. The
-model is then built around two stages. The first stage is the sampling model:
+The basic area level model was introduced by @Fay79 and has been used to
+predict the mean income of small areas using census data. The general setting is
+that only information on the area level is available, i.e. direct estimates
+for the domains. The model is then built around two stages. The first stage is
+the sampling model:
 $$
 \si{\tilde{y}} = \si{\theta} + \si{e}
 $$
@@ -79,15 +79,15 @@ squares estimator of equation \eq{eq:blue} with $\delta =
 ### Mean Squared Prediction Error
 
 The MSPE of the EBLUP under the Fay-Herriot model, $\si{\hat{\theta}}^{FH}$, is
-subject of several studies. However, it needs to be noted that, interestingly,
+subject to several studies. However, it needs to be noted that, interestingly,
 @Fay79 did not asses the qunatification of uncertainty associated with their
 predictions. In principle the MSPE can be defined for an EBLUP as it was
-discussed in section \ref{sec:eblup_mspe}. @Dat05 study the MSPE estimation
-using the results of @Pra90 for different estimations of the variance component
-$\sigre$. They compare the method of moment method by @Pra90 with the original
-estimator by @Fay79 and the maximum likelihood estimator by @Dat00. The main
-finding is that regarding the properties of the MSPE estimation the estimator by
-@Fay79 performs best overall.
+discussed in section \ref{sec:eblup_mspe}. @Dat05 study the MSPE estimation 
+using the results of @Pra90 for different estimations of the variance component 
+$\sigre$. They compare the method of moment estimator by @Pra90 with the
+original estimator by @Fay79 and the maximum likelihood estimator by @Dat00. The
+main finding is that with respect to the MSPE estimation the estimator by @Fay79
+performs best overall.
 
 A jackknife MSPE estimator for linear mixed models was introduced by @Jia02 and
 later subject to several refinements; see for example @Che03. @Che08 then
@@ -104,17 +104,17 @@ the case and these parameters are estimated using the sample data. This can mean
 that they are themselfes direct estimators; but if a direct mean is considered 
 unreliable then its variance estimation cannot be considered reliable. @Fay79 
 used generalized variance functions - see @Wol07[pp. 272 ff] for a discussion of
-these methods - instead of direct estimators. @Mai14 suggest instead to shrink
-both means and variances to account for the possibly of unstable direct variance
-estimates and also provide an estimator of the MSPE of the predictions. 
-This approach is based on a Baysian modelling strategy. @You06 provide results
-for the case that direct variance estimates are used in a hirarchical Bayes
-approach and can account for that extra variability in the MSPE estimation.
-Results for an EBLUP based on estimated sampling variances can be found in
-@Wan03 and @Riv03. @Wan03 derive an MSPE using asymptotic properties of the
-EBLUP. @Riv03 instead extend the results of @Pra90 and add an extra term to
-account for the additional variability assciciated to the estimation of direct
-sampling variances.
+these methods - instead of direct estimators. @Mai14 suggest instead to shrink 
+both means and variances to account for the possibility of unstable direct
+variance estimates and also provide an estimator of the MSPE of the predictions.
+This approach is based on a Baysian modelling strategy. @You06 provide results 
+for the case that direct variance estimates are used in a hirarchical Bayes 
+approach and can account for that extra variability in the MSPE estimation. MSPE
+estimators for an EBLUP based prediction using estimated sampling variances can
+be found in @Wan03 and @Riv03. @Wan03 derive an MSPE using asymptotic properties
+of the EBLUP. @Riv03 instead extend the results of @Pra90 and add an extra term
+to the MSPE estimator to account for the additional variability associated with 
+the estimation of direct sampling variances.
 
 ### Remarks
 
@@ -251,47 +251,6 @@ $$
   discussion of robust small area methods.
 
 
-## From Unit to Area Level Models
-
-
-
-In later simulation studies we will consider data in which area level statistics
-are computed from individual information. From a contextual point of view, 
-starting from individual information is advantageous in the sense that outlying 
-areas can be motivated more easily. Also the question for a good estimator for 
-the sampling variances can be motivated when knowing the underlying individual 
-model. Hence, I will derive the Fay-Herriot model starting from unit-level. 
-Consider the following model:
-$$
-\sij{y} = x_i^\top\beta + \re + e_i \text{ ,}
-$$
-where $\sij{y}$ is the response in domain $i$ of unit $j$ with $i = 1, \dots,
-\si{n}$, where $\si{n}$ is the number of units in domain $i$. $\re$ is an area
-specific random effect following (i.i.d.) a normal distribution with zero mean
-and $\sigre$ as variance parameter. $\sij{e}$ is the remaining deviation from
-the model, following (i.i.d.) a normal distribution with zero mean and $\sige$
-as variance parameter. This unit level model is defined under strong
-assumptions, still, assumptions most practitioner are willing to make which
-could simplify the identification of the sampling variances under the area level
-model.
-
-From this model consider the area statistics $\tilde{y}_i = \frac{1}{n_j}
-\sum_{j = 1}^{\si{n}}\sij{y}$, for which an area level model can be derived as:
-$$
-\tilde{y}_i = \si{x}^\top\beta + \si{\re} + \si{e}
-$$
-Considering the mean in a linear model, it can be expressed as $\bar{y} = 
-\bar{x}\beta$; the random effect was defined for each area, hence it remains 
-unaltered for the area level model. The error term in this model can be 
-expressed as the sampling error and its standard deviation as the (conditional) 
-standard deviation of the aggregated area statistic, which in this case is a 
-mean. Hence, $\si{e} \sim \Distr{N}(0, \sige = \sigma^2_e / \si{n})$. Under this
-unit level model a sufficient estimator for $\sige$ can be derived from
-estimating $\sige$, which can be done robust and non-robust in many ways.
-
-
-
-
 - Namazi-Rad / Steel (2015): *What Level of Statistical Model Should We Use
     in Small Area Estimation?*, Australian Journal of Statistics
     - Area Level vs. Unit Level Models. Main finding: When a model with
@@ -316,6 +275,6 @@ estimating $\sige$, which can be done robust and non-robust in many ways.
 - Sugasawa and Kubokawa (2015): Transforming Response Values in Small Area Prediction
 - Benavent and Morales (2015): Multivariate Fay-Herriot models for small area estimation
 
-
+@Cle14 and @Gua15 are examples for reviews appearing for
 
 
