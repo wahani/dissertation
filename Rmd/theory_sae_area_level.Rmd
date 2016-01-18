@@ -77,6 +77,7 @@ squares estimator of equation \eq{eq:blue} with $\delta =
 
 
 ### Mean Squared Prediction Error
+\label{sec:theory_sae_fh_mspe}
 
 The MSPE of the EBLUP under the Fay-Herriot model, $\si{\hat{\theta}}^{FH}$, is
 subject to several studies. However, it needs to be noted that, interestingly,
@@ -116,102 +117,144 @@ of the EBLUP. @Riv03 instead extend the results of @Pra90 and add an extra term
 to the MSPE estimator to account for the additional variability associated with 
 the estimation of direct sampling variances.
 
-### Remarks
+### Discussion
 
-With respect to the Fay-Herriot model \eq{eq:FH} some remarks need to made. A
-closely related form is that closely realated to the James-Stein and emperical
-Bayes estimator in that:
+From a practical point of view the assumption of known sampling variances under
+the model is not plausible. Hence these variances are subject to estimation but
+are treated as known constants. Some approaches to face this problem have been
+reviewed in section \ref{sec:theory_sae_fh_mspe} because in principle this is
+mostly related to an underestimation of the true uncertainty of the predictions.
+Another dimension which was for example addressed by @Mai14 is the instability
+of predictions when very heterogenous sampling variances are observed, by
+shrinking both means and variances. Another approach is to stabalize the
+sampling variances by using generalized variance functions or other smoothing
+techniques. Albeit these parameters are assumed to be known they can have a
+large impact on the validity of domain predictions. In section (?) I will show
+how the robust FH model relates to this discussion in terms of stability and
+MSPE.
+
+The response variable, $\tilde{y}_i$, denotes a direct estimator. This is, of
+course, not necessarily the sample mean but can be any other statistic. An
+important feature of this statistic that it is design unbiased. So in principle
+it can be a direct design based estimator such as the HT estimator. However, it
+is assumed that the sampling errors are independent. This can be a plausible
+assumption under simple random sampling but is not necessarily plausible under
+an informative sampling design. With respect to the response variable it also
+needs to be noted that very often not the direct estimator itself but a suitable
+transformation is used. @Fay79 log\hyp{}transoform the direct estimator and
+suggest to use a transformation such that a normal distribution is plausible,
+i.e. is supported by the observed data. Hence several suggestions have been made
+how to optimally transform the response variable and how to asses the estimation
+of the MSPE of the back transformed domain prediction; see for example @Slu06.
+@Sug15 review and introduce several parametric transformations for the FH model
+and also discuss the possibility of MSPE estimation.
+
+One of the main motivations to consider area level models is the availability of
+data. Especially with census or administrative data, it may not be possible to
+give unit level information directly to the analyst due to reasons of
+confidentiality. Thus only aggregates, i.e. direct domain estimations, are
+reported. Despite the availability of information there are other reasons to
+consider. One is the integration of sampling weights which is in general not
+directly feasible in model based methodology. Area level models present a way to
+at least incorporate design weights into the direct estimation and then have a
+design unbiased estimator on the area level. Other reasons can be practical
+reasons, e.g. the reduction of computational demands because area level data 
+often means a dramitic reduction in the number of observations, hence more 
+complex variance structures can be modelled with less computational effort.
+Other reasons are discussed in more detail in @Nam15 who consider different
+scenarios for the availibility of auxiliary information, e.g. unit and area
+level variables and contextual variables. Their findings show that overall unit
+level models have more potential to reduce the MSPE of domain predictions, which
+is not supprising as parameter estimation under a unit level model uses more 
+information and thus is more precise. This leaves the availibility of data as 
+the main reason to consider area level models.
+
+Area level models in small area estimation have found many use cases and the
+Fay-Herriot model explicitly is subjuct to numerous extensions. See for example
+@Cle14 for a review in desease mapping; @Gua15 for a review of methods used for 
+  poverty mapping; and @Ben16 for an EBLUP under a multivariate FH model. A
+  comprehensive review of extension can be found in @Rao03[pp. 153 ff] and
+  @Rao15[pp ?]. The following section reviews some advances for incorporating
+  structures in space and time into the estimation process. Some of these
+  results in addition to a robust extension is then subject of chapter (?).
 
 
-in Small Area Estimation play an important role in the
-production of reliable domain estimates.
+## Spatial and Temporal Fay-Harriot Models
 
-- They can be used even if unit level observations are not accessible. 
-- In a model based estimation it is largely unsolved to incorporate design
-weights. Area level models can be used to start from a direct design based
-estimator.
-- Unit level models often have problems with heterogeneity. An assumption, for
-example, for unit level data is that the error terms of a model are
-homescedastic given the random effects. This assumption is often not plausible
-and may call for more complex assumptions on the variance structure of the data.
-However such structures may or may not be known and cannot be modelled easily.
-This can also lead to computationally demanding procedures.
+This section reviews spatial and temporal extensions to the FH model. These
+extensions are again subject in chapter (?) where they are then combined with
+robust estimation methodology which is reviewed in section (?). It is in
+principle intuitive that if historical data, e.g. yearly repeated surveys, is
+available it should be used. From a mixed model perspective we can modify two
+components, the random effects or the errer term. The use of correlated random
+effects with modified variance structures to allow for spatial, temporal or
+spatio-temporal effects may be beneficial with respect to domain predictions.
+However, an early extension by @Cho89 allows for an autoregressive process in
+the error term, which in the context of the FH model is one way to account for
+correlated sampling errors. @Rao94 then introduced a model to use auto correlated random effects to borrow strength for domain predictions. 
 
-Given these considerations the most important factor to choose cadidate models
-is the availability of data. Very often there is not much of a choice but rather
-a decission given the available information. And given the availability of unit
-level data, the obvious choice is to consider a model which can use such
-information. Only if that fails for one of the above reasons can an area level
-model be of interest.
-
-
-## Spatio-Temporal Fay Harriot model
-
-The model stated in equation \ref{eq:FH} has been modified for including
-historical information by modelling autocorrelated model errors and also by
-allowing for spatial correlation (in the model error). See the discussion in
-@Mar13 for more details. @Mar13 allow for both spatial and temporal correlation
-in the model errors. Hence the sampling model is (simply) extended to include
-historical information:
+More measurements will improve everything. The sampling model can then be defined as
 $$
-y_{dt} = \mu_{dt} + e_{dt},
+\tilde{y}_{it} = \theta_{it} + e_{it}
 $$
-with $d = 1, \dots, D$ and $t = 1, \dots, T$ where $D$ and $T$ are the total
-number of areas and time periods respectively. Here $e_{dt} \sim \mathit{N}(0,
-\sigma^2_{dt})$ are independent with known variances $\sigma_{dt}^2$. The model
-error is composed of a spatial autoregressive process of order 1 (SAR(1)) and an
-autoregressive process of order 1 (AR(1)):
+with $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D$ and $T$ are the total 
+number of areas and time periods respectively. 
+
+
+Here $e_{it} \sim\Distr{N}(0, 
+\sigma^2_{eit})$ are independent with known variances $\sigma_{eit}^2$. The
+model error is composed of a spatial autoregressive process of order 1 (SAR(1))
+and an autoregressive process of order 1 (AR(1)):
 $$
-\mu_{dt} = x^\top_{dt}\beta + u_{1d} + u_{2dt},
+\theta_{it} = \mat{x}^\top_{it}\beta + u_{1i} + u_{2it}
 $$
-where $u_{1d}$ and $u_{2dt}$ follow a SAR(1) and AR(1) respectively:
+where $u_{1i}$ and $u_{2it}$ follow a SAR(1) and AR(1) respectively:
 $$
-u_{1d} = \rho_1 \sum_{l\neq d}w_{d,l} u_{1l} + \epsilon_{1d},
+u_{1i} = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i}
 $$
-where $|\rho_1| < 1$ and $\epsilon_{1d} \sim \mathit{N}(0, \sigma_1^2)$ are
-i.i.d. with $d = 1,\dots, D$. $w_{d, l}$ are the elements of $W$ which is the
-row standardized proximity matrix $W^0$. The elements in $W^0$ are equal to 1 if
-areas are neighboured and 0 otherwise (an area is not neighboured with itself) -
-thus the dimension of $W^0$ is $D\times D$. As stated above $u_{2dt}$ follows an
+where $|\rho_1| < 1$ and $\epsilon_{1i} \sim \Distr{N}(0, \sigma_1^2)$ are
+i.i.d. with $i = 1,\dots, D$. $w_{il}$ are the elements of $\mat{W}$ which is the
+row standardized proximity matrix $\mat{W}^0$. The elements in $\mat{W}^0$ are equal to 1 if
+areas are neighboured and 0 otherwise, thus the dimension of $\mat{W}^0$ is $D \times D$. As stated above $u_{2it}$ follows an
 AR(1):
 $$
-u_{2dt} = \rho_2 u_{2d, t-1} + \epsilon_{2dt},
+u_{2it} = \rho_2 u_{2i, t-1} + \epsilon_{2it}
 $$
-where $|\rho_2| < 1$ and $\epsilon_{2dt} \sim \mathit{N}(0, \sigma_2^2)$ are
-i.i.d. with $d = 1, \dots, D$ and $t = 1, \dots, T$. Note that $u_{1d}$ and
-$u_{2dt}$ and $e_{dt}$ are independent and the sampling error variance
+where $|\rho_2| < 1$ and $\epsilon_{2it} \sim \Distr{N}(0, \sigma_2^2)$ are
+i.i.d. with $i = 1, \dots, D$ and $t = 1, \dots, T$. Note that $u_{1i}$ and
+$u_{2it}$ and $e_{it}$ are independent and the sampling error variance
 parameters are assumed to be known. The model can then be stated as:
 $$
-\mathbf{y} = \mathbf{X}\beta + \mathbf{Z}\mathbf{u} + \mathbf{e},
+\mat{y} = \mat{X}\beta + \mat{Z}\mat{u} + \mat{e},
 $$
-where $\mathbf{y}$ is the $DT\times 1$ vector containing $y_{dt}$ as elements,
-$\mathbf{X}$ is the $DT \times p$ design matrix containing the vectors
-$x^\top_{dt}$ as rows, $\mathbf{u}$ is the $(D + DT) \times 1$ vector of model
-errors and $\mathbf{e}$ the $DT \times 1$ vector of sampling errors $e_{dt}$.
-Note that $\mathbf{u} = (u_1^\top, u_2^\top)$ where the $D\times 1$ vector $u_1$
-and $DT \times 1$ vector $u_2$ have $u_{1d}$ and $u_{2dt}$ as elements
-respectively. Furthermore $\mathbf{Z} = (\mathbf{Z}_1, \mathbf{Z}_2)$ has
-dimension $DT \times (D+DT)$, where $\mathbf{Z}_1 = \mathbf{I}_D \otimes
-\mathbf{1}_T$ ($\mathbf{I}_D$ denotes a $D\times D$ identity matrix and
-$\mathbf{1}_T$ a $1 \times T$ vector of ones) has dimension $DT \times D$ and
-$\mathbf{Z}_2$ is a $DT \times DT$ identity matrix.
+where $\mat{y}$ is the $DT\times 1$ vector containing $y_{it}$ as elements,
+$\mat{X}$ is the $DT \times P$ design matrix containing the vectors
+$\mat{x}^\top_{it}$ as rows, $\mat{u}$ is the $(D + DT) \times 1$ vector of model
+errors and $\mat{e}$ the $DT \times 1$ vector of sampling errors $e_{it}$.
+Note that $\mat{u} = (\mat{u}_1^\top, \mat{u}_2^\top)$ where the $D\times 1$ vector $\mat{u}_1$
+and $DT \times 1$ vector $\mat{u}_2$ have $\mat{u}_{1i}$ and $\mat{u}_{2it}$ as elements
+respectively. Furthermore $\mat{Z} = (\mat{Z}_1, \mat{Z}_2)$ has
+dimension $DT \times (D+DT)$, where $\mat{Z}_1 = \mat{I}_D \otimes
+\mat{1}_T$ ($\mat{I}_D$ denotes a $D\times D$ identity matrix and
+$\mat{1}_T$ a $1 \times T$ vector of ones) has dimension $DT \times D$ and
+$\mat{Z}_2$ is a $DT \times DT$ identity matrix.
 
-Concerning the variance of $\mathbf{y}$ first consider the distributions of all
-error components. $\mathbf{e} \sim \mathit{N}(\mathbf{0}, \mathbf{V}_e)$ where
-$\mathbf{V}_e$ is a diagonal matrix with the known $\sigma^2_{dt}$ on the main
-diagonal. $\mathbf{u} \sim \mathit{N}(\mathbf{0}, \mathbf{V}_u(\theta))$ with
-the block diagonal covariance matrix $\mathbf{V}_u(\theta) =
+Concerning the variance of $\mat{y}$ first consider the distributions of all
+error components. $\mat{e} \sim \Distr{N}(\mat{0}, \mat{V}_e)$ where
+$\mat{V}_e$ is a diagonal matrix with the known $\sigma^2_{eit}$ on the main
+diagonal. $\mat{u} \sim \Distr{N}(\mat{0}, \mat{V}_u(\delta))$ with
+the block diagonal covariance matrix $\mat{V}_u(\delta) =
 \text{diag}(\sigma_1^2\Omega_1(\rho_1), \sigma_2^2\Omega_2(\rho_2))$ where
-$\theta = (\sigma_1^2, \rho_1, \sigma_2^2, \rho_2)$.
+$\delta = (\sigma_1^2, \rho_1, \sigma_2^2, \rho_2)$.
 
 $$
-\Omega_1(\rho_1) = \left((\mathbf{I}_D - \rho_1\mathbf{W})^\top (\mathbf{I}_D - \rho_1\mathbf{W})\right)^{-1}
+\Omega_1(\rho_1) = \left((\mat{I}_D - \rho_1\mat{W})^\top (\mat{I}_D - \rho_1\mat{W})\right)^{-1}
 $$
 and follows from the SAR(1) process in the model errors. $\Omega_2(\rho_2)$ has
-a block diagonal structure with $\Omega_{2d}(\rho_2)$ denoting the blocks where
-the definition of $\Omega_{2d}(\rho_2)$ follows from the AR(1) process:
+a block diagonal structure with $\Omega_{2i}(\rho_2)$ denoting the blocks where
+the definition of $\Omega_{2i}(\rho_2)$ follows from the AR(1) process:
   $$
-    \Omega_{2d}(\rho_2) = \frac{1}{1-\rho_2^2}
+    \Omega_{2i}(\rho_2) = \frac{1}{1-\rho_2^2}
     \left(
       \begin{matrix}
       1 & \rho_2 & \cdots & \rho_2^{T-2}& \rho_2^{T-1}\\
@@ -222,59 +265,41 @@ the definition of $\Omega_{2d}(\rho_2)$ follows from the AR(1) process:
       \end{matrix}
       \right)_{T\times T}
   $$
-The variance of $\mathbf{y}$ can thus be stated as:
+The variance of $\mat{y}$ can thus be stated as:
 $$
-\mathbb{V}(\mathbf{y}) = \mathbf{V}(\theta) = \mathbf{Z}\mathbf{V}_u(\theta)\mathbf{Z}^\top + \mathbf{V}_e
+\mathbb{V}(\mat{y}) = \mat{V}(\delta) = \mat{Z}\mat{V}_u(\delta)\mat{Z}^\top + \mat{V}_e
 $$
-The BLUE of $\beta$ and BLUP of $\theta$ can be stated as \citep[see][]{Hen75}:
+The BLUE of $\beta$ and BLUP of $\delta$ can be stated as \citep[see][]{Hen75}:
 $$
-\tilde{\beta}(\theta) = \left(\mathbf{X}^\top \mathbf{V}^{-1}(\theta) \mathbf{X} \right)^{-1} \mathbf{X}^\top \mathbf{V}^{-1}(\theta) \mathbf{y}
-$$
-$$
-\tilde{u}(\theta) = \mathbf{V}_u(\theta) \mathbf{Z}^\top \mathbf{V}^{-1}(\theta) \left(\mathbf{y} - \mathbf{X}\tilde{\beta}(\theta)\right)
-$$
-Hence the BLUP of $u_1$ and $u_2$ can be stated as:
-$$
-\tilde{u}_1(\theta) = \sigma_1^2 \Omega_1(\rho_1) \mathbf{Z}^\top \mathbf{V}^{-1}(\theta) \left(\mathbf{y} - \mathbf{X}\tilde{\beta}(\theta)\right)
+\tilde{\beta}(\delta) = \left(\mat{X}^\top \mat{V}^{-1}(\delta) \mat{X} \right)^{-1} \mat{X}^\top \mat{V}^{-1}(\delta) \mat{y}
 $$
 $$
-\tilde{u}_2(\theta) = \sigma_2^2 \Omega_2(\rho_2) \mathbf{Z}^\top \mathbf{V}^{-1}(\theta) \left(\mathbf{y} - \mathbf{X}\tilde{\beta}(\theta)\right)
+\tilde{\mat{u}}(\delta) = \mat{V}_u(\delta) \mat{Z}^\top \mat{V}^{-1}(\delta) \left(\mat{y} - \mat{X}\tilde{\beta}(\delta)\right)
 $$
-Estimating $\theta$ leads to the EBLUE for $\beta$ and EBLUPs for $u_1$ and
-$u_2$, hence an predictor for the area characteristic $\mu_{dt}$ is given by:
+Hence the BLUP of $\mat{u}_1$ and $\mat{u}_2$ can be stated as:
 $$
-\hat{\mu}_{dt} = x_{dt}^\top \hat{\beta} + \hat{u}_{1d} + \hat{u}_{2dt}
+\tilde{\mat{u}}_1(\delta) = \sigma_1^2 \Omega_1(\rho_1) \mat{Z}^\top \mat{V}^{-1}(\delta) \left(\mat{y} - \mat{X}\tilde{\beta}(\delta)\right)
 $$
-@Mar13 use a restricted maximum likelihood method to estimate $\theta$
+$$
+\tilde{\mat{u}}_2(\delta) = \sigma_2^2 \Omega_2(\rho_2) \mat{Z}^\top \mat{V}^{-1}(\delta) \left(\mat{y} - \mat{X}\tilde{\beta}(\delta)\right)
+$$
+Estimating $\delta$ leads to the EBLUE for $\beta$ and EBLUPs for $\mat{u}_1$ and
+$\mat{u}_2$, hence an predictor for the area characteristic $\theta_{it}$ is given by:
+$$
+\hat{\theta}^{STFH}_{it} = \mat{x}_{it}^\top \hat{\beta} + \hat{\mat{u}}_{1i} + \hat{\mat{u}}_{2it}
+$$
+@Mar13 use a restricted maximum likelihood method to estimate $\delta$
   independently of $\beta$. An open question is if this approach can be applied
   for the robust spatio-temporal model. Thus we will continue with the
   discussion of robust small area methods.
 
-
-- Namazi-Rad / Steel (2015): *What Level of Statistical Model Should We Use
-    in Small Area Estimation?*, Australian Journal of Statistics
-    - Area Level vs. Unit Level Models. Main finding: When a model with
-        contextual variables is the population model, using a area level model
-        better than a unit level without contextual variables.
-- Chandra, Sud and Gharde (2014): Small Area Estimation Using Estimated Population Level Auxiliary Data
-
-- You and Chapman (2006): Small Area Estimation Using Area Level Models and Estimated Sampling Variances
-- Rivest, Vandal (): Mean Squared Error Estimation for Small Areas when the Small Area Variances Are Estimated
-- Chen and Lahiri (2008): On Mean Squared Prediction Error Estimation in Small Area Estimation Problems
-- Wang and Fuller (2003): The Mean Squared Error of Small Area Predictors Constructed With Estimated Area Variances
-- Datta, Rao Smith: On measuring the variability of small area estimators under a basic area level model
 
 - Porter, Holan, Wikle, Cressie (2014): Spatial Fay-Herriot models for small area estimation with functional covariates
 - López-Vizcaíno, Lombardía and Morales (2015): Small area estimation of labour force indicators under multinomial models with correlated time and area effects
 - Rao and Yu (1994): Small-Area Estimation by Combining Time-Series and Cross-Sectional Data
 - Benedetti, Pratesi and Salvati (2013): Local stationarity in small area estimation models
 
-- Sugasawa et.al. (2015): Bayesian Estimators for Small Area Models Shrinking Both Means and Variances
-
-- Sugasawa and Kubokawa (2015): Parametric transformed Fay-Herriot model for small area estimation
-- Sugasawa and Kubokawa (2015): Transforming Response Values in Small Area Prediction
 - Benavent and Morales (2015): Multivariate Fay-Herriot models for small area estimation
 
-@Cle14 and @Gua15 are examples for reviews appearing for
 
 
