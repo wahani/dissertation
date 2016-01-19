@@ -1,5 +1,5 @@
 # Small Area Prediction using Linear Mixed Models
-
+\label{sec:blup}
 This section gives a general overview of mixed linear models and the best linear
 unbiased prediction (BLUP) and empirical BLUP (EBLUP). The introduced unit and
 area level models are based on this class of models and the robust methodology 

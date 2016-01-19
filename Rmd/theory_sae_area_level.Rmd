@@ -32,12 +32,12 @@ independent and identically distributed following a normal distribution: $\re_i
 \sim \Distr{N}(0, \sigre)$. Furthermore $e_i$ and $\re_i$ are assumed to be
 independent. Combining the sampling and linking model leads to:
 \begin{align}
-\tilde{y}_i = \si{\mat{x}}^\top \beta + \re_i + e_i \label{eq:FH}
+\tilde{y}_i = \si{\mat{x}}^\top \beta + \re_i + e_i \label{eq:fh}
 \end{align}
 
 ### Best Linear Unbiased Prediction
 
-To obtain small area predictions under model \eq{eq:FH} it can be defined as a 
+To obtain small area predictions under model \eq{eq:fh} it can be defined as a 
 linear mixed model and a BLUP and EBLUP can be derived. Basically model 
 \eq{eq:FH} can be directly viewed as a mixed model as it was introduced in
 equation \eq{eq:lmm} where $\mat{Z} = \mat{I}_D$, $\mat{V}_\re =
@@ -189,117 +189,167 @@ available it should be used. From a mixed model perspective we can modify two
 components, the random effects or the errer term. The use of correlated random
 effects with modified variance structures to allow for spatial, temporal or
 spatio-temporal effects may be beneficial with respect to domain predictions.
-However, an early extension by @Cho89 allows for an autoregressive process in
-the error term, which in the context of the FH model is one way to account for
-correlated sampling errors. @Rao94 then introduced a model to use auto correlated random effects to borrow strength for domain predictions. 
 
-More measurements will improve everything. The sampling model can then be defined as
-$$
-\tilde{y}_{it} = \theta_{it} + e_{it}
-$$
-with $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D$ and $T$ are the total 
-number of areas and time periods respectively. 
+### Spatial Extensions
 
-
-Here $e_{it} \sim\Distr{N}(0, 
-\sigma^2_{eit})$ are independent with known variances $\sigma_{eit}^2$. The
-model error is composed of a spatial autoregressive process of order 1 (SAR(1))
-and an autoregressive process of order 1 (AR(1)):
-$$
-\theta_{it} = \mat{x}^\top_{it}\beta + u_{1i} + u_{2it}
-$$
-where $u_{1i}$ and $u_{2it}$ follow a SAR(1) and AR(1) respectively:
+The standard FH model \eq{eq:fh} uses a random effect to capture unobserved 
+variation between areas. However, it ignores spatial patterns which can be 
+present when areas refer to geographical units. Albeit in many cases it is
+plausible that neighbouring areas are more similar. If no covariates are present
+to capture such effects @Mol09 showed that taking spatial correlation into
+account can be beneficial for domain predictions. @Sin05, @Pet06 and @Pra08
+investigated the possibility to incorporate a simultanous autoregressive process
+(SAR) into the domain predictions. In principle there are two options how to
+model spatial correlation: conditional autoregressive models (CAR) and SAR. The
+main difference is that CAR models are based on a Markov field which implies
+that spatial correlation exists local between two or more neighbours but do not 
+effect other non neighbouring units, i.e. such a process has no memory across 
+space. SAR processies do not have this restriction and are more usefull to 
+describe a global correlation structure. For a comprehensive overview of 
+different approaches see @Cre93. To incorporate spatial correlation we can
+modify model \eq{eq:fh} such that:
+\empty{
+\begin{align}
+\tilde{y}_{i} = \mat{x}^\top_{i}\beta + \re_{1i} + e_{i} \label{eq:sfh}
+\end{align}
+}where the only difference to model \eq{eq:fh} is to use $u_{1i}$ to represent
+the random effect. $u_{1i}$ now follows a simultanous autoregressive process of
+order one (SAR(1)) which is defined as:
 $$
 u_{1i} = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i}
 $$
-where $|\rho_1| < 1$ and $\epsilon_{1i} \sim \Distr{N}(0, \sigma_1^2)$ are
-i.i.d. with $i = 1,\dots, D$. $w_{il}$ are the elements of $\mat{W}$ which is the
-row standardized proximity matrix $\mat{W}^0$. The elements in $\mat{W}^0$ are equal to 1 if
-areas are neighboured and 0 otherwise, thus the dimension of $\mat{W}^0$ is $D \times D$. As stated above $u_{2it}$ follows an
-AR(1):
-$$
-u_{2it} = \rho_2 u_{2i, t-1} + \epsilon_{2it}
-$$
-where $|\rho_2| < 1$ and $\epsilon_{2it} \sim \Distr{N}(0, \sigma_2^2)$ are
-i.i.d. with $i = 1, \dots, D$ and $t = 1, \dots, T$. Note that $u_{1i}$ and
-$u_{2it}$ and $e_{it}$ are independent and the sampling error variance
-parameters are assumed to be known. The model can then be stated as:
-$$
-\mat{y} = \mat{X}\beta + \mat{Z}\mat{u} + \mat{e},
-$$
-where $\mat{y}$ is the $DT\times 1$ vector containing $y_{it}$ as elements,
-$\mat{X}$ is the $DT \times P$ design matrix containing the vectors
-$\mat{x}^\top_{it}$ as rows, $\mat{u}$ is the $(D + DT) \times 1$ vector of model
-errors and $\mat{e}$ the $DT \times 1$ vector of sampling errors $e_{it}$.
-Note that $\mat{u} = (\mat{u}_1^\top, \mat{u}_2^\top)$ where the $D\times 1$ vector $\mat{u}_1$
-and $DT \times 1$ vector $\mat{u}_2$ have $\mat{u}_{1i}$ and $\mat{u}_{2it}$ as elements
-respectively. Furthermore $\mat{Z} = (\mat{Z}_1, \mat{Z}_2)$ has
-dimension $DT \times (D+DT)$, where $\mat{Z}_1 = \mat{I}_D \otimes
-\mat{1}_T$ ($\mat{I}_D$ denotes a $D\times D$ identity matrix and
-$\mat{1}_T$ a $1 \times T$ vector of ones) has dimension $DT \times D$ and
-$\mat{Z}_2$ is a $DT \times DT$ identity matrix.
+where $|\rho_1| < 1$ and $\epsilon_{1i} \sim \Distr{N}(0, \sigma_1^2)$ are 
+i.i.d. with $i = 1,\dots, D$. $w_{il}$ are the elements of $\mat{W}$ which is 
+the row standardized proximity matrix $\mat{W}^0$. The elements in $\mat{W}^0$ 
+are equal to 1 if areas are neighboured and 0 otherwise, thus the dimension of 
+$\mat{W}^0$ is $D \times D$. Using the methodology of section \ref{sec:blup} the
+BLUP can be stated as:
+\empty{
+\begin{align*}
+\tilde{\theta}^{SFH}_{i} = \mat{x}^\top_{i}\tilde{\beta} + \tilde{\re}_{1i}
+\end{align*}
+}where $\tilde{\theta}^{SFH}_{i}$ depends on the variance parameters $\delta =
+(\rho_1, \sigma_1^2)$. @Pra08 use a maximum likelihood estimator for both
+parameters. Replacing the unknown parameters with their repective estimates
+leads then to the EBLUP:
+\empty{
+\begin{align}
+\hat{\theta}^{SFH}_{i} = \mat{x}^\top_{i}\hat{\beta} + \hat{\re}_{1i}.
+\end{align}
+}Note that this model is again subject of section (?) where the variance 
+structure is reviewed in more detail. The MSPE for the EBLUP under model
+\eq{eq:sfh} is developed by @Pra08 who extend the results from @Pra90.
 
-Concerning the variance of $\mat{y}$ first consider the distributions of all
-error components. $\mat{e} \sim \Distr{N}(\mat{0}, \mat{V}_e)$ where
-$\mat{V}_e$ is a diagonal matrix with the known $\sigma^2_{eit}$ on the main
-diagonal. $\mat{u} \sim \Distr{N}(\mat{0}, \mat{V}_u(\delta))$ with
-the block diagonal covariance matrix $\mat{V}_u(\delta) =
-\text{diag}(\sigma_1^2\Omega_1(\rho_1), \sigma_2^2\Omega_2(\rho_2))$ where
-$\delta = (\sigma_1^2, \rho_1, \sigma_2^2, \rho_2)$.
-
-$$
-\Omega_1(\rho_1) = \left((\mat{I}_D - \rho_1\mat{W})^\top (\mat{I}_D - \rho_1\mat{W})\right)^{-1}
-$$
-and follows from the SAR(1) process in the model errors. $\Omega_2(\rho_2)$ has
-a block diagonal structure with $\Omega_{2i}(\rho_2)$ denoting the blocks where
-the definition of $\Omega_{2i}(\rho_2)$ follows from the AR(1) process:
-  $$
-    \Omega_{2i}(\rho_2) = \frac{1}{1-\rho_2^2}
-    \left(
-      \begin{matrix}
-      1 & \rho_2 & \cdots & \rho_2^{T-2}& \rho_2^{T-1}\\
-      \rho_2 & 1 & & & \rho_2^{T-2} \\
-      \vdots & & \ddots & & \vdots \\
-      \rho_2^{T-2} &&& 1 & \rho_2 \\
-      \rho_2^{T-1} & \rho_2^{T-2} & \cdots & \rho_2 & 1\\
-      \end{matrix}
-      \right)_{T\times T}
-  $$
-The variance of $\mat{y}$ can thus be stated as:
-$$
-\mathbb{V}(\mat{y}) = \mat{V}(\delta) = \mat{Z}\mat{V}_u(\delta)\mat{Z}^\top + \mat{V}_e
-$$
-The BLUE of $\beta$ and BLUP of $\delta$ can be stated as \citep[see][]{Hen75}:
-$$
-\tilde{\beta}(\delta) = \left(\mat{X}^\top \mat{V}^{-1}(\delta) \mat{X} \right)^{-1} \mat{X}^\top \mat{V}^{-1}(\delta) \mat{y}
-$$
-$$
-\tilde{\mat{u}}(\delta) = \mat{V}_u(\delta) \mat{Z}^\top \mat{V}^{-1}(\delta) \left(\mat{y} - \mat{X}\tilde{\beta}(\delta)\right)
-$$
-Hence the BLUP of $\mat{u}_1$ and $\mat{u}_2$ can be stated as:
-$$
-\tilde{\mat{u}}_1(\delta) = \sigma_1^2 \Omega_1(\rho_1) \mat{Z}^\top \mat{V}^{-1}(\delta) \left(\mat{y} - \mat{X}\tilde{\beta}(\delta)\right)
-$$
-$$
-\tilde{\mat{u}}_2(\delta) = \sigma_2^2 \Omega_2(\rho_2) \mat{Z}^\top \mat{V}^{-1}(\delta) \left(\mat{y} - \mat{X}\tilde{\beta}(\delta)\right)
-$$
-Estimating $\delta$ leads to the EBLUE for $\beta$ and EBLUPs for $\mat{u}_1$ and
-$\mat{u}_2$, hence an predictor for the area characteristic $\theta_{it}$ is given by:
-$$
-\hat{\theta}^{STFH}_{it} = \mat{x}_{it}^\top \hat{\beta} + \hat{\mat{u}}_{1i} + \hat{\mat{u}}_{2it}
-$$
-@Mar13 use a restricted maximum likelihood method to estimate $\delta$
-  independently of $\beta$. An open question is if this approach can be applied
-  for the robust spatio-temporal model. Thus we will continue with the
-  discussion of robust small area methods.
+A different approache to model spatial correlation structures can be found in
+@Cha12, which is to use a geographically weighted regression model and derive 
+predictions under an EBLUP. @Sal12 also use this for M-quantile regression 
+models and small area predicitons. @Por14 is an example how to use a CAR process
+in the context of the FH model, which is, additionally, extended to allow for
+functional covariates.
 
 
-- Porter, Holan, Wikle, Cressie (2014): Spatial Fay-Herriot models for small area estimation with functional covariates
-- López-Vizcaíno, Lombardía and Morales (2015): Small area estimation of labour force indicators under multinomial models with correlated time and area effects
-- Rao and Yu (1994): Small-Area Estimation by Combining Time-Series and Cross-Sectional Data
-- Benedetti, Pratesi and Salvati (2013): Local stationarity in small area estimation models
+### Temporal Extensions
 
-- Benavent and Morales (2015): Multivariate Fay-Herriot models for small area estimation
+An early extension by @Cho89 allows for an autoregressive process in the error
+term, which, in the context of the FH model, is one way to account for 
+correlated sampling errors. @Rao94 then introduced a model to use auto
+correlated random effects to borrow strength for domain predictions:
+\empty{
+\begin{align}
+\tilde{y}_{it} = \mat{x}^\top_{it}\beta + \re_{i} + \re_{2it} + e_{it} \label{eq:tfh}
+\end{align}
+}where $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D$ and $T$ are the total 
+number of areas and time periods respectively. Here $e_{it} \sim\Distr{N}(0, 
+\sigma^2_{eit})$ are independent with known variances $\sigma_{eit}^2$. $u_{i}$
+coresponds to the random effect in model \eq{eq:fh} and follows a normal
+distribution with zero mean and variance $\sigre$. Correlation over time
+is now incorporated by adding $\re_{2it}$ which is a correlated random effect following a
+AR(1), i.e. an autoregressive process of order one:
+$$
+\re_{2it} = \rho_2 \re_{2i, t-1} + \epsilon_{2it}
+$$
+where $\rho_2$ is the auto correlation coefficient with $|\rho_2| < 1$ and 
+$\epsilon_{2it} \sim \Distr{N}(0, \sigma_2^2)$ are i.i.d. with $i = 1, \dots, D$
+and $t = 1, \dots, T$. The BLUP under model \eq{eq:tfh} can then be defined as:
+\empty{
+\begin{align*}
+\tilde{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\tilde{\beta} + \tilde{\re}_{i} + \tilde{\re}_{2it}
+\end{align*}
+}where the variance parameters $\delta = (\sigma_u^2, \rho_2, \sigma_2^2)$ is
+known. Replacing these parameters with estimates leads to the EBLUP:
+\empty{
+\begin{align}
+\hat{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\hat{\beta} + \hat{u}_{i} + \hat{u}_{2it}.
+\end{align}
+}@Rao94 used method of moment estimators to estimate the elements in $\delta$.
+Extensions to this model have been made by @Dat02 by replacing the AR(1) process
+with a random walk. @Sin91 use a random slope model instead of correlated random
+effects, but also use an AR(1) to describe the variation of the random
+regression coefficients.
 
 
+### Spatio Temporal Extensions
 
+Subject of this section is the combination of the spatial model \eq{eq:sfh} and
+temporal model \eq{eq:tfh}. This combination was introduced by @Mar13. A similar
+approach but for a multinomial response can be found in @Lop15. @Sin05 use a
+similar approach with respect to spatial autocorrelation but they use a State
+Space Model with a Kalman filter to take advantage of time series data.
+
+Following @Mar13 a spatio temporal FH model can be formulated as:
+\empty{
+\begin{align}
+\tilde{y}_{it} = \mat{x}^\top_{it}\beta + \re_{1i} + \re_{2it} + e_{it} \label{eq:stfh}
+\end{align}
+}where in contrast to model \eq{eq:tfh} the first random effect component has 
+been replaced with a correlated random effects component following a SAR(1). To
+summarize this model, we have $\re_{1i}$ following a SAR(1), $\re_{2it}$ following
+an AR(1) and $e_{it}$ are i.i.d., furthermore $\re_{1i}$, $\re_{2it}$ and 
+$e_{it}$ are assumed to be independent. Following the presentation of the
+previous sections, the spatio temporal BLUP under model \eq{eq:stfh} is:
+\empty{
+\begin{align*}
+\tilde{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\tilde{\beta} + \tilde{\re}_{1i} + \tilde{\re}_{2it}.
+\end{align*}
+}@Mar13 used an REML estimator for the unknown variance components $\delta = 
+(\rho_1, \sigma_1^2, \rho_2, \sigma_2^2)$. Replacing the unknown components with
+their estimates leads then to the EBLUP under the model:
+\empty{
+\begin{align}
+\hat{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\hat{\beta} + \hat{\re}_{1i} + \hat{\re}_{2it}.
+\end{align}
+}
+In contrast to @Sin05 who derived an analytical MSPE for spatio temporal domain
+predictions and @Pra08 who derived an MSPE for spatial predictions, @Mar13
+propose to use a parametric bootstrap for the estimation of the MSPE.
+
+### Discussion
+
+The use of correlation across space to improve domain predictions is in
+principle promissing for applications. However, an important remark and result
+of the reviewed literatur is, that modelling spatial autocorrelation as a random
+effect is beneficial if this structure can not be captured by auxiliary 
+variables, i.e. in the fixed effects part of a mixed model. This means the
+primary use is to capture unobserved spatial correlation. Also note that,
+although the proximity matrix is introduced to represent neighbouring units in a
+geographical sense it is not restricted to that. Neighboured units may be
+defined in a more general sense for example by capturing the structure between
+industry sectors which are very dependent on each other. Such structures, which
+in contrast to geographical units, may be defined with expertise. Thus this
+strategy can be generally useful for domain predictions instead of being
+restricted to the literal sense of area predictions.
+
+Different is the use of information over time. @Mar13 note that in practice we
+may be interested to make predictions for the current time period, and not the
+past, and use historic information as additional information. The use of
+historic information may lead to an improvement of parameter estimates due to an
+increased sample size. The temporal random effect in model \eq{eq:tfh} can
+additionally be of use to improve domain predictions. @Sin05 note that this is 
+especially the case if the historic information, often itself predictions, is
+more reliable than the current time period.
+
+The spatial, temporal and spatio temporal FH is again subject of section (?)
+where they are combined with robust estimation methodology. Note that the review
+in this chapter may not be sufficient to deduce the representation of these
+models as linear mixed models, which will be stated more precisely in section
+(?).

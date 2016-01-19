@@ -1,3 +1,109 @@
 # The Robust Fay-Herriot Model and Extensions
 
 - Chakraborty, Datta and Mandal (2015): A two-component normal mixture alternative to the Fay-Herriot model
+
+The variance structure under model \eq{eq:tfh} can again
+be derived as a special mixed linear model. Hence the concrete variance
+components are stated with respect to model \eq{eq:lmm}. Here $V_e = 
+\diag\Paran{\{\{\sigma_{eit}^2\}_{t=1}^T\}_{i = 1}^D}$ and is similar to the 
+structure under model \eq{eq:fh}. $V_u(\delta) = \diag \left(\sigma_u^2 \mat{I}_D, 
+\sigma_2^2 \Omega(\rho_2)\right)$ which depends on the vector of unknown variance 
+parameters $\delta = (\sigma_1^2, \rho_2, \sigma_2^2)$. $\Omega_2(\rho_2)$ has a
+block diagonal structure with $\Omega_{2i}(\rho_2)$ denoting the block for
+observation $i$ with:
+  $$
+    \Omega_{2i}(\rho_2) = \frac{1}{1-\rho_2^2}
+    \left(
+      \begin{matrix}
+      1 & \rho_2 & \cdots & \rho_2^{T-2}& \rho_2^{T-1}\\
+      \rho_2 & 1 & & & \rho_2^{T-2} \\
+      \vdots & & \ddots & & \vdots \\
+      \rho_2^{T-2} &&& 1 & \rho_2 \\
+      \rho_2^{T-1} & \rho_2^{T-2} & \cdots & \rho_2 & 1\\
+      \end{matrix}
+      \right)_{T\times T}
+  $$
+Furthermore $\mat{u}$$\mat{Z} = (\mat{I}_D, \mat{Z}_2)_{DT\times (D+DT)}$
+
+
+
+
+$$
+\tilde{y}_{it} = \theta_{it} + e_{it}
+$$
+
+ The
+model error is composed of a spatial autoregressive process of order 1 (SAR(1))
+and an autoregressive process of order 1 (AR(1)):
+$$
+\theta_{it} = \mat{x}^\top_{it}\beta + u_{1i} + u_{2it}
+$$
+where $u_{1i}$ and $u_{2it}$ follow a SAR(1) and AR(1) respectively:
+$$
+u_{1i} = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i}
+$$
+where $|\rho_1| < 1$ and $\epsilon_{1i} \sim \Distr{N}(0, \sigma_1^2)$ are
+i.i.d. with $i = 1,\dots, D$. $w_{il}$ are the elements of $\mat{W}$ which is the
+row standardized proximity matrix $\mat{W}^0$. The elements in $\mat{W}^0$ are equal to 1 if
+areas are neighboured and 0 otherwise, thus the dimension of $\mat{W}^0$ is $D \times D$. As stated above $u_{2it}$ follows an
+AR(1):
+ Note that $u_{1i}$ and
+$u_{2it}$ and $e_{it}$ are independent and the sampling error variance
+parameters are assumed to be known. The model can then be stated as:
+$$
+\mat{y} = \mat{X}\beta + \mat{Z}\mat{u} + \mat{e},
+$$
+where $\mat{y}$ is the $DT\times 1$ vector containing $y_{it}$ as elements,
+$\mat{X}$ is the $DT \times P$ design matrix containing the vectors
+$\mat{x}^\top_{it}$ as rows, $\mat{u}$ is the $(D + DT) \times 1$ vector of model
+errors and $\mat{e}$ the $DT \times 1$ vector of sampling errors $e_{it}$.
+Note that $\mat{u} = (\mat{u}_1^\top, \mat{u}_2^\top)$ where the $D\times 1$ vector $\mat{u}_1$
+and $DT \times 1$ vector $\mat{u}_2$ have $\mat{u}_{1i}$ and $\mat{u}_{2it}$ as elements
+respectively. Furthermore $\mat{Z} = (\mat{Z}_1, \mat{Z}_2)$ has
+dimension $DT \times (D+DT)$, where $\mat{Z}_1 = \mat{I}_D \otimes
+\mat{1}_T$ ($\mat{I}_D$ denotes a $D\times D$ identity matrix and
+$\mat{1}_T$ a $1 \times T$ vector of ones) has dimension $DT \times D$ and
+$\mat{Z}_2$ is a $DT \times DT$ identity matrix.
+
+Concerning the variance of $\mat{y}$ first consider the distributions of all
+error components. $\mat{e} \sim \Distr{N}(\mat{0}, \mat{V}_e)$ where
+$\mat{V}_e$ is a diagonal matrix with the known $\sigma^2_{eit}$ on the main
+diagonal. $\mat{u} \sim \Distr{N}(\mat{0}, \mat{V}_u(\delta))$ with
+the block diagonal covariance matrix $\mat{V}_u(\delta) =
+\text{diag}(\sigma_1^2\Omega_1(\rho_1), \sigma_2^2\Omega_2(\rho_2))$ where
+$\delta = (\sigma_1^2, \rho_1, \sigma_2^2, \rho_2)$.
+
+$$
+\Omega_1(\rho_1) = \left((\mat{I}_D - \rho_1\mat{W})^\top (\mat{I}_D - \rho_1\mat{W})\right)^{-1}
+$$
+and follows from the SAR(1) process in the model errors. 
+
+
+The variance of $\mat{y}$ can thus be stated as:
+$$
+\mathbb{V}(\mat{y}) = \mat{V}(\delta) = \mat{Z}\mat{V}_u(\delta)\mat{Z}^\top + \mat{V}_e
+$$
+The BLUE of $\beta$ and BLUP of $\delta$ can be stated as \citep[see][]{Hen75}:
+$$
+\tilde{\beta}(\delta) = \left(\mat{X}^\top \mat{V}^{-1}(\delta) \mat{X} \right)^{-1} \mat{X}^\top \mat{V}^{-1}(\delta) \mat{y}
+$$
+$$
+\tilde{\mat{u}}(\delta) = \mat{V}_u(\delta) \mat{Z}^\top \mat{V}^{-1}(\delta) \left(\mat{y} - \mat{X}\tilde{\beta}(\delta)\right)
+$$
+Hence the BLUP of $\mat{u}_1$ and $\mat{u}_2$ can be stated as:
+$$
+\tilde{\mat{u}}_1(\delta) = \sigma_1^2 \Omega_1(\rho_1) \mat{Z}^\top \mat{V}^{-1}(\delta) \left(\mat{y} - \mat{X}\tilde{\beta}(\delta)\right)
+$$
+$$
+\tilde{\mat{u}}_2(\delta) = \sigma_2^2 \Omega_2(\rho_2) \mat{Z}^\top \mat{V}^{-1}(\delta) \left(\mat{y} - \mat{X}\tilde{\beta}(\delta)\right)
+$$
+Estimating $\delta$ leads to the EBLUE for $\beta$ and EBLUPs for $\mat{u}_1$ and
+$\mat{u}_2$, hence an predictor for the area characteristic $\theta_{it}$ is given by:
+$$
+\hat{\theta}^{STFH}_{it} = \mat{x}_{it}^\top \hat{\beta} + \hat{\mat{u}}_{1i} + \hat{\mat{u}}_{2it}
+$$
+@Mar13 use a restricted maximum likelihood method to estimate $\delta$
+  independently of $\beta$. An open question is if this approach can be applied
+  for the robust spatio-temporal model. Thus we will continue with the
+  discussion of robust small area methods.
+
