@@ -1,6 +1,6 @@
 # Area Level Models
 
-In SAE mixed models are generally devided into area and unit level models. In
+In SAE mixed models are generally decided into area and unit level models. In
 this section a review of some of the most important results is given with
 respect to area level models. Section \ref{sec:unit_level} then presents the
 basic unit level model.
@@ -15,13 +15,13 @@ the sampling model:
 $$
 \si{\tilde{y}} = \si{\theta} + \si{e}
 $$
-where $\si{\tilde{y}}$ is a direct estimator for a statistic of interest,
-$\si{\theta}$, for an area $i$ with $i = 1, \dots, D$ and $D$ being the number
-of areas. The sampling error $\si{e}$ is assumed to be independent and normally
-distributed with known variances $\sige$, i.e. $\si{e} \sim \Distr{N}(0,
-\sige)$. The model is modified with a second stage, the linking model, by 
-assuming a linear relationship between the true area statistic, $\si{\theta}$,
-and some diterministic auxiliary variables $\si{\mat{x}}$:
+where $\si{\tilde{y}}$ is a direct estimator for a statistic of interest, 
+$\si{\theta}$, for an area $i$ with $i = 1, \dots, D$. The sampling error
+$\si{e}$ is assumed to be independent and normally distributed with known
+variances $\sige$, i.e. $\si{e} \sim \Distr{N}(0, \sige)$. The model is modified
+with a second stage, the linking model, by assuming a linear relationship
+between the true area statistic, $\si{\theta}$, and some deterministic auxiliary
+variables $\si{\mat{x}}$:
 $$
 \si{\theta} = \si{\mat{x}}^\top \beta + \si{\re}
 $$
@@ -32,20 +32,20 @@ independent and identically distributed following a normal distribution: $\re_i
 \sim \Distr{N}(0, \sigre)$. Furthermore $e_i$ and $\re_i$ are assumed to be
 independent. Combining the sampling and linking model leads to:
 \begin{align}
-\tilde{y}_i = \si{\mat{x}}^\top \beta + \re_i + e_i \label{eq:fh}
+\tilde{y}_i = \si{\mat{x}}^\top \beta + \re_i + e_i. \label{eq:fh}
 \end{align}
 
 ### Best Linear Unbiased Prediction
 
 To obtain small area predictions under model \eq{eq:fh} it can be defined as a 
 linear mixed model and a BLUP and EBLUP can be derived. Basically model 
-\eq{eq:FH} can be directly viewed as a mixed model as it was introduced in
+\eq{eq:fh} can be directly viewed as a linear mixed model as it was introduced in
 equation \eq{eq:lmm} where $\mat{Z} = \mat{I}_D$, $\mat{V}_\re =
 \sigre\mat{I}_D$ and $\mat{V}_e = \diag(\sigma_{e, 1}^2, \dots, \sigma_{e,
 D}^2)$ with $\mat{I}_D$ being a $(D\times D)$ identity matrix. The vector of
-unknown variance parameter in this case is a scalar, such that $\delta = \sigre$
-since $\sige$ is assumed to be known. The BLUP, defined in equation
-\eq{eq:blup}, for the Fay-Herriot model can then be obtained by setting
+unknown variance parameters in this case is a scalar, such that $\delta = \sigre$
+since $\sige$ is assumed to be known. The BLUP under the Fay-Herriot model,
+defined in equation \eq{eq:blup}, can then be obtained by setting
 $\tilde{\mu}_i = \tilde{\theta}_i^{FH}$,
 $\mat{l}_i^\top = \mat{x}_i^\top$, $\mat{m}^\top_i = 1$ and $y_i = \tilde{y}_i$:
 \empty{
@@ -58,22 +58,23 @@ $\mat{l}_i^\top = \mat{x}_i^\top$, $\mat{m}^\top_i = 1$ and $y_i = \tilde{y}_i$:
 }with $\si{\gamma} = \sigre / (\sigre + \sige)$. The BLUP depends on the
 variance parameter of the random effects, $\sigre$, which is unknown. To obtain
 the EBLUP under the Fay-Herriot model we can replace the unknown parameter with
-an estimate leading to:
+an estimate, leading to:
 $$
 \si{\hat{\theta}}^{FH} = \si{\hat{\gamma}}\si{\tilde{y}} + \Paran{1 - \si{\hat{\gamma}}} \si{\mat{x}}^\top\hat{\beta}
 $$
 where $\si{\hat{\gamma}} = \hat{\sigma}_\re^2 / (\hat{\sigma}_\re^2 + \sige)$.
 Note that the regression parameters are still estimated using the weighted least
 squares estimator of equation \eq{eq:blue} with $\delta =
-\hat{\sigma}_\re^2$. For the estimation of $\sigre$ different approaches exist.
-@Fay79 proposed a moment estimator from which they derived an algorithm to 
-  estimate $\sigre$. @Rao03[118-119] reviews several other ideas. Also based on 
-  a moment estimator he derives the estimator also used in @Pra90. Both moment 
-  estimators have the property that they do not rely on a normal distribution, 
-  which is also true for the estimation of the regression coefficients. 
-  Alternatively $\sigre$ can be estimated using maximum likelihood or 
-  restricted maximum likelihood, which, in contrast, relies on the distributional 
-  assumptions. For details see also @Dat00.
+\hat{\sigma}_\re^2$.
+
+For the estimation of $\sigre$ different approaches exist. @Fay79 proposed a
+moment estimator from which they derived an algorithm to estimate $\sigre$.
+@Rao03[118-119] reviews several other ideas. Also based on a moment estimator he
+derives the estimator also used in @Pra90. Both moment estimators have the
+property that they do not rely on a normal distribution, which is also true for
+the estimation of the regression coefficients. Alternatively $\sigre$ can be
+estimated using maximum likelihood or restricted maximum likelihood, which, in
+contrast, relies on the distributional assumptions. For details see also @Dat00.
 
 
 ### Mean Squared Prediction Error
@@ -81,7 +82,7 @@ squares estimator of equation \eq{eq:blue} with $\delta =
 
 The MSPE of the EBLUP under the Fay-Herriot model, $\si{\hat{\theta}}^{FH}$, is
 subject to several studies. However, it needs to be noted that, interestingly,
-@Fay79 did not asses the qunatification of uncertainty associated with their
+@Fay79 did not asses the quantification of uncertainty associated with their
 predictions. In principle the MSPE can be defined for an EBLUP as it was
 discussed in section \ref{sec:eblup_mspe}. @Dat05 study the MSPE estimation 
 using the results of @Pra90 for different estimations of the variance component 
@@ -102,14 +103,14 @@ conclusion with respect to the estimation of $\sigre$ is not as clear as by
 A different line of discussion is stimulated by the fact that it is assumed that
 the sampling variances, $\sige$, are known parameters. In practice this is not 
 the case and these parameters are estimated using the sample data. This can mean
-that they are themselfes direct estimators; but if a direct mean is considered 
+that they are themselves direct estimators; but if a direct mean is considered 
 unreliable then its variance estimation cannot be considered reliable. @Fay79 
 used generalized variance functions - see @Wol07[pp. 272 ff] for a discussion of
 these methods - instead of direct estimators. @Mai14 suggest instead to shrink 
 both means and variances to account for the possibility of unstable direct
 variance estimates and also provide an estimator of the MSPE of the predictions.
-This approach is based on a Baysian modelling strategy. @You06 provide results 
-for the case that direct variance estimates are used in a hirarchical Bayes 
+This approach is based on a Bayesian modelling strategy. @You06 provide results 
+for the case that direct variance estimates are used in a hierarchical Bayes 
 approach and can account for that extra variability in the MSPE estimation. MSPE
 estimators for an EBLUP based prediction using estimated sampling variances can
 be found in @Wan03 and @Riv03. @Wan03 derive an MSPE using asymptotic properties
@@ -126,7 +127,7 @@ reviewed in section \ref{sec:theory_sae_fh_mspe} because in principle this is
 mostly related to an underestimation of the true uncertainty of the predictions.
 Another dimension which was for example addressed by @Mai14 is the instability
 of predictions when very heterogenous sampling variances are observed, by
-shrinking both means and variances. Another approach is to stabalize the
+shrinking both means and variances. Another approach is to stabilise the
 sampling variances by using generalized variance functions or other smoothing
 techniques. Albeit these parameters are assumed to be known they can have a
 large impact on the validity of domain predictions. In section (?) I will show
@@ -141,7 +142,7 @@ is assumed that the sampling errors are independent. This can be a plausible
 assumption under simple random sampling but is not necessarily plausible under
 an informative sampling design. With respect to the response variable it also
 needs to be noted that very often not the direct estimator itself but a suitable
-transformation is used. @Fay79 log\hyp{}transoform the direct estimator and
+transformation is used. @Fay79 log\hyp{}transform the direct estimator and
 suggest to use a transformation such that a normal distribution is plausible,
 i.e. is supported by the observed data. Hence several suggestions have been made
 how to optimally transform the response variable and how to asses the estimation
@@ -159,19 +160,19 @@ directly feasible in model based methodology. Area level models present a way to
 at least incorporate design weights into the direct estimation and then have a
 design unbiased estimator on the area level. Other reasons can be practical
 reasons, e.g. the reduction of computational demands because area level data 
-often means a dramitic reduction in the number of observations, hence more 
+often means a dramatic reduction in the number of observations, hence more 
 complex variance structures can be modelled with less computational effort.
 Other reasons are discussed in more detail in @Nam15 who consider different
-scenarios for the availibility of auxiliary information, e.g. unit and area
+scenarios for the availability of auxiliary information, e.g. unit and area
 level variables and contextual variables. Their findings show that overall unit
 level models have more potential to reduce the MSPE of domain predictions, which
-is not supprising as parameter estimation under a unit level model uses more 
-information and thus is more precise. This leaves the availibility of data as 
+is not surprising as parameter estimation under a unit level model uses more 
+information and thus is more precise. This leaves the availability of data as 
 the main reason to consider area level models.
 
 Area level models in small area estimation have found many use cases and the
-Fay-Herriot model explicitly is subjuct to numerous extensions. See for example
-@Cle14 for a review in desease mapping; @Gua15 for a review of methods used for 
+Fay-Herriot model explicitly is subject to numerous extensions. See for example
+@Cle14 for a review in disease mapping; @Gua15 for a review of methods used for 
   poverty mapping; and @Ben16 for an EBLUP under a multivariate FH model. A
   comprehensive review of extension can be found in @Rao03[pp. 153 ff] and
   @Rao15[pp ?]. The following section reviews some advances for incorporating
@@ -186,7 +187,7 @@ extensions are again subject in chapter (?) where they are then combined with
 robust estimation methodology which is reviewed in section (?). It is in
 principle intuitive that if historical data, e.g. yearly repeated surveys, is
 available it should be used. From a mixed model perspective we can modify two
-components, the random effects or the errer term. The use of correlated random
+components, the random effects or the error term. The use of correlated random
 effects with modified variance structures to allow for spatial, temporal or
 spatio-temporal effects may be beneficial with respect to domain predictions.
 
@@ -198,13 +199,13 @@ present when areas refer to geographical units. Albeit in many cases it is
 plausible that neighbouring areas are more similar. If no covariates are present
 to capture such effects @Mol09 showed that taking spatial correlation into
 account can be beneficial for domain predictions. @Sin05, @Pet06 and @Pra08
-investigated the possibility to incorporate a simultanous autoregressive process
+investigated the possibility to incorporate a simultaneous autoregressive process
 (SAR) into the domain predictions. In principle there are two options how to
 model spatial correlation: conditional autoregressive models (CAR) and SAR. The
 main difference is that CAR models are based on a Markov field which implies
 that spatial correlation exists local between two or more neighbours but do not 
 effect other non neighbouring units, i.e. such a process has no memory across 
-space. SAR processies do not have this restriction and are more usefull to 
+space. SAR processes do not have this restriction and are more useful to 
 describe a global correlation structure. For a comprehensive overview of 
 different approaches see @Cre93. To incorporate spatial correlation we can
 modify model \eq{eq:fh} such that:
@@ -213,7 +214,7 @@ modify model \eq{eq:fh} such that:
 \tilde{y}_{i} = \mat{x}^\top_{i}\beta + \re_{1i} + e_{i} \label{eq:sfh}
 \end{align}
 }where the only difference to model \eq{eq:fh} is to use $u_{1i}$ to represent
-the random effect. $u_{1i}$ now follows a simultanous autoregressive process of
+the random effect. $u_{1i}$ now follows a simultaneous autoregressive process of
 order one (SAR(1)) which is defined as:
 $$
 u_{1i} = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i}
@@ -230,7 +231,7 @@ BLUP can be stated as:
 \end{align*}
 }where $\tilde{\theta}^{SFH}_{i}$ depends on the variance parameters $\delta =
 (\rho_1, \sigma_1^2)$. @Pra08 use a maximum likelihood estimator for both
-parameters. Replacing the unknown parameters with their repective estimates
+parameters. Replacing the unknown parameters with their receptive estimates
 leads then to the EBLUP:
 \empty{
 \begin{align}
@@ -240,10 +241,10 @@ leads then to the EBLUP:
 structure is reviewed in more detail. The MSPE for the EBLUP under model
 \eq{eq:sfh} is developed by @Pra08 who extend the results from @Pra90.
 
-A different approache to model spatial correlation structures can be found in
+A different approach to model spatial correlation structures can be found in
 @Cha12, which is to use a geographically weighted regression model and derive 
 predictions under an EBLUP. @Sal12 also use this for M-quantile regression 
-models and small area predicitons. @Por14 is an example how to use a CAR process
+models and small area predictions. @Por14 is an example how to use a CAR process
 in the context of the FH model, which is, additionally, extended to allow for
 functional covariates.
 
@@ -261,7 +262,7 @@ correlated random effects to borrow strength for domain predictions:
 }where $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D$ and $T$ are the total 
 number of areas and time periods respectively. Here $e_{it} \sim\Distr{N}(0, 
 \sigma^2_{eit})$ are independent with known variances $\sigma_{eit}^2$. $u_{i}$
-coresponds to the random effect in model \eq{eq:fh} and follows a normal
+corresponds to the random effect in model \eq{eq:fh} and follows a normal
 distribution with zero mean and variance $\sigre$. Correlation over time
 is now incorporated by adding $\re_{2it}$ which is a correlated random effect following a
 AR(1), i.e. an autoregressive process of order one:
@@ -326,8 +327,8 @@ propose to use a parametric bootstrap for the estimation of the MSPE.
 ### Discussion
 
 The use of correlation across space to improve domain predictions is in
-principle promissing for applications. However, an important remark and result
-of the reviewed literatur is, that modelling spatial autocorrelation as a random
+principle promising for applications. However, an important remark and result
+of the reviewed literature is, that modelling spatial autocorrelation as a random
 effect is beneficial if this structure can not be captured by auxiliary 
 variables, i.e. in the fixed effects part of a mixed model. This means the
 primary use is to capture unobserved spatial correlation. Also note that,
