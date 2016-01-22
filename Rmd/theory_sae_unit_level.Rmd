@@ -1,30 +1,32 @@
 # Unit Level Models
 \label{sec:unit_level}
 
-The basic unit level model, which can also be framed by an linear mixed model, 
+The basic unit level model, which can also be viewed as a linear mixed model, 
 was introduced by @Bat88 and inherits the authors names as it is refered to as 
 the Battese-Harter-Fuller (BHF) model. Note that the main focus of this thesis
 is the extension of area level models. However, some recent advances in the
-field, especially with repect to robust methodology, have been made for unit
+field, especially with respect to robust methodology, have been made for unit
 level models. Since chapter (?) uses these results, they are reviewed in the
 following Section (?) using mostly notation for unit level models and with a 
 special focus on the BHF model. A review of unit level models framed by linear 
 mixed models and EBLUP based predictions can be found in @Jia06 and also in
 @Rao03 and @Rao15 which also review a variety of extensions.
 
-The unit level model introduced by @Bat88 can be expressed as linear
-mixed model by
+The unit level model introduced by @Bat88 can be expressed as linear mixed model 
+by:
 \empty{
 \begin{align}
 	 y_{ij} = \sij{\mat{x}}^\top\beta + \si{\re} + \sij{e} \label{eq:bhf}
 \end{align}
-}where $y_{ij}$ denotes the response of unit $j = 1, \dots, n_i$ and area $i =
-1, \dots, D$. The reandom effetc, $\si{\re}$, are independent and identically
-distributed following a normal distribution such that $\re_i \sim \Distr{N}(0,
-\sigre)$. $\sij{e} \stackrel{iid}{\sim} N(0, \sige)$ with $\re \perp e$. $i = 1,
-\dots, D$ and $j = 1, \dots, \si{n}$ and $\sij{y}$ is the dependent variable for
-unit $j$ in domain $i$. $\si{x}$ are the corresponding auxiliary variables for
-that unit. Let the set of $n$ sampled and $N-n$ non-sampled units be denoted by
+}where $y_{ij}$ denotes the response of unit $j = 1, \dots, n_i$ and area $i = 
+1, \dots, D$. The random effetc, $\si{\re}$, are independent and identically 
+distributed following a normal distribution such that $\re_i \sim \Distr{N}(0, 
+\sigre)$. The error term $\sij{e}$ is i.i.d. following a normal distribution 
+with zero mean and variance $\sigma_e^2$. Furthermore the random effect and 
+model error are independent. $\sij{\mat{x}}$ are the corresponding auxiliary
+variables for that unit.
+
+Let the set of $n$ sampled and $N-n$ non-sampled units be denoted by
 $s$ and $r$ respectivey.
 
 Let $\hat{\beta}$ denote the best linear unbiased estimator (BLUE) of $\beta$ and $\si{\hat{\re}}$ the best linear unbiased predictor (BLUP) (cf.\ \citealp{Hen50} or \citealp{Sea71}). The empirical best linear unbiased predictor (EBLUP) for the mean in small area $i$ under the Battese-Harter-Fuller model is then given by
