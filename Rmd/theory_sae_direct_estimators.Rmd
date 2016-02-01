@@ -1,9 +1,9 @@
 # Direct Estimators
 
 In this section I introduce a simple direct estimator and notation which 
-is used throughout the thesis. The estimator is of interest as it will be
+is then used throughout the thesis. The estimator is of interest as it will be
 used in the simulation studies in Part \ref{part:results}. @Leh09 give a more 
-comprehesive overview of direct estimators and design-based methods.
+comprehesive overview of direct estimators and design based methods.
 
 Let a population be denoted by $U$, consisting of $N$ units, which can be devided
 into $D$ distinct domains or areas $U_1 \cup \dots \cup U_D$. Each area is of
@@ -13,13 +13,13 @@ size $N_i$, with $i = 1, \dots, D$ denoting area $i$, such that $N = \sum_{i =
   such that $n = \sum_{i = 1}^D n_i$.
 
 Let $y$ define the characteristic of interest and $y_{ij}$ the response value 
-for unit $j$ with $j = 1, \dots, N_i$ in area $i$. Furthermore, let the target 
+for unit $j$ with $j = 1, \dots, N_i$ in area $i$. Furthermore let the target 
 quantity be the population mean in area $U_i$ defined by $\theta_i = \bar{Y}_i =
 \frac{1}{N_i}\sum_{j = 1}^{N_i} y_{ij}$ . Note that the target quantity is not
 necessarily a mean but can be any statistic in the population.
 
 Given that the sample is drawn with simple random sampling without replacement
-(SRSWOR) a design unbiased estimator is given by
+(SRSWOR), a design unbiased estimator is given by
 
 \empty{
 \begin{align}
