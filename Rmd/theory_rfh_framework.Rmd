@@ -1,5 +1,7 @@
 # The Problem of Outlying Observations for Area-Level Models
 
+> *"[Outliers:] observations obtained under seemingly normal circumstances, but that turn out to be extremely deviant from the main body of observations."* -- @Abe95[69]
+
 - Hulliger (2010): *Simple and Robust Estimators for Sampling*, SFSO
     - Robuste direkte Schätzer mit Survey Gewichten (robuster HT)
 - 2015-03-17: Bell, W. t-Distr. US-Census
