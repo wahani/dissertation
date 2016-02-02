@@ -1,27 +1,34 @@
 # Robust Methods in Small Area Estimation
 
-- Sinha and Rao (2008): Robust Small Area Estimation Under Unit Level Models
-- Richardson and Welsh (1995): Robust Restricted Maximum Likelihood in Mixed Linear Models
-- Yau and Kuk (2002): Robust Estimation in Generalized Linear Mixed Models
-- Hulliger (2010): Simple and Robust Estimators for Sampling
-- Lange, Little and Taylor (1989): Robust Statistical Modeling Using the t Distribution
-- Peel and McLachlan (2000): Robust mixture modelling using the t distribution
-- Bell and Huang (2006): Using the t-distribution to Deal with Outliers in Small Area Estimation
-- Huang and Bell (): Using the t-distribution in Small Area Estimation: An Application to SAIPE State Poverty Models
-- Schoch (2012): Robust Unit-Level Small Area Estimation: A Fast Algorithm for Large Datasets
-- Xie, Raghunathan and Lepkowski (2007): Estimation of the proportion of overweight individuals in small areas - a robust extension of the Fay-Herriot model
-- Gershunskaya (2010): Robust Small Area Estimation Using a Mixture Model
-- Datta and Lahiri (1995): Robust Hierarchical Bayes Estimation of Small Area Characteristics in the Presence of Covariates and Outliers
-- Rao, Sinha and Dumitrescu (2014): Robust Small area estimation under semi-parametric mixed models
-- Salvati et.al. (2012): Small area estimation via M-quantile geographically weighted regression
-- Salvati et.al. (2009): Spatial M-Quantile Modles for Small Area Estimation
-- Shmid and Münnich (2012): Spatial robust small area estimation
-- Tzavidis et.al. (2010): Robust Prediction of Small Area Means and Distributions
-- Gervini / Yohai (2002): A Class of Robust and Fully Efficient Regression Estimators
-- Pra99
+The quality of predictions using model based methods are strongly connected to
+their distributional assumptions. Severe problems with these methods can already
+arise when single outlying observations are present in the data. Hence some
+discussion and progress has been made with respect to methods robust against
+outliers.
 
-## Robust ML Score Functions
+In the broader context of this subfield within SAE this thesis relies strongly 
+on the results of @Sin09 who proposed robust estimation quations for linear 
+mixed models. The proposition of @Sin09 has a focus on the unit level 
+model \eq{eq:bhf}, however the methodology builds on linear mixed models where 
+\eq{eq:bhf} can be derived as a special case of these models. Also the basic
+area level model \eq{eq:fh} can be framed in this context and the estimation
+equations can be adapted; this is also pointed out in @Sin08 and @Rao15[pp. 146
+ff]. Using these results for area level models is again addressed in chapter
+\ref{chap:rfh} where robust extensions of the FH model are proposed.
 
+In the following the main results around the methodology introduced by @Sin09 
+are reviewed. Together with the models reviewed in \ref{sec:area} these results 
+are the basis for the extensions proposed in this thesis. The section is 
+structured as follows: section \ref{sec:robustee} reviews the methodology around
+robust estimation equations; in section \ref{sec:robustbc} these results are
+extended to allow for a correction of the bias asscociated with these type of
+robust predictions; in section \ref{sec:robustmse} then different possibilities
+to estimate the MSPE of the area level predictions are described; and in section
+\ref{sec:robustdiscussion} these results are embedded in a broader context of
+proposed robust methods in the SAE field.
+
+## Robust Estimation Equations
+\label{sec:robustee}
 
 @Fel86 studied the robust estimation of linear mixed model parameters.
 However, the proposed approach is based on given variance parameters $\theta$
@@ -84,12 +91,14 @@ distribution.
 
 
 ## Bias Correction
+\label{sec:robustbc}
 
 - Tzavidis and Chambers (2005): BIAS ADJUSTED SMALL AREA ESTIMATION WITH M-QUANTILE MODELS
 - Jiongo, Haziza and Duchesne (2013): Controlling the bias of robust small-area estimators
 
 
 ## Mean Squared Error Estimation
+\label{sec:robustmse}
 
 ### Bootstrap
 
@@ -199,6 +208,51 @@ $$
 
 Note that $\hat{\mu}_j$ is an unbiased estimator of the the conditional expectation $\mu_j = \Exp{E}\Paran{y_j | \mat{x}_j, \mat{\re}^\psi}$. $\lambda_j = 1 - 2\phi_{jj} + \sum_{k \in s}\phi^2_{kj}$.
 
+## Discussion
+\label{sec:robustdiscussion}
 
+A reported problem with this method is the numerical stability of the parameter 
+estimates. The robust estimation equations are solved using a Newton-Raphson 
+algorithm; Hence @Schoch12 proposes a different numerical solution for these 
+optimisation problems. @Schoch12 uses similar robust estimation equations for
+the model parameters of the fixed effects part but suggests to use a variation
+of Huber's proposal 2 (cf. @Hub64) to estimate the variance parameter of the
+random effects. Extensions based on the results of @Sin09 can also be found in
+@Sch12 and @Sch14 who use the results for the BHF model with spatially 
+correlated random effects similar to \eq{eq:sfh}.
+
+
+Three lines of discussion on robust small area estimation can be identified. The use of alter First, if the distributional assumption - often a
+Gaussian distribution - appears to be implausible then intuition demands that it
+be replaced. This often leads to the use of non-symmetric or heavy-tailed 
+distributions for the model error or the random effect. Due to their flexibility
+Bayesian modelling strategies are often used in this context; see for example
+@Dat95 and @Bel06. Secondly, methods are applied which are *naturally* more
+robust against outlying observations. @Tza10 model a global conditional median,
+or more generally a quantile, instead of a mean. The third approach is to remain
+with the original model or method and *robustify* the estimation equations. In
+this context @Sin09 develop a robustified EBLUP; @Bea09 refer to a winzorisation
+of the Horvitz-Thompson estimator; and @Bea04 introduces a robust extension to 
+generalized regression estimation.
+
+- Sinha and Rao (2008): Robust Small Area Estimation Under Unit Level Models
+- Richardson and Welsh (1995): Robust Restricted Maximum Likelihood in Mixed Linear Models
+- Yau and Kuk (2002): Robust Estimation in Generalized Linear Mixed Models
+- Hulliger (2010): Simple and Robust Estimators for Sampling
+- Lange, Little and Taylor (1989): Robust Statistical Modeling Using the t Distribution
+- Peel and McLachlan (2000): Robust mixture modelling using the t distribution
+- Bell and Huang (2006): Using the t-distribution to Deal with Outliers in Small Area Estimation
+- Huang and Bell (): Using the t-distribution in Small Area Estimation: An Application to SAIPE State Poverty Models
+- Schoch (2012): Robust Unit-Level Small Area Estimation: A Fast Algorithm for Large Datasets
+- Xie, Raghunathan and Lepkowski (2007): Estimation of the proportion of overweight individuals in small areas - a robust extension of the Fay-Herriot model
+- Gershunskaya (2010): Robust Small Area Estimation Using a Mixture Model
+- Datta and Lahiri (1995): Robust Hierarchical Bayes Estimation of Small Area Characteristics in the Presence of Covariates and Outliers
+- Rao, Sinha and Dumitrescu (2014): Robust Small area estimation under semi-parametric mixed models
+- Salvati et.al. (2012): Small area estimation via M-quantile geographically weighted regression
+- Salvati et.al. (2009): Spatial M-Quantile Modles for Small Area Estimation
+- Shmid and Münnich (2012): Spatial robust small area estimation
+- Tzavidis et.al. (2010): Robust Prediction of Small Area Means and Distributions
+- Gervini / Yohai (2002): A Class of Robust and Fully Efficient Regression Estimators
+- Pra99
 
 

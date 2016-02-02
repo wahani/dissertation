@@ -1,5 +1,5 @@
 # Area Level Models
-
+\label{sec:area}
 In SAE mixed models are generally devided into area and unit level models. In
 this section a review of some of the more important results is given with
 respect to area level models. Section \ref{sec:unit_level} then presents the
@@ -365,5 +365,5 @@ more reliable than the current time period.
 The spatial, temporal and spatio\hyp{}temporal FH is again the subject in
 section (?) where they are combined with robust estimation methodology. Note
 that the review in this chapter may not be sufficient to deduce the
-representation of these models as linear mixed models, which will be stated more
+representation of these models as linear mixed models, this will be stated more
 precisely in section (?).
