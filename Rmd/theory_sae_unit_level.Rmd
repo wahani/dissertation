@@ -6,19 +6,19 @@ was introduced by @Bat88 and inherits the authors names as it is refered to as
 the Battese-Harter-Fuller (BHF) model. Note that the main focus of this thesis 
 is the extension of area level models. However, some recent advances in the 
 field, especially with respect to robust estimation methodology, have been made 
-for unit level models. In chapter (?) these results are extended to the area
-level; here the basic unit level model and unit level notation is reviewed in
-order to give some more details in the following section (?). A review of unit
-level models in the context of linear mixed models and EBLUP based predictions
-can be found in @Jia06 and also in @Rao03 and @Rao15 who also review a variety
-of extensions.
+for unit level models. In chapter (?) these results are extended to the area 
+level; here the basic unit level model and unit level notation is reviewed in 
+order to be able to give some more details in the following section (?). A
+review of unit level models in the context of linear mixed models and EBLUP
+based predictions can be found in @Jia06 and also in @Rao03 and @Rao15 who also
+review a variety of extensions.
 
 The unit level model of @Bat88 can be expressed as linear mixed model by:
 \empty{
 \begin{align}
 	 y_{ij} = \sij{\mat{x}}^\top\beta + \si{\re} + \sij{e} \label{eq:bhf}
 \end{align}
-}where $y_{ij}$ denotes the response of unit $j = 1, \dots, n_i$ in area $i = 
+}where $y_{ij}$ denotes the response of unit $j = 1, \dots, N_i$ in area $i = 
 1, \dots, D$. The random effetc, $\si{\re}$, are independent and identically 
 distributed following a normal distribution such that $\re_i \sim \Distr{N}(0, 
 \sigre)$. The error term $\sij{e}$ are i.i.d. following a normal distribution 
@@ -26,13 +26,42 @@ with zero mean and variance $\sigma_e^2$. Furthermore the random effect and
 model error are independent. $\sij{\mat{x}}$ are the corresponding auxiliary
 variables for that unit.
 
-Let the set of $n$ sampled and $N-n$ non-sampled units be denoted by
-$s$ and $r$ respectivey.
+Following @Rao15[pp. 78 ff] this model can be split into sampled and non-sampled
+units. Let the set of $n$ sampled and $N-n$ non-sampled units be denoted by $S$
+and $R$ respectivey. The sets can furthermore be split into the distinct $S_1 
+\cup \dots \cup S_D$ and $R_1 \cup \dots \cup R_D$, where $S_i$ and $R_i$ denote
+the sampled and non sampled units in area $i = 1, \dots, D$ respectively. Then
+\eq{eq:bhf} can be written in matrix notation as
+\empty{
+\begin{align*}
+\mat{y} = 
+  \begin{pmatrix}\mat{y}_S\\\mat{y}_R\end{pmatrix} =
+  \begin{pmatrix}\mat{X}_S\\\mat{X}_R\end{pmatrix} \beta +
+  \begin{pmatrix}\mat{Z}_S\\\mat{Z}_R\end{pmatrix} \re + 
+  \begin{pmatrix}\mat{e}_S\\\mat{e}_R\end{pmatrix}
+\end{align*}
+}where the subscripts $R$ and $S$ denote the sampled and non-sampled part of the
+model. This representation makes it clear that a fundamental assumption is that 
+the sampled units follow the population model. This is plausible under simple 
+random sampling within each domain and, as @Rao15[79] note, also when $\mat{X}_S$
+contains the variables used for sampling.
 
-Let $\hat{\beta}$ denote the best linear unbiased estimator (BLUE) of $\beta$ and $\si{\hat{\re}}$ the best linear unbiased predictor (BLUP) (cf.\ \citealp{Hen50} or \citealp{Sea71}). The empirical best linear unbiased predictor (EBLUP) for the mean in small area $i$ under the Battese-Harter-Fuller model is then given by
-
+These results can now be used to derive an EBLUP for the target statistic. In 
+principle this also happens according to section \ref{sec:blup}, however we are 
+generally not interested in a prediction on unit level but for the area level 
+target statistic. Following @Rao15[pp. 174 ff] an EBLUP under model \eq{eq:bhf}
+for the ith area mean can be derived as
+\empty{
 \begin{align}
-\label{eq:BHFEBLUP}
-\hat{\theta}_i^{BHF} = N_i^{-1} \Paran{\sum_{j \in s_i} y_{ij} + \sum_{j\in r_i}(\si{x}^\top\hat{{\beta}} + \hat{\si{\re}})}.
+\hat{\theta}_i^{BHF} = N_i^{-1} \Paran{\sum_{j \in S_i} y_{ij} + 
+  \sum_{j\in R_i}(\sij{\mat{x}}^\top\hat{{\beta}} + \si{\hat{\re}})}
 \end{align}
+}where $\hat{\beta}$ denotes the BLUE of $\beta$ which is estimated using the
+sampled information. Note that this predictor is based on the auxiliary 
+information for each unit in the non-sampled part of the population. In practice
+this assumption can be relaxed by using the area means of the population which 
+need to be available to the analyst. The unknown parameters of the model, i.e.
+$\beta$, $\sigre$ and $\sigma_e^2$, can be estimated using standard ML and REML
+estimation techniques.
+
 
