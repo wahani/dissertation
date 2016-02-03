@@ -97,7 +97,7 @@ introduced a jackknife estimator based on the results of @Jia02 and explicitly
 targeted the MSPE estimation of the prediction under a Fay-Herriot model. They 
 found satisfying results for the MSPE estimation using their method; however the
 conclusion with respect to the estimation of $\sigre$ is not as clear as in
-@Dat05, where they compare a method of moment estimator to the method proposed
+@Dat05, where they compare a method of moments estimator to the method proposed
 by @Fay79.
 
 A different line of discussion is stimulated by the fact that it is assumed that
@@ -105,11 +105,11 @@ the sampling variances, $\sige$, are known parameters. In practice this is not
 the case and these parameters are estimated using the sample data. This can mean
 that they are themselves direct estimators; but if a direct mean is considered 
 unreliable then its variance estimation cannot be considered reliable. @Fay79 
-use generalized variance functions - see @Wol07[pp. 272 ff] for a discussion of 
+use generalised variance functions - see @Wol07[pp. 272 ff] for a discussion of 
 these methods - instead of direct estimators. @Mai14 suggest instead to shrink 
 both means and variances to account for the possibility of unstable direct 
 variance estimates and also provide an estimator of the MSPE of the predictions.
-This approach is based on a Bayesian modelling strategy. @You06 provide results 
+This approach is based on a Bayesian modeling strategy. @You06 provide results 
 for the case that direct variance estimates are used in a hierarchical Bayes 
 approach and can account for that extra variability in the MSPE estimation. MSPE
 estimators for an EBLUP based prediction using estimated sampling variances can 
@@ -121,14 +121,14 @@ variability associated with the estimation of direct sampling variances.
 ### Discussion
 
 From a practical point of view the assumption of known sampling variances under 
-the model is not plausible. Hence these variances, though subject to estimation,
+the model is not plausible. Here these variances, though subject to estimation,
 are treated as known constants. Some approaches to deal with this problem have
 been reviewed in section \ref{sec:theory_sae_fh_mspe} because in principle this
 relates mostly to an underestimation of the true uncertainty of the predictions.
 Another dimension which was for example addressed by @Mai14 is the instability 
 of predictions when very heterogenous sampling variances are observed, and to
 deal with this by shrinking both means and variances. A further approach is to
-stabilise the sampling variances by using generalized variance functions or
+stabilise the sampling variances by using generalised variance functions or
 other smoothing techniques. Albeit these parameters are assumed to be known they
 can have a large impact on the validity of domain predictions. In section (?) I
 show how the robust FH model relates to this discussion in terms of stability
@@ -162,21 +162,21 @@ at least incorporate design weights into the direct estimation and then have a
 design unbiased estimator on the area level. Other reasons can be practical
 considerations, e.g. the reduction of computational demands because area level data 
 is often connected with a dramatic reduction in the number of observations hence more 
-complex variance structures can be modelled with less computational effort.
+complex variance structures can be modeled with less computational effort.
 Other reasons are discussed in more detail in @Nam15 who consider different
-scenarios for the availability of auxiliary information, e.g. unit and area
+scenarios for thie availability of auxiliary information, e.g. unit and area
 level variables and contextual variables. Their findings show that overall unit
 level models have more potential to reduce the MSPE of domain predictions; this
 is not surprising as parameter estimation under a unit level model uses more 
 information and thus is more precise. This leaves the availability of data as 
 the main reason to consider area level models.
 
-Area level models in small area estimation have been used in many applications and the
+Area level models in Small Area Estimation have been used in many applications and the
 Fay-Herriot model is explicitly subject to numerous extensions. See for example
 @Cle14 for a review in disease mapping; @Gua15 for a review of methods used for 
   poverty mapping; and @Ben16 for an EBLUP under a multivariate FH model. A
-  comprehensive review of extension can be found in @Rao03[pp. 153 ff] and
-  @Rao15[pp ?]. The following section reviews some advances for incorporating
+  comprehensive review of extensions to the FH model can be found in @Rao03[pp. 153 ff] and
+  @Rao15[pp 81 ff]. The following section reviews some advances for incorporating
   structures in space and time into the estimation process. Some of these
   results in addition to a robust extension is then the subject of chapter (?).
 
@@ -196,24 +196,24 @@ predictions. In constrast to modifications to the model error this may add to
 the improvement of domain predictions in terms of MSPE and is favoured in the 
 literature. Modifying the model error can be motivated to account for correlated
 sampling errors of the direct estimators. This may be of special interest if,
-for example, the area level information is based on panel surveyes.
+for example, the area level information are based on a panel surveye.
 
 ### Spatial Extensions
 
 The standard FH model \eq{eq:fh} uses a random effect to capture unobserved 
-variation between areas. However it ignores unobserved spatial patterns which
-can be present when areas refer to geographical units. In the standard FH model
-the area specific random effects are independent; when spatial correlation is an
-issue then instead the assumption of correlated random effects appears to be
-more plausible because neighbouring areas may be similar. If no covariates are
-present to capture such effects @Mol09 showed that taking spatial correlation
-into account can be beneficial for domain predictions. @Sin05, @Pet06 and @Pra08
-investigated the possibility to incorporate a simultaneous autoregressive
+variation between areas. However it ignores unobserved spatial patterns which 
+can be present when areas refer to geographical units. In the FH model the area
+specific random effects are independent; when spatial correlation is an issue
+then instead the assumption of correlated random effects appears to be more
+plausible because neighbouring areas may be similar. If no covariates are 
+present to capture such effects @Mol09 showed that taking spatial correlation 
+into account can be beneficial for domain predictions. @Sin05, @Pet06, and
+@Pra08 investigated the possibility to incorporate a simultaneous autoregressive
 process (SAR) into the domain predictions. In principle there are two options to
 model spatial correlation: conditional autoregressive models (CAR) and SAR. The 
 main difference is that CAR models are based on a Markov field which implies 
-that spatial correlation exists only locally between two or more neighbours but
-does not effect other non neighbouring units, i.e. such a process has no memory
+that spatial correlation exists only locally between two or more neighbours but 
+does not effect other non neighbouring units, i.e. such a process has no memory 
 across space. SAR processes do not have this restriction and are more useful to 
 describe a global correlation structure. For a comprehensive overview of 
 different approaches see @Cre93. To incorporate spatial correlation we can 
@@ -231,10 +231,10 @@ u_{1i} = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i}
 $$
 where $|\rho_1| < 1$ and $\epsilon_{1i} \sim \Distr{N}(0, \sigma_1^2)$ are 
 i.i.d. with $i = 1,\dots, D$. $w_{il}$ are the elements of $\mat{W}$ which is 
-the row standardized proximity matrix $\mat{W}^0$. The elements in $\mat{W}^0$ 
-are equal to 1 if areas are neighboured and 0 otherwise, it then follows that
-the dimension of $\mat{W}^0$ is $D \times D$. Using the methodology of section
-\ref{sec:blup} the BLUP can be stated as:
+the row standardized transformation of the proximity matrix $\mat{W}^0$. The 
+elements in $\mat{W}^0$ are equal to one if areas are neighboured and zero
+otherwise, it then follows that the dimension of $\mat{W}^0$ is $D \times D$.
+Using the methodology of section \ref{sec:blup} the BLUP can be stated as:
 \empty{
 \begin{align*}
 \tilde{\theta}^{SFH}_{i} = \mat{x}^\top_{i}\tilde{\beta} + \tilde{\re}_{1i}
@@ -270,12 +270,12 @@ correlated random effects to borrow strength for domain predictions:
 \tilde{y}_{it} = \mat{x}^\top_{it}\beta + \re_{i} + \re_{2it} + e_{it} \label{eq:tfh}
 \end{align}
 }where $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D$ and $T$ are the total 
-number of areas and time periods respectively. Here $e_{it} \sim\Distr{N}(0, 
+number of areas and time periods, respectively. Here $e_{it} \sim\Distr{N}(0, 
 \sigma^2_{eit})$ are independent with known variances $\sigma_{eit}^2$. $u_{i}$ 
 corresponds to the random effect in model \eq{eq:fh} and follows a normal 
 distribution with zero mean and variance $\sigre$. Correlation over time is now
 incorporated by adding $\re_{2it}$ which is a correlated random effect following
-a AR(1), i.e. an autoregressive process of order one:
+an AR(1), i.e. an autoregressive process of order one:
 $$
 \re_{2it} = \rho_2 \re_{2i, t-1} + \epsilon_{2it}
 $$
@@ -294,7 +294,7 @@ the EBLUP can be obtained:
 \begin{align}
 \hat{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\hat{\beta} + \hat{u}_{i} + \hat{u}_{2it}.
 \end{align}
-}@Rao94 used method of moment estimators to estimate the elements in $\delta$.
+}@Rao94 used a method of moments estimator for the elements in $\delta$.
 Extensions to this model have been made by @Dat02 by replacing the AR(1) process
 with a random walk. @Sin91 use a random slope model instead of correlated random
 effects, but also use an AR(1) to describe the variation of the random
@@ -333,7 +333,7 @@ their respective estimates leads then to the EBLUP under model \eq{eq:stfh}:
 \hat{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\hat{\beta} + \hat{\re}_{1i} + \hat{\re}_{2it}.
 \end{align}
 }
-In contrast to @Sin05 who derived an analytical MSPE for spatio temporal domain
+In contrast to @Sin05 who derived an analytical MSPE for spatio-temporal domain
 predictions and @Pra08 who derived an MSPE for spatial predictions, @Mar13
 propose to use a parametric bootstrap for the estimation of the MSPE.
 
@@ -341,17 +341,17 @@ propose to use a parametric bootstrap for the estimation of the MSPE.
 
 The use of correlation across space to improve domain predictions is in 
 principle promising for applications. However, an important remark and result of
-the reviewed literature is, that modelling spatial autocorrelation as a random
+the reviewed literature is, that modeling spatial autocorrelation as a random 
 effect is beneficial if this structure can not be captured by auxiliary 
 information, i.e. in the fixed effects part of a mixed model. This means such 
 models can be used to capture *unobserved* spatial correlation. Also note that 
-although the proximity matrix is introduced to represent neighbouring units in a
-geographical sense it can refer to more abstract relationships. Neighbouring
-units may also be defined, for example, by capturing the structure between 
-industry sectors with strong inter connections. Such structures, in
-contrast to geographical units, may be defined with domain expertise. Thus
-this strategy can be generally useful for domain predictions instead of being 
-restricted to the geographical sense of area predictions.
+although the proximity matrix $\mat{W}^0$ is introduced to represent
+neighbouring units in a geographical sense it can refer to more abstract
+relationships. Neighbouring units may also be defined, for example, by capturing
+the structure between industry sectors with strong inter-connections. Such
+structures, in contrast to geographical units, may be defined with domain
+expertise. Thus this strategy can be generally useful for domain predictions
+instead of being restricted to the geographical sense of area predictions.
 
 Different is the use of information over time. @Mar13 note that in practice we
 may be interested to make predictions for the current time period, and not the
@@ -362,7 +362,7 @@ additionally be of use to improve domain predictions. @Sin05 note that this is
 especially the case if the historic information, often itself predictions, is
 more reliable than the current time period.
 
-The spatial, temporal and spatio\hyp{}temporal FH is again the subject in
+The spatial, temporal and spatio\hyp{}temporal FH model is again the subject in
 section (?) where they are combined with robust estimation methodology. Note
 that the review in this chapter may not be sufficient to deduce the
 representation of these models as linear mixed models, this will be stated more
