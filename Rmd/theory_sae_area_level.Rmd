@@ -316,11 +316,11 @@ Following @Mar13 a spatio temporal FH model can be formulated as:
 \end{align}
 }where in contrast to model \eq{eq:tfh} the first random effect component has 
 been replaced with a correlated random effects component following a SAR(1). To 
-summarise this model, we have $\re_{1i}$ following a SAR(1), $\re_{2it}$
+summarise this model, we have $\re_{1i}$ following a SAR(1), $\re_{2it}$ 
 following an AR(1), and $e_{it}$ are i.i.d., furthermore $\re_{1i}$, $\re_{2it}$
-and $e_{it}$ are assumed to be independent. Following the presentation of the 
-previous sections, the spatio temporal BLUP under model \eq{eq:stfh} can be
-defined by:
+and $e_{it}$ are assumed to be pairwise independent. Following the presentation
+of the previous sections, the spatio temporal BLUP under model \eq{eq:stfh} can
+be defined by:
 \empty{
 \begin{align*}
 \tilde{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\tilde{\beta} + \tilde{\re}_{1i} + \tilde{\re}_{2it}.
