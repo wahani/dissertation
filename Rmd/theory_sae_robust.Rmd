@@ -30,65 +30,106 @@ proposed robust methods in the SAE field.
 ## Robust Estimation Equations
 \label{sec:robustee}
 
-@Fel86 studied the robust estimation of linear mixed model parameters.
-However, the proposed approach is based on given variance parameters $\theta$
-which is why @Sin09 propose an estimation procedure in which robust estimators
-for $\beta$ and $\theta$ are solved iteratively. With given robust estimates for
-$\beta$ and $\theta$ the estimation of the random effects is straight forward,
-the main concern, however, lies with the estimation of robust variance
-parameters. Starting from a mixed model:
+Section \ref{sec:blup} reviewed the domain prediction under linear mixed models.
+Key to these predictions are the BLUE given by \eq{eq:blue} and the BLUP given
+by \eq{eq:blupre}. These estimators can be derived based on the log-likelihood
+of the joint density of $\mat{y}$ and $\mat{\re}$ of \eq{eq:lmm}
 $$
-\mat{y} = \mat{X} \beta + \mat{Z} \re + \mat{e}
+\mat{y} = \mat{X} \beta + \mat{Z} \mat{\re} + \mat{e}
 $$
-where $\mat{y}$ is the response vector with elements $y_i$, $\mat{X}$ the
-design matrix, $\re$ the vector of random effects and $\mat{e}$ the
-vector of sampling errors. Both error components are assumed to be normally
-distributed with $\mat{\re} \sim \Distr{N}(0, \mat{G})$ and $\mat{e}
-\sim \Distr{N}(0, \mat{R})$ where $\mat{G}$ and $\mat{R}$ typically
-depend on some variance parameters $\theta$. Thus the variance of y is given by
-$\mat{V}(\mat{y}) = \mat{V}(\theta) =
-\mat{Z}\mat{G}\mat{Z}^\top + \mat{R}$. Maximizing the likelihood of
-$\mat{y}$ with respect to $\beta$ and $\theta$ leads to the following
-equations:
-\begin{align*}
-\mat{X}^\top\mat{V}^{-1}\left(\mat{y}-\mat{X}\beta\right) =& 0 \\
-\left(\mat{y} - \mat{X}\beta\right)^\top\mat{V}^{-1}          %(y-Xb)'V^-1
-\frac{\partial\mat{V}}{\partial\theta_l}                      % dV/dx
-\mat{V}^{-1}\left(\mat{y} - \mat{X}\beta\right) -             %V^-1 (y-Xb)
-\tr\left(\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}\right) =& 0
-\end{align*}
-
-where $q$ denotes the number of unknown variance parameters with $l = 1, \dots,
-q$. Solving the above equations leads to the ML-estimates for $\beta$ and
-$\theta$. To robustify against outliers in the response variable, the residuals 
-$\left(\mat{y}-\mat{X}\beta\right)$ are standardized and restricted by some
-influence function $\psi(\cdot)$. The standardized residuals are given by
-$$
-\mat{r} = \mat{U}^{-\frac{1}{2}}
-\left(\mat{y}-\mat{X}\beta\right)
-$$
-where $\mat{U}$ is the matrix of diagonal elements of $\mat{V}$ and thus
-also depends on the variance parameters $\theta$. A typical choice for
-$\psi(\cdot)$ is Hubers influence function:
-$$
-\psi(u) = u \min\left(1, \frac{b}{|u|}\right).
-$$
-A typical choice for $b$ is 1.345. The vector of robustified residuals is
-denoted by $\mat{\psi}(\mat{r}) = (\psi(r_1), \dots, \psi(r_{n}))$.
-Solving the following robust ML-equations leads to robustified estimators for
-$\beta$ and $\theta$:
+when we assume normality of the distribution of $\mat{\re}$ and $\mat{e}$. 
+Remember that the model now can be stated as $\mat{y} \sim 
+\Distr{N}(\mat{X}\beta, \mat{V})$ where $\mat{V} = 
+\mat{Z}\mat{V}_\re\mat{Z}^\top + \mat{V}_e$. The first derivatives of the 
+log-likelihood with respect to $\beta$ and $\mat{\re}$ for given variance 
+parameters $\delta$ then lead to the so-called *mixed model equations*:
+\empty{
 \begin{align}
-\label{eq:rml_beta}
-\mat{X}^\top\mat{V}^{-1} \mat{U}^{\frac{1}{2}} \psi(\mat{r}) =& 0 \\
-\label{eq:rml_theta}
-\Phi_l(\theta) = \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}
-\frac{\partial\mat{V}}{\partial\theta_l}
-\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) - \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}\right) =& 0 
+\mat{X}^\top\mat{V}_e^{-1}\left(\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}\right) &= 0 \label{eq:mmeb} \\
+\mat{Z}^\top \mat{V}_e^{-1} \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}} - \mat{V}_\re^{-1} \mat{\re} &= 0. \label{eq:mmere}
 \end{align}
-where $K$ is a diagonal matrix of the same order as $\mat{V}$ with diagonal
-elements $c = \Exp{E}[\psi^2(r)|b]$ where $r$ follows a standard normal
-distribution.
+}@Hen63 showed that the solutions to \eq{eq:mmeb} and \eq{eq:mmere} are
+identical to the BLUE and BLUP defined in \eq{eq:blue} and \eq{eq:blupre}
+respectively.
 
+@Fel86 studied the robust estimation of $\beta$ and $\mat{\re}$ by modifying
+  \eq{eq:mmeb} and \eq{eq:mmere} to restrict the influence of outlying
+  observations. He suggests to use an influence function to restrict the
+  influence of the residuals in \eq{eq:mmeb} and \eq{eq:mmere} modifying them
+  into:
+\empty{
+\begin{align}
+\mat{X}^\top\mat{V}_e^{-\half}\psi\left(\mat{V}_e^{-\half} \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}}\right) &= 0 \label{eq:rmmeb} \\
+\intertext{and}
+\mat{Z}^\top \mat{V}_e^{-\half} \psi \Paran{\mat{V}_e^{-\half} \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}}} - \mat{V}_\re^{-\half} \psi\Paran{\mat{V}_\re^{-\half}\mat{\re}} &= 0 \label{eq:rmmere}
+\end{align}
+}where $\psi(\cdot)$ is a bounded monotonous influence function. @Fel86 suggests
+to use Huber's influence function (cf. @Hub64) where $\psi_b(x) = x 
+\min\Paran{1, \frac{b}{|x|}}$ for a given tuning canstant $b$ where a common 
+choice for $b$ is 1.345. @Rao03[102] suggests to use a robust version of 
+Henderson's (cf. @Hen50) estimation equations for the unknown parameters in 
+$\delta$; remember that $V = V(\delta)$ where $\delta$ denotes the vector of
+unknown variance parameters.
+
+Building on these results @Sin09 proposed a similar approach in that they use 
+*robustified* estimation equations. In contrast to the approach by @Fel86 these 
+equations are derived from the marginal model of \eq{eq:lmm} and specifically
+for $\beta$ and $\delta$; thus the first derivatives of the marginal
+log-likelihood with respect to $\beta$ and $\delta$ are:
+\empty{
+\begin{align*}
+\mat{X}^\top\mat{V}^{-1}\left(\mat{y}-\mat{X}\beta\right) &= 0 \\
+\intertext{and}
+\left(\mat{y} - \mat{X}\beta\right)^\top\mat{V}^{-1}          %(y-Xb)'V^-1
+\frac{\partial\mat{V}}{\partial\delta_l}                      % dV/dx
+\mat{V}^{-1}\left(\mat{y} - \mat{X}\beta\right) -             %V^-1 (y-Xb)
+\tr\left(\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\right) &= 0
+\end{align*}
+}for $l = 1, \dots, Q$ where $Q$ denotes the total number of variance parameters
+in $\delta$. These estimation equations are now modified to restrict the
+influence of outlying observations similar to \eq{eq:rmmeb} in that the
+residuals have bounded influence using, also, an influence function denoted by
+$\psi(\cdot)$:
+\empty{
+\begin{align}
+\label{eq:reeb}
+\mat{X}^\top\mat{V}^{-1} \mat{U}^{\frac{1}{2}} \psi(\mat{r}) & = 0 \\
+\label{eq:reed}
+\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1} 
+\frac{\partial\mat{V}}{\partial\delta_l}
+\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) - \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\right) & = 0 
+\end{align}
+}where $K = \Exp{E}(\psi_b^2(z)) \mat{I}_n$ is a diagonal matrix of the same 
+order as $\mat{V}$ with $z$ following a standard normal distribution; and 
+$\mat{r} = \mat{r}(\beta) = \mat{U}^{-\half} (\mat{y} - \mat{X}\beta)$ denotes
+the vector of the standardised residuals and $\mat{U} = \mat{U}(\delta)$ is the
+matrix containing the diagonal elements of $\mat{V}$.
+
+In order to find solutions for $\beta$ and $\delta$ based on the robust
+estimation equations \eq{eq:reeb} and \eq{eq:reed} @Sin09 proposed
+Newton-Raphson algorithms. @Sch12 and @Schoch12 have reported numerical problems
+with this approach and different alternative solutions have been investigated.
+@Sch12 proposed to find the minimum of the squared estimation equations in
+\eq{eq:reed} for all variance parameters, which was further optimized by @Aue15
+with stable and satisfying results. @Schoch12 uses instead an iteratively
+re-weighted least squares (IRWLS) algorithm for a solution of \ref{eq:reeb}
+which also yields satisfying results. Another proposition has been made by
+@Chat12 which is to derive a system of fixed point equations based on
+\eq{eq:reed} and derives a stable algorithm - using a fixed point algorithm -
+for $\delta$. 
+
+The main advantage of these alternatives may be that they do not rely on the
+derivatives of the estimation equations, which was already a known concern in
+the work by @Sin09. See @Ken80[chapter 11] and @Thi88[chapter 4] for
+comprehensive overviews for solving ML based robust estimation equations, who
+also suggest the IRWLS algorithm as an alternative to the NR algorithm. In
+section (?) the explicit form and extension of these results are given for the
+suggested estimators.
+
+With given robust estimates for $\beta$ and $\delta$ @Sin09 solve the robust
+mixed model equation \eq{eq:rmmere} proposed by @Fel86 and in order to derive a
+robust EBLUP (REBLUP). Although they also suggest to use a NR algorithm which is
+developed using a Taylor series expansion, the numerical solution appears to less problematic. This is indicated @Sch12 who 
 
 ## Bias Correction
 \label{sec:robustbc}

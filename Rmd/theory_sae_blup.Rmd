@@ -61,9 +61,10 @@ variance components, $\delta$, the best linear unbiased estimator (BLUE) is give
 \end{align}
 }and the BLUP for $\mat{\re}$ by:
 \empty{
-\begin{align*}
+\begin{align}
+\label{eq:blupre}
 \tilde{\mat{\re}} = \tilde{\mat{\re}}(\delta) = \mat{V}_\re\mat{Z}^\top\mat{V}^{-1}\Paran{\mat{y} - \mat{X}\tilde{\beta}}
-\end{align*}
+\end{align}
 }such that the BLUP estimator for $\mu$ can be stated as:
 \empty{
 \begin{align}
