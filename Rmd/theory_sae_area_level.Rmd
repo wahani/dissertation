@@ -346,12 +346,12 @@ effect is beneficial if this structure can not be captured by auxiliary
 information, i.e. in the fixed effects part of a mixed model. This means such 
 models can be used to capture *unobserved* spatial correlation. Also note that 
 although the proximity matrix $\mat{W}^0$ is introduced to represent
-neighbouring units in a geographical sense it can refer to more abstract
+neighbouring units in a geographical sense it can refer to more abstract 
 relationships. Neighbouring units may also be defined, for example, by capturing
-the structure between industry sectors with strong inter-connections. Such
-structures, in contrast to geographical units, may be defined with domain
-expertise. Thus this strategy can be generally useful for domain predictions
-instead of being restricted to the geographical sense of area predictions.
+the structure between industry sectors with inter-relations. Such structures, in
+contrast to geographical units, may be defined with domain expertise. Thus this
+strategy can be generally useful for domain predictions instead of being
+restricted to the geographical sense of area predictions.
 
 Different is the use of information over time. @Mar13 note that in practice we
 may be interested to make predictions for the current time period, and not the
@@ -360,7 +360,7 @@ historic information may lead to an improvement of parameter estimates due to an
 increased sample size. The temporal random effect in model \eq{eq:tfh} can
 additionally be of use to improve domain predictions. @Sin05 note that this is 
 especially the case if the historic information, often itself predictions, is
-more reliable than the current time period.
+more reliable than the available information of the current time period.
 
 The spatial, temporal and spatio\hyp{}temporal FH model is again the subject in
 section (?) where they are combined with robust estimation methodology. Note
