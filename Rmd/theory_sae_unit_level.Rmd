@@ -53,6 +53,7 @@ target statistic. Following @Rao15[pp. 174 ff] an EBLUP under model \eq{eq:bhf}
 for the ith area mean can be derived as
 \empty{
 \begin{align}
+\label{eq:bhfeblup}
 \hat{\theta}_i^{BHF} = N_i^{-1} \Paran{\sum_{j \in S_i} y_{ij} + 
   \sum_{j\in R_i}(\sij{\mat{x}}^\top\hat{{\beta}} + \si{\hat{\re}})}
 \end{align}

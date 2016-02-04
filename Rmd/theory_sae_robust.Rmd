@@ -112,24 +112,51 @@ with this approach and different alternative solutions have been investigated.
 @Sch12 proposed to find the minimum of the squared estimation equations in
 \eq{eq:reed} for all variance parameters, which was further optimized by @Aue15
 with stable and satisfying results. @Schoch12 uses instead an iteratively
-re-weighted least squares (IRWLS) algorithm for a solution of \ref{eq:reeb}
+re-weighted least squares (IRWLS) algorithm for a solution of \eq{eq:reeb}
 which also yields satisfying results. Another proposition has been made by
 @Chat12 which is to derive a system of fixed point equations based on
-\eq{eq:reed} and derives a stable algorithm - using a fixed point algorithm -
+\eq{eq:reed} and she derives a stable algorithm - using a fixed point algorithm -
 for $\delta$. 
 
-The main advantage of these alternatives may be that they do not rely on the
-derivatives of the estimation equations, which was already a known concern in
-the work by @Sin09. See @Ken80[chapter 11] and @Thi88[chapter 4] for
-comprehensive overviews for solving ML based robust estimation equations, who
-also suggest the IRWLS algorithm as an alternative to the NR algorithm. In
-section (?) the explicit form and extension of these results are given for the
-suggested estimators.
+The main advantage of these alternatives may be that they do not rely on the 
+derivatives of the estimation equations, which was already a known concern in 
+the work of @Sin09. See @Ken80[chapter 11] and @Thi88[chapter 4] for 
+comprehensive overviews for solving ML based robust estimation equations, who 
+also suggest the IRWLS algorithm as an alternative to the NR algorithm for this
+very reason. 
 
-With given robust estimates for $\beta$ and $\delta$ @Sin09 solve the robust
-mixed model equation \eq{eq:rmmere} proposed by @Fel86 and in order to derive a
+With given robust estimates for $\beta$ and $\delta$ @Sin09 solve the robust 
+mixed model equation \eq{eq:rmmere} proposed by @Fel86 in order to derive a 
 robust EBLUP (REBLUP). Although they also suggest to use a NR algorithm which is
-developed using a Taylor series expansion, the numerical solution appears to less problematic. This is indicated @Sch12 who 
+developed using a Taylor series expansion, the numerical solution appears to be
+less problematic. This is indicated by @Sch12, @Aue15, and @Chat12 whose main
+concern are stable solutions for $\delta$. On the other hand @Schoch12 suggests
+to find solutions based on a robust version of a method of moments estimator and
+a similar suggestion can be found in @Rao15[196] which is to use a robust
+version of \eq{eq:blupre}:
+\empty{
+\begin{align}
+\hat{\mat{\re}}^\psi = \mat{V}_u\mat{Z}^\top\mat{V}^{-1}\mat{U}^\half\psi(\mat{r}) \label{eq:reblupre}
+\end{align}
+}where the notation is the same as before with the only difference being that 
+$\hat{\mat{\re}}^\psi$ now depends on the robust parameter estimates 
+$\hat{\beta}^\psi$ and $\hat{\delta}^\psi$ for which different solutions exist 
+as discussed before. From a computational point of view this has the obvious 
+advantage that no iterative algorithm is needed. @Rao15[196] note that a 
+disadvantage may be that \eq{eq:reblupre} depends on the composite error - 
+$\mat{Z}\mat{\re} + \mat{e}$ - of \eq{eq:lmm} whereas in \eq{eq:rmmere} the 
+influence function is applied only to $\mat{e}$. However, an empirical
+investigation of this issue can not be found in the literature at this time.
+
+Given the robust estimates $\hat{\beta}^\psi$, $\hat{\delta}^\psi$, and $\hat{\mat{\re}}^\psi$ @Sin09 derive the REBLUP for area level means under the BHF model \eq{eq:bhf}. The REBLUP is then a robust variation of \eq{eq:bhfeblup} and can be stated as:
+\empty{
+\begin{align*}
+\hat{\theta}_i^{RBHF} = N_i^{-1} \Paran{\sum_{j \in S_i} y_{ij} + 
+  \sum_{j\in R_i}(\sij{\mat{x}}^\top\hat{{\beta}}^\psi + \si{\hat{\re}^\psi})}
+\end{align*}
+}
+
+
 
 ## Bias Correction
 \label{sec:robustbc}
