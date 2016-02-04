@@ -152,14 +152,22 @@ Given the robust estimates $\hat{\beta}^\psi$, $\hat{\delta}^\psi$, and $\hat{\m
 \empty{
 \begin{align*}
 \hat{\theta}_i^{RBHF} = N_i^{-1} \Paran{\sum_{j \in S_i} y_{ij} + 
-  \sum_{j\in R_i}(\sij{\mat{x}}^\top\hat{{\beta}}^\psi + \si{\hat{\re}^\psi})}
+  \sum_{j\in R_i}\Paran{\sij{\mat{x}}^\top\hat{{\beta}}^\psi + \si{\hat{\re}^\psi}}}
 \end{align*}
 }
 
 
-
 ## Bias Correction
 \label{sec:robustbc}
+
+In the above we have seen everything is great, awsome. But not everything is so super dupy as it appears. Predictions made using the methodology above are often asscociated with a bias. This is so because 
+
+\empty{
+\begin{align*}
+\hat{\theta}_i^{RBHF-BC} = \hat{\theta}_i^{RBHF} + \Paran{\frac{1}{n_i} - \frac{1}{N_i}} \sum_{j\in S_i} \phi_i\psi_c\Paran{\frac{ \sij{\hat{e}}^\psi }{\phi_i}} 
+\end{align*}
+}where $\sij{\hat{e}}^\psi = \sij{y} - \sij{\mat{x}}^\top \hat{\beta}^\psi - \hat{\re}_i^\psi$ is the prediction error associated to the REBLUP.
+
 
 - Tzavidis and Chambers (2005): BIAS ADJUSTED SMALL AREA ESTIMATION WITH M-QUANTILE MODELS
 - Jiongo, Haziza and Duchesne (2013): Controlling the bias of robust small-area estimators
