@@ -100,13 +100,13 @@ Gaussian distribution - appears to be implausible then intuition demands that it
 be replaced. This often leads to the use of non-symmetric or heavy-tailed 
 distributions for the model error or the random effect. Due to their flexibility
 Bayesian modelling strategies are often used in this context; see for example
-@Dat95 and @Bel06. Secondly, methods are applied which are *naturally* more
-robust against outlying observations. @Tza10 model a global conditional median,
-or more generally a quantile, instead of a mean. The third approach is to remain
-with the original model or method and *robustify* the estimation equations. In
-this context @Sin09 develop a robustified EBLUP; @Bea09 refer to a winzorisation
-of the Horvitz-Thompson estimator; and @Bea04 introduces a robust extension to 
-generalized regression estimation.
+@Dat95 and @Bel06. Secondly, methods are applied which are *naturally* more 
+  robust against outlying observations. @Cha06 and @Tza10 model a global
+  conditional median, or more generally a quantile, instead of a mean. The third
+  approach is to remain with the original model or method and *robustify* the
+  estimation equations. In this context @Sin09 develop a robust EBLUP; @Bea09
+  refer to a winzorisation of the Horvitz-Thompson estimator; and @Bea04
+  introduces a robust extension to generalized regression estimation.
 
 Given this background, in this thesis I introduce extensions to the
 Fay\hyp{}Herriot area level model using a model based perspective. More
