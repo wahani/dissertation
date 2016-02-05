@@ -201,7 +201,7 @@ the potential bias:
 \hat{\theta}_i^{RBHF-BC} = \hat{\theta}_i^{RBHF} + \Paran{\frac{1}{n_i} - \frac{1}{N_i}} \sum_{j\in S_i} \phi_i\psi_c\Paran{\frac{ \sij{\hat{e}}^\psi }{\phi_i}} 
 \end{align}
 }where $\sij{\hat{e}}^\psi = \sij{y} - \sij{\mat{x}}^\top \hat{\beta}^\psi -
-\hat{\re}_i^\psi$ is the unit level prediction error; $\phi_i$ with $i = 1,
+\hat{\re}_i^\psi$ is the unit level prediction error and $\phi_i$ with $i = 1,
 \dots, D$ is the median absolute deviation of $\sij{\hat{e}}^\psi$ within area
 $i$. Note that here $\psi_c$ denotes typically the same influence function as in
 the robust estimation equations, $\psi_b$, with the important restriction that $c
@@ -217,7 +217,7 @@ relies on $S$ instead of $S_i$, i.e. the whole sample and not just the sampled
 units within domains. Hence they called their bias correction fully
 bias-corrected. The second approach uses a conditional bias to account for units
 in the population. This effectively reduces to the different treatment of the 
-robust predictions of the random effects in their two approches. In their
+robust predictions of the random effects in their two approaches. In their
 simulation study they find an improvement in terms of bias for all three bias
 corrections for the REBLUP in \eq{eq:reblupbhf}. However, especially in terms of
 stability measured by relative efficiency - relative to the EBLUP in
@@ -237,6 +237,16 @@ area level predictions is discussed in section (?).
 
 ### Bootstrap
 \label{sec:theory_sae_robust_bootstrap}
+For given parameters $\hat{\beta}^\psi$, $\delta^\psi = \Paran{(\hat{\sigma}_u^2)^\psi, (\hat{\sigma}_e^2)^\psi}$
+$$
+\sij{y}^* = \sij{x}^\top \hat{\beta}^\psi + \re_i^* + \sij{e}^*
+$$
+with $j = 1, \dots, n_i$ and $i = 1, \dots, D$ where $\re_i^* \sim \Distr{N}(0, (\hat{\sigma}_u^2)^\psi)$ and $\sij{e}^* \sim \Distr{N}(0, (\hat{\sigma}_e^2)^\psi)$
+$$
+\bar{Y}_i^{*} = N_i^{-1} \Paran{\sum_{j \in S_i} y^*_{ij} + 
+  \sum_{j\in R_i}\Paran{\sij{\mat{x}}^\top\hat{{\beta}}^\psi + (1-n_iN_i^{-1})(\si{\re}^* + \bar{e}^*_i }}
+$$
+with $\si{\bar{e}}^* \sim \Distr{N}(0, (N_i - n_i)^{-1} (\hat{\sigma}_e^2)^\psi)$
 
 - Jiiongo, Nguimekeu (2014): Bootstrapping Mean Squared Errors of Robust Small
 Area Estimators
