@@ -148,36 +148,94 @@ $\mat{Z}\mat{\re} + \mat{e}$ - of \eq{eq:lmm} whereas in \eq{eq:rmmere} the
 influence function is applied only to $\mat{e}$. However, an empirical
 investigation of this issue can not be found in the literature at this time.
 
-Given the robust estimates $\hat{\beta}^\psi$, $\hat{\delta}^\psi$, and $\hat{\mat{\re}}^\psi$ @Sin09 derive the REBLUP for area level means under the BHF model \eq{eq:bhf}. The REBLUP is then a robust variation of \eq{eq:bhfeblup} and can be stated as:
+Given the robust estimates $\hat{\beta}^\psi$, $\hat{\delta}^\psi$, and
+$\hat{\mat{\re}}^\psi$ @Sin09 derive the REBLUP for area level means under the
+BHF model \eq{eq:bhf}. The REBLUP is then a robust variation of \eq{eq:bhfeblup}
+and can be stated as:
 \empty{
-\begin{align*}
+\begin{align}
+\label{eq:reblupbhf}
 \hat{\theta}_i^{RBHF} = N_i^{-1} \Paran{\sum_{j \in S_i} y_{ij} + 
   \sum_{j\in R_i}\Paran{\sij{\mat{x}}^\top\hat{{\beta}}^\psi + \si{\hat{\re}^\psi}}}
-\end{align*}
+\end{align}
 }
 
 
 ## Bias Correction
 \label{sec:robustbc}
 
-In the above we have seen everything is great, awsome. But not everything is so super dupy as it appears. Predictions made using the methodology above are often asscociated with a bias. This is so because 
+Predictions using a REBLUP in the form of \eq{eq:reblupbhf} can introduce a 
+bias. This can also be true for different outlier robust estimation approaches 
+as already noted for example by @Tza05 in the context of M-quantile regression. 
+In general a bias can be introduced if outliers in $\mat{\re}$ or $\mat{e}$ are 
+present but are not drawn from a distribution with zero mean or from a asymmetric
+distribution. 
 
+This can be viewed as a contrast to say the situation in which we believe in a
+well behaved population model following, for example, the Gaussian linear mixed
+model; in this situation outliers can occur randomly due to sampling but should
+be no concern under repeated sampling. This effectively means that realisations 
+of outliers are purely driven by chance. In many real world scenarios outliers 
+have a direction, for instance outliers for income data are typically high 
+incomes. The same holds for example for revenue of a company. This is modelled in
+the robust SAE literature as either a mixture distribution in which outlying
+observations are believed to follow a different population model with a shifted
+location then the rest of the observations; or as a non-symmetric, heavy tailed 
+distribution which is better suited to describe the occurrence of outlying
+observations than a symmetric distribution like a normal.
+
+When in truth we suspect a mixture or non-symmetric population model, then 
+weighting down outlying observations means that we tend to ignore the outlier
+population model or the asymmetry. The robust estimation of location parameters
+using the techniques described above are essentially a trade-off between
+predicting the mean or median which with respect to bias introduces a problem
+with an asymmetric population model.
+
+This reasoning is why some advances have been made to control a potential bias
+introduced by robust estimation techniques. @Cha14 proposed a correction of 
+REBLUPs in the form of \eq{eq:reblupbhf} by adding an area specific estimator of
+the potential bias:
 \empty{
-\begin{align*}
+\begin{align}
+\label{eq:rbhfbc}
 \hat{\theta}_i^{RBHF-BC} = \hat{\theta}_i^{RBHF} + \Paran{\frac{1}{n_i} - \frac{1}{N_i}} \sum_{j\in S_i} \phi_i\psi_c\Paran{\frac{ \sij{\hat{e}}^\psi }{\phi_i}} 
-\end{align*}
-}where $\sij{\hat{e}}^\psi = \sij{y} - \sij{\mat{x}}^\top \hat{\beta}^\psi - \hat{\re}_i^\psi$ is the prediction error associated to the REBLUP.
+\end{align}
+}where $\sij{\hat{e}}^\psi = \sij{y} - \sij{\mat{x}}^\top \hat{\beta}^\psi -
+\hat{\re}_i^\psi$ is the unit level prediction error; $\phi_i$ with $i = 1,
+\dots, D$ is the median absolute deviation of $\sij{\hat{e}}^\psi$ within area
+$i$. Note that here $\psi_c$ denotes typically the same influence function as in
+the robust estimation equations, $\psi_b$, with the important restriction that $c
+> b$. This means that $\psi_c$ is still bounded but more liberal than $\psi_b$
+which introduces the possibility to compute a potential prediction bias for each
+area.
+
+An extension to this approach was introduced by @Jio13 whose main concern is
+that the correction in \eq{eq:rbhfbc} only depends on the sampled units within
+domains. Hence they propose two alternatives. First they propose a bias
+correction based on the results of @Cha86 which in contrast to \eq{eq:rbhfbc}
+relies on $S$ instead of $S_i$, i.e. the whole sample and not just the sampled
+units within domains. Hence they called their bias correction fully
+bias-corrected. The second approach uses a conditional bias to account for units
+in the population. This effectively reduces to the different treatment of the 
+robust predictions of the random effects in their two approches. In their
+simulation study they find an improvement in terms of bias for all three bias
+corrections for the REBLUP in \eq{eq:reblupbhf}. However, especially in terms of
+stability measured by relative efficiency - relative to the EBLUP in
+\eq{eq:bhfeblup} - the two approaches by @Jio13 are promissing and outperform
+the solution by @Cha14.
+
+At this point it is important to note that for area level robust predictions the
+application of the results of @Cha14 and @Jio13 are not imediately obvious. All
+three approaches are based on some form of mean of the unit level prediction
+error which is not available on the area level. However, the underlying problem
+of a potential bias persists also on the area level and a solution for robust
+area level predictions is discussed in section (?).
 
 
-- Tzavidis and Chambers (2005): BIAS ADJUSTED SMALL AREA ESTIMATION WITH M-QUANTILE MODELS
-- Jiongo, Haziza and Duchesne (2013): Controlling the bias of robust small-area estimators
-
-
-## Mean Squared Error Estimation
+## Mean Squared Prediction Error 
 \label{sec:robustmse}
 
 ### Bootstrap
-
 \label{sec:theory_sae_robust_bootstrap}
 
 - Jiiongo, Nguimekeu (2014): Bootstrapping Mean Squared Errors of Robust Small
