@@ -379,7 +379,6 @@ this context @Sin09 develop a robustified EBLUP; @Bea09 refer to a winzorisation
 of the Horvitz-Thompson estimator; and @Bea04 introduces a robust extension to 
 generalized regression estimation.
 
-- Sinha and Rao (2008): Robust Small Area Estimation Under Unit Level Models
 - Richardson and Welsh (1995): Robust Restricted Maximum Likelihood in Mixed Linear Models
 - Yau and Kuk (2002): Robust Estimation in Generalized Linear Mixed Models
 - Hulliger (2010): Simple and Robust Estimators for Sampling
@@ -387,7 +386,6 @@ generalized regression estimation.
 - Peel and McLachlan (2000): Robust mixture modelling using the t distribution
 - Bell and Huang (2006): Using the t-distribution to Deal with Outliers in Small Area Estimation
 - Huang and Bell (): Using the t-distribution in Small Area Estimation: An Application to SAIPE State Poverty Models
-- Schoch (2012): Robust Unit-Level Small Area Estimation: A Fast Algorithm for Large Datasets
 - Xie, Raghunathan and Lepkowski (2007): Estimation of the proportion of overweight individuals in small areas - a robust extension of the Fay-Herriot model
 - Gershunskaya (2010): Robust Small Area Estimation Using a Mixture Model
 - Datta and Lahiri (1995): Robust Hierarchical Bayes Estimation of Small Area Characteristics in the Presence of Covariates and Outliers

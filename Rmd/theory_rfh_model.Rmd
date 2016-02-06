@@ -107,3 +107,46 @@ $$
   for the robust spatio-temporal model. Thus we will continue with the
   discussion of robust small area methods.
 
+## Pseudo Linear Form
+
+\empty{
+\begin{align*}
+\mat{u} & = \mat{B}\Paran{\mat{I} - \mat{X}\mat{A}} \mat{y} \\
+        & = \mat{B}\Paran{\mat{y} - \mat{X}\beta}
+\end{align*}
+}
+
+\empty{
+\begin{align*}
+\mat{Z}^\top \mat{V}_e^{-\half} \psi \Paran{\mat{V}_e^{-\half} 
+  \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}}} 
+  - \mat{V}_\re^{-\half} \psi\Paran{\mat{V}_\re^{-\half}\mat{\re}} & = 0 \\
+%
+\underbrace{\mat{Z}^\top \mat{V}_e^{-\half} \mat{W}_2 \mat{V}_e^{-\half}}_{\mat{W}^*_2}
+  \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}} 
+  - \underbrace{\mat{V}_\re^{-\half} \mat{W}_3 \mat{V}_\re^{-\half}}_{\mat{W}_3^*} \mat{\re} & = 0
+%  
+\end{align*}
+}
+
+\empty{
+\begin{align*}
+\mat{W}_2^* \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}} & = 
+  \mat{W}_3^*\mat{\re} \\
+%
+\mat{W}_2^* \Paran{\mat{y}-\mat{X}\beta} & = 
+  \Paran{\mat{W}_2^*\mat{Z} + \mat{W}_3^*} \mat{\re} \\
+%
+\underbrace{\Paran{\mat{W}_2^*\mat{Z} + \mat{W}_3^*}^{-1} \mat{W}_2^*}_{\mat{B}} 
+  \Paran{\mat{y}-\mat{X}\beta} & = \mat{\re}
+\end{align*}
+}
+
+where 
+$$
+\mat{B}(\mat{u}) = \mat{B} = 
+  \Paran{
+    \mat{Z}^\top \mat{V}_e^{-\half} \mat{W}_2 \mat{V}_e^{-\half} \mat{Z}
+    + \mat{V}_\re^{-\half} \mat{W}_3 \mat{V}_\re^{-\half}
+  }^{-1} \mat{Z}^\top \mat{V}_e^{-\half} \mat{W}_2 \mat{V}_e^{-\half}
+$$
