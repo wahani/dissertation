@@ -111,6 +111,36 @@ $$
 
 \empty{
 \begin{align*}
+\sum_i \mat{X}_i^\top\mat{v}_i^{-1} v_{ii}^{\half} 
+  \psi\Paran{v_{ii}^{-\half} (y_i - \mat{x}^\top_i\beta)} & = 0
+\end{align*}
+}
+
+
+\empty{
+\begin{align*}
+\mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} 
+  \psi\Paran{\mat{U}^{-\half} (\mat{y} - \mat{X}\beta)} & = 0 \\
+\underbrace{\mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} \mat{W}_1
+  \mat{U}^{-\half}}_{\mat{W}_1^*} (\mat{y} - \mat{X}\beta) & = 0 \\
+\mat{W}_1^* \mat{y} & = \mat{W}_1^* \mat{X}\beta \\
+\underbrace{\Paran{\mat{W}_1^* \mat{X}}^{-1} \mat{W}_1^*}_{\mat{A}} 
+  \mat{y} & = \beta
+\end{align*}
+}
+
+with
+
+\empty{
+\begin{align*}
+\mat{A} = \Paran{\mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} \mat{W}_1
+  \mat{U}^{-\half} \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} \mat{W}_1
+  \mat{U}^{-\half}
+\end{align*}
+}
+
+\empty{
+\begin{align*}
 \mat{u} & = \mat{B}\Paran{\mat{I} - \mat{X}\mat{A}} \mat{y} \\
         & = \mat{B}\Paran{\mat{y} - \mat{X}\beta}
 \end{align*}

@@ -235,18 +235,33 @@ area level predictions is discussed in section (?).
 ## Mean Squared Prediction Error 
 \label{sec:robustmse}
 
+The estimation of the MSPE in model based SAE is one of the challenging problems in the discipline (cf. @Pfe13). This is only accelerated with the combination of robust estimation methodology so that @Sin09 proposed initially a bootstrap instead of a analytical solution. (?) have recently proposed a different bootstrap method targeting the problems of solutions like @Sin09. (?) proposed an analytical solution albeit this solution has some ceivats. 
+
+In section \ref{sec:theory_sae_robust_bootstrap} existing bootstrap methods in this context are reviewed from which two are adapted for the later introduced models. Then in section \ref{sec:theory_sae_robust_mspe} one analytical solution is presented based on a pseudo linear representation of the REBLUP which also allows the estimation of the MSPE of the bias corrected REBLUP. Some of the results in chapter (?) are based on these estimators.
+
 ### Bootstrap
 \label{sec:theory_sae_robust_bootstrap}
-For given parameters $\hat{\beta}^\psi$, $\delta^\psi = \Paran{(\hat{\sigma}_u^2)^\psi, (\hat{\sigma}_e^2)^\psi}$
+
+In order to estimate the MSPE for the REBLUP in \eq{eq:reblupbhf} @Sin09
+proposed to use a parametric bootstrap. With the robust parameter estimates
+$\hat{\beta}^\psi$ and $\delta^\psi = \Paran{(\hat{\sigma}_u^2)^\psi,
+(\hat{\sigma}_e^2)^\psi}$ samples are generated from the following model:
 $$
 \sij{y}^* = \sij{x}^\top \hat{\beta}^\psi + \re_i^* + \sij{e}^*
 $$
-with $j = 1, \dots, n_i$ and $i = 1, \dots, D$ where $\re_i^* \sim \Distr{N}(0, (\hat{\sigma}_u^2)^\psi)$ and $\sij{e}^* \sim \Distr{N}(0, (\hat{\sigma}_e^2)^\psi)$
+with $j = 1, \dots, n_i$ and $i = 1, \dots, D$ where $\re_i^* \sim \Distr{N}(0, 
+(\hat{\sigma}_u^2)^\psi)$ and $\sij{e}^* \sim \Distr{N}(0, 
+(\hat{\sigma}_e^2)^\psi)$. In each repetition, i.e. for each bootstrap sample,
+the bootstrap population mean is computed as:
 $$
 \bar{Y}_i^{*} = N_i^{-1} \Paran{\sum_{j \in S_i} y^*_{ij} + 
   \sum_{j\in R_i}\Paran{\sij{\mat{x}}^\top\hat{{\beta}}^\psi + (1-n_iN_i^{-1})(\si{\re}^* + \bar{e}^*_i }}
 $$
-with $\si{\bar{e}}^* \sim \Distr{N}(0, (N_i - n_i)^{-1} (\hat{\sigma}_e^2)^\psi)$
+where $\si{\bar{e}}^* \sim \Distr{N}(0, (N_i - n_i)^{-1}
+(\hat{\sigma}_e^2)^\psi)$. Using each bootstrap sample, the REBLUP \eq{eq:reblupbhf} is computed and the suggested MSPE bootstrap estimator for $B$ repetitions is then defined by:
+$$
+\widehat{MSPE}\Paran{\hat{\theta}_i^{RBHF}} = \frac{1}{B} \sum_{l = 1}^B \Paran{\hat{\theta}_{il}^{RBHF} - \bar{Y}_{il}^{*}}^2
+$$
 
 - Jiiongo, Nguimekeu (2014): Bootstrapping Mean Squared Errors of Robust Small
 Area Estimators
