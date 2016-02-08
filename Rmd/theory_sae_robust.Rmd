@@ -257,84 +257,96 @@ $$
 \bar{Y}_i^{*} = N_i^{-1} \Paran{\sum_{j \in S_i} y^*_{ij} + 
   \sum_{j\in R_i}\Paran{\sij{\mat{x}}^\top\hat{{\beta}}^\psi + (1-n_iN_i^{-1})(\si{\re}^* + \bar{e}^*_i }}
 $$
-where $\si{\bar{e}}^* \sim \Distr{N}(0, (N_i - n_i)^{-1}
-(\hat{\sigma}_e^2)^\psi)$. Using each bootstrap sample, the REBLUP \eq{eq:reblupbhf} is computed and the suggested MSPE bootstrap estimator for $B$ repetitions is then defined by:
+where $\si{\bar{e}}^* \sim \Distr{N}(0, (N_i - n_i)^{-1} 
+(\hat{\sigma}_e^2)^\psi)$. Using each bootstrap sample, the REBLUP
+\eq{eq:reblupbhf} is computed and the suggested bootstrap estimator of the MSPE
+with $B$ repetitions is then defined by:
 $$
-\widehat{MSPE}\Paran{\hat{\theta}_i^{RBHF}} = \frac{1}{B} \sum_{l = 1}^B \Paran{\hat{\theta}_{il}^{RBHF} - \bar{Y}_{il}^{*}}^2
+\widehat{MSPE}\Paran{\hat{\theta}_i^{RBHF}} = \frac{1}{B} \sum_{b = 1}^B \Paran{\hat{\theta}_{i}^{RBHF(b)} - \bar{Y}_{i}^{*(b)}}^2
 $$
+where $\hat{\theta}_{i}^{RBHF(b)}$ and $\bar{Y}_{i}^{*(b)}$ denote the REBLUP 
+and bootstrap population mean of the $b$th bootstrap sample respectively. @Jio13
+use a very similar approach with the important difference that their model - from
+which the bootstrap samples are drawn - depends on the non robust parameter
+estimates $\hat{\delta} = (\hat{\sigma}_\re^2, \hat{\sigma}_e^2)$. @Sin09 argue
+that they are interested in resampling the non contaminated part of the
+observations because the MSPE of their robust estimator should be uneffected by
+outliers. @Jio13 found that the method by @Sin09 lead to poor coverage rates of
+constructed confidence intervals and they suspect that this is because the
+robust parameter estimates do not reflect a sufficiently large part of the
+sample.
 
-- Jiiongo, Nguimekeu (2014): Bootstrapping Mean Squared Errors of Robust Small
-Area Estimators
-
+@Jio14 propose a different bootstrap method. This non-parametric approach is
+  different to the above in that the random effects, $\re_i^*$, and the error
+  term, $e_{ij}^*$, are drawn from a transformed set of the estimated
+  $\{\hat{\re}_i\}_{i = 1}^D$ and $\{\{\hat{e}_{ij}\}_{j = 1}^{N_i}\}_{i =
+  1}^{D}$ under a non robust BHF model to generate bootstrap populations. From
+  these populations bootstrap samples are drawn using the same sampling scheme
+  as for the realised sample at hand. With these differences they provide
+  preliminary results which show very good properties in terms of relative bias
+  and relative root mean squared error of their bootstrap estimator. Albeit
+  their results are very promising, it is not obvious how to adapt this approach
+  for mixed linear models with correlated random effects which will be further
+  discussed in section (?).
 
 ### Pseudo Linearization
 \label{sec:theory_sae_robust_mspe}
 
-@Cha11 and @Cha14 deal with the estimation of the MSE of robust area predictors
-  in the context of Small Area Estimation. In this section I review their
-  results. Later in section ? I will, firt, adapt their findings to estimate the
-  MSE of the robustified Fay Herriot model, and second use the linearization of
-  robust mixed models to derive a fixed point algorithm to find solutions for
-  the model parameters.
+Parallel to the development of the discussed bootstrap methods @Cha11 provide an
+analytical solution for a bias\hyp{}robust mean squared error estimator for
+small area estimators. The appeal of their method stems from the ability to be
+used for a wide range of predictors. Specifically their method can be used for
+any predictor which can be represented as weighted sum of the sampled response
+vector. This includes all predictors discussed in the review of methods so far.
+@Cha14 then targeted the REBLUP in \eq{eq:reblupbhf} and the bias corrected 
+  version in \eq{eq:rbhfbc} among others and provide results for two different
+  solutions: a method based on a pseudolinearisation of an predictor and a
+  linearisation\hyp{}based approach.
 
-The central idea is to formulate the RBLUP as wigthed sum of the response vector:
-
+The central idea is to represent the REBLUP as wigthed sum of the sampled
+response values, $y_j$ with $j = 1, \dots, n$, which can be done for 
+\eq{eq:reblupbhf} as follows:
 $$
-\si{\theta}^{RBLUP} = \sum_{j \in s} \sij{w}^{RBLUP} \sij{y} = \Paran{\mat{w}_{is}^{RBLUP}}^\top \mat{y}_s
+\si{\hat{\theta}}^{RBHF} = \sum_{j \in S} \sij{\mat{w}}^{RBHF} y_j = \Paran{\mat{w}_{iS}^{RBHF}}^\top \mat{y}_S
 $$
-
-where
-
+where $\mat{y}_S$ denotes the vector of sampled response values and
+$\mat{w}_{iS}^{RBHF}$ the vector of weights to produce the $i$th area
+prediction. $\mat{w}_{iS}^{RBHF}$ is here defined as:
 $$
-\Paran{\mat{w}_{is}^{RBLUP}}^\top = N_i^{-1} \Paran{\mat{1}_s^\top + (N_i - n_i) \Paran{\bar{x}_{ir}^\top \mat{A}_s + \bar{z}_{ir}^\top \mat{B}_s \Paran{\mat{I}_s - \mat{X}_s \mat{A}_s }}}
+\Paran{\mat{w}_{iS}^{RBHF}}^\top = N_i^{-1} \Paran{\mat{1}_{iS}^\top + (N_i - n_i) \Paran{\bar{\mat{x}}_{iR}^\top \mat{A}_S + \bar{\mat{z}}_{iR}^\top \mat{B}_S \Paran{\mat{I}_S - \mat{X}_S \mat{A}_S }}}
 $$
-
-  and
-
+where in contrast to \eq{eq:reblupbhf} we have substituted $\mat{x}_{ij}$ with
+$\bar{\mat{x}}_{iR}$ denoting the known population means of the auxiliary
+variables and, similarly, $\bar{\mat{z}}_{iR}$ denotes the known vector for
+selecting the random effects for area $i$. Here $\mat{1}_{iS}$ denotes a vector with n elements which are equal to one if the $j$th element is from area $i$ and zero otherwise; and $\mat{I}_S$ is a $n \times n$ identity matrix. Furthermore 
 $$
-\mat{A}_s = \Paran{\mat{X}_s^\top \mat{V}_s^{-1} \mat{U}_s^\frac{1}{2} \mat{W}_{1s} \mat{U}_s^{-\frac{1}{2}} \mat{X}_s }^{-1} \mat{X}_s^\top \mat{V}_s^{-1} \mat{U}_s^\frac{1}{2} \mat{W}_{1s} \mat{U}_s^{-\frac{1}{2}}
+\mat{A}_S = \Paran{\mat{X}_S^\top \mat{V}_S^{-1} \mat{U}_S^\frac{1}{2} \mat{W}_{1S} \mat{U}_S^{-\frac{1}{2}} \mat{X}_S }^{-1} 
+\mat{X}_S^\top \mat{V}_S^{-1} \mat{U}_S^\frac{1}{2} \mat{W}_{1S} \mat{U}_S^{-\frac{1}{2}}
 $$
-
-with
-
+where $\mat{W}_{1S} = \Diag{\{w_{1j}\}_{j = 1}^n}_{n \times n}$ is a diagonal matrix with 
 $$
-\mat{W}_{1s} = \Diag{w_j}_{n \times n}
-$$
-
-and
-
-$$
-w_{1j} = \frac{\psi\Paran{ U_j^{-\frac{1}{2}} \Paran{ y_j - x_j^\top\hat{\beta}^\psi } }}{ U_j^{-\frac{1}{2}} \Paran{ y_j - x_j^\top\hat{\beta}^\psi }}
-$$
-
+w_{1j} = \psi\Paran{ \hat{U}_j^{-\frac{1}{2}} \Paran{ y_j - \mat{x}_j^\top\hat{\beta}^\psi } } 
+\Paran{\hat{U}_j^{-\frac{1}{2}} \Paran{ y_j - \mat{x}_j^\top\hat{\beta}^\psi }}^{-1}
+$$ as elements. Note that here $\hat{U}_j^{-\frac{1}{2}}$ denotes the $j$th diagonal element of the matrix $\mat{U}_S^{-\half}$. Continuing,
 $$
   \mat{B}_s =
   \Paran{
-    \mat{Z}_s^\top \mat{V}_{es}^{-\frac{1}{2}} \mat{W}_{2s} \mat{V}_{es}^{-\frac{1}{2}} \mat{Z}_s +
-      \mat{V}_u^{-\frac{1}{2}} \mat{W}_{3s} \mat{V}_u^{-\frac{1}{2}}
+    \mat{Z}_S^\top \mat{V}_{eS}^{-\frac{1}{2}} \mat{W}_{2S} \mat{V}_{eS}^{-\frac{1}{2}} \mat{Z}_S +
+      \mat{V}_u^{-\frac{1}{2}} \mat{W}_{3S} \mat{V}_u^{-\frac{1}{2}}
     }^{-1}
-\mat{Z}_s^\top \mat{V}_e^{-\frac{1}{2}} \mat{W}_{2s} \mat{V}_e^{-\frac{1}{2}}
+\mat{Z}_S^\top \mat{V}_{eS}^{-\frac{1}{2}} \mat{W}_{2S} \mat{V}_{eS}^{-\frac{1}{2}}
 $$
-
-  with $\mat{W}_{2s}$ as diagonal matrix with ith component:
-
-  $$
-  w_{2i} =
-  \frac{
-    \psi\Paran{\Paran{\sigma^\psi_{e, i}}^{-1} \Paran{y_i - x_i^\top \hat{\beta}^\psi - \hat{u}^\psi_i}}
-  }{
-    \Paran{\sigma^\psi_{e, i}}^{-1} \Paran{y_i - x_i^\top \hat{\beta}^\psi - \hat{u}^\psi_i}
-  }
+where $\mat{W}_{2S} = \Diag{\{w_{2j}\}_{j = 1}^n}_{n \times n}$ and $\mat{W}_{3S} = \Diag{\{w_{3i}\}_{i = 1}^D}_{D \times D}$ are diagonal matrices where their respective elements are defined by:
 $$
-
-and with $\mat{W}_{3s}$ as $\Paran{m \times m}$ diagonal matrix with ith component:
-
-  $$
-  w_{3i} = \frac{
-    \psi\Paran{\Paran{\sigma_u^\psi}^{-1} \hat{u}^\psi_i}
-  }{
-    \Paran{\sigma_u^\psi}^{-1} \hat{u}^\psi_i
-  }
+  w_{2j} =
+     \psi\Paran{\frac{1}{\hat{\sigma}^\psi_{e}} \Paran{y_i - x_i^\top \hat{\beta}^\psi - \hat{u}^\psi_i}}
+     \Paran{\frac{1}{\hat{\sigma}^\psi_{e}} \Paran{y_i - x_i^\top \hat{\beta}^\psi - \hat{u}^\psi_i}}^{-1}
+$$
+and
+$$
+  w_{3i} = 
+    \psi\Paran{\frac{ \hat{u}^\psi_i}{\hat{\sigma}_u^\psi} }
+    \frac{ \hat{\sigma}_u^\psi }{\hat{u}^\psi_i}.
 $$
 
 This all assumes known variance parameters. When the variance parameters are
