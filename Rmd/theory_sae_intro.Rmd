@@ -9,7 +9,7 @@ respective point in time.
 
 The main endevour Small Area Estimation tries to solve is to produce *reliable 
 predictions* of a *target statistic* for *small domains*. A *target statistic* 
-can be a simple statistic such as a mean, a count, or quantiles; but it can take
+can be a linear statistic such as a mean, a count, or quantiles; but it can take
 other forms: e.g. an inequality measure like the Gini coefficient for poverty
 mapping. Such statistics are produced for *small domains*, where domain refers
 to specific groups, e.g. a sector of industry, or groups defined by
@@ -42,11 +42,12 @@ In general small area methods are divided into two categories: design based and
 model based methods. Design based methods can be considered the traditional 
 methodology for analysing survey data; a comprehensive overview of these methods
 for SAE can be found in @Leh09. Design based methods comprise different direct
-and indirect techniques. The Horvitz\hyp{}Thompson (HT) estimator (@Hor52) which
+and indirect techniques. The Horvitz\hyp{}Thompson (HT) estimator by @Hor52 which
 only uses sampled units within domains, synthetic regression estimates as well
 as model assisted methods like generalized regression (GREG) estimators
-(@Saer92) are examples of such estimators. What all these methods have in common
-is that they incorporate information of the sampling design into the estimation.
+- see @Saer92 for a discussion of these methods - are examples of such
+estimators. What all these methods have in common is that they incorporate
+information of the sampling design into the estimation.
 
 Conceptually design based and model based methods differ in that design based
 methods are used to optimally estimate a target parameter of a fixed and finite 
@@ -120,7 +121,7 @@ extension introduced in the literature around robust EBLUPs (REBLUPs) have been
 focused on unit level models, thus results especially to MSE estimation and bias
 correction are extended to area level models.
 
-In addition to the main focus of this Thesis reference is made to certain
+In addition to the main focus of this thesis reference is made to certain
 supplementary material on software having relevance to this thesis. @War15
 introduces tools for simulation studies for the special case of small area
 estimation and (?) implements the methods introduced in this thesis. All the 
