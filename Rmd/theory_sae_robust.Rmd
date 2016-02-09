@@ -349,35 +349,33 @@ $$
     \frac{ \hat{\sigma}_u^\psi }{\hat{u}^\psi_i}.
 $$
 
-This all assumes known variance parameters. When the variance parameters are
-unknown, they are estimated and instead of $\mat{w}_{is}^{RBLUP}$ we have to use
-$\mat{w}_{is}^{REBLUP}$. Then the estimator of the conditional MSE is given by:
-
+@Cha14 then derive their MSPE estimator which can be formulated following the
+  results of @Cha11 as:
 $$
-\widehat{MSE}\Paran{\si{\widehat{\theta}}^{REBLUP}} = 
-  \widehat{\Exp{V}}\Paran{\si{\widehat{\theta}}^{REBLUP}} + 
-  \widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{REBLUP}}^2
+\widehat{MSPE}\Paran{\si{\widehat{\theta}}^{RBHF}} = 
+  \widehat{\Exp{V}}\Paran{\si{\widehat{\theta}}^{RBHF}} + 
+  \widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{RBHF}}^2
 $$
-
+where
 $$
-\widehat{\Exp{V}}\Paran{\si{\widehat{\theta}}^{REBLUP}} =
-  N_i^{-2} \sum_{j \in s} \Paran{a_{ij}^2 + \Paran{N_i - n_i} n^{-1}} \lambda_j^{-1}\Paran{y_j - \hat{\mu}_j}^2
+\widehat{\Exp{V}}\Paran{\si{\widehat{\theta}}^{RBHF}} =
+  N_i^{-2} \sum_{j \in S} \Paran{a_{ij}^2 + \Paran{N_i - n_i} n^{-1}} \lambda_j^{-1}\Paran{y_j - \hat{\mu}_j}^2
 $$
 
 with 
 
 $$
-a_{ij} = N_i w_{ij}^{REBLUP} - I\Paran{j \in i}
+a_{ij} = N_i w_{ij}^{RBHF} - I\Paran{j \in i}
 $$
 
 and
 
 $$
-\widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{REBLUP}} =
-  \sum_{j \in s} w_{ij}^{REBLUP} \hat{\mu}_j - N_i^{-1} \sum_{j \in \Paran{r_i \cup s_i}} \hat{\mu}_j
+\widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{RBHF}} =
+  \sum_{j \in S} w_{ij}^{RBHF} \hat{\mu}_j - N_i^{-1} \sum_{j \in \Paran{R_i \cup S_i}} \hat{\mu}_j
 $$
 
-Note that $\hat{\mu}_j$ is an unbiased estimator of the the conditional expectation $\mu_j = \Exp{E}\Paran{y_j | \mat{x}_j, \mat{\re}^\psi}$. $\lambda_j = 1 - 2\phi_{jj} + \sum_{k \in s}\phi^2_{kj}$.
+Note that $\hat{\mu}_j$ is an unbiased estimator of the the conditional expectation $\mu_j = \Exp{E}\Paran{y_j | \mat{x}_j, \mat{\re}^\psi}$. $\lambda_j = 1 - 2\phi_{jj} + \sum_{k \in S}\phi^2_{kj}$.
 
 ## Discussion
 \label{sec:robustdiscussion}
