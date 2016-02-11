@@ -23,16 +23,16 @@ with a second stage, the linking model, by assuming a linear relationship
 between the true area statistic, $\si{\theta}$, and some deterministic auxiliary
 variables $\si{\mat{x}}$:
 $$
-\si{\theta} = \si{\mat{x}}^\top \beta + \si{\re}
+\si{\theta} = \si{\mat{x}}^\top \pmat\beta + \si{\re}
 $$
-where $\si{\mat{x}}$ is a $(P \times 1)$ vector containing area\hyp{}level
-information for $P$ variables and $\beta$ is a ($P \times 1$) vector of
+where $\si{\mat{x}}$ is a $(P \times 1)$ vector containing area level
+information for $P$ variables and $\pmat\beta$ is a ($P \times 1$) vector of
 regression coefficients. The model errors $\si{\re}$ are assumed to be
 independent and identically distributed following a normal distribution: $\re_i
 \sim \Distr{N}(0, \sigre)$. Furthermore $e_i$ and $\re_i$ are assumed to be
 independent. Combining the sampling and the linking model thus leads to:
 \begin{align}
-\tilde{y}_i = \si{\mat{x}}^\top \beta + \re_i + e_i. \label{eq:fh}
+\tilde{y}_i = \si{\mat{x}}^\top \pmat\beta + \re_i + e_i. \label{eq:fh}
 \end{align}
 
 ### Best Linear Unbiased Prediction
@@ -43,7 +43,7 @@ model in \eq{eq:fh} can be viewed directly as a linear mixed model as it was
 introduced in equation \eq{eq:lmm} where $\mat{Z} = \mat{I}_D$, $\mat{V}_\re = 
 \sigre\mat{I}_D$ and $\mat{V}_e = \diag(\sigma_{e, 1}^2, \dots, \sigma_{e, 
 D}^2)$ with $\mat{I}_D$ being a $(D\times D)$ identity matrix. The vector of 
-unknown variance parameters in this case is a scalar, such that $\delta =
+unknown variance parameters in this case is a scalar, such that $\pmat\delta =
 \sigre$ since $\sige$ is assumed to be known. The BLUP under the Fay-Herriot
 model, defined in equation \eq{eq:blup}, can then be obtained by setting
 $\tilde{\mu}_i = \tilde{\theta}_i^{FH}$,
@@ -51,21 +51,21 @@ $\mat{l}_i^\top = \mat{x}_i^\top$, $\mat{m}^\top_i = 1$ and $y_i = \tilde{y}_i$:
 \empty{
 \begin{align}
 \tilde{\theta}_i^{FH} = 
-\tilde{\theta}_i^{FH}(\sigma_\re^2) &= \si{\mat{x}}^\top\tilde{\beta} + \si{\tilde{\re}} \nonumber\\
-                              &= \si{\mat{x}}^\top\tilde{\beta} + \frac{\sigma_\re^2}{\sigma_\re^2 + \sige} \Paran{\tilde{y}_i - \si{\mat{x}}^\top\tilde{\beta}} \nonumber\\
-                              &= \gamma_i\tilde{y}_i + (1 - \gamma_i)\si{\mat{x}}^\top\tilde{\beta}
+\tilde{\theta}_i^{FH}(\sigma_\re^2) &= \si{\mat{x}}^\top\tilde{\pmat\beta} + \si{\tilde{\re}} \nonumber\\
+                              &= \si{\mat{x}}^\top\tilde{\pmat\beta} + \frac{\sigma_\re^2}{\sigma_\re^2 + \sige} \Paran{\tilde{y}_i - \si{\mat{x}}^\top\tilde{\pmat\beta}} \nonumber\\
+                              &= \gamma_i\tilde{y}_i + (1 - \gamma_i)\si{\mat{x}}^\top\tilde{\pmat\beta}
 \end{align}
 }with $\si{\gamma} = \sigre / (\sigre + \sige)$. The BLUP depends on the
 variance parameter of the random effects, $\sigre$, which is unknown. To obtain
 the EBLUP under the Fay-Herriot model we can replace the unknown parameter with
 an estimate, leading to:
 $$
-\si{\hat{\theta}}^{FH} = \si{\hat{\gamma}}\si{\tilde{y}} + \Paran{1 - \si{\hat{\gamma}}} \si{\mat{x}}^\top\hat{\beta}
+\si{\hat{\theta}}^{FH} = \si{\hat{\gamma}}\si{\tilde{y}} + \Paran{1 - \si{\hat{\gamma}}} \si{\mat{x}}^\top\hat{\pmat\beta}
 $$
 where $\si{\hat{\gamma}} = \hat{\sigma}_\re^2 / (\hat{\sigma}_\re^2 + \sige)$.
 Note that the regression parameters are still estimated using the weighted least
 squares estimator of equation \eq{eq:blue} with $\delta =
-\hat{\sigma}_\re^2$.
+\hat{\pmat\sigma}_\re^2$.
 
 For the estimation of $\sigre$ different approaches exist. @Fay79 propose a
 moment estimator from which they derive an algorithm to estimate $\sigre$.
@@ -220,7 +220,7 @@ different approaches see @Cre93. To incorporate spatial correlation we can
 modify model \eq{eq:fh} such that:
 \empty{
 \begin{align}
-\tilde{y}_{i} = \mat{x}^\top_{i}\beta + \re_{1i} + e_{i} \label{eq:sfh}
+\tilde{y}_{i} = \mat{x}^\top_{i}\pmat\beta + \re_{1i} + e_{i} \label{eq:sfh}
 \end{align}
 }where the only difference to model \eq{eq:fh} is to replace $\re_i$ with
 $\re_{1i}$ to represent the random effect. In contrast to the formulation in
@@ -237,15 +237,15 @@ otherwise, it then follows that the dimension of $\mat{W}^0$ is $D \times D$.
 Using the methodology of section \ref{sec:blup} the BLUP can be stated as:
 \empty{
 \begin{align*}
-\tilde{\theta}^{SFH}_{i} = \mat{x}^\top_{i}\tilde{\beta} + \tilde{\re}_{1i}
+\tilde{\theta}^{SFH}_{i} = \mat{x}^\top_{i}\tilde{\pmat\beta} + \tilde{\re}_{1i}
 \end{align*}
-}where $\tilde{\theta}^{SFH}_{i}$ depends on the variance parameters $\delta =
+}where $\tilde{\theta}^{SFH}_{i}$ depends on the variance parameters $\pmat\delta =
 (\rho_1, \sigma_1^2)$. @Pra08 use a maximum likelihood estimator for both
 parameters. Replacing the unknown parameters with their respective estimates
 the EBLUP can be obtained by:
 \empty{
 \begin{align}
-\hat{\theta}^{SFH}_{i} = \mat{x}^\top_{i}\hat{\beta} + \hat{\re}_{1i}.
+\hat{\theta}^{SFH}_{i} = \mat{x}^\top_{i}\hat{\pmat\beta} + \hat{\re}_{1i}.
 \end{align}
 }Note that this model is again subject of section (?) where the variance 
 structure is reviewed in more detail. The MSPE for the EBLUP under model
@@ -267,7 +267,7 @@ correlated sampling errors. @Rao94 then introduced a model to use auto
 correlated random effects to borrow strength for domain predictions:
 \empty{
 \begin{align}
-\tilde{y}_{it} = \mat{x}^\top_{it}\beta + \re_{i} + \re_{2it} + e_{it} \label{eq:tfh}
+\tilde{y}_{it} = \mat{x}^\top_{it}\pmat\beta + \re_{i} + \re_{2it} + e_{it} \label{eq:tfh}
 \end{align}
 }where $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D$ and $T$ are the total 
 number of areas and time periods, respectively. Here $e_{it} \sim\Distr{N}(0, 
@@ -285,14 +285,14 @@ D$ and $t = 1, \dots, T$. The BLUP under model \eq{eq:tfh} can then be defined
 as:
 \empty{
 \begin{align*}
-\tilde{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\tilde{\beta} + \tilde{\re}_{i} + \tilde{\re}_{2it}
+\tilde{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\tilde{\pmat\beta} + \tilde{\re}_{i} + \tilde{\re}_{2it}
 \end{align*}
 }where the variance parameters $\delta = (\sigma_u^2, \rho_2, \sigma_2^2)$ are 
 assumed to be known. Replacing these parameters with their respective estimates
 the EBLUP can be obtained:
 \empty{
 \begin{align}
-\hat{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\hat{\beta} + \hat{u}_{i} + \hat{u}_{2it}.
+\hat{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\hat{\pmat\beta} + \hat{u}_{i} + \hat{u}_{2it}.
 \end{align}
 }@Rao94 used a method of moments estimator for the elements in $\delta$.
 Extensions to this model have been made by @Dat02 by replacing the AR(1) process
@@ -312,7 +312,7 @@ Space Model with a Kalman filter to take advantage of time series data.
 Following @Mar13 a spatio temporal FH model can be formulated as:
 \empty{
 \begin{align}
-\tilde{y}_{it} = \mat{x}^\top_{it}\beta + \re_{1i} + \re_{2it} + e_{it} \label{eq:stfh}
+\tilde{y}_{it} = \mat{x}^\top_{it}\pmat\beta + \re_{1i} + \re_{2it} + e_{it} \label{eq:stfh}
 \end{align}
 }where in contrast to model \eq{eq:tfh} the first random effect component has 
 been replaced with a correlated random effects component following a SAR(1). To 
@@ -323,14 +323,14 @@ of the previous sections, the spatio temporal BLUP under model \eq{eq:stfh} can
 be defined by:
 \empty{
 \begin{align*}
-\tilde{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\tilde{\beta} + \tilde{\re}_{1i} + \tilde{\re}_{2it}.
+\tilde{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\tilde{\pmat\beta} + \tilde{\re}_{1i} + \tilde{\re}_{2it}.
 \end{align*}
-}@Mar13 used an REML estimator for the unknown variance components $\delta = 
+}@Mar13 used an REML estimator for the unknown variance components $\pmat\delta = 
 (\rho_1, \sigma_1^2, \rho_2, \sigma_2^2)$. Replacing the unknown components with
 their respective estimates leads then to the EBLUP under model \eq{eq:stfh}:
 \empty{
 \begin{align}
-\hat{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\hat{\beta} + \hat{\re}_{1i} + \hat{\re}_{2it}.
+\hat{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\hat{\pmat\beta} + \hat{\re}_{1i} + \hat{\re}_{2it}.
 \end{align}
 }
 In contrast to @Sin05 who derived an analytical MSPE for spatio-temporal domain
@@ -362,7 +362,7 @@ additionally be of use to improve domain predictions. @Sin05 note that this is
 especially the case if the historic information, often itself predictions, is
 more reliable than the available information of the current time period.
 
-The spatial, temporal and spatio\hyp{}temporal FH model is again the subject in
+The spatial, temporal, and spatio\hyp{}temporal FH model is again the subject in
 section (?) where they are combined with robust estimation methodology. Note
 that the review in this chapter may not be sufficient to deduce the
 representation of these models as linear mixed models, this will be stated more

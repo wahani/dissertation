@@ -12,7 +12,7 @@ size $N_i$, with $i = 1, \dots, D$ denoting area $i$, such that $N = \sum_{i =
 \cup \dots \cup S_D$, where $n$ is the sample size of $S$ and $n_i$ of $S_i$
   such that $n = \sum_{i = 1}^D n_i$.
 
-Let $y$ define the characteristic of interest and $y_{ij}$ the response value 
+Let $\mat{y}$ define the characteristic of interest and $y_{ij}$ the response value 
 for unit $j$ with $j = 1, \dots, N_i$ in area $i$. Furthermore let the target 
 quantity be the population mean in area $U_i$ defined by $\theta_i = \bar{Y}_i =
 \frac{1}{N_i}\sum_{j = 1}^{N_i} y_{ij}$ . Note that the target quantity is not

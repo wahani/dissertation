@@ -16,7 +16,7 @@ review a variety of extensions.
 The unit level model of @Bat88 can be expressed as linear mixed model by:
 \empty{
 \begin{align}
-	 y_{ij} = \sij{\mat{x}}^\top\beta + \si{\re} + \sij{e} \label{eq:bhf}
+	 y_{ij} = \sij{\mat{x}}^\top\pmat\beta + \si{\re} + \sij{e} \label{eq:bhf}
 \end{align}
 }where $y_{ij}$ denotes the response of unit $j = 1, \dots, N_i$ in area $i = 
 1, \dots, D$. The random effetc, $\si{\re}$, are independent and identically 
@@ -36,8 +36,8 @@ the sampled and non sampled units in area $i = 1, \dots, D$ respectively. Then
 \begin{align*}
 \mat{y} = 
   \begin{pmatrix}\mat{y}_S\\\mat{y}_R\end{pmatrix} =
-  \begin{pmatrix}\mat{X}_S\\\mat{X}_R\end{pmatrix} \beta +
-  \begin{pmatrix}\mat{Z}_S\\\mat{Z}_R\end{pmatrix} \re + 
+  \begin{pmatrix}\mat{X}_S\\\mat{X}_R\end{pmatrix} \pmat\beta +
+  \begin{pmatrix}\mat{Z}_S\\\mat{Z}_R\end{pmatrix} \pmat\re + 
   \begin{pmatrix}\mat{e}_S\\\mat{e}_R\end{pmatrix}
 \end{align*}
 }where the subscripts $R$ and $S$ denote the sampled and non-sampled part of the
@@ -55,14 +55,14 @@ for the ith area mean can be derived as
 \begin{align}
 \label{eq:bhfeblup}
 \hat{\theta}_i^{BHF} = N_i^{-1} \Paran{\sum_{j \in S_i} y_{ij} + 
-  \sum_{j\in R_i}(\sij{\mat{x}}^\top\hat{{\beta}} + \si{\hat{\re}})}
+  \sum_{j\in R_i}(\sij{\mat{x}}^\top\hat{{\pmat\beta}} + \si{\hat{\re}})}
 \end{align}
-}where $\hat{\beta}$ denotes the BLUE of $\beta$ which is estimated using the
+}where $\hat{\pmat\beta}$ denotes the BLUE of $\pmat\beta$ which is estimated using the
 sampled information. Note that this predictor is based on the auxiliary 
 information for each unit in the non-sampled part of the population. In practice
 this assumption can be relaxed by using the area means of the population which 
 need to be available to the analyst. The unknown parameters of the model, i.e.
-$\beta$, $\sigre$ and $\sigma_e^2$, can be estimated using standard ML and REML
-estimation techniques.
+$\pmat\beta$, $\sigre$ and $\sigma_e^2$, can be estimated using standard ML and REML
+estimation techniques and are based on the sampled data.
 
 
