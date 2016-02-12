@@ -1,24 +1,13 @@
 # The Problem of Outlying Observations for Area-Level Models
 
-> *"[Outliers:] observations obtained under seemingly normal circumstances, but that turn out to be extremely deviant from the main body of observations."* -- @Abe95[69]
+> *"[Outliers:] observations obtained under seemingly normal circumstances, but
+that turn out to be extremely deviant from the main body of observations."* --
+@Abe95[69]
 
-
-In contrast to these available approaches I follow the main results of @Sin09 to derive robust estimation equations for linear mixed models. Furthermore the introduced models allow to model unobserved spatial and temporal structures in the random effects, which has not been explored 
-
-- Hulliger (2010): *Simple and Robust Estimators for Sampling*, SFSO
-    - Robuste direkte Schätzer mit Survey Gewichten (robuster HT)
-- 2015-03-17: Bell, W. t-Distr. US-Census
-    - Paper: *Using the t-distribution in Small Area Estimation: An Application
-    to SAIPE State Poverty Models*
-    - Paper: *Using the t-distribution to Deal with Outliers in Small Area
-    Estimation*
-- 2015-02-17: `Literatur` -- Handbook of Statistics 29a -- Dealing with Outliers
-in Survey Data, 247 ff.
-    - Winzorization des HT-Schätzers
-    - Buaumont
-- Chakraborty, Datta and Mandal (2015): A two-component normal mixture
-alternative to the Fay-Herriot model
-- Fabrizi, Trivisano (2010): Robust linear mixed modles for Small Area Estimation
+In contrast to these available approaches I follow the main results of @Sin09 to
+derive robust estimation equations for linear mixed models. Furthermore the
+introduced models allow to model unobserved spatial and temporal structures in
+the random effects, which has not been explored
 
 This section provides some motivation for the study of robust area-level models.
 It mainly lays out under which scenarios a robust estimation may proove to be
