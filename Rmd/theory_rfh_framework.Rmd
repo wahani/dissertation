@@ -2,6 +2,9 @@
 
 > *"[Outliers:] observations obtained under seemingly normal circumstances, but that turn out to be extremely deviant from the main body of observations."* -- @Abe95[69]
 
+
+In contrast to these available approaches I follow the main results of @Sin09 to derive robust estimation equations for linear mixed models. Furthermore the introduced models allow to model unobserved spatial and temporal structures in the random effects, which has not been explored 
+
 - Hulliger (2010): *Simple and Robust Estimators for Sampling*, SFSO
     - Robuste direkte Schätzer mit Survey Gewichten (robuster HT)
 - 2015-03-17: Bell, W. t-Distr. US-Census

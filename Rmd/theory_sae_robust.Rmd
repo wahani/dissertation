@@ -303,48 +303,54 @@ sample.
 Parallel to the development of the discussed bootstrap methods @Cha11 provide an
 analytical solution for a bias\hyp{}robust MSPE estimator for 
 small area predictions. The appeal of their method stems from the ability to be 
-used for a wide range of predictors. Specifically their method can be used for 
-any predictor which can be represented as weighted sum of the sampled response 
-vector. @Cha14 then targeted the REBLUP in \eq{eq:reblupbhf} and the bias
-corrected version in \eq{eq:rbhfbc} among others and provide results for two
-different solutions: a method based on a pseudolinearisation of a predictor and
-a linearisation\hyp{}based approach.
+used for a wide range of predictors. Their method can be used for any predictor
+which can be represented as a weighted sum of the sampled response vector.
+@Cha14 then adapted this approach for the REBLUP in \eq{eq:reblupbhf} and the 
+  bias corrected version in \eq{eq:rbhfbc}. They derive an analytical estimator
+  to the conditional MSPE - conditional on the set of random effects - based on
+  a pseudolinear form of the REBLUP and extend this approach to a 
+  linearisation\hyp{}based approach.
 
-Following @Cha14 the RBLUP underlying \eq{eq:reblupbhf} can be represented as a
-weigthed sum of the sampled response values as:
+Following @Cha14 the RBLUP underlying \eq{eq:reblupbhf} - i.e. with known
+parameters $\pmat\delta$ - can be represented as a weigthed sum of the sampled
+response values:
 $$
-\si{\tilde{\theta}}^{RBHF} = \sum_{j \in S} \sij{\mat{w}}^{RBHF} y_j = \Paran{\mat{w}_{iS}^{RBHF}}^\top \mat{y}_S
+\si{\tilde{\theta}}^{RBHF} = \sum_{j \in S} \sij{\tilde{\mat{w}}}^{RBHF} y_j = \Paran{\tilde{\mat{w}}_{iS}^{RBHF}}^\top \mat{y}_S
 $$
 where $\mat{y}_S$ denotes the vector of sampled response values and 
-$\mat{w}_{iS}^{RBHF}$ the vector of weights to produce the $i$th area 
-prediction. $\mat{w}_{iS}^{RBHF}$ is here defined as:
+$\tilde{\mat{w}}_{iS}^{RBHF}$ the vector of weights to produce the $i$th area 
+prediction. $\tilde{\mat{w}}_{iS}^{RBHF}$ is here defined as:
 $$
-\Paran{\mat{w}_{iS}^{RBHF}}^\top = N_i^{-1} \Paran{\mat{1}_{iS}^\top + (N_i - n_i) \Paran{\bar{\mat{x}}_{iR}^\top \mat{A}_S + \bar{\mat{z}}_{iR}^\top \mat{B}_S \Paran{\mat{I}_S - \mat{X}_S \mat{A}_S }}}
+\Paran{\tilde{\mat{w}}_{iS}^{RBHF}}^\top = N_i^{-1} \Paran{\mat{1}_{iS}^\top + (N_i - n_i) \Paran{\bar{\mat{x}}_{iR}^\top \mat{A}_S + \bar{\mat{z}}_{iR}^\top \mat{B}_S \Paran{\mat{I}_S - \mat{X}_S \mat{A}_S }}}
 $$
 where in contrast to \eq{eq:reblupbhf} we have substituted $\mat{x}_{ij}$ with 
 $\bar{\mat{x}}_{iR}$ denoting the known population means of the auxiliary 
 variables and, similarly, $\bar{\mat{z}}_{iR}$ denotes the known vector for 
 selecting the random effects for area $i$. Here $\mat{1}_{iS}$ denotes a vector
 with n elements which are equal to one if the $j$th element is from area $i$ and
-zero otherwise; and $\mat{I}_S$ is a $n \times n$ identity matrix. Furthermore
+zero otherwise; and $\mat{I}_S$ is a $(n \times n)$ identity matrix. Furthermore
 $$
 \mat{A}_S = \Paran{\mat{X}_S^\top \mat{V}_S^{-1} \mat{U}_S^\frac{1}{2} \mat{W}_{1S} \mat{U}_S^{-\frac{1}{2}} \mat{X}_S }^{-1} 
 \mat{X}_S^\top \mat{V}_S^{-1} \mat{U}_S^\frac{1}{2} \mat{W}_{1S} \mat{U}_S^{-\frac{1}{2}}
 $$
-where $\mat{W}_{1S} = \Diag{\{w_{1j}\}_{j = 1}^n}_{n \times n}$ is a diagonal matrix with 
+where $\mat{W}_{1S} = \Diag{\{w_{1j}\}_{j = 1}^n}_{n \times n}$ is a diagonal
+matrix with
 $$
 w_{1j} = \psi\Paran{ U_j^{-\frac{1}{2}} \Paran{ y_j - \mat{x}_j^\top\tilde{\pmat\beta}^\psi } } 
 \Paran{U_j^{-\frac{1}{2}} \Paran{ y_j - \mat{x}_j^\top\tilde{\pmat\beta}^\psi }}^{-1}
-$$ as elements. Note that here $U_j^{-\frac{1}{2}}$ denotes the $j$th diagonal element of the matrix $\mat{U}_S^{-\half}$. Continuing,
+$$ as elements. Note that here $U_j^{-\frac{1}{2}}$ denotes the $j$th diagonal
+element of the matrix $\mat{U}_S^{-\half}$. Continuing,
 $$
-  \mat{B}_s =
+  \mat{B}_S =
   \Paran{
     \mat{Z}_S^\top \mat{V}_{eS}^{-\frac{1}{2}} \mat{W}_{2S} \mat{V}_{eS}^{-\frac{1}{2}} \mat{Z}_S +
       \mat{V}_u^{-\frac{1}{2}} \mat{W}_{3S} \mat{V}_u^{-\frac{1}{2}}
     }^{-1}
 \mat{Z}_S^\top \mat{V}_{eS}^{-\frac{1}{2}} \mat{W}_{2S} \mat{V}_{eS}^{-\frac{1}{2}}
 $$
-where $\mat{W}_{2S} = \Diag{\{w_{2j}\}_{j = 1}^n}_{n \times n}$ and $\mat{W}_{3S} = \Diag{\{w_{3i}\}_{i = 1}^D}_{D \times D}$ are diagonal matrices where their respective elements are defined by:
+where $\mat{W}_{2S} = \Diag{\{w_{2j}\}_{j = 1}^n}_{n \times n}$ and
+$\mat{W}_{3S} = \Diag{\{w_{3i}\}_{i = 1}^D}_{D \times D}$ are diagonal matrices
+where their respective elements are defined by:
 $$
   w_{2j} =
      \psi\Paran{\frac{1}{\sigma^\psi_{e}} \Paran{y_i - \mat{x}_i^\top \tilde{\pmat\beta}^\psi - \tilde{u}^\psi_i}}
@@ -357,73 +363,120 @@ $$
     \frac{ \sigma_u^\psi }{\tilde{u}^\psi_i}.
 $$
 
-@Cha14 then state the estimator of the MSPE following the results of @Cha11
-  which in turn are based on the results of @Roy78. Hence the
-$$
+The pseudolinear representation for $\tilde{\theta}_i^{RBHF}$ needs to be 
+modified for the REBLUP in that we substitute the unknown variance parameters 
+with their robust estimates, $\hat{\pmat\delta}^\psi$. In addition let
+$\hat{w}_{ij}^{RBHF}$ denote the weight of the REBLUP ander the BHF model
+for the $j$th observation to predict the $i$th area mean. @Cha14 then state the
+estimator of the MSPE following the results of @Cha11 which in turn are based on
+the results of @Roy78. Hence estimator for the MSPE is given by:
+\empty{
+\begin{align}
+\label{eq:cctmspe}
 \widehat{MSPE}\Paran{\si{\widehat{\theta}}^{RBHF}} = 
   \widehat{\Exp{V}}\Paran{\si{\widehat{\theta}}^{RBHF}} + 
   \widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{RBHF}}^2
-$$
-where
+\end{align}
+}where
 $$
 \widehat{\Exp{V}}\Paran{\si{\widehat{\theta}}^{RBHF}} =
   N_i^{-2} \sum_{j \in S} \Paran{a_{ij}^2 + \Paran{N_i - n_i} n^{-1}} \lambda_j^{-1}\Paran{y_j - \hat{\mu}_j}^2
 $$
-is an estimator of the conditional prediction variance with $a_{ij} = N_i w_{ij}^{RBHF} - I\Paran{j \in i}$ and
+is an estimator of the conditional prediction variance with $a_{ij} = N_i
+w_{ij}^{RBHF} - I\Paran{j \in i}$ where $I\Paran{j \in i}$ denotes an indicator
+function if observation $j$ is in area $i$; and
 $$
 \widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{RBHF}} =
-  \sum_{j \in S} w_{ij}^{RBHF} \hat{\mu}_j - N_i^{-1} \sum_{j \in \Paran{R_i \cup S_i}} \hat{\mu}_j
+  \sum_{j \in S} \hat{w}_{ij}^{RBHF} \hat{\mu}_j - N_i^{-1} \sum_{j \in \Paran{R_i \cup S_i}} \hat{\mu}_j
 $$
 is an estimator of the conditional prediction bias. Note that $\hat{\mu}_j$ is
 an unbiased estimator of the the conditional expectation $\mu_j =
 \Exp{E}\Paran{y_j | \mat{x}_j, \mat{\re}^\psi}$ and $\lambda_j = 1 - 2\phi_{jj}
-+ \sum_{k \in S}\phi^2_{kj}$ is a scaling constant. Due to the shrinkage effect
-associated with EBLUPs @Cha11 suggest to use the unshrunken version of the EBLUP
-under the BHF model for $\hat{\mu}_j$.
++ \sum_{k \in S}\phi^2_{kj}$ is a scaling constant. 
+
+Due to the shrinkage effect associated with EBLUPs @Cha11 suggest to use the 
+unshrunken version of the EBLUP under the BHF model for $\hat{\mu}_j$. The
+approach can be utilized to derive an analytical MSPE estimator for the bias
+corrected version of the REBLUP. @Cha14 do this by replacing the weights in the
+pseudolinear representation and argue to omit the squared bias term in
+\eq{eq:cctmspe} because it is an approximately unbiased estimator of the area
+mean.
+
+Note that the benefit of this pseudolinear representation has the underlying
+assumption that the weights and sampled response values are independent and
+furthermore this estimator of the MSPE neglects the uncertainty associated with
+the estimation of the variance components. @Cha14 hence note that this is a
+first order approximation to the actual MSPE estimator of the REBLUP. A second
+note is that this approach has the price of an increase in the MSE of the MSPE
+estimator. However, @Cha14 argue that in realistic applications this approach
+has good repeated sampling properties - for details see the references in
+@Cha14.
+
+@Cha14 also provide a linearisation-based approach to the estimation of the
+  conditional MSPE. This approach explicitly targets to incorporate the
+  uncertainty in the estimation of the variance components and hence is a second
+  order approximation. The pseudolinear form has in principle the great
+  advantage, that it is easily adapted for other small area estimators by
+  replacing the weights. The linearization-based approach makes it necessary to
+  derive components to capture the uncertainty associated with specific variance
+  components and variance structures. For this reason the pseudolinear form is
+  further explored and adapted for the robust area level estimators in section
+  (?).
 
 ## Discussion
 \label{sec:robustdiscussion}
 
-A reported problem with this method is the numerical stability of the parameter 
-estimates. The robust estimation equations are solved using a Newton-Raphson 
-algorithm; Hence @Schoch12 proposes a different numerical solution for these 
-optimisation problems. @Schoch12 uses similar robust estimation equations for
-the model parameters of the fixed effects part but suggests to use a variation
-of Huber's proposal 2 (cf. @Hub64) to estimate the variance parameter of the
-random effects. Extensions based on the results of @Sin09 can also be found in
-@Sch12 and @Sch14 who use the results for the BHF model with spatially 
-correlated random effects similar to \eq{eq:sfh}.
+The discussion in this section has been narrowed down to the SAE field and 
+specifically around the results @Sin09. Their results are strongly influenced by
+@Ric95 who proposed robust estimation equations for linear mixed models and
+@Hug93 who proposed similar methods. A further extension of these methods to
+generalized linear mixed models can be found in @Yau02.
 
+Recent extensions to to the robust methods by @Sin09 can be found in @Sch14 who
+used a unit level model with spatially correlated random effects and proposed a
+sptial REBLUP (SREBLUP). @Rao14 extended the unit level mixed model to allow for
+P-splines in the fixed part of the model. It is interesting to note that they
+also report problems with their originally proposed Newton-Raphson algorithm and
+suggest using a fixed point algorithm for the variance parameters instead.
 
-Three lines of discussion on robust small area estimation can be identified. The use of alter First, if the distributional assumption - often a
-Gaussian distribution - appears to be implausible then intuition demands that it
-be replaced. This often leads to the use of non-symmetric or heavy-tailed 
-distributions for the model error or the random effect. Due to their flexibility
-Bayesian modelling strategies are often used in this context; see for example
-@Dat95 and @Bel06. Secondly, methods are applied which are *naturally* more
-robust against outlying observations. @Tza10 model a global conditional median,
-or more generally a quantile, instead of a mean. The third approach is to remain
-with the original model or method and *robustify* the estimation equations. In
-this context @Sin09 develop a robustified EBLUP; @Bea09 refer to a winzorisation
-of the Horvitz-Thompson estimator; and @Bea04 introduces a robust extension to 
-generalized regression estimation.
+In general the approach to outlier robust predictions, as it was discussed
+above, is but one possible approach. It is plausible to apply in an application
+when the analyst believes that the population model is correctly specified for a
+substential part of the population. When the model is incorrect, for example in
+the case of a mixture distribution or in general in the context of non-symmteric
+outliers, the proposed methods easily lead to a prediction bias. However
+solutions have been suggested to overcome this issue. Similar methods - in that
+they use robust estimation equations - with respect to survey methods can be
+found in @Bea09 and @Hul99 who suggest for example a robust HT estimator; and
+@Bea04 introduced robust extensions to generalised regression estimation.
 
-- Richardson and Welsh (1995): Robust Restricted Maximum Likelihood in Mixed Linear Models
-- Yau and Kuk (2002): Robust Estimation in Generalized Linear Mixed Models
-- Hulliger (2010): Simple and Robust Estimators for Sampling
-- Lange, Little and Taylor (1989): Robust Statistical Modeling Using the t Distribution
-- Peel and McLachlan (2000): Robust mixture modelling using the t distribution
-- Bell and Huang (2006): Using the t-distribution to Deal with Outliers in Small Area Estimation
-- Huang and Bell (): Using the t-distribution in Small Area Estimation: An Application to SAIPE State Poverty Models
-- Xie, Raghunathan and Lepkowski (2007): Estimation of the proportion of overweight individuals in small areas - a robust extension of the Fay-Herriot model
-- Gershunskaya (2010): Robust Small Area Estimation Using a Mixture Model
-- Datta and Lahiri (1995): Robust Hierarchical Bayes Estimation of Small Area Characteristics in the Presence of Covariates and Outliers
-- Rao, Sinha and Dumitrescu (2014): Robust Small area estimation under semi-parametric mixed models
-- Salvati et.al. (2012): Small area estimation via M-quantile geographically weighted regression
-- Salvati et.al. (2009): Spatial M-Quantile Modles for Small Area Estimation
-- Shmid and Münnich (2012): Spatial robust small area estimation
-- Tzavidis et.al. (2010): Robust Prediction of Small Area Means and Distributions
-- Gervini / Yohai (2002): A Class of Robust and Fully Efficient Regression Estimators
-- Pra99
+A different approach to robust small area predictions can be found in @Cha06 and
+@Tza10 which is to model a conditional quantile instead of a conditional mean.
+This approach also leads to the same problem under non-symmetric outliers in
+that the predictions can be biased. @Tza05 suggested a correction term for this
+bias which was then adapted for the REBLUP by @Cha14.
 
+Also possible is to change the underlying model. This approach is most natural
+in the situation where the original distributional assumption, for example a
+normal distribution, is implausible and needs to be replaced. Choices can fall
+on symmetric distributions with more probability mass on the tails or
+non-symmetric distributions. @Bel06 for example uses a Bayesian approach and
+chooses a t-distribution for the random effects. @Dat95 use suggest to use a
+cauchy distribution or a mixture distribution. Outside the SAE field examples
+for robust modelling can be found in @Lan89 and @Pee00 who formulate a
+likelihood based on a multivariate t-distribution.
 
+Although most of the references focus on robust SAE based on unit level models, 
+several possibilities have explored for area level models. @Bel06 and @Hua06 
+both use the t-distribution to model the random effect in the FH model within
+the context poverty mapping. @Xie07 also use a hierarchical Bayes approach using
+a t-distribution, however they predict the proportion of overweight individuals 
+in small areas. @Fab10 explore the possibility to use exponential power 
+distributions to model the random effect; simply spoken this is a normal 
+distribution where the skewness and kurtosis are parameterised such that this 
+distribution can be used to model heavy tails or non-symmetry. They also use a
+Baysian approach. @Ger10 and @Cha15 propose to use the FH model but replace the
+distribution of the random effects with a mixture distribution. This essentially
+means that they have to detect which observations are outliers and fit a seperat
+model for them. All these studies can show some advantage of their respective
+method when outliers are present.
