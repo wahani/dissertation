@@ -183,56 +183,58 @@ Fay-Herriot model is explicitly subject to numerous extensions. See for example
 
 ## Spatial and Temporal Fay-Harriot Models
 
-This section reviews spatial and temporal extensions to the FH model. These
-extensions are again subject of chapter (?) where they are then combined with 
-robust estimation methodology which is reviewed in section (?). It is in 
-principle intuitive that if historical data, e.g. yearly repeated surveys, are 
-available it should be exploited; and the same is true for spatial structures. 
-From a mixed model perspective two components can be modified in order to take 
-such information into account: the random effect and the model error term. The 
-use of correlated random effects to allow for spatial, temporal, or 
-spatio\hyp{}temporal effects may be beneficial with respect to domain
-predictions. In constrast to modifications to the model error this may add to
-the improvement of domain predictions in terms of MSPE and is favoured in the 
-literature. Modifying the model error can be motivated to account for correlated
-sampling errors of the direct estimators. This may be of special interest if,
-for example, the area level information are based on a panel surveye.
+This section reviews spatial and temporal extensions to the FH model. These 
+extensions are again the subject of chapter (?) where they are then combined
+with robust estimation methodology which is reviewed in section (?). In 
+principle it is intuitive that if historical data, e.g. annually repeated
+surveys, is available it should be exploited; and the same is true of spatial
+structures. From a mixed model perspective two components can be modified in
+order to take such information into account: the random effect and the model
+error term. The use of correlated random effects to allow for spatial, temporal,
+or spatio\hyp{}temporal effects may also be beneficial with respect to domain 
+predictions. In constrast to modifications to the model error this may add to 
+the improvement of domain predictions in terms of MSPE and is looked upon
+favourably in the literature. Modifying the model error can be motivated to
+account for correlated sampling errors of the direct estimators. This may be of
+special interest if, for example, the area level information is based on a panel
+survey.
 
 ### Spatial Extensions
 
 The standard FH model \eq{eq:fh} uses a random effect to capture unobserved 
 variation between areas. However it ignores unobserved spatial patterns which 
-can be present when areas refer to geographical units. In the FH model the area
-specific random effects are independent; when spatial correlation is an issue
-then instead the assumption of correlated random effects appears to be more
-plausible because neighbouring areas may be similar. If no covariates are 
-present to capture such effects @Mol09 showed that taking spatial correlation 
-into account can be beneficial for domain predictions. @Sin05, @Pet06, and
-@Pra08 investigated the possibility to incorporate a simultaneous autoregressive
-process (SAR) into the domain predictions. In principle there are two options to
-model spatial correlation: conditional autoregressive models (CAR) and SAR. The 
-main difference is that CAR models are based on a Markov field which implies 
-that spatial correlation exists only locally between two or more neighbours but 
-does not effect other non neighbouring units, i.e. such a process has no memory 
-across space. SAR processes do not have this restriction and are more useful to 
-describe a global correlation structure. For a comprehensive overview of 
-different approaches see @Cre93. To incorporate spatial correlation we can 
-modify model \eq{eq:fh} such that:
+may be present when areas refer to geographical units. In the FH model the area 
+specific random effects are independent; when spatial correlation is an issue 
+then the assumption of correlated random effects appear instead to be more 
+plausible since neighbouring areas may be similar. If no covariates are present
+to capture such effects @Mol09 show that taking spatial correlation into account
+can be beneficial for domain predictions. @Sin05, @Pet06, and
+@Pra08 investigated the possibility of incorporating a simultaneous
+  autoregressive process (SAR) into the domain predictions. In principle there
+  are two options to model spatial correlation: conditional autoregressive
+  models (CAR) and SAR. The main difference is that CAR models are based on a
+  Markov field which implies that spatial correlation exists only locally
+  between two or more neighbours but does not affect other non neighbouring
+  units, i.e. such a process has no memory across space. SAR processes do not
+  have this restriction and are more useful in describing a global correlation
+  structure. For a comprehensive overview of the different approaches see
+  @Cre93. In order to incorporate spatial correlation we can modify model
+  \eq{eq:fh} such that:
 \empty{
 \begin{align}
 \tilde{y}_{i} = \mat{x}^\top_{i}\pmat\beta + \re_{1i} + e_{i} \label{eq:sfh}
 \end{align}
-}where the only difference to model \eq{eq:fh} is to replace $\re_i$ with
-$\re_{1i}$ to represent the random effect. In contrast to the formulation in
-model \eq{eq:fh} $u_{1i}$ now follows a simultaneous autoregressive process of 
-order one (SAR(1)) which is defined by:
+}where the only difference to model \eq{eq:fh} is the replacement of $\re_i$
+with $\re_{1i}$ to represent the random effect. In contrast to the formulation
+in model \eq{eq:fh} $u_{1i}$ now follows a simultaneous autoregressive process
+of order one (SAR(1)) which is defined by:
 $$
 u_{1i} = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i}
 $$
 where $|\rho_1| < 1$ and $\epsilon_{1i} \sim \Distr{N}(0, \sigma_1^2)$ are 
 i.i.d. with $i = 1,\dots, D$. $w_{il}$ are the elements of $\mat{W}$ which is 
 the row standardized transformation of the proximity matrix $\mat{W}^0$. The 
-elements in $\mat{W}^0$ are equal to one if areas are neighboured and zero
+elements in $\mat{W}^0$ are equal to one where areas are neighboured and zero
 otherwise, it then follows that the dimension of $\mat{W}^0$ is $D \times D$.
 Using the methodology of section \ref{sec:blup} the BLUP can be stated as:
 \empty{
@@ -247,15 +249,15 @@ the EBLUP can be obtained by:
 \begin{align}
 \hat{\theta}^{SFH}_{i} = \mat{x}^\top_{i}\hat{\pmat\beta} + \hat{\re}_{1i}.
 \end{align}
-}Note that this model is again subject of section (?) where the variance 
+}This model is again the subject matter of section (?) where the variance 
 structure is reviewed in more detail. The MSPE for the EBLUP under model
 \eq{eq:sfh} is developed by @Pra08 who extend the results from @Pra90.
 
-A different approach to model spatial correlation structures can be found in
+A different approach to model spatial correlation structures can be seen in
 @Cha12 who use a geographically weighted regression model and derive the EBLUP
-  under this model. @Sal12 use a geographically wighted M-quantile regression 
-  model for small area predictions. @Por14 is an example how to use a CAR
-  process in the context of the FH model, which is, additionally, extended to
+  under this model. @Sal12 use a geographically weighted M-quantile regression 
+  model for small area predictions. @Por14 is an example how a CAR
+  process may be used in the context of the FH model, which is, additionally, extended to
   allow for functional covariates.
 
 
@@ -295,7 +297,7 @@ the EBLUP can be obtained:
 \hat{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\hat{\pmat\beta} + \hat{u}_{i} + \hat{u}_{2it}.
 \end{align}
 }@Rao94 used a method of moments estimator for the elements in $\delta$.
-Extensions to this model have been made by @Dat02 by replacing the AR(1) process
+Extensions to this model have been made by @Dat02 who replace the AR(1) process
 with a random walk. @Sin91 use a random slope model instead of correlated random
 effects, but also use an AR(1) to describe the variation of the random
 regression coefficients.
@@ -303,11 +305,12 @@ regression coefficients.
 
 ### Spatio Temporal Extensions
 
-Subject of this section is the combination of the spatial model \eq{eq:sfh} and
-temporal model \eq{eq:tfh}; this combination was first introduced by @Mar13. A similar
-approach but for a multinomial response can be found in @Lop15. @Sin05 use a
-similar approach with respect to spatial autocorrelation but they use a State
-Space Model with a Kalman filter to take advantage of time series data.
+The subject matter of this section is the combination of the spatial model
+\eq{eq:sfh} and temporal model \eq{eq:tfh}; this combination was first
+introduced by @Mar13. A similar approach but for a multinomial response can be
+found in @Lop15. @Sin05 use a similar approach with respect to spatial
+autocorrelation but they use a State Space Model with a Kalman filter to take
+advantage of time series data.
 
 Following @Mar13 a spatio temporal FH model can be formulated as:
 \empty{
@@ -317,7 +320,7 @@ Following @Mar13 a spatio temporal FH model can be formulated as:
 }where in contrast to model \eq{eq:tfh} the first random effect component has 
 been replaced with a correlated random effects component following a SAR(1). To 
 summarise this model, we have $\re_{1i}$ following a SAR(1), $\re_{2it}$ 
-following an AR(1), and $e_{it}$ are i.i.d., furthermore $\re_{1i}$, $\re_{2it}$
+following an AR(1), and $e_{it}$ are i.i.d.; furthermore $\re_{1i}$, $\re_{2it}$
 and $e_{it}$ are assumed to be pairwise independent. Following the presentation
 of the previous sections, the spatio temporal BLUP under model \eq{eq:stfh} can
 be defined by:
@@ -325,7 +328,7 @@ be defined by:
 \begin{align*}
 \tilde{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\tilde{\pmat\beta} + \tilde{\re}_{1i} + \tilde{\re}_{2it}.
 \end{align*}
-}@Mar13 used an REML estimator for the unknown variance components $\pmat\delta = 
+}@Mar13 have used an REML estimator for the unknown variance components $\pmat\delta = 
 (\rho_1, \sigma_1^2, \rho_2, \sigma_2^2)$. Replacing the unknown components with
 their respective estimates leads then to the EBLUP under model \eq{eq:stfh}:
 \empty{
@@ -333,37 +336,38 @@ their respective estimates leads then to the EBLUP under model \eq{eq:stfh}:
 \hat{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\hat{\pmat\beta} + \hat{\re}_{1i} + \hat{\re}_{2it}.
 \end{align}
 }
-In contrast to @Sin05 who derived an analytical MSPE for spatio-temporal domain
-predictions and @Pra08 who derived an MSPE for spatial predictions, @Mar13
+In contrast to @Sin05 who derive an analytical MSPE for spatio-temporal domain
+predictions and @Pra08 who derive an MSPE for spatial predictions, @Mar13
 propose to use a parametric bootstrap for the estimation of the MSPE.
 
 ### Discussion
 
 The use of correlation across space to improve domain predictions is in 
-principle promising for applications. However, an important remark and result of
-the reviewed literature is, that modeling spatial autocorrelation as a random 
-effect is beneficial if this structure can not be captured by auxiliary 
-information, i.e. in the fixed effects part of a mixed model. This means such 
-models can be used to capture *unobserved* spatial correlation. Also note that 
-although the proximity matrix $\mat{W}^0$ is introduced to represent
-neighbouring units in a geographical sense it can refer to more abstract 
-relationships. Neighbouring units may also be defined, for example, by capturing
-the structure between industry sectors with inter-relations. Such structures, in
-contrast to geographical units, may be defined with domain expertise. Thus this
-strategy can be generally useful for domain predictions instead of being
-restricted to the geographical sense of area predictions.
+principle a promising approach for applications. However an important aspect and
+result of the literature reviewed is that modeling spatial autocorrelation in
+terms of a random effect is useful only when this structure cannot be captured
+by auxiliary information, i.e. in the fixed effects part of a mixed model. This
+means that such models can be used to capture *unobserved* spatial correlation.
+Also of interest is that although the proximity matrix $\mat{W}^0$ is introduced
+to represent neighbouring units in a geographical sense it can refer to more
+abstract relationships. Neighbouring units may also be defined, for example, by
+capturing the structure between industry sectors which are inter-related. Such
+structures, in contrast to geographical units, may be defined through domain
+expertise. Thus this strategy can be generally useful for domain predictions
+instead of being restricted to the geographical sense of area predictions.
 
-Different is the use of information over time. @Mar13 note that in practice we
-may be interested to make predictions for the current time period, and not the
-past, and use historic information as additional information. The use of
-historic information may lead to an improvement of parameter estimates due to an
-increased sample size. The temporal random effect in model \eq{eq:tfh} can
-additionally be of use to improve domain predictions. @Sin05 note that this is 
-especially the case if the historic information, often itself predictions, is
+The use of information over time on the other hand is quite different. @Mar13
+note that in practice we may be interested in making predictions for the current
+time period - and not the past - and use historic information as additional
+data. The use of historic information may lead to an improvement of parameter
+estimates due to the increased sample size. The temporal random effect in model
+\eq{eq:tfh} can additionally be of use in improving domain predictions. @Sin05
+note that this is especially the case if the historic information, often itself
+a prediction, is
 more reliable than the available information of the current time period.
 
-The spatial, temporal, and spatio\hyp{}temporal FH model is again the subject in
-section (?) where they are combined with robust estimation methodology. Note
-that the review in this chapter may not be sufficient to deduce the
-representation of these models as linear mixed models, this will be stated more
-precisely in section (?).
+The spatial, temporal, and spatio\hyp{}temporal FH model is again the subject of
+Section (?) where it is combined with robust estimation methodology. Note that
+the review in this chapter may not be sufficient to deduce the representation of
+these models as linear mixed models; this will be discussed in more detail in
+section (?).
