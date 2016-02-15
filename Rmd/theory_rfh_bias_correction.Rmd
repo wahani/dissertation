@@ -1,4 +1,4 @@
-# Bias correction
+# Bias Correction
 
 The two existing methodologies which are available to do bias correction for
 robust models in SAE are not easily adapted to the general context of the

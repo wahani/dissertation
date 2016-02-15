@@ -1,13 +1,15 @@
-# The Problem of Outlying Observations for Area-Level Models
+# The Problem of Outlying Observations for Area Level Models
 
 > *"[Outliers:] observations obtained under seemingly normal circumstances, but
 that turn out to be extremely deviant from the main body of observations."* --
 @Abe95[69]
 
-In contrast to these available approaches I follow the main results of @Sin09 to
-derive robust estimation equations for linear mixed models. Furthermore the
-introduced models allow to model unobserved spatial and temporal structures in
-the random effects, which has not been explored
+Chambers (1986) uses
+the term representative outliers to describe observations which are cor-
+rectly recorded and can not be assumed to be unique. Non-representa-
+tive outliers, on the other hand, may be best described as not correctly
+recorded and should be imputed or generally dealt with during the
+editing process of survey data
 
 This section provides some motivation for the study of robust area-level models.
 It mainly lays out under which scenarios a robust estimation may proove to be
@@ -144,3 +146,7 @@ to both scenarios because single observations are restricted in their influence.
 Furthermore the robust model may present an alternative to smoothing strategies,
 although that has not been the initial intention, without the danger of creating
 overly influencial observations.
+
+## Outlook
+
+

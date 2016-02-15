@@ -1,8 +1,8 @@
-# Mean Squared Error Estimation
+# Mean Squared Prediction Error
 
-## Bootstrap
+## Parametric Bootstrap Methods
 
-## Pseudo Linearization
+## Pseudolinearization-based MSPE
 
 This is the representation of the pseudo linear representation of the FH model.
 As it is introduced in @Cha11 and @Cha14.
