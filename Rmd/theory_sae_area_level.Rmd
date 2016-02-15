@@ -49,20 +49,22 @@ model, defined in equation \eq{eq:blup}, can then be obtained by setting
 $\tilde{\mu}_i = \tilde{\theta}_i^{FH}$,
 $\mat{l}_i^\top = \mat{x}_i^\top$, $\mat{m}^\top_i = 1$ and $y_i = \tilde{y}_i$:
 \empty{
-\begin{align}
+\begin{align*}
 \tilde{\theta}_i^{FH} = 
 \tilde{\theta}_i^{FH}(\sigma_\re^2) &= \si{\mat{x}}^\top\tilde{\pmat\beta} + \si{\tilde{\re}} \nonumber\\
                               &= \si{\mat{x}}^\top\tilde{\pmat\beta} + \frac{\sigma_\re^2}{\sigma_\re^2 + \sige} \Paran{\tilde{y}_i - \si{\mat{x}}^\top\tilde{\pmat\beta}} \nonumber\\
                               &= \gamma_i\tilde{y}_i + (1 - \gamma_i)\si{\mat{x}}^\top\tilde{\pmat\beta}
-\end{align}
+\end{align*}
 }with $\si{\gamma} = \sigre / (\sigre + \sige)$. The BLUP depends on the
 variance parameter of the random effects, $\sigre$, which is unknown. To obtain
 the EBLUP under the Fay-Herriot model we can replace the unknown parameter with
 an estimate, leading to:
-$$
+\empty{
+\begin{align}
+\label{eq:fheblup}
 \si{\hat{\theta}}^{FH} = \si{\hat{\gamma}}\si{\tilde{y}} + \Paran{1 - \si{\hat{\gamma}}} \si{\mat{x}}^\top\hat{\pmat\beta}
-$$
-where $\si{\hat{\gamma}} = \hat{\sigma}_\re^2 / (\hat{\sigma}_\re^2 + \sige)$.
+\end{align}
+}where $\si{\hat{\gamma}} = \hat{\sigma}_\re^2 / (\hat{\sigma}_\re^2 + \sige)$.
 Note that the regression parameters are still estimated using the weighted least
 squares estimator of equation \eq{eq:blue} with $\delta =
 \hat{\pmat\sigma}_\re^2$.
