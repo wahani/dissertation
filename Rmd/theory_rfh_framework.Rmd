@@ -5,15 +5,15 @@ that turn out to be extremely deviant from the main body of observations."* --
 @Abe95[69]
 
 Otliers can have severe and unwanted impact on predictions. This is true for the
-case of linear mixed models but also for hierarchical Bayes; both methodologies
-are considered for area level models. In section \ref{sec:robustdiscussion} a
-literature review of robust area level models can be found. In this context it
-is notworthy that these studies focused on how to adress outliers in the context
-of hierarchical Bayes. In the following I will adapt the robust estimation
-methodology by @Sin09 to area level models which leads to outlier robust
-predictions under mixed linear models. Before I come to the robust methods I
-want to point out different scenarios in which we may be interested in robust
-methods; i.e. what are outliers on the area level?
+case of linear mixed models but also for hierarchical Bayes; both methodologies 
+are considered for area level models. In section \ref{sec:robustdiscussion} a 
+literature review of robust area level models can be found. In this context it 
+is noteworthy that these studies focused on how outliers can be dealt with in
+the context of hierarchical Bayes. In the following I will adapt the robust 
+estimation methodology by @Sin09 to area level models which leads to outlier 
+robust predictions under mixed linear models. Before I come to the robust 
+methods I want to point out different scenarios in which we may be interested in
+robust methods; i.e. what are outliers on the area level?
 
 @Cha86 has introduced the terms *representative* and *non-representative*
   outliers to distinguish between two common types:
@@ -50,10 +50,9 @@ single units in the sample and in this case the synthetic estimator, i.e. the
 regression line, is a better choice.
 
 \noindent Given this distinction @Bel06 argue that in practice there is no 
-indication which type of outlying observations area being observed and the 
-existing literature mainly focuses on dealing with area level outliers since
-they lead to a simple extension to the FH model - see for example @Dat95 and
-@Xie07.
+indication which type of outlying observations are observed and the existing
+literature mainly focuses on dealing with area level outliers since they lead to
+a simple extension of the FH model - see for example @Dat95 and @Xie07.
 
 In contrast to this classification I want to distiguish between three types of 
 outlying observations and furthermore want to illustrate that it may be possible
@@ -64,26 +63,26 @@ will characterize these types to motivate the study of robust area level models.
 ## Unit-Level Outliers
 \label{sec:unit-level-outliers}
 
-Unit-level outliers can be representative or non-representative but in most
+Unit level outliers can be representative or non-representative but in most
 cases it is beyond our reach to judge which kind they are since we may only have
 access to aggregates. These observations will influence the direct estimator in
 that this quantity may have unexpectedly large absolute values. They also 
 influence the estimation of the standard error of the direct estimator which in 
-turn may be used as the true or rather given variance parameters in a 
+turn may be used as the true or rather given variance parameters in the 
 Fay-Herriot model.
 
 In the situation where the direct variance estimators are treated as the known 
 variance structure in a FH model two conflicting effects need to be considered. 
 First, we use an obviously unreliable estimator for the sampling error and 
-assume that such values can be used as the *true* variance parameters in the 
-Fay-Herriot model. Such estimators will have poor properties when the target is 
-the *true* sampling error especially in the context of outliers. This problem 
+assume that such values can be used as the *true* variance parameters which are
+assumed to be known. Such estimators will have poor properties when the target
+is the *true* sampling error especially in the context of outliers. This problem
 stimulates the recent discussion around smoothing the variance estimates prior 
 to using them in a Fay-Herriot model - see section \ref{sec:theory_sae_fh_mspe} 
 for a review of this discussion. However unit level outliers may lead to 
-*outlying estimates of the standard errors*, which in turn may have unwanted 
+*outlying estimates of the standard errors*, which in turn may have an unwanted 
 effect on the smoothing of these parameters. This situation is further discussed
-in section \ref{sec:overly-influencial-observations}
+in section \ref{sec:overly-influencial-observations}.
 
 Second, we may consider the direct variance estimators not as an informative 
 quantity for the *true* sampling error as it is assumed under the FH model, but
@@ -126,38 +125,45 @@ stimulates a more fundamental discussion of linear mixed models in Small Area
 Estimation; and it gives reason to frame a random effect as fixed but unknown
 quantity. In this setting the existance of outliers means that the normal
 distribution may well be a good approximation for the majority of areas but not
-for all them. This will raise the question if a different distribution should be
-used to approximate the random effect, e.g. a mixture distribution of normals or
-a scewed distribution.
+for all them. 
 
-Regardless of the perspective, in the application in which such values are 
-observed a robust estimation technique can be beneficial. The main effect of a 
-misspecified distributional assumption is that the variance parameter of the 
-random effect will be overestimated; at least this is what we should expect in 
-the presence of outliers. Also the parameter estimates of the fixed effects part
-can be influenced by such observations, allthough it is unclear whether they are
-under or over estimated. Looking at the EBLUP under the FH model in \eq{eq:fheblup}:
+In an application in which such values are observed a robust estimation 
+technique can be beneficial. The main effect of area level outliers is that the 
+variance parameter of the random effect will be overestimated. Also the
+parameter estimates of the fixed effects part can be influenced by such
+observations, allthough it is unclear whether they are under or over estimated.
+Looking at the EBLUP under the FH model in \eq{eq:fheblup}:
 \empty{
 \begin{align*}
-\tilde{\theta}_i^{FH} = 
-\gamma_i\tilde{y}_i + (1 - \gamma_i)\si{\mat{x}}^\top\tilde{\pmat\beta}
+\hat{\theta}_i^{FH} = 
+\gamma_i\tilde{y}_i + (1 - \gamma_i)\si{\mat{x}}^\top\hat{\pmat\beta}
 \end{align*}
 }where $\si{\hat{\gamma}} = \hat{\sigma}_\re^2 / (\hat{\sigma}_\re^2 + \sige)$
 we see that the larger the estimated variance parameter $\hat{\sigma}_\re^2$ -
 for fixed values of $\sige$ - the more weight is given to the direct estimator.
-This will reduce the beneficial effect for the predictions in terms of MSPE
-since we rely more on the direct estimates.
+Thus an overestimation of $\hat{\sigma}_\re^2$ will reduce the beneficial effect
+for the predictions in terms of MSPE since predictions rely more on the direct
+estimates which is known to be unreliable.
+
+This type of outlying observations can be seen as one of the main reasons to
+study a robust extension to the FH model. Estimating the model parameters using
+robust estimation equations will reduce the impact of outlying areas and
+preserve the improvement in MSPE for the non-outlying areas. However this also
+means that we have a poor fit for the outlying observations as was pointed out
+by @Bel06. This will be partially adressed by the bias correction discussed in
+section (?) which means that we fall back to the direct estimator for outlying
+areas, which is appropriate when the direct estimator has sufficient precision.
 
 
 ## The Creation of Overly Influencial Observations
 \label{sec:overly-influencial-observations}
 
-A third kind of outlying observations can be thoght of when we frame them as 
-*overly influencial observations*. They are not necessarily far away from the
-center of the data. Furthermore they can not be understood by looking at the 
-direct estimator alone but must be seen as pairs of direct estimator and 
-sampling variance. Together they determine the impact of a single observation on
-the overall predictions under a FH model.
+The third kind of outlying observations can best be understood when framed as 
+*overly influencial observations*. They are not necessarily far away from the 
+center of the data, i. e. large in absolute values. Furthermore they cannot be
+understood by looking at the direct estimator alone but must be seen as pairs of
+direct estimator and sampling variance. Together they determine the impact of a
+single observation on the overall predictions under a FH model.
 
 To be able to distinguish them from area and unit level outliers consider two
 hypothetical scenarios from which these values can arise:
@@ -178,18 +184,41 @@ after smoothing, the direct estimators appear to be more reliable than they
 truly are. Effectively this reduces the self adjusting effect described in
 section \ref{sec:unit-level-outliers}.
 
-Both scenarios are situation in which we have unstable variance estimates and
-the FH model may not yield stable and reliable results. Especially the second
-scenario should not be misunderstood as an argument against smoothing, or that
-we should not care about unstable variance estimation. Allthogh the variances
-are not smoothed the influence of observations is bounded in a robust estimation
-procedure. In fact the introduced robust area level model can be considered to
-have a positive effect with respect to both scenarios because single
-observations are restricted in their influence. Furthermore the robust model may
-present an alternative to smoothing strategies, although that has not been the
-initial intention, without the danger of creating overly influencial
-observations.
+Both scenarios are situation in which we have heterogenous variance estimates
+and the FH model may not yield stable and reliable results. Especially the
+second scenario should not be misunderstood as an argument against smoothing, or
+that we should not care about unstable variance estimation. Allthogh the
+variances are not smoothed the influence of observations is bounded in a robust
+estimation procedure. And not just the influence of the direct estimator is
+bounded but the influence of the pair of direct estimator and sampling variance.
+In fact the introduced robust area level model can be considered to have a
+positive effect with respect to both scenarios because single observations are
+restricted in their influence. Furthermore the robust model may present an
+alternative to smoothing strategies - although that has not been the initial
+intention - without loosing the ability to weight down areas with unit level
+outliers.
 
 ## Outlook
 
+In the following sections the robust estimation methodology of section (?) are
+adapted for area level models. Results for this approach can also be found in
+@Rao15[146 ff] who derive robust estimation methodology based on the results of
+@Sin09 for the FH model. The approach of @Sin09 is directly applicable to the FH
+  model but is extended, first, by proposing robust estimation equations
+  for area level models with correlated random effects; and second, by proposing 
+  algorithms for the model parameters and predictions which do not
+  rely on the Taylor series expansion used by @Sin09.
 
+The reason for these extensions are that the original approach focused on the
+case where the variance structure of the random effects is a diagonal matrix,
+which in the case of the spatial and temporal extensions is not the case.
+Furthermore the proposed NR algorithm for the random effects was surprisingly
+unstable for area level models which manifested itself in thousands of
+iterations until numerical convergence was reached. A possible reason may be the
+ratio between observations and random effects, e.g. we have $D$ areas and make
+$D$ predictions. However a conclusive analysis of these problem cannot be
+provided.
+
+Furthermore some simulation studies are conducted to complete the link between
+unit and area level outliers and their effect on the area level predictions.
+This approach is discussed in more detail in chapter (?).
