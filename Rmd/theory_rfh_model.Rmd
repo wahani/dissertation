@@ -289,9 +289,7 @@ as:
 \underbrace{\Paran{\mat{W}_2^*\mat{Z} + \mat{W}_3^*}^{-1} \mat{W}_2^*}_{\mat{B}(\pmat\beta, \mat{u})} 
   \Paran{\mat{y}-\mat{X}\beta} & = \mat{\re}
 \end{align*}
-}
-
-where 
+}and hence 
 \empty{
 \begin{align*}
 \mat{B}(\mat{u}) = \mat{B} = &
@@ -300,52 +298,106 @@ where
     + \mat{V}_\re^{-1} \mat{U}_\re^\half \mat{W}_3 \mat{U}_\re^{-\half}
   }^{-1} \\ & \times \mat{Z}^\top \mat{V}_e^{-1} \mat{U}_e^\half \mat{W}_2 \mat{U}_e^{-\half}
 \end{align*}
+}where, similar as before, $\mat{W}_2 = \Diag{\{w_{2i}\}_{i = 1}^n}$ and $\mat{W}_3 = \Diag{\{w_{3j}\}_{j = 1}^m}$ are diagonal metrices with elements:
+\empty{
+\begin{align*}
+w_{2i} = 
+  \psi\Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)} 
+  \Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)}^{-1}
+\end{align*}
+}and
+\empty{
+\begin{align*}
+w_{3j} = 
+  \psi\Paran{U_{uj}^{-\half} u_j} 
+  \Paran{U_{uj}^{-\half} u_j}^{-1}
+\end{align*}
 }
-
-
 
 
 ## Solutions to the Robust Estimation Equations
 
-### Newton Raphson Algorithms
-
-@Sin09 propose a Newton-Raphson algorithm to solve equations \ref{eq:rml_beta} and \ref{eq:rml_theta} iteratively. The iterative equation for $\beta$ is given by:
-$$
-\beta^{(m+1)} = \beta^{(m)} + \left(\mathbf{X}^\top \mathbf{V}^{-1}\mathbf{D}(\beta^{(m)})\mathbf{X}\right)^{-1}\mathbf{X}^\top\mathbf{V}^{-1}\mathbf{U}^{\frac{1}{2}}\psi(\mathbf{r}(\beta^{(m)}))
-$$
-where $\mathbf{D}(\beta) = \frac{\partial \psi(\mathbf{r})}{\partial \mathbf{r}}$ is a diagonal matrix of the same order as $\mathbf{V}$ with elements
-$$
-D_{jj} =
-\begin{cases}
-1 \text{ for } |r_j|\leq b\\
-0 \text{ else}
-\end{cases}
-\text{ , } j = 1, \dots, n
-$$
-The iterative equation for $\theta$ can be stated as:
-$$
-\theta^{(m+1)} = \theta^{(m)} - \left( \Phi'(\theta^{(m)}) \right)^{-1} \Phi(\theta^{(m)})
-$$
-where $\Phi'(\theta^m)$ is the derivative of $\Phi(\theta)$ evaluated at $\theta^{(m)}$. The derivative of $\Phi$ is given by \cite[p.53]{Sch11}:
-\begin{align}
-\label{eq:deriv_Phi_theta}
-\frac{\partial\Phi}{\partial\theta_l} = 2\frac{\partial}{\partial\theta_l}\left(\psi(\mathbf{r})^\top\mathbf{U}^{\frac{1}{2}}\mathbf{V}^{-1}\right)\frac{\partial\mathbf{V}}{\partial\theta_l}\mathbf{V}^{-1}\mathbf{U}^{\frac{1}{2}}\psi(\mathbf{r}) + \tr\left(\mathbf{V}^{-1}\frac{\partial\mathbf{V}}{\partial\theta_l}\mathbf{V}^{-1}\frac{\partial\mathbf{V}}{\partial\theta_l} K\right)
-\end{align}
-where
-$$
-\frac{\partial}{\partial\theta_l}\left(\psi(\mathbf{r})^\top\mathbf{U}^{\frac{1}{2}}\mathbf{V}^{-1}\right) = \frac{\partial}{\partial\theta_l}(\psi(\mathbf{r})^\top)\mathbf{U}^\frac{1}{2}\mathbf{V}^{-1} + \psi(\mathbf{r})^\top\frac{\partial}{\partial\theta_l}(\mathbf{U}^\frac{1}{2})\mathbf{V}^{-1} - \psi(\mathbf{r})^\top\mathbf{U}^\frac{1}{2}\mathbf{V}^{-1}\frac{\partial\mathbf{V}}{\partial\theta_l}\mathbf{V}^{-1}.
-$$
-In @Sch11 adopted this procedure for the Spatial Robust EBLUP and essentially we will follow the same procedure @Sch11[p.74ff.]. Thus we will directly consider the algorithm for the Spatio Temporal model introduced earlier. Since the model considered by @Sin09 contained a block diagonal variance structure where all off-diagonals are zero, equation \ref{eq:deriv_Phi_theta} is valid with respect to the earlier specified variance parameters $\sigma_1^2$ and $\sigma_2^2$ from the spatio temporal Fay Herriot model. The derivative of $\Phi$ with respect to $\rho_1$ and $\rho_2$, however, is different. To adapt the notation, let $\theta = (\sigma_1^2, \sigma_2^2)$ for which equation \ref{eq:deriv_Phi_theta} holds. Let $\rho = (\rho_1, \rho_2)$ denote the vector of correlation parameters as they already have been defined above. Then the iterative equation for $\rho$ is can be stated as:
-$$
-\rho^{(m+1)} = \rho^{(m)} + \left(\Phi'(\rho^{(m)}\right)^{-1}\Phi(\rho^{(m)})
-$$
-where the derivative of $\Phi$ with respect to $\rho$ is given by @Sch11[p.76]:
-
+To create a generic notation for the solutions to the robust estimation equations recall that:
+\empty{
 \begin{align*}
-\frac{\partial\Phi}{\partial\rho_l} =& 2\frac{\partial}{\partial\rho_l}\left(\psi(\mathbf{r})^\top\mathbf{U}^{\frac{1}{2}}\mathbf{V}^{-1}\right)\frac{\partial\mathbf{V}}{\partial\rho_l}\mathbf{V}^{-1}\mathbf{U}^{\frac{1}{2}}\psi(\mathbf{r})\\
-&+ \psi(\mathbf{r})^\top\mathbf{U}^{\frac{1}{2}}\mathbf{V}^{-1} \frac{\partial\mathbf{V}}{\partial\rho_l\partial\rho_l} \mathbf{V}^{-1}\mathbf{U}^{\frac{1}{2}}\psi(\mathbf{r}) \\
-&+ \tr\left(\mathbf{V}^{-1}\frac{\partial\mathbf{V}}{\partial\rho_l\partial\rho_l} K - \mathbf{V}^{-1}\frac{\partial\mathbf{V}}{\partial\theta_l}\mathbf{V}^{-1}\frac{\partial\mathbf{V}}{\partial\theta_l} K\right)
+\pmat\beta = \mat{A}(\pmat\beta)\mat{y}
 \end{align*}
+}and that $\hat{\pmat\beta}^\psi = \mat{A}\Paran{\hat{\pmat\beta}^\psi}\mat{y}$. This representation already makes it obvious that we have a fixed point function or a IRWLS algorithm which can be derived as:
+\empty{
+\begin{align*}
+\pmat\beta^{(m + 1)} = \mat{A}\Paran{\pmat\beta^{(m)}}\mat{y}
+\end{align*}
+}for adequate starting values, $\pmat\beta^{(0)}$. To motivate a decision for the starting values recall that:
+\empty{
+\begin{align*}
+\pmat\beta^{(m + 1)} 
+  & = \mat{A}\Paran{\pmat\beta^{(m)}}\mat{y} \\
+  & = \Paran{\mat{X}^\top\mat{V}^{-1} \underbrace{\mat{U}^{\half} \mat{W}_1
+  \mat{U}^{-\half}}_{\mat{W}_1^*} \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \underbrace{\mat{U}^{\half} \mat{W}_1 \mat{U}^{-\half}}_{\mat{W}_1^*} \mat{y}
+\end{align*}
+}where $\mat{W}_1^*$ is a diagonal matrix and can be interpreted as the
+weighting matrix inside a IRWLS algorithm. A natural choice as a starting value
+for such matrices is to set the diagonal elements to one. This will lead, in the
+first iteration, to the generalised least squares estimator. Note also that this
+iterative algorithm has the desirable property that it reduces to the GLS
+estimator if we set the tuning constant of $\psi_b$ to infinity because of the
+special form of $\mat{W}_1$. In this case $\mat{W}_1^* = \mat{I}_n$.
+
+Similarly a fixed point function for $\mat{u}$ can be defined by:
+\empty{
+\begin{align*}
+\mat{u} & = \mat{B}(\mat{u})\Paran{\mat{y} - \mat{X}\beta}
+\end{align*}
+}where we can define an algorithm for given realisations for $\pmat\beta$ and
+$\pmat\delta$:
+\empty{
+\begin{align*}
+\mat{u}^{(m + 1)} & = \mat{B}(\mat{u}^{(m)})\Paran{\mat{y} - \mat{X}\beta}
+\end{align*}
+}with suitable starting values $\mat{u}^{(0)}$. The starting values are chosen
+to be the estimated composite error, $\mat{y} - \mat{X}\hat{\pmat\beta}^\psi$.
+Similar to the algorithm before, if the tuning constant of the influence
+function is chosen to be infinity the algorithm has the desiarable property that
+it reduces to the form of (?) because of the special form of $\mat{W}_2$ and
+$\mat{W}_3$:
+\empty{
+\begin{align*}
+\mat{B} \mid_{b = \infty} = &
+  \Paran{
+    \mat{Z}^\top \mat{V}_e^{-1} \underbrace{\mat{U}_e^\half \mat{W}_2 \mat{U}_e^{-\half}}_{\mat{I}_n} \mat{Z}
+    + \mat{V}_\re^{-1} \underbrace{\mat{U}_\re^\half \mat{W}_3 \mat{U}_\re^{-\half}}_{\mat{I}_m}
+  }^{-1} \\ 
+  & \times \mat{Z}^\top \mat{V}_e^{-1} \underbrace{\mat{U}_e^\half \mat{W}_2 \mat{U}_e^{-\half}}_{\mat{I}_n}.
+\end{align*}
+}
+
+An algorithm to solve for $\pmat\delta$ was derived by (?) for the case of the
+robust BHF model. I follow hear the same general procedure to derive fixed point
+equations. In contrast to the solution of $\pmat\beta$ and $\mat{u}$ this
+algorithm depends on the specific form of the variance matrix of the random
+effects and hence needs to be derieved for each model individually. However
+consider the general algorithm:
+\empty{
+\begin{align*}
+\pmat\delta^{(m + 1)} = \mat{C}(\pmat\delta^{(m)})^{-1} \mat{D}(\pmat\delta^{(m)})
+\end{align*}
+}where $\mat{C}$ and $\mat{D}$ denote matrices depending on $\pmat\delta$ and we
+assume that the inverse of $\mat{C}$ exists. The specific form of $\mat{C}$ and
+$\mat{D}$ is the the subject matter of the following sections.
+
+The algorithm is now:
+
+1. Choose initial values $\pmat\beta^{(0)}$ and $\pmat\delta^{(0)}$ and set $m = 0$.
+2. Compute $\pmat\beta^{(m + 1)}$ using equation (?) with given parameters
+$\pmat\delta^{(m)}$ until convergence is reached.
+3. With $\pmat\beta^{(m + 1)}$ compute $\pmat\delta^{(m + 1)}$ using equation (?).
+4. Set $m = m + 1$
+3. Repeat steps 2. to 4. until the set of parameters jointly reaches
+convergence. Declare these solutions to be the robust parameter estimates
+$\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$.
+4. With the solutions $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$ compute $\mat{u}^{(m +
+1)}$ using equation (?) until convergence is reached.
+
 
 The partial derivatives of $\mathbf{V}$ with respect to $\theta$ and $\rho$ are given by:
 
@@ -378,116 +430,41 @@ where
 \right) + \frac{2\rho_2\Omega_{2d}(\rho_2)}{1-\rho_2^2}
 \end{align*}
 
-Having identified all iterative equations the adapted algorithm from @Sch11 is as follows:
 
-- Choose initial values for $\beta^0$, $\theta^0$ and $\rho^0$.
-  - Compute $\beta^{(m+1)}$, with given variance parameters and correlation parameters
-	- Compute $\theta^{(m+1)}$, with given regression and correlation parameters
-	- Compute $\rho^{(m+1)}$, with given variance and regression parameters
+### Solutions for the Robust FH Model
 
-- Continue step 2 until the following stopping rule holds:
+Starting from equation \ref{eq:rml_theta} where $\theta = \sigre$ we can rewrite
+the equation such that:
 
-\begin{align*}
-	||\beta^{(m+1)}- \beta^{(m)}||^2 <& \text{const} \\
-	(\sigma_1^{2(m+1)} - \sigma_1^{2(m)})^2 + (\sigma_2^{2(m+1)} - \sigma_2^{2(m)})^2 + (\rho_1^{(m+1)} - \rho_1^{(m)})^2 + (\rho_2^{(m+1)} - \rho_2^{(m)})^2 <& \text{const}
-\end{align*}
-
-
-### Fixed Point Algorithms
-
-Inspired by: Chatrchi Golshid (2012): Robust Estimation of Variance Components
-in Small Area Estimation, Master-Thesis, Ottawa, Ontario, Canada: p. 16ff.:
-
-\begin{quote}
-The fixed-point iterative method relies on the fixed-point theorem: "If g(x) is
-a continuous function for all $x \in [a; b]$, then $g$ has a fixed point in $[a;
-b]$." This can be proven by assuming that $g(a)\geq a$ and $g(b)\leq b$. Since
-$g$ is continuous the intermediate value theorem guarantees that there exists a
-$c$ such that $g(c) = c$.
-\end{quote}
-
-Starting from equation \ref{eq:rml_theta} where $\theta = (\sigma_1^2,
-\sigma_2^2)$ and $(\rho_1, \rho_2)$ are assumed to be known, we can rewrite the
-equation such that:
-
-\begin{multline}
+\begin{align}
 \label{eq:rml_theta_fp}
-\Phi_l(\theta) = \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}
-\frac{\partial\mat{V}}{\partial\theta_l}
-\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) -\\
-\Tr{K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}
-(\mat{Z}\mat{V}_\re\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_\re\mat{Z}^\top)} = 0
-\end{multline}
+\Phi(\theta) = \aFH - \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta} (\mat{Z}\mat{G}\mat{Z}^\top)^{-1} (\mat{Z}\mat{G}\mat{Z}^\top)\right) =& 0
+\end{align}
 
-Note that because the matrix $\mat{V}_e$ is assumed to be known for the FH
-model, it can be omitted. Let $\mat{0}_{r\times c}$ define a matrix filled with
-$0$ of dimension $(r \times c)$ then:
+Note that because the matrix $\mat{R}$ is assumed to be known for the FH model,
+it can be omitted. Note that under the simple Fay-Herriot Model
+$\mat{Z}\mat{G}\mat{Z}^\top = \sigre\mat{I}$, where $\mat{I}$ is a $(D \times
+D)$ identity matrix. Furthermore $\frac{\partial\mat{V}}{\partial\theta} =
+\mat{I}$. Thus equation \ref{eq:rml_theta_fp} can be rewritten to:
 
 \begin{align*}
-\mat{Z}\mat{V}_u\mat{Z}^\top =& \mat{Z}\left(\begin{matrix}
-\sigma_1^2\Omega_1 & \mat{0}_{D\times DT}\\
-\mat{0}_{DT\times D} &  \sigma_2^2\Omega_2
-\end{matrix}\right)\mat{Z}^\top \\
-=& \mat{Z}
-\left[
-\sigma_1^2\left(\begin{matrix}
-\Omega_1 & \mat{0}_{D\times DT} \\
-\mat{0}_{DT\times D} &  \mat{0}_{DT\times DT}
-\end{matrix}\right) +
-\sigma_2^2\left(\begin{matrix}
-\mat{0}_{D\times D} & \mat{0}_{D\times DT} \\
-\mat{0}_{DT\times D} & \Omega_2
-\end{matrix}\right)
-\right]\mat{Z}^\top \\
-=& \left(\begin{matrix}\mat{Z}\bar{\Omega}_1\mat{Z}^\top & \mat{Z}\bar{\Omega}_2\mat{Z}^\top\end{matrix}\right)
-\left(\begin{matrix}
-\sigma_1^2 \\
-\sigma_2^2
-\end{matrix}\right)
+\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) = \tr\left(K\mat{V}^{-1}\mat{G}^{-1} \sigre \right)
 \end{align*}
 
-Thus equation \ref{eq:rml_theta_fp} can be rewritten to:
-
-\begin{multline*}
-\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) = \\ \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \left(\begin{matrix}\mat{Z}\bar{\Omega}_1\mat{Z}^\top & \mat{Z}\bar{\Omega}_2\mat{Z}^\top\end{matrix}\right)\left(\begin{matrix}
-\sigma_1^2 \\
-\sigma_2^2
-\end{matrix}\right)\right)
-\end{multline*}
-
-Let
+This can be solved for the fixed Point and is directly presented in algorithmic
+notation, such that:
 $$
-\left(\begin{matrix}
-\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
-\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
-\end{matrix}\right)
-= a(\theta) \text{ ,}
-$$
-then
-$$
-\theta = \left(\begin{matrix}
-\sigma_1^2 \\
-\sigma_2^2
-\end{matrix}\right) = A(\theta)^{-1} a(\theta) \text{ ,}
+\theta^{m+1} = A(\theta^{(m)})^{-1} a(\theta^{(m)}) \text{ ,}
 $$
 where
-\begin{align*}
-A(\theta) = \left(\begin{matrix}
-\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_1\mat{Z}^\top \right) &
-\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right) \\
-\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_1\mat{Z}^\top \right) &
-\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right)
-\end{matrix}\right) \text{.}
-\end{align*}
-So, the fixed point algorithm can be presented as follows:
 $$
-\theta^{m+1} = A(\theta^{(m)})^{-1} a(\theta^{(m)})
+A(\theta) = \tr\left(K\mat{V}^{-1}\mat{G}^{-1} \right)
+$$
+and
+$$a(\theta) = \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
 $$
 
-At this time the fixed-point algorithm for $\theta = (\sigma_1^2, \sigma_2^2)$
-will replace the corresponding step in Issue 1.
-
-### N-S: Fixed-Point-Algorithm - Spatial Correlation
+### Solutions for the Spatial Robust FH Model
 
 To extend the above algorithm to not only being used for the estimation of
 $\theta = (\sigma_1^2, \sigma_2^2)$ but also for the spatial correlation
@@ -584,47 +561,90 @@ A(\theta) = \left(\begin{matrix}
 
 and $\gamma(\theta_l) = K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}$
 
-### More on the Fixed Point
 
-Inspired by: Chatrchi Golshid (2012): Robust Estimation of Variance Components
-in Small Area Estimation, Master-Thesis, Ottawa, Ontario, Canada: p. 16ff.:
+### Solutions for the Temporal Robust FH Model
 
-\begin{quote}
-The fixed-point iterative method relies on the fixed-point theorem: "If g(x) is
-a continuous function for all $x \in [a; b]$, then $g$ has a fixed point in $[a;
-b]$." This can be proven by assuming that $g(a)\geq a$ and $g(b)\leq b$. Since
-$g$ is continuous the intermediate value theorem guarantees that there exists a
-$c$ such that $g(c) = c$.
-\end{quote}
+### Solutions for the Spatio Temporal Model
 
-Starting from equation \ref{eq:rml_theta} where $\theta = \sigre$ we can rewrite
-the equation such that:
+Starting from equation \ref{eq:rml_theta} where $\theta = (\sigma_1^2,
+\sigma_2^2)$ and $(\rho_1, \rho_2)$ are assumed to be known, we can rewrite the
+equation such that:
 
-\begin{align}
+\begin{multline}
 \label{eq:rml_theta_fp}
-\Phi(\theta) = \aFH - \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta} (\mat{Z}\mat{G}\mat{Z}^\top)^{-1} (\mat{Z}\mat{G}\mat{Z}^\top)\right) =& 0
-\end{align}
+\Phi_l(\theta) = \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}
+\frac{\partial\mat{V}}{\partial\theta_l}
+\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) -\\
+\Tr{K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}
+(\mat{Z}\mat{V}_\re\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_\re\mat{Z}^\top)} = 0
+\end{multline}
 
-Note that because the matrix $\mat{R}$ is assumed to be known for the FH model,
-it can be omitted. Note that under the simple Fay-Herriot Model
-$\mat{Z}\mat{G}\mat{Z}^\top = \sigre\mat{I}$, where $\mat{I}$ is a $(D \times
-D)$ identity matrix. Furthermore $\frac{\partial\mat{V}}{\partial\theta} =
-\mat{I}$. Thus equation \ref{eq:rml_theta_fp} can be rewritten to:
+Note that because the matrix $\mat{V}_e$ is assumed to be known for the FH
+model, it can be omitted. Let $\mat{0}_{r\times c}$ define a matrix filled with
+$0$ of dimension $(r \times c)$ then:
 
 \begin{align*}
-\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) = \tr\left(K\mat{V}^{-1}\mat{G}^{-1} \sigre \right)
+\mat{Z}\mat{V}_u\mat{Z}^\top =& \mat{Z}\left(\begin{matrix}
+\sigma_1^2\Omega_1 & \mat{0}_{D\times DT}\\
+\mat{0}_{DT\times D} &  \sigma_2^2\Omega_2
+\end{matrix}\right)\mat{Z}^\top \\
+=& \mat{Z}
+\left[
+\sigma_1^2\left(\begin{matrix}
+\Omega_1 & \mat{0}_{D\times DT} \\
+\mat{0}_{DT\times D} &  \mat{0}_{DT\times DT}
+\end{matrix}\right) +
+\sigma_2^2\left(\begin{matrix}
+\mat{0}_{D\times D} & \mat{0}_{D\times DT} \\
+\mat{0}_{DT\times D} & \Omega_2
+\end{matrix}\right)
+\right]\mat{Z}^\top \\
+=& \left(\begin{matrix}\mat{Z}\bar{\Omega}_1\mat{Z}^\top & \mat{Z}\bar{\Omega}_2\mat{Z}^\top\end{matrix}\right)
+\left(\begin{matrix}
+\sigma_1^2 \\
+\sigma_2^2
+\end{matrix}\right)
 \end{align*}
 
-This can be solved for the fixed Point and is directly presented in algorithmic
-notation, such that:
+Thus equation \ref{eq:rml_theta_fp} can be rewritten to:
+
+\begin{multline*}
+\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) = \\ \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \left(\begin{matrix}\mat{Z}\bar{\Omega}_1\mat{Z}^\top & \mat{Z}\bar{\Omega}_2\mat{Z}^\top\end{matrix}\right)\left(\begin{matrix}
+\sigma_1^2 \\
+\sigma_2^2
+\end{matrix}\right)\right)
+\end{multline*}
+
+Let
 $$
-\theta^{m+1} = A(\theta^{(m)})^{-1} a(\theta^{(m)}) \text{ ,}
+\left(\begin{matrix}
+\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
+\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
+\end{matrix}\right)
+= a(\theta) \text{ ,}
+$$
+then
+$$
+\theta = \left(\begin{matrix}
+\sigma_1^2 \\
+\sigma_2^2
+\end{matrix}\right) = A(\theta)^{-1} a(\theta) \text{ ,}
 $$
 where
+\begin{align*}
+A(\theta) = \left(\begin{matrix}
+\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_1\mat{Z}^\top \right) &
+\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right) \\
+\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_1\mat{Z}^\top \right) &
+\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right)
+\end{matrix}\right) \text{.}
+\end{align*}
+So, the fixed point algorithm can be presented as follows:
 $$
-A(\theta) = \tr\left(K\mat{V}^{-1}\mat{G}^{-1} \right)
+\theta^{m+1} = A(\theta^{(m)})^{-1} a(\theta^{(m)})
 $$
-and
-$$a(\theta) = \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
-$$
+
+At this time the fixed-point algorithm for $\theta = (\sigma_1^2, \sigma_2^2)$
+will replace the corresponding step in Issue 1.
+
 
