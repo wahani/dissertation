@@ -1,4 +1,5 @@
 # Robust Methods in Small Area Estimation
+\label{sec:saerobust}
 
 The quality of predictions using model based methods are strongly connected to
 their distributional assumptions. Severe problems with these methods can already
@@ -6,24 +7,24 @@ arise when single outlying observations are present in the data. Hence some
 discussion and progress has been made with respect to methods robust against
 outliers.
 
-In the broader context of this subfield within SAE this thesis relies strongly
-on the results of @Sin09 who proposed robust estimation equations for linear
-mixed models. The proposition of @Sin09 is focused on the unit level
-model \eq{eq:bhf}, however the methodology builds on linear mixed models where
-\eq{eq:bhf} can be derived as a special case of these models. Also the basic
-area level model \eq{eq:fh} can be framed in this context and the estimation
-equations can be adapted; this is also pointed out in @Sin08 and @Rao15[pp. 146
-ff]. Using these results for area level models is again addressed in chapter
-\ref{chap:rfh} where robust extensions of the FH model are proposed.
+In the broader context of this subfield within SAE this thesis relies strongly 
+on the results of @Sin09 who proposed robust estimation equations for linear 
+mixed models. Their proposition focuses on the unit level model \eq{eq:bhf},
+however the methodology builds on linear mixed models where \eq{eq:bhf} can be
+derived as a special case of these models. Also the basic area level model
+\eq{eq:fh} can be framed in this context and the estimation equations can be
+adapted; this is also pointed out in @Sin08 and @Rao15[pp. 146 ff]. Using these
+results for area level models is again addressed in Chapter \ref{chap:rfh} where
+robust extensions of the FH model are proposed.
 
 In the following the main results around the methodology introduced by @Sin09
 are reviewed. Together with the models reviewed in section \ref{sec:area} these
 results are the basis for the extensions proposed in this thesis. The section is
-structured as follows: section \ref{sec:robustee} reviews the methodology around
-robust estimation equations; in section \ref{sec:robustbc} these results are
+structured as follows: Section \ref{sec:robustee} reviews the methodology around
+robust estimation equations; in Section \ref{sec:robustbc} these results are
 extended to allow for a correction of the bias asscociated with these type of
-robust predictions; in section \ref{sec:robustmse} then different possibilities
-to estimate the MSPE of the area level predictions are described; and in section
+robust predictions; in Section \ref{sec:robustmse} then different possibilities
+to estimate the MSPE of the area level predictions are described; and in Section
 \ref{sec:robustdiscussion} these results are embedded in a broader context of
 proposed robust methods in the SAE field.
 
@@ -49,13 +50,13 @@ parameters $\pmat\delta$ then lead to the so-called *mixed model equations*:
 \mat{Z}^\top \mat{V}_e^{-1} \Paran{\mat{y}-\mat{X}\pmat\beta - \mat{Z} \mat{\re}} - \mat{V}_\re^{-1} \mat{\re} &= 0. \label{eq:mmere}
 \end{align}
 }@Hen63 showed that the solutions to \eq{eq:mmeb} and \eq{eq:mmere} are
-identical to the BLUE and BLUP defined in \eq{eq:blue} and \eq{eq:blupre}
+identical to the BLUE and BLUP defined in \eq{eq:blue} and \eq{eq:blupre},
 respectively.
 
 @Fel86 studied the robust estimation of $\pmat\beta$ and $\mat{\re}$ by
   modifying \eq{eq:mmeb} and \eq{eq:mmere} to restrict the influence of outlying
   observations. He suggests to use an influence function to restrict the
-  influence of the residuals in \eq{eq:mmeb} and \eq{eq:mmere} transforming them
+  impact of the residuals in \eq{eq:mmeb} and \eq{eq:mmere} transforming them
   into:
 \empty{
 \begin{align}
@@ -63,19 +64,19 @@ respectively.
 \intertext{and}
 \mat{Z}^\top \mat{V}_e^{-\half} \psi \Paran{\mat{V}_e^{-\half} \Paran{\mat{y}-\mat{X}\pmat\beta - \mat{Z} \mat{\re}}} - \mat{V}_\re^{-\half} \psi\Paran{\mat{V}_\re^{-\half}\mat{\re}} &= 0 \label{eq:rmmere}
 \end{align}
-}where $\psi(\cdot)$ is a bounded monotonous influence function. @Fel86 suggests
-to use Huber's influence function (cf. @Hub64) where $\psi_b(x) = x
-\min\Paran{1, \frac{b}{|x|}}$ for a given tuning constant $b$ where a common
-choice for $b$ is 1.345. @Rao03[102] suggests to use a robust version of
-Henderson's (cf. @Hen50) estimation equations for the unknown parameters in
-$\pmat\delta$; remember that $\mat{V} = \mat{V}(\pmat\delta)$ where $\pmat\delta$ denotes the vector of
+}where $\psi(\cdot)$ is a bounded monotonous function. @Fel86 suggests to use
+Huber's influence function (cf. @Hub64) where $\psi_b(x) = x \min\Paran{1,
+\frac{b}{|x|}}$ for a given tuning constant $b$ where a common choice for $b$ is
+1.345. @Rao03[102] suggests to use a robust version of Henderson's (cf. @Hen50)
+estimation equations for the unknown parameters in $\pmat\delta$; remember that
+$\mat{V} = \mat{V}(\pmat\delta)$ where $\pmat\delta$ denotes the vector of 
 unknown variance parameters.
 
 Building on these results @Sin09 proposed a similar approach in that they use
 *robustified* estimation equations. In contrast to the approach by @Fel86 these
 equations are derived from the marginal model of \eq{eq:lmm} and specifically
 for $\pmat\beta$ and $\pmat\delta$; thus the first derivatives of the marginal
-log-likelihood with respect to $\pmat\beta$ and $\pmat\delta$ are:
+log-likelihood of $\mat{y}$ with respect to $\pmat\beta$ and $\pmat\delta$ are:
 \empty{
 \begin{align*}
 \mat{X}^\top\mat{V}^{-1}\left(\mat{y}-\mat{X}\pmat\beta\right) &= 0 \\
@@ -111,7 +112,7 @@ estimation equations \eq{eq:reeb} and \eq{eq:reed} @Sin09 proposed
 Newton-Raphson algorithms. @Sch11 and @Schoch12 have reported numerical problems
 with this approach and different alternative solutions have been investigated.
 @Sch11 proposed to find the minimum of the squared estimation equations in
-\eq{eq:reed} for all variance parameters, which was further optimized by @Aue15
+\eq{eq:reed} for all variance parameters, which was further optimised by @Aue15
 with stable and satisfying results. @Schoch12 uses instead an iteratively
 re-weighted least squares (IRWLS) algorithm for a solution of \eq{eq:reeb}
 which also yields satisfying results. Another proposition has been made by
@@ -121,7 +122,7 @@ for $\pmat\delta$.
 
 The main advantage of these alternatives may be that they do not rely on the
 derivatives of the estimation equations, which was already a known concern in
-the work of @Sin09. See @Ken80[chapter 11] and @Thi88[chapter 4] for
+the work of @Sin09. See @Ken80[Chapter 11] and @Thi88[Chapter 4] for
 comprehensive overviews for solving ML based robust estimation equations, who
 also suggest the IRWLS algorithm as an alternative to the NR algorithm for this
 very reason.
@@ -151,8 +152,8 @@ time.
 
 Given the robust estimates $\hat{\pmat\beta}^\psi$, $\hat{\pmat\delta}^\psi$,
 and $\hat{\mat{\re}}^\psi$ @Sin09 derive the REBLUP for area level means under
-the BHF model \eq{eq:bhf}. The REBLUP is then a robust variation of
-\eq{eq:bhfeblup} and can be stated as:
+the BHF model \eq{eq:bhf}. The REBLUP under the BHF model is then a robust
+variation of \eq{eq:bhfeblup} and can be stated as:
 \empty{
 \begin{align}
 \label{eq:reblupbhf}
@@ -165,12 +166,12 @@ the BHF model \eq{eq:bhf}. The REBLUP is then a robust variation of
 ## Bias Correction
 \label{sec:robustbc}
 
-Predictions using a REBLUP in the form of \eq{eq:reblupbhf} can introduce a
-bias. This can also be true for different outlier robust estimation approaches
-as already noted for example by @Tza05 in the context of M-quantile regression.
-In general a bias can be introduced if outliers in $\mat{\re}$ or $\mat{e}$ are
-present but are not drawn from a distribution with zero mean or from a asymmetric
-distribution.
+Predictions using a REBLUP in the form of \eq{eq:reblupbhf} can introduce a 
+bias. This can also be true for different outlier robust estimation approaches 
+as already noted for example by @Tza05 in the context of M-quantile regression. 
+In general a bias can be introduced if outliers in $\mat{\re}$ or $\mat{e}$ are 
+present but are not drawn from a distribution with zero mean or from an
+asymmetric distribution.
 
 This can be viewed as a contrast to say the situation in which we believe in a
 well behaved population model following, for example, the Gaussian Linear Mixed
@@ -178,7 +179,7 @@ Model; in this situation outliers can occur randomly due to sampling but should
 be no concern under repeated sampling. This effectively means that realisations
 of outliers are purely driven by chance. In many real world scenarios outliers
 have a direction, for instance outliers for income data are typically high
-incomes. The same holds for example for revenue of a company. This is modelled in
+incomes. The same holds for example for revenue of a company. This is modeled in
 the robust SAE literature as either a mixture distribution in which outlying
 observations are believed to follow a different population model with a shifted
 location then the rest of the observations; or as a non-symmetric, heavy tailed
@@ -215,22 +216,21 @@ that the correction in \eq{eq:rbhfbc} only depends on the sampled units within
 domains. Hence they propose two alternatives. First they propose a bias
 correction based on the results of @Cha86 which in contrast to \eq{eq:rbhfbc}
 relies on $S$ instead of $S_i$, i.e. the whole sample and not just the sampled
-units within domains. Hence they called their bias correction fully
-bias-corrected. The second approach uses a conditional bias to account for units
-in the population. This effectively reduces to the different treatment of the
-robust predictions of the random effects in their two approaches. In their
-simulation study they find an improvement in terms of bias for all three bias
-corrections for the REBLUP in \eq{eq:reblupbhf}. However, especially in terms of
-stability measured by relative efficiency - relative to the EBLUP in
-\eq{eq:bhfeblup} - the two approaches by @Jio13 are promissing and outperform
-the solution by @Cha14.
+units within domains and this method is called a fully-bias correction. The
+second approach uses a conditional bias to account for units in the population.
+This effectively reduces to the different treatment of the robust predictions of
+the random effects in their two approaches. In their simulation study they find
+an improvement in terms of bias for all three bias corrections for the REBLUP in
+\eq{eq:reblupbhf}. However, especially in terms of stability measured by
+relative efficiency - relative to the EBLUP in \eq{eq:bhfeblup} - the two
+approaches by @Jio13 are promissing and outperform the solution by @Cha14.
 
 At this point it is important to note that for area level robust predictions the
 application of the results of @Cha14 and @Jio13 are not imediately obvious. All
 three approaches are based on some form of mean of the unit level prediction
 error which is not available on the area level. However, the underlying problem
 of a potential bias persists also on the area level and a solution for robust
-area level predictions is discussed in section (?).
+area level predictions is discussed in Section \ref{sec:rfhbiascorrection}.
 
 
 ## Mean Squared Prediction Error
@@ -239,13 +239,12 @@ area level predictions is discussed in section (?).
 The estimation of the MSPE in model based SAE is one of the challenging problems
 in the discipline (cf. @Pfe13). This is only accelerated with the combination of
 robust estimation methodology so that @Sin09 proposed initially a bootstrap
-instead of an analytical solution. In section
+instead of an analytical solution. In Section
 \ref{sec:theory_sae_robust_bootstrap} existing bootstrap methods in this context
 are reviewed from which two are adapted for the later introduced models. Then in
-section \ref{sec:theory_sae_robust_mspe} one analytical solution is presented
+Section \ref{sec:theory_sae_robust_mspe} one analytical solution is presented
 based on a pseudolinear representation of the REBLUP which also allows the
-estimation of the MSPE of the bias corrected REBLUP. Some of the results in
-chapter (?) are based on these estimators.
+estimation of the MSPE of the bias corrected REBLUP. 
 
 ### Bootstrap Methods
 \label{sec:theory_sae_robust_bootstrap}
@@ -272,23 +271,23 @@ with $B$ repetitions is then defined by:
 $$
 \widehat{MSPE}\Paran{\hat{\theta}_i^{RBHF}} = \frac{1}{B} \sum_{b = 1}^B \Paran{\hat{\theta}_{i}^{RBHF(b)} - \bar{Y}_{i}^{*(b)}}^2
 $$
-where $\hat{\theta}_{i}^{RBHF(b)}$ and $\bar{Y}_{i}^{*(b)}$ denote the REBLUP
-and bootstrap population mean of the $b$th bootstrap sample respectively. @Jio13
-use a very similar approach with the important difference that their model - from
-which the bootstrap samples are drawn - depends on the non robust parameter
-estimates $\hat{\pmat\delta} = (\hat{\sigma}_\re^2, \hat{\sigma}_e^2)$. @Sin09 argue
-that they are interested in resampling the non contaminated part of the
-observations because the MSPE of their robust estimator should be uneffected by
-outliers. @Jio13 found that the method by @Sin09 lead to poor coverage rates of
-constructed confidence intervals and they suspect that this is because the
-robust parameter estimates do not reflect a sufficiently large part of the
-sample.
+where $\hat{\theta}_{i}^{RBHF(b)}$ and $\bar{Y}_{i}^{*(b)}$ denote the REBLUP 
+and bootstrap population mean of the $b$th bootstrap sample, respectively.
+@Jio13 use a very similar approach with the important difference that their
+model - from which the bootstrap samples are drawn - depends on the
+non\hyp{}robust parameter estimates $\hat{\pmat\delta} = (\hat{\sigma}_\re^2,
+\hat{\sigma}_e^2)$. @Sin09 argue that they are interested in resampling the
+non\hyp{}contaminated part of the observations because the MSPE of their robust
+estimator should be uneffected by outliers. @Jio13 found that the method by
+@Sin09 lead to poor coverage rates of constructed confidence intervals and they
+suspect that this is because the robust parameter estimates do not reflect a
+sufficiently large part of the sample.
 
 @Jio14 propose a different bootstrap method. This non-parametric approach is
   different to the above in that the random effects, $\re_i^*$, and the error
   term, $e_{ij}^*$, are drawn from a transformed set of the estimated
   $\{\hat{\re}_i\}_{i = 1}^D$ and $\{\{\hat{e}_{ij}\}_{j = 1}^{N_i}\}_{i =
-  1}^{D}$ under a non robust BHF model to generate bootstrap populations. From
+  1}^{D}$ under a non\hyp{}robust BHF model to generate bootstrap populations. From
   these generated populations samples are drawn using the same sampling scheme
   as for the realised sample at hand. With these differences they provide
   preliminary results which show very good properties in terms of relative bias
@@ -297,7 +296,7 @@ sample.
   for mixed linear models with correlated random effects which would be needed
   for the spatial and temporal extension introduced in section (?).
 
-### Approach based on pseudolinearization
+### Pseudolinearisation\hyp{}based Approach
 \label{sec:theory_sae_robust_mspe}
 
 Parallel to the development of the discussed bootstrap methods @Cha11 provide an
@@ -369,7 +368,7 @@ with their robust estimates, $\hat{\pmat\delta}^\psi$. In addition let
 $\hat{w}_{ij}^{RBHF}$ denote the weight of the REBLUP ander the BHF model
 for the $j$th observation to predict the $i$th area mean. @Cha14 then state the
 estimator of the MSPE following the results of @Cha11 which in turn are based on
-the results of @Roy78. Hence estimator for the MSPE is given by:
+the results of @Roy78. Thus an estimator for the MSPE is given by:
 \empty{
 \begin{align}
 \label{eq:cctmspe}
@@ -384,7 +383,7 @@ $$
 $$
 is an estimator of the conditional prediction variance with $a_{ij} = N_i
 w_{ij}^{RBHF} - I\Paran{j \in i}$ where $I\Paran{j \in i}$ denotes an indicator
-function if observation $j$ is in area $i$; and
+function if observation $j$ is in the $i$th area; and
 $$
 \widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{RBHF}} =
   \sum_{j \in S} \hat{w}_{ij}^{RBHF} \hat{\mu}_j - N_i^{-1} \sum_{j \in \Paran{R_i \cup S_i}} \hat{\mu}_j
@@ -396,7 +395,7 @@ an unbiased estimator of the the conditional expectation $\mu_j =
 
 Due to the shrinkage effect associated with EBLUPs @Cha11 suggest to use the
 unshrunken version of the EBLUP under the BHF model for $\hat{\mu}_j$. The
-approach can be utilized to derive an analytical MSPE estimator for the bias
+approach can be utilised to derive an analytical MSPE estimator for the bias
 corrected version of the REBLUP. @Cha14 do this by replacing the weights in the
 pseudolinear representation and argue to omit the squared bias term in
 \eq{eq:cctmspe} because it is an approximately unbiased estimator of the area
@@ -417,20 +416,20 @@ has good repeated sampling properties - for details see the references in
   uncertainty in the estimation of the variance components and hence is a second
   order approximation. The pseudolinear form has in principle the great
   advantage, that it is easily adapted for other small area estimators by
-  replacing the weights. The linearization-based approach makes it necessary to
+  replacing the weights. The linearisation-based approach makes it necessary to
   derive components to capture the uncertainty associated with specific variance
   components and variance structures. For this reason the pseudolinear form is
-  further explored and adapted for the robust area level estimators in section
+  further explored and adapted for the robust area level estimators in Section
   (?).
 
 ## Discussion
 \label{sec:robustdiscussion}
 
-The discussion in this section has been narrowed down to the SAE field and
-specifically around the results @Sin09. Their results are strongly influenced by
-@Ric95 who proposed robust estimation equations for linear mixed models and
-@Hug93 who proposed similar methods. A further extension of these methods to
-generalized linear mixed models can be found in @Yau02.
+The discussion in this section has been narrowed down to the SAE field and 
+specifically around the results by @Sin09. Their results are strongly influenced
+by @Ric95 who proposed robust estimation equations for linear mixed models and
+@Hug93 who proposed similar methods. A further extension of these methods to 
+  generalised linear mixed models can be found in @Yau02.
 
 Recent extensions to to the robust methods by @Sin09 can be found in @Sch14 who
 used a unit level model with spatially correlated random effects and proposed a
@@ -456,27 +455,28 @@ This approach also leads to the same problem under non-symmetric outliers in
 that the predictions can be biased. @Tza05 suggested a correction term for this
 bias which was then adapted for the REBLUP by @Cha14.
 
-Also possible is to change the underlying model. This approach is most natural
-in the situation where the original distributional assumption, for example a
-normal distribution, is implausible and needs to be replaced. Choices can fall
-on symmetric distributions with more probability mass on the tails or
-non-symmetric distributions. @Bel06 for example uses a Bayesian approach and
-chooses a t-distribution for the random effects. @Dat95 use suggest to use a
-cauchy distribution or a mixture distribution. Outside the SAE field examples
-for robust modelling can be found in @Lan89 and @Pee00 who formulate a
-likelihood based on a multivariate t-distribution.
+Furthermore robust small area predictions can be adressed by changing the 
+underlying model assumptions. This is most natural in the situation where the
+original distributional assumption, for example a normal distribution, is
+implausible and needs to be replaced. Choices can fall on symmetric 
+distributions with more probability mass on the tails or non-symmetric 
+distributions. @Bel06 for example use a Bayesian approach and chooses a 
+t-distribution for the random effects. @Dat95 suggest to use a cauchy 
+distribution or a mixture distribution. Outside the SAE field examples for 
+robust modeling can be found in @Lan89 and @Pee00 who formulate a likelihood 
+based on a multivariate t-distribution.
 
-Although most of the references focus on robust SAE based on unit level models,
-several possibilities have explored for area level models. @Bel06 and @Hua06
-both use the t-distribution to model the random effect in the FH model within
-the context poverty mapping. @Xie07 also use a hierarchical Bayes approach using
-a t-distribution, however they predict the proportion of overweight individuals
-in small areas. @Fab10 explore the possibility to use exponential power
-distributions to model the random effect; simply spoken this is a normal
-distribution where the skewness and kurtosis are parameterised such that this
-distribution can be used to model heavy tails or non-symmetry. They also use a
-Baysian approach. @Ger10 and @Cha15 propose to use the FH model but replace the
-distribution of the random effects with a mixture distribution. This essentially
-means that they have to detect which observations are outliers and fit a seperat
-model for them. All these studies can show some advantage of their respective
-method when outliers are present.
+Although most of the references focus on robust small area prediction under unit
+level models, several possibilities have been explored for area level models. @Bel06
+and @Hua06 both use the t-distribution to model the random effect in the FH
+model within the context poverty mapping. @Xie07 also use a hierarchical Bayes
+approach using a t-distribution, however they predict the proportion of
+overweight individuals in small areas. @Fab10 explore the possibility to use
+exponential power distributions to model the random effect; simply spoken this
+is a normal distribution where the skewness and kurtosis are parameterised such
+that this distribution can be used to model heavy tails or non-symmetry. They
+also use a Baysian approach. @Ger10 and @Cha15 propose to use the FH model but
+replace the distribution of the random effects with a mixture distribution. This
+essentially means that they have to detect which observations are outliers and
+fit a seperat model for them. All these studies can show some advantage of their
+respective method when outliers are present.

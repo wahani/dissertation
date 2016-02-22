@@ -6,31 +6,31 @@ was introduced by @Bat88 and inherits the authors names as it is refered to as
 the Battese-Harter-Fuller (BHF) model. Note that the main focus of this thesis 
 is the extension of area level models. However, some recent advances in the 
 field, especially with respect to robust estimation methodology, have been made 
-for unit level models. In chapter (?) these results are extended to the area 
-level; here the basic unit level model and unit level notation is reviewed in 
-order to be able to give some more details in the following section (?). A
-review of unit level models in the context of linear mixed models and EBLUP
-based predictions can be found in @Jia06 and also in @Rao03 and @Rao15 who also
-review a variety of extensions.
+for unit level models. In Chapter \ref{chap:rfh} these results are extended to
+the area level; here the basic unit level model and unit level notation is
+reviewed in order to be able to give some more details in the following Section
+\ref{sec:saerobust}. A review of unit level models in the context of linear
+mixed models and EBLUP based predictions can be found in @Jia06 and also in
+@Rao03 and @Rao15 who also review a variety of extensions.
 
 The unit level model of @Bat88 can be expressed as linear mixed model by:
 \empty{
 \begin{align}
 	 y_{ij} = \sij{\mat{x}}^\top\pmat\beta + \si{\re} + \sij{e} \label{eq:bhf}
 \end{align}
-}where $y_{ij}$ denotes the response of unit $j = 1, \dots, N_i$ in area $i = 
-1, \dots, D$. The random effetc, $\si{\re}$, are independent and identically 
+}where $y_{ij}$ denotes the response of unit $j = 1, \dots, N_i$ in area $i = 1,
+\dots, D$. The random effects, $\si{\re}$, are independent and identically 
 distributed following a normal distribution such that $\re_i \sim \Distr{N}(0, 
-\sigre)$. The error term $\sij{e}$ are i.i.d. following a normal distribution 
+\sigre)$. The error terms $\sij{e}$ are i.i.d. following a normal distribution 
 with zero mean and variance $\sigma_e^2$. Furthermore the random effect and 
-model error are independent. $\sij{\mat{x}}$ are the corresponding auxiliary
-variables for that unit.
+model error are independent. $\sij{\mat{x}}$ denote the auxiliary variables for
+the $j$th unit in the $i$th area.
 
 Following @Rao15[pp. 78 ff] this model can be split into sampled and non-sampled
 units. Let the set of $n$ sampled and $N-n$ non-sampled units be denoted by $S$
 and $R$ respectivey. The sets can furthermore be split into the distinct $S_1 
 \cup \dots \cup S_D$ and $R_1 \cup \dots \cup R_D$, where $S_i$ and $R_i$ denote
-the sampled and non sampled units in area $i = 1, \dots, D$ respectively. Then
+the sampled and non sampled units in area $i = 1, \dots, D$, respectively. Then
 \eq{eq:bhf} can be written in matrix notation as
 \empty{
 \begin{align*}
@@ -47,7 +47,7 @@ random sampling within each domain and, as @Rao15[79] note, also when $\mat{X}_S
 contains the variables used for sampling.
 
 These results can now be used to derive an EBLUP for the target statistic. In 
-principle this also happens according to section \ref{sec:blup}, however we are 
+principle this also happens according to Section \ref{sec:blup}, however we are 
 generally not interested in a prediction on unit level but for the area level 
 target statistic. Following @Rao15[pp. 174 ff] an EBLUP under model \eq{eq:bhf}
 for the ith area mean can be derived as
