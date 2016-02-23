@@ -399,38 +399,6 @@ $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$.
 1)}$ using equation (?) until convergence is reached.
 
 
-The partial derivatives of $\mathbf{V}$ with respect to $\theta$ and $\rho$ are given by:
-
-\begin{align*}
-\frac{\partial\mathbf{V}}{\partial\sigma_1^2} =& \mathbf{Z}_1\Omega_1(\rho_1)\mathbf{Z}_1^\top \\
-\frac{\partial\mathbf{V}}{\partial\sigma_2^2} =& \Omega_2(\rho_2) \\
-\frac{\partial\mathbf{V}}{\partial\rho_1} =& -\sigma_1^2\mathbf{Z}_1\Omega_1(\rho_1)\frac{\partial\Omega_1^{-1}(\rho_1)}{\partial\rho_1}\Omega_1(\rho_1)\mathbf{Z}^\top_1 \\
-\frac{\partial\mathbf{V}}{\partial\rho_2} =& \sigma_2^2 \diag\left(\frac{\partial\Omega_{2d}(\rho_2)}{\partial\rho_2}\right) \\
-\frac{\partial\mathbf{V}}{\partial\rho_1\partial\rho_1} =& -\sigma_1^2\mathbf{Z}_1\frac{\partial\Omega_1(\rho_1)}{\partial\rho_1}\frac{\partial\Omega_1^{-1}(\rho_1)}{\partial\rho_1}\Omega_1(\rho_1)\mathbf{Z}^\top_1 \\
-&-\sigma_1^2\mathbf{Z}_1\Omega_1(\rho_1)\frac{\partial\Omega_1^{-1}(\rho_1)}{\partial\rho_1\partial\rho_1}\Omega_1(\rho_1)\mathbf{Z}^\top_1 \\
-&-\sigma_1^2\mathbf{Z}_1\Omega_1(\rho_1)\frac{\partial\Omega_1^{-1}(\rho_1)}{\partial\rho_1}\frac{\partial\Omega_1(\rho_1)}{\partial\rho_1}\mathbf{Z}^\top_1 \\
-\frac{\partial\mathbf{V}}{\partial\rho_2\partial\rho_2} =& \text{Needs to be TEXed}
-\end{align*}
-
-where
-
-\begin{align*}
-\frac{\Omega_1(\rho_1)}{\partial\rho_1} =& -\Omega_1(\rho_1)\frac{\partial\Omega_1^{-1}(\rho_1)}{\partial\rho_1}\Omega_1(\rho_1) \text{ , }\\
-\frac{\partial\Omega_1^{-1}(\rho_1)}{\partial\rho_1} =& -\mathbf{W} - \mathbf{W}^\top + 2\rho_1\mathbf{W}^\top\mathbf{W} \text{ , } \\
-\frac{\partial\Omega_1^{-1}(\rho_1)}{\partial\rho_1\partial\rho_1} =& 2\mathbf{W}^\top\mathbf{W}\\
-\frac{\partial\Omega_{2d}(\rho_2)}{\partial\rho_2} =& \frac{1}{1-\rho_2^2}
-\left(
-\begin{matrix}
-0 & 1 & \cdots & \cdots & (T-1)\rho_2^{T-2}\\
-1 & 0 & & & (T-2)\rho_2^{T-3} \\
-\vdots & & \ddots & & \vdots \\
-(T-2)\rho_2^{T-3} &&& 0 & 1 \\
-(T-1)\rho_2^{T-2} & \cdots & \cdots & 1 & 0\\
-\end{matrix}
-\right) + \frac{2\rho_2\Omega_{2d}(\rho_2)}{1-\rho_2^2}
-\end{align*}
-
-
 ### Solutions for the Robust FH Model
 
 Starting from equation \ref{eq:rfhreed} where $\pmat\delta = (\sigre)$ we can
@@ -568,18 +536,18 @@ For the solutions for the temporal FH model recall that $\pmat\delta = (\sigre, 
     \end{matrix}\right) \\
   =& \left(\begin{matrix}\bar{\mat{I}} & \bar{\pmat\Omega}_2\end{matrix}\right)
     \left(\begin{matrix}
-    \sigma_1^2 \\
+    \sigre \\
     \sigma_2^2
     \end{matrix}\right)
 \end{align*}
-} and hence we can write:
+}and hence we can write:
 \empty{
 \begin{align*}
 0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
   & - \tr\left(\underbrace{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}}_{\mat{C}^*(\delta_{\sigma l})}
   \left(\begin{matrix}\mat{Z}\bar{\mat{I}}\mat{Z}^\top & \mat{Z}\bar{\pmat\Omega}_2\mat{Z}^\top\end{matrix}\right)
     \left(\begin{matrix}
-    \sigma_1^2 \\
+    \sigre \\
     \sigma_2^2
     \end{matrix}\right)\right)
 \end{align*}
@@ -608,90 +576,172 @@ For the solutions for the temporal FH model recall that $\pmat\delta = (\sigre, 
     \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
   \end{matrix}\right)
 \end{align*}
+}where we have to devine the derivatives. $\partial\mat{V} / \partial\sigre =
+\mat{Z}_1\mat{I}_D\mat{Z}_1^\top$ and
+$\partial\mat{V} / \partial\sigma_2^2 = \pmat\Omega_2$.
+
+Now missing is still a solution for $\delta_\rho = (\rho_2)$. Starting from \eq{eq:rfhreed} we can write:
+\empty{
+\begin{align*}
+0 = \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
+  - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho}} \delta_{\rho}^{-1} \delta_{\rho}\right)
+\end{align*}
+}and solve for $\delta_{\rho}$:
+\empty{
+\begin{align*}
+\delta_{\rho} = 
+  \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho}} \delta_{\rho}^{-1} \right)
+  \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
+\end{align*}
+}where we have
+\empty{
+\begin{align*}
+\frac{\partial\mathbf{V}}{\partial\rho_2} = & \sigma_2^2 \Diag{\left\{\frac{\partial\pmat\Omega_{2i}}{\partial\rho_2}\right\}_{i = 1}^D} \\
+\intertext{with}
+\frac{\partial\pmat\Omega_{2i}}{\partial\rho_2} = & \frac{1}{1-\rho_2^2}
+\left(
+\begin{matrix}
+0 & 1 & \cdots & \cdots & (T-1)\rho_2^{T-2}\\
+1 & 0 & & & (T-2)\rho_2^{T-3} \\
+\vdots & & \ddots & & \vdots \\
+(T-2)\rho_2^{T-3} &&& 0 & 1 \\
+(T-1)\rho_2^{T-2} & \cdots & \cdots & 1 & 0\\
+\end{matrix}
+\right) \\ & + \frac{2\rho_2\pmat\Omega_{2d}}{1-\rho_2^2}
+\end{align*}
 }
 
 
-### Solutions for the Spatio Temporal Model
+### Solutions for the Spatio\hyp{}Temporal Model
 
-Starting from equation \ref{eq:rml_theta} where $\theta = (\sigma_1^2,
-\sigma_2^2)$ and $(\rho_1, \rho_2)$ are assumed to be known, we can rewrite the
-equation such that:
-
-\begin{multline}
-\label{eq:rml_theta_fp}
-\Phi_l(\theta) = \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}
-\frac{\partial\mat{V}}{\partial\theta_l}
-\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) -\\
-\Tr{K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}
-(\mat{Z}\mat{V}_\re\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_\re\mat{Z}^\top)} = 0
-\end{multline}
-
-Note that because the matrix $\mat{V}_e$ is assumed to be known for the FH
-model, it can be omitted. Let $\mat{0}_{r\times c}$ define a matrix filled with
-$0$ of dimension $(r \times c)$ then:
-
+Starting from equation \eq{eq:rfhreed} where $\pmat\delta = (\rho_1, \sigma_1^2,
+\rho_2, \sigma_2^2)$ and we split again the problem into finding solutions for
+$\pmat\delta_\rho = (\rho_1, \rho_2)$ and $\pmat\delta_\sigma = (\sigma_1^2,
+\sigma_2^2)$. In both cases we can start from:
+\empty{
 \begin{align*}
-\mat{Z}\mat{V}_u\mat{Z}^\top =& \mat{Z}\left(\begin{matrix}
-\sigma_1^2\Omega_1 & \mat{0}_{D\times DT}\\
-\mat{0}_{DT\times D} &  \sigma_2^2\Omega_2
-\end{matrix}\right)\mat{Z}^\top \\
-=& \mat{Z}
-\left[
-\sigma_1^2\left(\begin{matrix}
-\Omega_1 & \mat{0}_{D\times DT} \\
-\mat{0}_{DT\times D} &  \mat{0}_{DT\times DT}
-\end{matrix}\right) +
-\sigma_2^2\left(\begin{matrix}
-\mat{0}_{D\times D} & \mat{0}_{D\times DT} \\
-\mat{0}_{DT\times D} & \Omega_2
-\end{matrix}\right)
-\right]\mat{Z}^\top \\
-=& \left(\begin{matrix}\mat{Z}\bar{\Omega}_1\mat{Z}^\top & \mat{Z}\bar{\Omega}_2\mat{Z}^\top\end{matrix}\right)
-\left(\begin{matrix}
-\sigma_1^2 \\
-\sigma_2^2
-\end{matrix}\right)
+0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
+  & - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{l}} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_u\mat{Z}^\top) \right)
 \end{align*}
-
-Thus equation \ref{eq:rml_theta_fp} can be rewritten to:
-
-\begin{multline*}
-\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) = \\ \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\theta_l} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \left(\begin{matrix}\mat{Z}\bar{\Omega}_1\mat{Z}^\top & \mat{Z}\bar{\Omega}_2\mat{Z}^\top\end{matrix}\right)\left(\begin{matrix}
-\sigma_1^2 \\
-\sigma_2^2
-\end{matrix}\right)\right)
-\end{multline*}
-
-Let
-$$
-\left(\begin{matrix}
-\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
-\psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
-\end{matrix}\right)
-= a(\theta) \text{ ,}
-$$
-then
-$$
-\theta = \left(\begin{matrix}
-\sigma_1^2 \\
-\sigma_2^2
-\end{matrix}\right) = A(\theta)^{-1} a(\theta) \text{ ,}
-$$
-where
+}where $\partial\delta_{l}$ denotes an element in either $\pmat\delta_\rho$ or $\pmat\delta_\sigma$. For the solutions of $\pmat\delta_\sigma$ we begin similar to the temporal extension in that we can write:
+\empty{
 \begin{align*}
-A(\theta) = \left(\begin{matrix}
-\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_1\mat{Z}^\top \right) &
-\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right) \\
-\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_1\mat{Z}^\top \right) &
-\tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right)
-\end{matrix}\right) \text{.}
+\mat{V}_u
+  =& \left(\begin{matrix}
+    \sigma_1^2 \pmat\Omega_1 & \mat{0}_{D\times DT}\\
+    \mat{0}_{DT\times D} &  \sigma_2^2\pmat\Omega_2
+    \end{matrix}\right) \\
+  =& \sigma_1^2
+      \left(\begin{matrix}
+      \pmat\Omega_1 & \mat{0}_{D\times DT} \\
+      \mat{0}_{DT\times D} &  \mat{0}_{DT\times DT}
+      \end{matrix}\right)
+    +
+    \sigma_2^2\left(\begin{matrix}
+    \mat{0}_{D\times D} & \mat{0}_{D\times DT} \\
+    \mat{0}_{DT\times D} & \pmat\Omega_2
+    \end{matrix}\right) \\
+  =& \left(\begin{matrix}\bar{\pmat\Omega}_1 & \bar{\pmat\Omega}_2\end{matrix}\right)
+    \left(\begin{matrix}
+    \sigma_1^2 \\
+    \sigma_2^2
+    \end{matrix}\right)
 \end{align*}
-So, the fixed point algorithm can be presented as follows:
-$$
-\theta^{m+1} = A(\theta^{(m)})^{-1} a(\theta^{(m)})
-$$
-
-At this time the fixed-point algorithm for $\theta = (\sigma_1^2, \sigma_2^2)$
-will replace the corresponding step in Issue 1.
-
+}and hence
+\empty{
+\begin{align*}
+0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
+  & - \tr\left(\underbrace{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}}_{\mat{C}^*(\delta_{\sigma l})}
+  \left(\begin{matrix}\mat{Z}\bar{\pmat\Omega}_1\mat{Z}^\top & \mat{Z}\bar{\pmat\Omega}_2\mat{Z}^\top\end{matrix}\right)
+    \left(\begin{matrix}
+    \sigma_1^2 \\
+    \sigma_2^2
+    \end{matrix}\right)\right)
+\end{align*}
+}which we can solve now for $\pmat\delta_\sigma$:
+\empty{
+\begin{align*}
+\pmat\delta_\sigma = \mat{C}(\pmat\delta_\sigma)^{-1}\mat{D}(\pmat\delta_\sigma)
+\end{align*}
+}where
+\empty{
+\begin{align*}
+\mat{C}(\pmat\delta_\sigma)
+  = \left(\begin{matrix}
+      \tr\left(\mat{C}^*(\sigma_1^2) \mat{Z}\bar{\pmat\Omega}_1\mat{Z}^\top \right) &
+      \tr\left(\mat{C}^*(\sigma_1^2) \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right) \\
+      \tr\left(\mat{C}^*(\sigma_2^2) \mat{Z}\bar{\pmat\Omega}_1\mat{Z}^\top \right) &
+      \tr\left(\mat{C}^*(\sigma_2^2) \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right)
+    \end{matrix}\right)
+\end{align*}
+}and
+\empty{
+\begin{align*}
+\mat{D}(\pmat\delta_\sigma) =
+  \left(\begin{matrix}
+    \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
+    \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
+  \end{matrix}\right)
+\end{align*}
+}where $\partial\mat{V} / \partial\sigma_2^2$ is defined as for the temporal model and $\partial\mat{V} / \partial\sigma_1^2 = \mat{Z}_1 \pmat\Omega_1 \mat{Z}_1^\top$. And for $\pmat\delta_\rho$:
+\empty{
+\begin{align*}
+\mat{V}_u
+  =& \left(\begin{matrix}
+    \sigma_1^2 \rho_1 \pmat\Omega_1^* & \mat{0}_{D\times DT}\\
+    \mat{0}_{DT\times D} &  \sigma_2^2 \rho_2 \pmat\Omega_2^*
+    \end{matrix}\right) \\
+  =& \rho_1
+      \left(\begin{matrix}
+      \sigma_1^2 \pmat\Omega_1^* & \mat{0}_{D\times DT} \\
+      \mat{0}_{DT\times D}       & \mat{0}_{DT\times DT}
+      \end{matrix}\right)
+    +
+    \rho_2 \left(\begin{matrix}
+    \mat{0}_{D\times D} & \mat{0}_{D\times DT} \\
+    \mat{0}_{DT\times D} & \sigma_2^2 \pmat\Omega_2^*
+    \end{matrix}\right) \\
+  =& \left(\begin{matrix}\bar{\pmat\Omega}_1^* & \bar{\pmat\Omega}_2^* \end{matrix}\right)
+    \left(\begin{matrix}
+    \rho_1 \\
+    \rho_2
+    \end{matrix}\right)
+\end{align*}
+}where $\pmat\Omega_1^*$ is defined as for the spatial FH model in section (?) and
+\empty{
+\begin{align*}
+\pmat\Omega_2(\rho_2) & = \rho_2 \underbrace{\Diag{\left\{\pmat\Omega_{2i}^*\right\}_{i = 1}^D}}_{\pmat\Omega_2^*}
+\intertext{with}
+\pmat\Omega_{2i}^* & = \frac{1}{\rho_2-\rho_2^3}
+\left(
+  \begin{matrix}
+    1 & \rho_2 & \cdots & \rho_2^{T-2}& \rho_2^{T-1}\\
+    \rho_2 & 1 & & & \rho_2^{T-2} \\
+    \vdots & & \ddots & & \vdots \\
+    \rho_2^{T-2} &&& 1 & \rho_2 \\
+    \rho_2^{T-1} & \rho_2^{T-2} & \cdots & \rho_2 & 1\\
+  \end{matrix}
+\right)_{T\times T}.
+\end{align*}
+}With this rewriting we can now write:
+\empty{
+\begin{align*}
+0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho l}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
+  & - \tr\left(\underbrace{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho l}} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}}_{\mat{C}^*(\delta_{\rho l})}
+  \left(\begin{matrix}\mat{Z}\bar{\pmat\Omega}_1^*\mat{Z}^\top & \mat{Z}\bar{\pmat\Omega}_2^*\mat{Z}^\top\end{matrix}\right)
+    \left(\begin{matrix}
+    \rho_1 \\
+    \rho_2
+    \end{matrix}\right)\right)
+\end{align*}
+}where $\partial\mat{V} / \partial\rho2$ is the same as for the temporal model and
+\empty{
+\begin{align*}
+\frac{\partial\mat{V}}{\partial\rho_1} 
+  =& -\sigma_1^2\mat{Z}_1\pmat\Omega_1\frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1}\pmat\Omega_1\mat{Z}^\top_1 \\
+\intertext{with}
+\frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1}
+  =& -\mathbf{W} - \mathbf{W}^\top + 2\rho_1\mathbf{W}^\top\mathbf{W}
+\end{align*}
+}
 
