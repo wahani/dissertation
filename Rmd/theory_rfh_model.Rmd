@@ -277,7 +277,8 @@ in
 \underbrace{\Paran{\mat{W}_1^* \mat{X}}^{-1} \mat{W}_1^*}_{\mat{A}} 
   \mat{y} & = \pmat\beta
 \end{align*}
-}where $\mat{W}_1 = \Diag{\{w_{1i}\}_{i = 1}^n}$ is a diagonal matrix with the elements defined by:
+}where $\mat{W}_1 = \mat{W}_1(\pmat\beta) = \Diag{\{w_{1i}\}_{i = 1}^n}$ is a
+diagonal matrix with the elements defined by:
 $$
 w_{1i} = 
   \psi\Paran{U_i^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)} 
@@ -345,15 +346,17 @@ $\mat{W}_2$ and $\mat{W}_3$. Continuing:
     \mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \mat{Z} + \mat{V}_\re^{-1} \mat{W}_3}^{-1} 
     \mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 
 \end{align*}
-}where $\mat{W}_2$ is a $(n \times n)$ diagonal matrix with elements:
+}where $\mat{W}_2 = \mat{W}_2(\pmat\beta)$ is a $(n \times n)$ diagonal matrix
+with elements:
 \empty{
 \begin{align*}
 w_{2i} = 
   \psi\Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)} 
   \Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)}^{-1}
 \end{align*}
-}where $U_{ei}^{-\half}$ denote the diagonal elements of $\mat{U}_e^{-\half}$;
-and $\mat{W}_3$ is a $(m \times m)$ diagonal matrix with elements:
+}where $U_{ei}^{-\half}$ denote the diagonal elements of $\mat{U}_e^{-\half}$; 
+and $\mat{W}_3 = \mat{W}_3(\mat{u})$ is a $(m \times m)$ diagonal matrix with
+elements:
 \empty{
 \begin{align*}
 w_{3j} = 
@@ -370,71 +373,73 @@ $\hat{\pmat\delta}^\psi$ and the prediction for $\mat{u}$ with
 $\hat{\mat{u}}^\psi$. Then the area level REBLUP is given by:
 \empty{
 \begin{align*}
-\tilde{\theta}_i^{REBLUP} 
+\hat{\theta}_i^{REBLUP} 
   & = \hat{\mat{w}}_i^\top \mat{y}.
 \end{align*}
-}This representation leads to two important results. First the derivation of an 
-iterative solution for the estimation equations \eq{eq:rfhreeb} and 
-\eq{eq:rfheere} which are presented in the following section; and second an
-analytical MSPE estimator similar to the proposition by @Cha11 which is
-presented in section (?).
+}where $\hat{\mat{w}}_i$ denotes the vector of weights depending on the
+estimated model parameters. This representation leads to two important results.
+First the derivation of an iterative solution for the estimation equations
+\eq{eq:rfhreeb} and \eq{eq:rfheere} which are presented in the following
+section; and second an analytical MSPE estimator similar to the proposition by
+@Cha11 which is presented in section (?).
 
 
 ## Solutions to the Robust Estimation Equations
 
-To create a generic notation for the solutions to the robust estimation equations recall that:
+For the solutions of the robust estimation equations I begin with the solution
+for the regression coefficients. Recall that:
 \empty{
 \begin{align*}
 \pmat\beta = \mat{A}(\pmat\beta)\mat{y}
 \end{align*}
-}and that $\hat{\pmat\beta}^\psi = \mat{A}\Paran{\hat{\pmat\beta}^\psi}\mat{y}$. This representation already makes it obvious that we have a fixed point function or a IRWLS algorithm which can be derived as:
-\empty{
-\begin{align*}
-\pmat\beta^{(m + 1)} = \mat{A}\Paran{\pmat\beta^{(m)}}\mat{y}
-\end{align*}
-}for adequate starting values, $\pmat\beta^{(0)}$. To motivate a decision for the starting values recall that:
+}and that $\hat{\pmat\beta}^\psi = \mat{A}\Paran{\hat{\pmat\beta}^\psi}\mat{y}$.
+This representation indicates that we have a fixed point function for 
+$\pmat\beta$ which, in this special case, leads to an iterative re-weighted
+least squares (IRWLS) algorithm to solve \eq{eq:rfhreeb} for $\pmat\beta$:
 \empty{
 \begin{align*}
 \pmat\beta^{(m + 1)} 
   & = \mat{A}\Paran{\pmat\beta^{(m)}}\mat{y} \\
-  & = \Paran{\mat{X}^\top\mat{V}^{-1} \underbrace{\mat{U}^{\half} \mat{W}_1
-  \mat{U}^{-\half}}_{\mat{W}_1^*} \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \underbrace{\mat{U}^{\half} \mat{W}_1 \mat{U}^{-\half}}_{\mat{W}_1^*} \mat{y}
+  & = \Paran{\mat{X}^\top\mat{V}^{-1} \mat{W}_1(\pmat\beta^{(m)}) \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \mat{W}_1(\pmat\beta^{(m)}) \mat{y}
 \end{align*}
-}where $\mat{W}_1^*$ is a diagonal matrix and can be interpreted as the
-weighting matrix inside a IRWLS algorithm. A natural choice as a starting value
-for such matrices is to set the diagonal elements to one. This will lead, in the
-first iteration, to the generalised least squares estimator. Note also that this
-iterative algorithm has the desirable property that it reduces to the GLS
-estimator if we set the tuning constant of $\psi_b$ to infinity because of the
-special form of $\mat{W}_1$. In this case $\mat{W}_1^* = \mat{I}_n$.
+}for adequate starting values $\pmat\beta^{(0)}$ and known variance parameters
+$\pmat\delta$. This proposition is very similar to the IRWLS algorithm suggested
+by @Schoch12 however it depends on a differnt choice for the robust estimation
+equation. Details on IRWLS algorithms for robust M-estimation can also be found 
+in @Mar06[pp. 104-105]. A natural choice as a starting value for the weighting 
+matrix is to set the diagonal elements to one. This will lead to the non robust 
+generalised least squares estimator in the first iteration. This solution is 
+acceptabel since - as @Mar06[pp. 104-105] note - for a continuous choice of
+$\psi$ the algorithm is non sensetive to the starting values with respect to 
+convergence. Bad starting values can however increase the number of iterations. 
+Note also that this iterative algorithm has the desirable property that it 
+reduces to the GLS estimator if we set the tuning constant of $\psi_b$ to 
+infinity because of the special form of $\mat{W}_1$.
 
 Similarly a fixed point function for $\mat{u}$ can be defined by:
 \empty{
 \begin{align*}
 \mat{u} & = \mat{B}(\mat{u})\Paran{\mat{y} - \mat{X}\beta}
 \end{align*}
-}where we can define an algorithm for given realisations for $\pmat\beta$ and
-$\pmat\delta$:
+}where we can define an algorithm for known regression coefficients,
+$\pmat\beta$, and variance parameters, $\pmat\delta$:
 \empty{
 \begin{align*}
-\mat{u}^{(m + 1)} & = \mat{B}(\mat{u}^{(m)})\Paran{\mat{y} - \mat{X}\beta}
+\mat{u}^{(m + 1)} 
+  = & \mat{B}(\mat{u}^{(m)})\Paran{\mat{y} - \mat{X}\beta} \\
+  = & \Paran{\mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \mat{Z} + \mat{V}_\re^{-1} \mat{W}_3(\mat{u}^{(m)})}^{-1} \\
+  & \times \mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \Paran{\mat{y} - \mat{X}\beta}
 \end{align*}
-}with suitable starting values $\mat{u}^{(0)}$. The starting values are chosen
-to be the estimated composite error, $\mat{y} - \mat{X}\hat{\pmat\beta}^\psi$.
-Similar to the algorithm before, if the tuning constant of the influence
-function is chosen to be infinity the algorithm has the desiarable property that
-it reduces to the form of (?) because of the special form of $\mat{W}_2$ and
-$\mat{W}_3$:
-\empty{
-\begin{align*}
-\mat{B} \mid_{b = \infty} = &
-  \Paran{
-    \mat{Z}^\top \mat{V}_e^{-1} \underbrace{\mat{U}_e^\half \mat{W}_2 \mat{U}_e^{-\half}}_{\mat{I}_n} \mat{Z}
-    + \mat{V}_\re^{-1} \underbrace{\mat{U}_\re^\half \mat{W}_3 \mat{U}_\re^{-\half}}_{\mat{I}_m}
-  }^{-1} \\ 
-  & \times \mat{Z}^\top \mat{V}_e^{-1} \underbrace{\mat{U}_e^\half \mat{W}_2 \mat{U}_e^{-\half}}_{\mat{I}_n}.
-\end{align*}
-}
+}with suitable starting values $\mat{u}^{(0)}$. The starting values can be 
+chosen similar to the IRWLS algorithm in that we set the diagonal elements in
+$\mat{W}_3$ to one. Similar to the IRWLS algorithm before, if the tuning 
+constant of the influence function is chosen to be infinity the algorithm has 
+the desiarable property that it reduces to the form of the non\hyp{}robust 
+estimation equation of \eq{eq:rfheere} because of the special form of 
+$\mat{W}_2$ and $\mat{W}_3$, i.e. they reduce to identity matrices. And - as it 
+was reviewed in Section \ref{sec:robustee} - the solution to the non\hyp{}robust
+equation \eq{eq:rfheere} is equivalent the the BLUP for $\mat{u}$ given by
+\eq{eq:blupre}.
 
 An algorithm to solve for $\pmat\delta$ was derived by (?) for the case of the
 robust BHF model. I follow hear the same general procedure to derive fixed point
