@@ -300,7 +300,7 @@ To derive $\mat{B}$ note that:
 \begin{align*}
 \tilde{\mat{u}}^\psi 
   & = \mat{B}\Paran{\mat{I} - \mat{X}\mat{A}} \mat{y} \\
-  & = \mat{B}\Paran{\mat{y} - \mat{X}\beta}
+  & = \mat{B}\Paran{\mat{y} - \mat{X}\pmat\beta^\psi}
 \end{align*}
 }and that the approach taken is similar as for $\mat{A}$. However the form of 
 $\mat{B}$ is different from the approach by @Cha14 because of the different 
