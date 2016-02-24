@@ -6,6 +6,7 @@ respect to area level models. Section \ref{sec:unit_level} then presents the
 basic unit level model.
 
 ## The Fay-Herriot Model
+\label{sec:theory_sae_fh}
 
 The basic area level model was introduced by @Fay79 and has been used to predict
 the mean income of small areas using census data. The general backdrop is that
@@ -184,6 +185,7 @@ Fay-Herriot model is explicitly subject to numerous extensions. See for example
 
 
 ## Spatial and Temporal Fay-Harriot Models
+\label{sec:theory_sae_fh_extensions}
 
 This section reviews spatial and temporal extensions to the FH model. These 
 extensions are again the subject of chapter (?) where they are then combined
@@ -202,6 +204,7 @@ special interest if, for example, the area level information is based on a panel
 survey.
 
 ### Spatial Extensions
+\label{sec:theory_sae_fh_spatial}
 
 The standard FH model \eq{eq:fh} uses a random effect to capture unobserved 
 variation between areas. However it ignores unobserved spatial patterns which 
@@ -264,6 +267,7 @@ A different approach to model spatial correlation structures can be seen in
 
 
 ### Temporal Extensions
+\label{sec:theory_sae_fh_temporal}
 
 An early extension by @Cho89 allows for an autoregressive process in the error
 term, which, in the context of the FH model, is one way to account for 
@@ -306,6 +310,7 @@ regression coefficients.
 
 
 ### Spatio Temporal Extensions
+\label{sec:theory_sae_fh_spatio_temporal}
 
 The subject matter of this section is the combination of the spatial model
 \eq{eq:sfh} and temporal model \eq{eq:tfh}; this combination was first

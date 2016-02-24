@@ -1,43 +1,47 @@
 # Extensions to the Fay-Herriot Model
 
-In the following you will find the models for which robust parameter estimates
-are provided. This includes the methods reviewed in section(?) but also the FH
-model. These models will be framed in the context of linear mixed models and
-some details on derivatives are provided. The robust estimation equations are -
-where possible - stated for the general case of linear mixed models. Hence the
-specifications of these sections can then simply be *plugged into* the robust
-estimation equations without the need to explicitly stating them for each
-extension.
+In the following sections the models under study are reviewed. This includes the
+methods reviewed in Section \ref{sec:theory_sae_fh_extensions} but also the FH 
+model. These models will be framed in the context of linear mixed models since 
+the robust estimation equations are - where possible - stated for the general 
+case of linear mixed models. Especially for the optimisation of the model
+specifc variance parameters it will be necessary to give some results for each
+model. In these situations the following sections will act as a reference point
+in order to maintain the flow of reading.
 
 ## Fay-Herriot Model
 
-For a review of the FH model see section (?). In the following the model is
-stated for consistent notation and the sace of completeness.
+For a review of the FH model see Section \ref{sec:theory_sae_fh}. In the 
+following the model is framed as a linear mixed model in order to achieve a 
+consistent notation for the robust parameter estimation. The model can be stated
+as:
 \empty{
 \begin{align*}
-\tilde{\mat{y}} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\
+\mat{y} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\
 \mat{u} & \sim \Distr{N}\Paran{\mat{0}_D, \mat{V}_u} \\
 \mat{e} & \sim \Distr{N}\Paran{\mat{0}_D, \mat{V}_e}
 \end{align*}
-}where $\tilde{\mat{y}}$ denotes the $(D \times 1)$ vector of observed direct 
+}where $\mat{y}$ denotes the $(D \times 1)$ vector of observed direct 
 estimates; $\mat{X}$ the $(D \times P)$ design matrix; $\pmat\beta$ the $(P 
-\times 1)$ vector of regression coefficients; $\mat{Z} = \mat{I}_{D \times D}$ 
-is an identity matrix; $\mat{u}$ is a $(D \times 1)$ vector of random effects; 
+\times 1)$ vector of regression coefficients; $\mat{Z} = \mat{I}_{D}$ 
+is an identity matrix; $\mat{u}$ is the $(D \times 1)$ vector of random effects; 
 and $\mat{e}$ is the $(D \times 1)$ vector of sampling errors. Furthermore
-$\mat{0}_r$ denotes a $(r \times 1)$ vector containing zeros; $\mat{V}_u =
-\mat{V}_u(\sigma_\re^2) = \sigma_\re^2 \mat{I}_{D \times D}$ is the variance
-covariance matrix of $\mat{u}$; and $\mat{V}_e = \diag{\{\sige\}_{i = 1}^D}$
-with known sampling variances $\{\sige\}_{i = 1}^D$. Hence the unknown model
-parameters are $\pmat\beta$ and $\pmat\delta = (\sigre)$.
+$\mat{0}_D$ denotes a $(D \times 1)$ vector containing zeros; $\mat{V}_u = 
+\mat{V}_u(\sigma_\re^2) = \sigma_\re^2 \mat{I}_{D \times D}$ is the variance 
+covariance matrix of $\mat{u}$; and $\mat{V}_e = \Diag{\{\sige\}_{i = 1}^D}$ 
+with known sampling variances $\sige$. Furthermore $\mat{u}$ and $\mat{e}$ are
+independent. The unknown model parameters are $\pmat\beta$ and $\pmat\delta =
+(\sigre)$.
 
 
 ## Spatial Fay-Herriot Model
 
-For a review of spatial extensions to the FH model see section (?). Here model
-(?) is represented as linear mixed model so that it can be represented as:
+For a review of the spatial extension to the FH model see section
+\ref{sec:theory_sae_fh_spatial}. Here model \eq{eq:sfh} is represented as linear
+mixed model and as such it can be represented as:
 \empty{
 \begin{align*}
-\tilde{\mat{y}} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\
+\mat{y} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\
 \mat{u} & \sim \Distr{N}\Paran{\mat{0}_D, \mat{V}_u} \\
 \mat{e} & \sim \Distr{N}\Paran{\mat{0}_D, \mat{V}_e}
 \end{align*}
@@ -47,37 +51,39 @@ vector of spatially correlated random effects following a SAR(1):
 \empty{
 \begin{align*}
 u_{1i} & = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i} \\
-\epsilon_{1i} & \sim \Distr{N}(0, \sigma_1^2) \text{ i.i.d.}\\
-\text{with }i & = 1, \dots, D,
+\epsilon_{1i} & \sim \Distr{N}(0, \sigma_1^2) \text{ i.i.d.}
 \end{align*}
-}where $w_{il}$ are the elements of the row standardized proximity matrix 
-$\mat{W}$. Let $\mat{W}^0$ denote the proximity matrix then a possible
-definition of $\mat{W}^0$ is that the elements are equal to one if area $i$ and
-$l$ are neighboured and zero otherwise. This leads to the following distribution of
-$\mat{u}_1$:
+}with $i = 1, \dots, D$, where $w_{il}$ are the elements of the row
+standardised proximity matrix $\mat{W}$. Let $\mat{W}^0$ denote the proximity
+matrix then one possible definition of $\mat{W}^0$ is that the elements are
+equal to one if area $i$ and $l$ are neighboured and zero otherwise. This leads
+to the following distribution of $\mat{u}_1$:
 \empty{
 \begin{align*}
-\mat{u}_1 & \sim \Distr{N}\Paran{\mat{0}_D, \sigma_{1}^2 \pmat\Omega(\rho_1)}
+\mat{u}_1 & \sim \Distr{N}\Paran{\mat{0}_D, \sigma_{1}^2 \pmat\Omega_1(\rho_1)}
 \intertext{where}
-\pmat\Omega_1(\rho_1) & = \Paran{(\mat{I}_{D\times D} - \rho_1\mat{W})^\top (\mat{I}_{D\times D} - \rho_1\mat{W})}^{-1}
+\pmat\Omega_1 = \pmat\Omega_1(\rho_1) & = \Paran{(\mat{I}_{D} - \rho_1\mat{W})^\top (\mat{I}_{D} - \rho_1\mat{W})}^{-1}
 \end{align*}
-}and hence $\mat{V}_u = \sigma_{1}^2 \Omega(\rho_1)$. Thus the unknown model
-parameters are $\pmat\beta$ and $\pmat\delta = (\rho_1, \sigma_1^2)$.
+}thus $\mat{V}_u = \sigma_{1}^2 \pmat\Omega_1(\rho_1)$. Furthermore
+$\mat{u}_1$ and $\mat{e}$ are independent. The unknown model parameters are
+$\pmat\beta$ and $\pmat\delta = (\rho_1, \sigma_1^2)$.
 
 
 ## Temporal Fay-Herriot Model
 
-A review of temporal extensions can be found in section (?). In the following you will find the representation of the temporal model underlying (?) as a linear mixed model:
+A review of temporal extensions can be found in section
+\ref{sec:theory_sae_fh_temporal}. In the following the representation of the
+temporal model in \eq{eq:tfh} is reviewed as a linear mixed model of the form:
 \empty{
 \begin{align*}
-\tilde{\mat{y}} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\
+\mat{y} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\
 \mat{u} & \sim \Distr{N}\Paran{\mat{0}_{D+DT}, \mat{V}_u} \\
 \mat{e} & \sim \Distr{N}\Paran{\mat{0}_{DT}, \mat{V}_e}
 \end{align*}
-}where $\tilde{\mat{y}}$ denotes the $(DT \times 1)$ vector of observed direct 
+}where $\mat{y}$ denotes the $(DT \times 1)$ vector of observed direct 
 estimates; $\mat{X}$ the $(DT \times P)$ design matrix; $\pmat\beta$ the $(P 
 \times 1)$ vector of regression coefficients; $\mat{Z} = (\mat{Z}_1, \mat{Z}_2)$
-where $\mat{Z}_1 = \mat{I}_{D \times D} \otimes (\mat{1}_T)^\top$, $\mat{1}_T$
+where $\mat{Z}_1 = \mat{I}_{D} \otimes (\mat{1}_T)^\top$, $\mat{1}_T$
 is a $T \times 1$ vector of ones, and $\mat{Z}_2 = \mat{I}_{DT}$; $\mat{u} =
 (\mat{u}_0, \mat{u}_2)$ is the $(D + DT \times 1)$ vector of random effects; and
 $\mat{e}$ is the $(DT \times 1)$ vector of sampling errors. Note that
@@ -90,12 +96,12 @@ $$
 with $i = 1, \dots, D$ and $t = 1, \dots, T$, where $\rho_2$ is the auto
 correlation coefficient with $|\rho_2| < 1$ and $\epsilon_{2it} \sim
 \Distr{N}(0, \sigma_2^2)$. Furthermore $\mat{u}_0$, $\mat{u}_2$ and $\mat{e}$
-are independent. Hence the distribution of $\mat{u}_2$ is given by:
+are pairwise independent. The distribution of $\mat{u}_2$ is given by:
 \empty{
 \begin{align*}
-\mat{u}_2 \sim \Distr{N}\Paran{\mat{0}_{DT}, \sigma_2^2\pmat\Omega(\rho_2)} 
+\mat{u}_2 \sim \Distr{N}\Paran{\mat{0}_{DT}, \sigma_2^2\pmat\Omega_2(\rho_2)} 
 \end{align*}
-}where $\pmat\Omega(\rho_2)$ is a block diagonal matrix in which each block is defined by:
+}where $\pmat\Omega_2 = \pmat\Omega_2(\rho_2)$ is a block diagonal matrix in which each block is defined by:
 $$
 \pmat\Omega_{2i}(\rho_2) = \frac{1}{1-\rho_2^2}
 \left(
@@ -118,23 +124,23 @@ parameters are $\pmat\beta$ and $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$.
 
 ## Spatio-Temporal Fay-Herriot Model
 
-The review of this type of models can be found in section (?). The following
-presents the spatio-temporal model introduced by @Mar13 as a linear mixed model
-in the form:
+A review of this model can be found in Section
+\ref{sec:theory_sae_fh_spatio_temporal}. In the following model \eq{eq:stfh} by
+@Mar13 is reviewed as a linear mixed model of the from:
 \empty{
 \begin{align*}
-\tilde{\mat{y}} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\
+\mat{y} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\
 \mat{u} & \sim \Distr{N}\Paran{\mat{0}_{D+DT}, \mat{V}_u} \\
 \mat{e} & \sim \Distr{N}\Paran{\mat{0}_{DT}, \mat{V}_e}
 \end{align*}
 }where the notation is the same as for the temporal model with the following 
 differences: here $\mat{u} = (\mat{u}_1, \mat{u}_2)$ where $\mat{u}_1$ denotes 
-the spatially correlated random effect of section (?) and $\mat{u}_2$ the 
-autocorrelated random effect as in section (?). Thus the variance structure of
-$\mat{u}$ is given by $\mat{V}_u = \mat{V}_u(\pmat\delta) =
-\Diag{\sigma_1^2\pmat\Omega_1(\rho_1), \sigma_2^2\pmat\Omega_2(\rho_2)}$ and
-hence the unknown model parameters are $\pmat\beta$ and $\pmat\delta = (\rho_1,
-\sigma_1^2, \rho_2, \sigma_2^2)$.
+the spatially correlated random effect also defined for the spatial model and 
+$\mat{u}_2$ the autocorrelated random effect as defined for the temporal model.
+Thus the variance structure of $\mat{u}$ is given by $\mat{V}_u =
+\mat{V}_u(\pmat\delta) = \Diag{\sigma_1^2\pmat\Omega_1(\rho_1),
+\sigma_2^2\pmat\Omega_2(\rho_2)}$ and hence the unknown model parameters are
+$\pmat\beta$ and $\pmat\delta = (\rho_1, \sigma_1^2, \rho_2, \sigma_2^2)$.
 
 
 # Robust Predictions under Area Level Models
@@ -142,15 +148,13 @@ hence the unknown model parameters are $\pmat\beta$ and $\pmat\delta = (\rho_1,
 In the following the concrete approach for the outlier robust predictions under
 area level models is layed out. The approach is kept in general notation for
 linear mixed models where the spatio and temporal extensions can be framed as
-special cases within this class of models. However the solutions for the
-estimation equations of the variance parameters $\pmat\delta$ are model specific
-and derived for each individually.
+special cases within this class of models. 
 
 ## Robust Estimation Equations
 
-In principle I follow the same approach as @Sin09 which is to use the
+In principle I follow the approach by @Sin09 which is to start with the
 dirivatives with respect to $\pmat\beta$ and $\pmat\delta$ of the marginal
-log-likelihood:
+log-likelihood of $\mat{y}$:
 \empty{
 \begin{align*}
 \mat{X}^\top\mat{V}^{-1}\left(\mat{y}-\mat{X}\pmat\beta\right) &= 0 \\
@@ -160,37 +164,40 @@ log-likelihood:
 \mat{V}^{-1}\left(\mat{y} - \mat{X}\pmat\beta\right) -             %V^-1 (y-Xb)
 \tr\left(\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\right) &= 0
 \end{align*}
-}with $l = 1, \dots, Q$ where $Q$ denotes the total number of variance
-parameters in $\pmat\delta$. @Sin09 proposed to use the following robust
-estimation equations:
+}with $l = 1, \dots, Q$ where $Q$ denotes the total number of variance 
+parameters in $\pmat\delta$. @Sin09 proposed to *robustify* these equations by
+replacing them with:
 \empty{
 \begin{align}
 \label{eq:rfhreeb}
-\mat{X}^\top\mat{V}^{-1} \mat{U}^{\frac{1}{2}} \psi(\mat{r}) & = 0 \\
+\mat{X}^\top\mat{V}^{-1} \mat{U}^{\frac{1}{2}} \psi(\mat{r}) & = 0
+\intertext{and}
 \label{eq:rfhreed}
 \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}
 \frac{\partial\mat{V}}{\partial\delta_l}
-\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) - \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\right) & = 0
+\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\right) & = 0
 \end{align}
-}where $K = \Exp{E}(\psi_b^2(z)) \mat{I}_n$ is a diagonal matrix of the same
-order as $\mat{V}$ with $z$ following a standard normal distribution; and
+}where $\mat{K} = \Exp{E}(\psi_b^2(z)) \mat{I}_n$ is a diagonal matrix of the
+same order as $\mat{V}$ with $z$ following a standard normal distribution; and 
 $\mat{r} = \mat{r}(\pmat\beta) = \mat{U}^{-\half} (\mat{y} - \mat{X}\pmat\beta)$
-denotes the vector of the standardised residuals and $\mat{U} =
-\mat{U}(\pmat\delta)$ is the matrix containing the diagonal elements of
-$\mat{V}$. Furthermore $\psi_b(x) = x \min\Paran{1, \frac{b}{|x|}}$ is the
-influence function proposed by @Hub64 for a given tuning constant $b$ where a
-common choice for $b$ is 1.345 - see @Sin09.
+denotes the vector of the standardised residuals and $\mat{U} = 
+\mat{U}(\pmat\delta)$ is the matrix containing the diagonal elements of 
+$\mat{V}$. Furthermore $\psi_b(x) = x \min\Paran{1, \frac{b}{|x|}}$ is the 
+influence function proposed by @Hub64 for a given tuning constant $b$ where a 
+common choice for $b$ is 1.345 - see @Sin09. These robust estimation equations
+are being utilised also for the area level models under study. A difference will
+be to find solutions to these equations which is outlined later in this Section.
 
-@Sin09 propose to use the estimation equations proposed by @Fel86 given in
-  \eq{eq:rmmere}. This estimation equation is based on the derivative of the
-  log-likelihood function of the joint probability distribution of $\mat{u}$ and
-  $\mat{e}$ with respect to $\mat{u}$:
+For the random effect, $\mat{u}$, @Sin09 propose to use the estimation equations
+proposed by @Fel86 given in \eq{eq:rmmere}. This estimation equation is based on
+the derivative of the log-likelihood function of the joint probability
+distribution of $\mat{u}$ and $\mat{y}$ with respect to $\mat{u}$:
 $$
-\mat{Z}^\top \mat{V}_e^{-1} \Paran{\mat{y}-\mat{X}\pmat\beta - \mat{Z} \mat{\re}} - \mat{V}_\re^{-1} \mat{\re} = 0
+\mat{Z}^\top \mat{V}_e^{-1} \Paran{\mat{y}-\mat{X}\pmat\beta - \mat{Z} \mat{\re}} - \mat{V}_\re^{-1} \mat{\re} = 0.
 $$
-The idea of the robust version is now to restrict the influence of the
-residuals, $\mat{u}$ and $\mat{e}$, in the estimation equation. However, instead
-of using the robust estimation equation by @Fel86:
+The idea of the robust version is now to restrict the influence of $\mat{u}$ and
+$\mat{e}$ in the estimation equation using the same influence function as
+before. However, instead of using the robust estimation equation by @Fel86:
 \empty{
 \begin{align}
 \mat{Z}^\top \mat{V}_e^{-\half} \psi \Paran{\mat{V}_e^{-\half} \Paran{\mat{y}-\mat{X}\pmat\beta - \mat{Z} \mat{\re}}}
@@ -205,36 +212,69 @@ modification is very similar to the idea by @Sin09 in that only the diagonal
 elements are used to standardize the residuals. In fact this modification is
 not necessary for the robust BHF model or a robust FH model because for these
 models $\mat{V}_u$ is a diagonal matrix. This is not the case, however, in the
-setting of correlated random effects, e. g. in the case of a SAR(1) or AR(1)
-model; which motivated this extensions.
+setting of correlated random effects - e. g. in the case of a SAR(1) or AR(1)
+model - which motivates this extensions.
+
+Let $\tilde{\pmat\beta}^\psi$ and $\tilde{\mat{u}}^\psi$ define the solutions for known variance parameters, $\pmat\delta$, to the robust estimation equations \eq{eq:rfhreeb} and \eq{eq:rfheere}, respectively. Then the area level RBLUP can be defined as:
+\empty{
+\begin{align}
+\label{eq:area_rblup}
+\tilde{\theta}_i^{RBLUP} 
+  = \mat{x}_i^\top\tilde{\pmat\beta}^\psi + \mat{z}_i^\top \tilde{\mat{u}}^\psi
+\end{align}
+}with $i = 1, \dots, n$ where $n$ can be the number of domains, $D$, or for the 
+temporal and spatio\hyp{}temporal model $DT$. Here $\mat{x}_i$ denotes the $(P
+\times 1)$ vector of auxiliary information for the $i$th observation and
+$\mat{z}_i$ similarly the column vector containing the $i$th row in $\mat{Z}$
+where the form of $\mat{Z}$ depends on the specific model. Here 
+\eq{eq:area_rblup} acts as a placeholder for the area level spatial RBLUP 
+(SRBLUP), the temporal RBLUP (TRBLUP), and the spatio\hyp{}temporal RBLUP 
+(STRBLUP). The RBLUP depends on the unknown variance parameters, $\pmat\delta$,
+which need to be estimated. If we replace $\pmat\delta$ with the robust
+parameter estimates $\hat{\pmat\delta}^\psi$ we denote $\hat{\pmat\beta}^\psi$
+and $\hat{\mat{u}}^\psi$ as robust solutions and hence the REBLUP can be derived
+as:
+\empty{
+\begin{align}
+\label{eq:area_reblup}
+\hat{\theta}_i^{REBLUP} 
+  = \mat{x}_i^\top\hat{\pmat\beta}^\psi + \mat{z}_i^\top \hat{\mat{u}}^\psi.
+\end{align}
+}Here the area level spatial REBLUP (SREBLUP), the temporal REBLUP (TREBLUP),
+and the spatio\hyp{}temporal REBLUP (STREBLUP) are special cases of
+\eq{eq:area_reblup}.
 
 
 ## Pseudolinear Representation
 
-The area level RBLUP - for known parameters $\pmat\delta$ - can be defined by:
+The solutions to the estimation equations \eq{eq:rfhreeb} and \eq{eq:rfheere} 
+are derived from the pseudolinear form of the RBLUP which follows a similar form
+as for the RBLUP under the unit level model by @Cha14 which was reviewed in
+Section \ref{sec:theory_sae_robust_mspe}. Hence following this idea the area
+level RBLUP \eq{eq:area_rblup} can be rewritten into:
 \empty{
 \begin{align*}
-\tilde{\theta}_i^{RFH} 
+\tilde{\theta}_i^{RBLUP} 
   & = \mat{x}_i^\top\tilde{\pmat\beta}^\psi + \mat{z}_i^\top \tilde{\mat{u}}^\psi \\
-  & = \Paran{\mat{x}_i^\top\mat{A} + \mat{z}_i^\top \mat{B} \Paran{\mat{I}_n - \mat{X} \mat{A}}} \tilde{\mat{y}} \\
-  & = \tilde{\mat{w}}_i^\top \tilde{\mat{y}}
+  & = \Paran{\mat{x}_i^\top\mat{A} + \mat{z}_i^\top \mat{B} \Paran{\mat{I}_n - \mat{X} \mat{A}}} \mat{y} \\
+  & = \tilde{\mat{w}}_i^\top \mat{y}
 \end{align*}
-}with $i = 1, \dots, n$ where $n$ can be the number of domains, $D$, or for the 
-temporal and spatio-temporal model $DT$. Here $\mat{x}_i$ denotes the $(P \times
-1)$ vector of auxiliary information for the $i$th observation and $\mat{z}_i$ 
-similarly the column vector containing the $i$th row in $\mat{Z}$ where the form
-of $\mat{Z}$ depends on the specific model. In the following I want to motivate
-the specific form of $\mat{A}$ and $\mat{B}$.
+}where $\tilde{\mat{w}}_i$ denotes the vector of weights. 
 
-Note that $\mat{A}\tilde{\mat{y}} = \tilde{\pmat\beta}$ and that the specific form of $\mat{A}$ can be derived starting from the estimation equation in \eq{eq:rfhreeb}:
+In the following I want to motivate the specific form of $\mat{A}$ and 
+$\mat{B}$. Note that $\mat{A}\mat{y} = \tilde{\pmat\beta}^\psi$ and that the
+specific form of $\mat{A}$ can be derived starting from the estimation equation
+in
+\eq{eq:rfhreeb}:
 \empty{
 \begin{align*}
 \mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} 
   \psi\Paran{\mat{U}^{-\half} (\mat{y} - \mat{X}\pmat\beta)} & = 0 \\
-\underbrace{\mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} \mat{W}_1
-  \mat{U}^{-\half}}_{\mat{W}_1^*} (\mat{y} - \mat{X}\pmat\beta) & = 0 \\
+\mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} \mat{W}_1 \mat{U}^{-\half} 
+  (\mat{y} - \mat{X}\pmat\beta) & = 0 \\
+\underbrace{\mat{X}^\top\mat{V}^{-1} \mat{W}_1}_{\mat{W}_1^*} (\mat{y} - \mat{X}\pmat\beta) & = 0 \\
 \mat{W}_1^* \mat{y} & = \mat{W}_1^* \mat{X}\pmat\beta \\
-\underbrace{\Paran{\mat{W}_1^* \mat{X}}^{-1} \mat{W}_1^*}_{\mat{A}(\pmat\beta)} 
+\underbrace{\Paran{\mat{W}_1^* \mat{X}}^{-1} \mat{W}_1^*}_{\mat{A}} 
   \mat{y} & = \pmat\beta
 \end{align*}
 }where $\mat{W}_1 = \Diag{\{w_{1i}\}_{i = 1}^n}$ is a diagonal matrix with the elements defined by:
@@ -243,41 +283,49 @@ w_{1i} =
   \psi\Paran{U_i^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)} 
   \Paran{U_i^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)}^{-1}
 $$
-where $U_i^{-\half}$ is the $i$th diagonal element of $\mat{U}^{-\half}$. Note
-that the extension is possible because $\mat{U}$ is a diagonal matrix. Hence $\mat{A} = \mat{A}(\pmat\beta)\mid_{\pmat\beta = \tilde{\pmat\beta}}$ and 
+where $U_i^{-\half}$ is the $i$th diagonal element of $\mat{U}^{-\half}$. Note 
+that the extension is possible because $\mat{U}$ is a diagonal matrix.
+Furthermore the form can be simplified because $\mat{U}^\half$, $\mat{W}_1$, and
+$\mat{U}^{-\half}$ are also diagonals. Hence
 \empty{
 \begin{align*}
-\mat{A}(\pmat\beta) = \Paran{\mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} \mat{W}_1
-  \mat{U}^{-\half} \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} \mat{W}_1
-  \mat{U}^{-\half}
+\mat{A} = \mat{A}(\pmat\beta) = \Paran{\mat{X}^\top\mat{V}^{-1} \mat{W}_1
+  \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \mat{W}_1
 \end{align*}
-}which is similar to the form derived by @Cha14 which was reviewed in (?) for
-the robust BHF model.
+}which is similar to the form derived by @Cha14 for the robust BHF model. And more correctly we can write now $\mat{A}(\tilde{\pmat\beta}^\psi)\mat{y} = \tilde{\pmat\beta}^\psi$.
 
 To derive $\mat{B}$ note that:
 \empty{
 \begin{align*}
-\mat{u} & = \mat{B}\Paran{\mat{I} - \mat{X}\mat{A}} \mat{y} \\
-        & = \mat{B}\Paran{\mat{y} - \mat{X}\beta}
+\tilde{\mat{u}}^\psi 
+  & = \mat{B}\Paran{\mat{I} - \mat{X}\mat{A}} \mat{y} \\
+  & = \mat{B}\Paran{\mat{y} - \mat{X}\beta}
 \end{align*}
-}and that the approach taken is similar as for $\mat{A}$. However the form of
-$\mat{B}$ is different from the approach by @Cha14 because of the different
-estimation equation for the random effects. This different form makes it
-possible to derive the two weighting matrices more easily as they are diagonal.
-Thus starting from \eq{eq:rfheere} the specific form of $\mat{B}$ can be derived
-as:
+}and that the approach taken is similar as for $\mat{A}$. However the form of 
+$\mat{B}$ is different from the approach by @Cha14 because of the different 
+estimation equation for the random effects \eq{eq:rfheere}. This different form 
+simplifies the form of the two weighting matrices - $\mat{W}_1$ and $\mat{W}_2$
+in the following equations - as they are also diagonal matrices. Thus starting
+from \eq{eq:rfheere} the specific form of $\mat{B}$ can be derived as:
 \empty{
 \begin{align*}
 \mat{Z}^\top \mat{V}_e^{-1} \mat{U}_e^{\half} \psi \Paran{\mat{U}_e^{-\half} 
   \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}}} 
   - \mat{V}_\re^{-1} \mat{U}_\re^\half \psi\Paran{\mat{U}_\re^{-\half}\mat{\re}} & = 0 \\
 %
-\underbrace{\mat{Z}^\top \mat{V}_e^{-1} \mat{U}_e^\half \mat{W}_2 \mat{U}_e^{-\half}}_{\mat{W}^*_2}
+\mat{Z}^\top \mat{V}_e^{-1} \mat{U}_e^\half \mat{W}_2 \mat{U}_e^{-\half}
   \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}} 
-  - \underbrace{\mat{V}_\re^{-1} \mat{U}_\re^\half \mat{W}_3 \mat{U}_\re^{-\half}}_{\mat{W}_3^*} \mat{\re} & = 0
-%  
+  - \mat{V}_\re^{-1} \mat{U}_\re^\half \mat{W}_3 \mat{U}_\re^{-\half} \mat{\re} & = 0 \\
+%
+\underbrace{\mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2}_{\mat{W}^*_2}
+  \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}} 
+  - \underbrace{\mat{V}_\re^{-1}  \mat{W}_3 }_{\mat{W}_3^*} \mat{\re} & = 0
+%
 \end{align*}
-}where I continue with $\mat{W}_2^*$ and $\mat{W}_3^*$ to simplify the notation:
+}where I continue with $\mat{W}_2^*$ and $\mat{W}_3^*$ to simplify the notation.
+As before $\mat{U}_e^\half$, $\mat{U}_e^{-\half}$, $\mat{U}_\re^\half$, and
+$\mat{U}_\re^{-\half}$ cancel out because they are diagonal matrices as well as
+$\mat{W}_2$ and $\mat{W}_3$. Continuing:
 \empty{
 \begin{align*}
 \mat{W}_2^* \Paran{\mat{y}-\mat{X}\beta - \mat{Z} \mat{\re}} & = 
@@ -286,33 +334,50 @@ as:
 \mat{W}_2^* \Paran{\mat{y}-\mat{X}\beta} & = 
   \Paran{\mat{W}_2^*\mat{Z} + \mat{W}_3^*} \mat{\re} \\
 %
-\underbrace{\Paran{\mat{W}_2^*\mat{Z} + \mat{W}_3^*}^{-1} \mat{W}_2^*}_{\mat{B}(\pmat\beta, \mat{u})} 
+\underbrace{\Paran{\mat{W}_2^*\mat{Z} + \mat{W}_3^*}^{-1} \mat{W}_2^*}_{\mat{B}} 
   \Paran{\mat{y}-\mat{X}\beta} & = \mat{\re}
 \end{align*}
-}and hence 
+}and thus 
 \empty{
 \begin{align*}
-\mat{B}(\mat{u}) = \mat{B} = &
+\mat{B}(\mat{u}, \pmat\beta) = \mat{B} = &
   \Paran{
-    \mat{Z}^\top \mat{V}_e^{-1} \mat{U}_e^\half \mat{W}_2 \mat{U}_e^{-\half} \mat{Z}
-    + \mat{V}_\re^{-1} \mat{U}_\re^\half \mat{W}_3 \mat{U}_\re^{-\half}
-  }^{-1} \\ & \times \mat{Z}^\top \mat{V}_e^{-1} \mat{U}_e^\half \mat{W}_2 \mat{U}_e^{-\half}
+    \mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \mat{Z} + \mat{V}_\re^{-1} \mat{W}_3}^{-1} 
+    \mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 
 \end{align*}
-}where, similar as before, $\mat{W}_2 = \Diag{\{w_{2i}\}_{i = 1}^n}$ and $\mat{W}_3 = \Diag{\{w_{3j}\}_{j = 1}^m}$ are diagonal metrices with elements:
+}where $\mat{W}_2$ is a $(n \times n)$ diagonal matrix with elements:
 \empty{
 \begin{align*}
 w_{2i} = 
   \psi\Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)} 
   \Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)}^{-1}
 \end{align*}
-}and
+}where $U_{ei}^{-\half}$ denote the diagonal elements of $\mat{U}_e^{-\half}$;
+and $\mat{W}_3$ is a $(m \times m)$ diagonal matrix with elements:
 \empty{
 \begin{align*}
 w_{3j} = 
   \psi\Paran{U_{uj}^{-\half} u_j} 
   \Paran{U_{uj}^{-\half} u_j}^{-1}
 \end{align*}
-}
+}where $U_{uj}^{-\half}$ denote the diagonal elements of $\mat{U}_\re^{-\half}$ 
+and $m$ the number of elements in $\mat{u}$. Now we can state more precisely: 
+$$\mat{B}(\tilde{\mat{u}}^\psi, \tilde{\pmat\beta}^\psi)\Paran{\mat{y} -
+\mat{X}\tilde{\pmat\beta}^\psi} = \tilde{\mat{u}}^\psi.$$
+This approach can be adapted for the REBLUP in \eq{eq:area_reblup} when we
+replace the model parameters by their estimators $\hat{\pmat\beta}^\psi$ and
+$\hat{\pmat\delta}^\psi$ and the prediction for $\mat{u}$ with
+$\hat{\mat{u}}^\psi$. Then the area level REBLUP is given by:
+\empty{
+\begin{align*}
+\tilde{\theta}_i^{REBLUP} 
+  & = \hat{\mat{w}}_i^\top \mat{y}.
+\end{align*}
+}This representation leads to two important results. First the derivation of an 
+iterative solution for the estimation equations \eq{eq:rfhreeb} and 
+\eq{eq:rfheere} which are presented in the following section; and second an
+analytical MSPE estimator similar to the proposition by @Cha11 which is
+presented in section (?).
 
 
 ## Solutions to the Robust Estimation Equations
