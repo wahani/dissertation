@@ -10,6 +10,7 @@ model. In these situations the following sections will act as a reference point
 in order to maintain the flow of reading.
 
 ## Fay-Herriot Model
+\label{sec:rfh_model_fh}
 
 For a review of the FH model see Section \ref{sec:theory_sae_fh}. In the 
 following the model is framed as a linear mixed model in order to achieve a 
@@ -35,6 +36,7 @@ independent. The unknown model parameters are $\pmat\beta$ and $\pmat\delta =
 
 
 ## Spatial Fay-Herriot Model
+\label{sec:rfh_model_sfh}
 
 For a review of the spatial extension to the FH model see section
 \ref{sec:theory_sae_fh_spatial}. Here model \eq{eq:sfh} is represented as linear
@@ -70,6 +72,7 @@ $\pmat\beta$ and $\pmat\delta = (\rho_1, \sigma_1^2)$.
 
 
 ## Temporal Fay-Herriot Model
+\label{sec:rfh_model_tfh}
 
 A review of temporal extensions can be found in section
 \ref{sec:theory_sae_fh_temporal}. In the following the representation of the
@@ -123,6 +126,7 @@ parameters are $\pmat\beta$ and $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$.
 
 
 ## Spatio-Temporal Fay-Herriot Model
+\label{sec:rfh_model_stfh}
 
 A review of this model can be found in Section
 \ref{sec:theory_sae_fh_spatio_temporal}. In the following model \eq{eq:stfh} by
@@ -209,13 +213,16 @@ before. However, instead of using the robust estimation equation by @Fel86:
 }where $\mat{U}_e$ and $\mat{U}_u$ denote diagonal matrices with the 
 diagonal elements of $\mat{V}_e$ and $\mat{V}_u$, respectively. This
 modification is very similar to the idea by @Sin09 in that only the diagonal
-elements are used to standardize the residuals. In fact this modification is
+elements are used to standardise the residuals. In fact this modification is
 not necessary for the robust BHF model or a robust FH model because for these
 models $\mat{V}_u$ is a diagonal matrix. This is not the case, however, in the
 setting of correlated random effects - e. g. in the case of a SAR(1) or AR(1)
 model - which motivates this extensions.
 
-Let $\tilde{\pmat\beta}^\psi$ and $\tilde{\mat{u}}^\psi$ define the solutions for known variance parameters, $\pmat\delta$, to the robust estimation equations \eq{eq:rfhreeb} and \eq{eq:rfheere}, respectively. Then the area level RBLUP can be defined as:
+Let $\tilde{\pmat\beta}^\psi$ and $\tilde{\mat{u}}^\psi$ define the solutions
+for known variance parameters, $\pmat\delta$, to the robust estimation equations
+\eq{eq:rfhreeb} and \eq{eq:rfheere}, respectively. Then the area level RBLUP can
+be defined as:
 \empty{
 \begin{align}
 \label{eq:area_rblup}
@@ -249,9 +256,9 @@ and the spatio\hyp{}temporal REBLUP (STREBLUP) are special cases of
 
 The solutions to the estimation equations \eq{eq:rfhreeb} and \eq{eq:rfheere} 
 are derived from the pseudolinear form of the RBLUP which follows a similar form
-as for the RBLUP under the unit level model by @Cha14 which was reviewed in
-Section \ref{sec:theory_sae_robust_mspe}. Hence following this idea the area
-level RBLUP \eq{eq:area_rblup} can be rewritten into:
+as for the RBLUP under the unit level model by @Cha14 which was reviewed in 
+Section \ref{sec:theory_sae_robust_mspe}. Following this idea the area level
+RBLUP \eq{eq:area_rblup} can be rewritten into:
 \empty{
 \begin{align*}
 \tilde{\theta}_i^{RBLUP} 
@@ -262,9 +269,9 @@ level RBLUP \eq{eq:area_rblup} can be rewritten into:
 }where $\tilde{\mat{w}}_i$ denotes the vector of weights. 
 
 In the following I want to motivate the specific form of $\mat{A}$ and 
-$\mat{B}$. Note that $\mat{A}\mat{y} = \tilde{\pmat\beta}^\psi$ and that the
-specific form of $\mat{A}$ can be derived starting from the estimation equation
-in
+$\mat{B}$. Note that $\mat{A}(\tilde{\pmat\beta}^\psi)\mat{y} =
+\tilde{\pmat\beta}^\psi$ and that the specific form of $\mat{A}$ can be derived
+starting from the estimation equation in
 \eq{eq:rfhreeb}:
 \empty{
 \begin{align*}
@@ -284,23 +291,24 @@ w_{1i} =
   \psi\Paran{U_i^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)} 
   \Paran{U_i^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)}^{-1}
 $$
-where $U_i^{-\half}$ is the $i$th diagonal element of $\mat{U}^{-\half}$. Note 
-that the extension is possible because $\mat{U}$ is a diagonal matrix.
-Furthermore the form can be simplified because $\mat{U}^\half$, $\mat{W}_1$, and
-$\mat{U}^{-\half}$ are also diagonals. Hence
+where $U_i^{-\half}$ is the $i$th diagonal element of $\mat{U}^{-\half}$. The
+extension is possible because $\mat{U}$ is a diagonal matrix. Furthermore the
+form can be simplified because $\mat{U}^\half$, $\mat{W}_1$, and 
+$\mat{U}^{-\half}$ are also diagonal matrices. Hence
 \empty{
 \begin{align*}
 \mat{A} = \mat{A}(\pmat\beta) = \Paran{\mat{X}^\top\mat{V}^{-1} \mat{W}_1
   \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \mat{W}_1
 \end{align*}
-}which is similar to the form derived by @Cha14 for the robust BHF model. And more correctly we can write now $\mat{A}(\tilde{\pmat\beta}^\psi)\mat{y} = \tilde{\pmat\beta}^\psi$.
+}which is similar to the form derived by @Cha14 for the robust BHF model - see
+Section \ref{sec:theory_sae_robust_mspe} for details.
 
 To derive $\mat{B}$ note that:
 \empty{
 \begin{align*}
 \tilde{\mat{u}}^\psi 
-  & = \mat{B}\Paran{\mat{I} - \mat{X}\mat{A}} \mat{y} \\
-  & = \mat{B}\Paran{\mat{y} - \mat{X}\pmat\beta^\psi}
+  & = \mat{B}(\tilde{\mat{u}}^\psi)\Paran{\mat{I} - \mat{X}\mat{A}} \mat{y} \\
+  & = \mat{B}(\tilde{\mat{u}}^\psi)\Paran{\mat{y} - \mat{X}\tilde{\pmat\beta}^\psi}
 \end{align*}
 }and that the approach taken is similar as for $\mat{A}$. However the form of 
 $\mat{B}$ is different from the approach by @Cha14 because of the different 
@@ -370,7 +378,7 @@ $$\mat{B}(\tilde{\mat{u}}^\psi, \tilde{\pmat\beta}^\psi)\Paran{\mat{y} -
 This approach can be adapted for the REBLUP in \eq{eq:area_reblup} when we
 replace the model parameters by their estimators $\hat{\pmat\beta}^\psi$ and
 $\hat{\pmat\delta}^\psi$ and the prediction for $\mat{u}$ with
-$\hat{\mat{u}}^\psi$. Then the area level REBLUP is given by:
+$\hat{\mat{u}}^\psi$. The area level REBLUP is then given by:
 \empty{
 \begin{align*}
 \hat{\theta}_i^{REBLUP} 
@@ -441,65 +449,99 @@ was reviewed in Section \ref{sec:robustee} - the solution to the non\hyp{}robust
 equation \eq{eq:rfheere} is equivalent the the BLUP for $\mat{u}$ given by
 \eq{eq:blupre}.
 
-An algorithm to solve for $\pmat\delta$ was derived by (?) for the case of the
-robust BHF model. I follow hear the same general procedure to derive fixed point
-equations. In contrast to the solution of $\pmat\beta$ and $\mat{u}$ this
-algorithm depends on the specific form of the variance matrix of the random
-effects and hence needs to be derieved for each model individually. However
-consider the general algorithm:
+An algorithm to solve the robust estimation equation \eq{eq:rfhreed} for 
+$\pmat\delta$ was derived by @Chat12 for the case of the robust BHF model 
+\eq{eq:reblupbhf}. The general approach is adapted for the robust area level 
+models under study which is to derive fixed point equations for the variance 
+parameters based on \eq{eq:rfhreed}. In order to stay as general as possible and
+yet present simple solutions I want to distinguish between two cases. First when
+$\pmat\delta$ is a scala under a given model. Second when $\pmat\delta$ has more
+than one element. This will lead to a form in which the solutions for the
+spatial and temporal extensions are just special cases. When we set $\pmat\delta
+= \delta$, i.e. the first case, \eq{eq:rfhreed} can be written as:
 \empty{
 \begin{align*}
-\pmat\delta^{(m + 1)} = \mat{C}(\pmat\delta^{(m)})^{-1} \mat{D}(\pmat\delta^{(m)})
+& 0 = \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) - \tr\Paran{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta} \delta^{-1}\delta} \\
+\implies & \tr\Paran{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta} \delta^{-1}\delta} = \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
+\implies & \delta = \underbrace{\tr\Paran{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta} \delta^{-1}}^{-1}}_{c_1^{-1}(\delta)} 
+\underbrace{\psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1} \frac{\partial\mat{V}}{\partial\delta}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})}_{c_2(\delta)}
 \end{align*}
-}where $\mat{C}$ and $\mat{D}$ denote matrices depending on $\pmat\delta$ and we
-assume that the inverse of $\mat{C}$ exists. The specific form of $\mat{C}$ and
-$\mat{D}$ is the the subject matter of the following sections.
-
-The algorithm is now:
-
-1. Choose initial values $\pmat\beta^{(0)}$ and $\pmat\delta^{(0)}$ and set $m = 0$.
-2. Compute $\pmat\beta^{(m + 1)}$ using equation (?) with given parameters
-$\pmat\delta^{(m)}$ until convergence is reached.
-3. With $\pmat\beta^{(m + 1)}$ compute $\pmat\delta^{(m + 1)}$ using equation (?).
-4. Set $m = m + 1$
-3. Repeat steps 2. to 4. until the set of parameters jointly reaches
-convergence. Declare these solutions to be the robust parameter estimates
-$\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$.
-4. With the solutions $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$ compute $\mat{u}^{(m +
-1)}$ using equation (?) until convergence is reached.
-
-
-### Solutions for the Robust FH Model
-
-Starting from equation \ref{eq:rfhreed} where $\pmat\delta = (\sigre)$ we can
-rewrite the equation such that:
+}where $c_1(\delta)$ and $c_2(\delta)$ are both scalar depending on $\delta$. An
+iterative equation to solve for $\delta$ can now be formulated as:
 \empty{
 \begin{align}
-0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigre}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
-  & - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigre} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_u\mat{Z}^\top)\right) \label{eq:reeefhsigma}
+\label{eq:fp_delta}
+\delta^{(m + 1)} = c_1^{-1}(\delta^{(m)}) c_2(\delta^{(m)})
 \end{align}
-}where under the FH model $\mat{Z} = \mat{I}_D$, $\mat{V}_u = \sigre\mat{I}_D$, and $\partial\mat{V} / \partial\sigre = \mat{I}_D$ and hence \eq{eq:reeefhsigma} simplifies to:
+}for an adequate starting value $\delta^{(0)}$ and known regression coefficients
+$\pmat\beta$. If \eq{eq:rfhreed} is a convex and continuous function the fixed
+point function converges against the true parameter regardless of the starting
+value - as long as they are chosen as values in the parameter space. Different
+choices are studied in more detail in Section (?).
+
+The solution by @Chat12 was based on the idea to add the term
+$\mat{V}^{-1}\mat{V}$ to the term inside the trace in \eq{eq:rfhreed}. This was
+necessary because under the unit level model $\mat{V}_e$ contains an unknown
+parameter. In the case of the FH model and its extensions $\mat{V}_e$ is assumed
+to be known and thus can be omitted. Thus the following approach is specific if
+the parameters in $\mat{V}_e$ are known but can be extended easily to the more
+general case. Hence starting from \eq{eq:rfhreed} we can write:
 \empty{
 \begin{align*}
-0 = \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
-  - \tr\left(\mat{K}\mat{V}^{-1} \sigma_\re^{-2} \sigre\right).
+0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
+  & - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_u\mat{Z}^\top)\right) 
 \end{align*}
-}Solving this equation for $\sigre$ we can write:
+}with $l = 1, \dots, Q$ where now we need to find matrices $\bar{\mat{V}}_{ul}$ such that:
 \empty{
 \begin{align*}
-\sigre = 
-  \tr\left(\mat{K}\mat{V}^{-1} \sigma_\re^{-2} \right)^{-1} 
-  \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
+0 = & 
+  \underbrace{\psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})}_{c_{2l}(\pmat\delta)} \\
+  & - \tr\Paran{\underbrace{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}}_{\mat{C}^*_{l}(\pmat\delta)}
+  (\begin{matrix}\mat{Z}\bar{\mat{V}}_{u1}\mat{Z}^\top & \dots & \mat{Z}\bar{\mat{V}}_{uQ}\mat{Z}^\top\end{matrix}) \pmat\delta}
 \end{align*}
-}which is the fixed point function and leads to the iterative equation:
+}with $l = 1, \dots, Q$. Because the sum of matrices in the trace are square
+matrices we can now solve for $\pmat\delta$. To simplify the solution we can set
+$Q = 2$ since this is the case relevant for the specific area level models as
+will be shown later:
 \empty{
 \begin{align*}
-\delta^{(m + 1)} = 
-  \Paran{\underbrace{\tr\left(\mat{K}\mat{V}^{-1} \sigma_\re^{-2} \right)}_{C(\delta^{(m)})}}^{-1} 
-  \underbrace{\psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})}_{D(\delta^{(m)})}
+\pmat\delta = \mat{C}_1^{-1}(\pmat\delta) \mat{c}_2(\pmat\delta)
 \end{align*}
-}where $C(\delta)$ and $D(\delta)$ are scalars under the FH model with $\delta =
-\sigre$.
+}where
+\empty{
+\begin{align*}
+\mat{C}_1(\pmat\delta) = &
+\Paran{\begin{matrix}
+\tr\Paran{\mat{C}^*_{1}(\pmat\delta)\mat{Z}\bar{\mat{V}}_{u1}\mat{Z}^\top} &
+\tr\Paran{\mat{C}^*_{1}(\pmat\delta)\mat{Z}\bar{\mat{V}}_{u2}\mat{Z}^\top} \\
+\tr\Paran{\mat{C}^*_{2}(\pmat\delta)\mat{Z}\bar{\mat{V}}_{u1}\mat{Z}^\top} &
+\tr\Paran{\mat{C}^*_{2}(\pmat\delta)\mat{Z}\bar{\mat{V}}_{u2}\mat{Z}^\top}
+\end{matrix}
+}
+\intertext{and}
+\mat{c}_2(\pmat\delta) = &
+\Paran{\begin{matrix}
+c_{21}(\pmat\delta) \\
+c_{22}(\pmat\delta)
+\end{matrix}
+}.
+\end{align*}
+}Similar as before we can now state an iterative equation as:
+\empty{
+\begin{align*}
+\pmat\delta^{(m + 1)} = \mat{C}_1^{-1}(\pmat\delta^{(m)}) \mat{c}_2(\pmat\delta^{(m)})
+\end{align*}
+}for adequate starting values $\pmat\delta^{(0)}$ and known regression 
+coefficients $\pmat\beta$. Some adjustments to this solution need to be made to 
+take the different definitions of $\mat{V}_u$ into account. For the specific 
+form of $\partial\mat{V} / \partial\delta_l$ see the results in the respective 
+section for each model, i.e. Sections \ref{sec:rfh_model_fh},
+\ref{sec:rfh_model_sfh}, \ref{sec:rfh_model_tfh}, and \ref{sec:rfh_model_stfh}.
+In the following sections the necessary adjustments are highlighted and
+specifically the special form of $\bar{\mat{V}}_{ul}$ are derived when
+necessary. The FH model is ommitted since \eq{eq:fp_delta} is directly
+applicable when we set $\delta = \sigre$ and use otherwise the notation in
+\ref{sec:rfh_model_fh}.
 
 
 ### Solutions for the Spatial Robust FH Model
@@ -814,4 +856,20 @@ $\pmat\delta_\rho = (\rho_1, \rho_2)$ and $\pmat\delta_\sigma = (\sigma_1^2,
   =& -\mathbf{W} - \mathbf{W}^\top + 2\rho_1\mathbf{W}^\top\mathbf{W}
 \end{align*}
 }
+
+### Algorithm
+
+1. Choose initial values $\pmat\beta^{(0)}$ and $\pmat\delta^{(0)}$ and set $m = 0$.
+2. Compute $\pmat\beta^{(m + 1)}$ using equation (?) with given parameters
+$\pmat\delta^{(m)}$ until convergence is reached.
+3. With $\pmat\beta^{(m + 1)}$ compute $\pmat\delta^{(m + 1)}$ using equation (?).
+4. Set $m = m + 1$
+3. Repeat steps 2. to 4. until the set of parameters jointly reaches
+convergence. Declare these solutions to be the robust parameter estimates
+$\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$.
+4. With the solutions $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$ compute $\mat{u}^{(m +
+1)}$ using equation (?) until convergence is reached.
+
+
+
 
