@@ -67,8 +67,20 @@ to the following distribution of $\mat{u}_1$:
 \pmat\Omega_1 = \pmat\Omega_1(\rho_1) & = \Paran{(\mat{I}_{D} - \rho_1\mat{W})^\top (\mat{I}_{D} - \rho_1\mat{W})}^{-1}
 \end{align*}
 }thus $\mat{V}_u = \sigma_{1}^2 \pmat\Omega_1(\rho_1)$. Furthermore
-$\mat{u}_1$ and $\mat{e}$ are independent. The unknown model parameters are
-$\pmat\beta$ and $\pmat\delta = (\rho_1, \sigma_1^2)$.
+$\mat{u}_1$ and $\mat{e}$ are independent. The unknown model parameters are 
+$\pmat\beta$ and $\pmat\delta = (\rho_1, \sigma_1^2)$. Because the results are
+needed in later sections the partial derivates of $\mat{V}(\pmat\delta)$ with
+respect to each element in $\pmat\delta$ are given here: $\partial\mat{V} /
+\partial\sigma_1^2 = \pmat\Omega_1(\rho_1)$ and
+\empty{
+\begin{align*}
+\frac{\partial\mathbf{V}}{\partial\rho_1}
+  & = - \sigma_1^2 \pmat\Omega_1 \frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1} \pmat\Omega_1 \\
+\intertext{with}
+\frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1} 
+  & = -\mathbf{W} - \mathbf{W}^\top + 2\rho_1\mathbf{W}^\top\mathbf{W}.
+\end{align*}
+}
 
 
 ## Temporal Fay-Herriot Model
@@ -86,7 +98,7 @@ temporal model in \eq{eq:tfh} is reviewed as a linear mixed model of the form:
 }where $\mat{y}$ denotes the $(DT \times 1)$ vector of observed direct 
 estimates; $\mat{X}$ the $(DT \times P)$ design matrix; $\pmat\beta$ the $(P 
 \times 1)$ vector of regression coefficients; $\mat{Z} = (\mat{Z}_1, \mat{Z}_2)$
-where $\mat{Z}_1 = \mat{I}_{D} \otimes (\mat{1}_T)^\top$, $\mat{1}_T$
+where $\mat{Z}_1 = \mat{I}_{D} \otimes (\mat{1}_T)$, $\mat{1}_T$
 is a $T \times 1$ vector of ones, and $\mat{Z}_2 = \mat{I}_{DT}$; $\mat{u} =
 (\mat{u}_0, \mat{u}_2)$ is the $(D + DT \times 1)$ vector of random effects; and
 $\mat{e}$ is the $(DT \times 1)$ vector of sampling errors. Note that
@@ -122,8 +134,26 @@ with $i = 1, \dots, D$. Thus $\mat{V}_u = \mat{V}_u(\pmat\delta) =
 covariance matrix of $\mat{u}$; and $\mat{V}_e = \Diag{\{\{\sigma_{eit}^2\}_{t =
 1}^T\}_{i = 1}^D}$ is the variance covariance matrix of $\mat{e}$ with known
 sampling variances for each time period and area. Hence the unknown model 
-parameters are $\pmat\beta$ and $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$.
-
+parameters are $\pmat\beta$ and $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$. The partial derivates of $\mat{V}(\pmat\delta)$ with respect to the variance parameters are then given by:
+$\partial\mat{V} / \partial\sigre = \mat{Z}_1\mat{I}_D\mat{Z}_1^\top$, 
+$\partial\mat{V} / \partial\sigma_2^2 = \pmat\Omega_2$, and
+\empty{
+\begin{align*}
+\frac{\partial\mathbf{V}}{\partial\rho_2} 
+  = & \sigma_2^2 \Diag{\left\{\frac{\partial\pmat\Omega_{2i}}{\partial\rho_2}\right\}_{i = 1}^D} \\
+\intertext{with}
+\frac{\partial\pmat\Omega_{2i}}{\partial\rho_2} = & \frac{1}{1-\rho_2^2}
+\left(
+\begin{matrix}
+0 & 1 & \cdots & \cdots & (T-1)\rho_2^{T-2}\\
+1 & 0 & & & (T-2)\rho_2^{T-3} \\
+\vdots & & \ddots & & \vdots \\
+(T-2)\rho_2^{T-3} &&& 0 & 1 \\
+(T-1)\rho_2^{T-2} & \cdots & \cdots & 1 & 0\\
+\end{matrix}
+\right) \\ & + \frac{2\rho_2\pmat\Omega_{2i}}{1-\rho_2^2}.
+\end{align*}
+}
 
 ## Spatio-Temporal Fay-Herriot Model
 \label{sec:rfh_model_stfh}
@@ -144,7 +174,18 @@ $\mat{u}_2$ the autocorrelated random effect as defined for the temporal model.
 Thus the variance structure of $\mat{u}$ is given by $\mat{V}_u =
 \mat{V}_u(\pmat\delta) = \Diag{\sigma_1^2\pmat\Omega_1(\rho_1),
 \sigma_2^2\pmat\Omega_2(\rho_2)}$ and hence the unknown model parameters are
-$\pmat\beta$ and $\pmat\delta = (\rho_1, \sigma_1^2, \rho_2, \sigma_2^2)$.
+$\pmat\beta$ and $\pmat\delta = (\rho_1, \sigma_1^2, \rho_2, \sigma_2^2)$. The partial derivatives of $\mat{V}(\pmat\delta)$ with respect to each element in $\pmat\delta$ are given by: 
+$\partial\mat{V} / \partial\sigma_2^2$ and $\partial\mat{V} / \partial\rho2$ are defined as for the temporal model; $\partial\mat{V} / \partial\sigma_1^2 = \mat{Z}_1 \pmat\Omega_1 \mat{Z}_1^\top$ and
+\empty{
+\begin{align*}
+\frac{\partial\mat{V}}{\partial\rho_1} 
+  =& -\sigma_1^2\mat{Z}_1\pmat\Omega_1\frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1}\pmat\Omega_1\mat{Z}^\top_1 \\
+\intertext{with}
+\frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1}
+  =& -\mathbf{W} - \mathbf{W}^\top + 2\rho_1\mathbf{W}^\top\mathbf{W}.
+\end{align*}
+}
+
 
 
 # Robust Predictions under Area Level Models
@@ -392,7 +433,9 @@ section; and second an analytical MSPE estimator similar to the proposition by
 @Cha11 which is presented in section (?).
 
 
-## Solutions to the Robust Estimation Equations
+## Solutions for the Robust Estimation Equations
+
+### Solution for $\pmat\beta$
 
 For the solutions of the robust estimation equations I begin with the solution
 for the regression coefficients. Recall that:
@@ -405,11 +448,11 @@ This representation indicates that we have a fixed point function for
 $\pmat\beta$ which, in this special case, leads to an iterative re-weighted
 least squares (IRWLS) algorithm to solve \eq{eq:rfhreeb} for $\pmat\beta$:
 \empty{
-\begin{align*}
+\begin{align}
 \pmat\beta^{(m + 1)} 
-  & = \mat{A}\Paran{\pmat\beta^{(m)}}\mat{y} \\
-  & = \Paran{\mat{X}^\top\mat{V}^{-1} \mat{W}_1(\pmat\beta^{(m)}) \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \mat{W}_1(\pmat\beta^{(m)}) \mat{y}
-\end{align*}
+  & = \mat{A}\Paran{\pmat\beta^{(m)}}\mat{y} \nonumber\\
+  & = \Paran{\mat{X}^\top\mat{V}^{-1} \mat{W}_1(\pmat\beta^{(m)}) \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \mat{W}_1(\pmat\beta^{(m)}) \mat{y} \label{eq:fp_beta}
+\end{align}
 }for adequate starting values $\pmat\beta^{(0)}$ and known variance parameters
 $\pmat\delta$. This proposition is very similar to the IRWLS algorithm suggested
 by @Schoch12 however it depends on a differnt choice for the robust estimation
@@ -424,6 +467,9 @@ Note also that this iterative algorithm has the desirable property that it
 reduces to the GLS estimator if we set the tuning constant of $\psi_b$ to 
 infinity because of the special form of $\mat{W}_1$.
 
+
+### Solution for $\mat{u}$
+
 Similarly a fixed point function for $\mat{u}$ can be defined by:
 \empty{
 \begin{align*}
@@ -432,12 +478,12 @@ Similarly a fixed point function for $\mat{u}$ can be defined by:
 }where we can define an algorithm for known regression coefficients,
 $\pmat\beta$, and variance parameters, $\pmat\delta$:
 \empty{
-\begin{align*}
+\begin{align}
 \mat{u}^{(m + 1)} 
-  = & \mat{B}(\mat{u}^{(m)})\Paran{\mat{y} - \mat{X}\beta} \\
-  = & \Paran{\mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \mat{Z} + \mat{V}_\re^{-1} \mat{W}_3(\mat{u}^{(m)})}^{-1} \\
-  & \times \mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \Paran{\mat{y} - \mat{X}\beta}
-\end{align*}
+  = & \mat{B}(\mat{u}^{(m)})\Paran{\mat{y} - \mat{X}\beta} \label{eq:fp_re} \\
+  = & \Paran{\mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \mat{Z} + \mat{V}_\re^{-1} \mat{W}_3 (\mat{u}^{(m)})}^{-1} \nonumber\\
+  & \times \mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \Paran{\mat{y} - \mat{X}\beta} \nonumber
+\end{align}
 }with suitable starting values $\mat{u}^{(0)}$. The starting values can be 
 chosen similar to the IRWLS algorithm in that we set the diagonal elements in
 $\mat{W}_3$ to one. Similar to the IRWLS algorithm before, if the tuning 
@@ -448,6 +494,10 @@ $\mat{W}_2$ and $\mat{W}_3$, i.e. they reduce to identity matrices. And - as it
 was reviewed in Section \ref{sec:robustee} - the solution to the non\hyp{}robust
 equation \eq{eq:rfheere} is equivalent the the BLUP for $\mat{u}$ given by
 \eq{eq:blupre}.
+
+
+### Solutions for $\pmat\delta$
+\label{sec:rfh_solutions_delta}
 
 An algorithm to solve the robust estimation equation \eq{eq:rfhreed} for 
 $\pmat\delta$ was derived by @Chat12 for the case of the robust BHF model 
@@ -479,13 +529,13 @@ point function converges against the true parameter regardless of the starting
 value - as long as they are chosen as values in the parameter space. Different
 choices are studied in more detail in Section (?).
 
-The solution by @Chat12 was based on the idea to add the term
+The solution by @Chat12 is based on the idea to add
 $\mat{V}^{-1}\mat{V}$ to the term inside the trace in \eq{eq:rfhreed}. This was
 necessary because under the unit level model $\mat{V}_e$ contains an unknown
 parameter. In the case of the FH model and its extensions $\mat{V}_e$ is assumed
 to be known and thus can be omitted. Thus the following approach is specific if
 the parameters in $\mat{V}_e$ are known but can be extended easily to the more
-general case. Hence starting from \eq{eq:rfhreed} we can write:
+general case. Starting from \eq{eq:rfhreed} we can write:
 \empty{
 \begin{align*}
 0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
@@ -504,9 +554,10 @@ matrices we can now solve for $\pmat\delta$. To simplify the solution we can set
 $Q = 2$ since this is the case relevant for the specific area level models as
 will be shown later:
 \empty{
-\begin{align*}
+\begin{align}
+\label{eq:fp_delta2}
 \pmat\delta = \mat{C}_1^{-1}(\pmat\delta) \mat{c}_2(\pmat\delta)
-\end{align*}
+\end{align}
 }where
 \empty{
 \begin{align*}
@@ -535,100 +586,47 @@ c_{22}(\pmat\delta)
 coefficients $\pmat\beta$. Some adjustments to this solution need to be made to 
 take the different definitions of $\mat{V}_u$ into account. For the specific 
 form of $\partial\mat{V} / \partial\delta_l$ see the results in the respective 
-section for each model, i.e. Sections \ref{sec:rfh_model_fh},
-\ref{sec:rfh_model_sfh}, \ref{sec:rfh_model_tfh}, and \ref{sec:rfh_model_stfh}.
-In the following sections the necessary adjustments are highlighted and
-specifically the special form of $\bar{\mat{V}}_{ul}$ are derived when
-necessary. The FH model is ommitted since \eq{eq:fp_delta} is directly
-applicable when we set $\delta = \sigre$ and use otherwise the notation in
+section for each model, i.e. Sections \ref{sec:rfh_model_fh}, 
+\ref{sec:rfh_model_sfh}, \ref{sec:rfh_model_tfh}, and \ref{sec:rfh_model_stfh}. 
+In the following sections the necessary adjustments are highlighted and 
+specifically the special form of $\bar{\mat{V}}_{ul}$ are derived when 
+necessary. The FH model is ommitted since \eq{eq:fp_delta} is directly 
+applicable when we set $\delta = \sigre$ and use the notation of Section 
 \ref{sec:rfh_model_fh}.
 
 
-### Solutions for the Spatial Robust FH Model
+#### Solutions for the Spatial Robust FH Model
 
-In principle the derivation for the spatio temporal extensions follows the same 
-procedure as before; however adpated for the more complex variance structure of
-the specific models. Under the spatial FH model we have $\pmat\delta = (\rho_1, 
-\sigma_1^2)$ and split up the derivation into an algorithm for $\delta_\rho =
-(\rho_1)$ and $\delta_\sigma = (\sigma_1^2)$. Starting, again, from \eq{eq:rfhreed}
-\empty{
-\begin{align}
-0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_\sigma}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
-  & - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_\sigma} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_u\mat{Z}^\top)\right) \label{eq:reesrfhsigma}
-\end{align}
-}where we can recall that $\mat{Z} = \mat{I}_D$, $\mat{V}_u =
-\sigma_1^2\pmat\Omega_1(\rho_1)$, and thus $\partial\mat{V} /
-\partial\delta_\sigma = \pmat\Omega_1(\rho_1)$. Hence we can write
-\eq{eq:reesrfhsigma} as:
-\empty{
-\begin{align*}
-0 = 
-\psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1} \pmat\Omega_1 \mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) 
-- \tr\left(\mat{K}\mat{V}^{-1} \pmat\Omega_1 \sigma_1^{-2} \pmat\Omega_1^{-1} \sigma_1^2 \pmat\Omega_1 \right)
-\end{align*}
-}and solving for $\sigma_1^2$ leads to:
-\empty{
-\begin{align*}
-\sigma_1^2 = \tr\left(\mat{K}\mat{V}^{-1} \sigma_1^{-2} \pmat\Omega_1 \right)^{-1} \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1} \pmat\Omega_1 \mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) 
-\end{align*}
-}which is the fixed point function for $\sigma_1^2$ and leads to the following iterative equation:
-\empty{
-\begin{align*}
-\delta_\sigma^{(m + 1)} = 
-  \Paran{\underbrace{\tr\left(\mat{K}\mat{V}^{-1} \sigma_1^{-2} \pmat\Omega_1 \right)}_{C(\delta_\sigma^{(m)})}}^{-1}
-  \underbrace{\psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1} \pmat\Omega_1 \mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})}_{D(\delta_\sigma^{(m)})}
-\end{align*}
-}
+In principle $\pmat\delta = (\rho_1, \sigma_1^2)$ under the spatial FH model of 
+Section \ref{sec:rfh_model_sfh}. Hence the specific form of \eq{eq:fp_delta2}
+needs to be derived. In this case each $\bar{V}_{ul}$ with $l = 1, 2$ need to be
+defined. Albeit it is possible to find such matrices the implementation has lead
+to unstable results. This can be solved by splitting the problem into finding
+solutions for $\delta_\sigma = (\sigma_1^2)$ and $\delta_\rho = (\rho_1)$
+seperately. This means that each iterative equation depends on the other *known*
+parameter. This is numerically not optimal since it will lead to an increase in 
+overall iterations. However, as I will show later, it leads to acceptable and 
+stable results. For the specific adaption of the iterative equations for 
+$\pmat\delta$ this means that \eq{eq:fp_delta} is used to find solutions for 
+$\delta_\sigma$ and $\delta_\rho$ seperately and all other specifications under
+the spatial model can be found in Section \ref{sec:rfh_model_sfh}.
 
-Similarly we can derive an algorithm for $\rho_1$ where we can start from the definition of $\pmat\Omega_1$:
-\empty{
-\begin{align*}
-\pmat\Omega_1(\rho_1) 
-  & = \Paran{\Paran{\mat{I}_D - \rho_1\mat{W}}^\top\Paran{\mat{I}_D - \rho_1\mat{W}}}^{-1} \\
-  & = \pmat\Omega_1 \pmat\Omega_1 \Paran{\mat{I}_D - \rho_1\mat{W}}^\top\Paran{\mat{I}_D - \rho_1\mat{W}} \\
-  & = \rho_1 \underbrace{\pmat\Omega_1 \pmat\Omega_1 \Paran{\mat{I}_D - \rho_1\mat{W}}^\top\Paran{\rho_1^{-1} \mat{I}_D - \mat{W}}}_{\pmat\Omega_1^*}
-\end{align*}
-}and hence $\mat{V}_u = \sigma_1^2\rho_1\pmat\Omega_1^*$. Now we can start again
-from \eq{eq:rfhreed} 
-\empty{
-\begin{align*}
-0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_\rho}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
-  & - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_\rho} \Paran{\rho_1\sigma_1^2\pmat\Omega_1^*}^{-1} \Paran{\rho_1\sigma_1^2\pmat\Omega_1^*} \right)
-\end{align*}
-}where:
-\empty{
-\begin{align*}
-\frac{\partial\mathbf{V}}{\partial\rho_1} 
-  & = - \sigma_1^2 \pmat\Omega_1 \frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1} \pmat\Omega_1 \\
-\intertext{and}
-\frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1} 
-  & = -\mathbf{W} - \mathbf{W}^\top + 2\rho_1\mathbf{W}^\top\mathbf{W}
-\end{align*}
-}which we can solve for $\rho_1$:
-\empty{
-\begin{align*}
-\rho_1 = 
-  \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_\rho} \rho_1^{-1} \right)^{-1}
-  \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_\rho}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) 
-\end{align*}
-}from which the following iterative equation can be derived:
-\empty{
-\begin{align*}
-\rho_1^{(m + 1)} = 
-  \Paran{\underbrace{\tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_\rho} \rho_1^{-1} \right)}_{C(\rho_1^{(m)})}}^{-1}
-  \underbrace{\psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_\rho}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})}_{D(\rho_1^{(m)})}
-\end{align*}
-}
+#### Solutions for the Temporal Robust FH Model
 
-### Solutions for the Temporal Robust FH Model
+Under the temporal model of Section \ref{sec:rfh_model_tfh} $\pmat\delta =
+(\sigre, \rho_2, \sigma_2^2)$. Although not all combinations have been
+empirically validated the same numerical problems may be suspected when we try
+to optimise the variance and correlation parameter jointly. Hence in this case
+the problem is split into finding solutions for $\pmat\delta_\sigma = (\sigre,
+\sigma_2^2)$ and $\delta_\rho = (\rho_2)$. Both iterative equations assume
+known parameters if the left out elements.
 
-For the solutions for the temporal FH model recall that $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$ and that $\mat{V}_u = \Diag{\sigre\mat{I}, \sigma_2^2\pmat\Omega_2(\rho_2)}$. $\delta_\sigma = (\sigre, \sigma_2^2)$ then we can start from \eq{eq:rfhreed} with:
-\empty{
-\begin{align*}
-0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
-  & - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_u\mat{Z}^\top)\right)
-\end{align*}
-}
+For $\delta_\rho$ we can simply use the iterative equation \eq{eq:fp_delta}
+which is directly applicable with the results of Section 
+\ref{sec:rfh_model_tfh}. For $\pmat\delta_\sigma$ we need to find
+$\bar{\mat{V}}_{u1}$ and $\bar{\mat{V}}_{u2}$ where $\rho_2$ is treated as a
+known parameter. Using the results of Section \ref{sec:rfh_model_tfh} we can
+find these solutions by:
 \empty{
 \begin{align*}
 \mat{V}_u
@@ -646,96 +644,25 @@ For the solutions for the temporal FH model recall that $\pmat\delta = (\sigre, 
     \mat{0}_{D\times D} & \mat{0}_{D\times DT} \\
     \mat{0}_{DT\times D} & \pmat\Omega_2
     \end{matrix}\right) \\
-  =& \left(\begin{matrix}\bar{\mat{I}} & \bar{\pmat\Omega}_2\end{matrix}\right)
+  =& \left(\begin{matrix}\bar{\mat{V}}_{u1} & \bar{\mat{V}}_{u2} \end{matrix}\right)
     \left(\begin{matrix}
     \sigre \\
     \sigma_2^2
     \end{matrix}\right)
 \end{align*}
-}and hence we can write:
-\empty{
-\begin{align*}
-0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
-  & - \tr\left(\underbrace{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}}_{\mat{C}^*(\delta_{\sigma l})}
-  \left(\begin{matrix}\mat{Z}\bar{\mat{I}}\mat{Z}^\top & \mat{Z}\bar{\pmat\Omega}_2\mat{Z}^\top\end{matrix}\right)
-    \left(\begin{matrix}
-    \sigre \\
-    \sigma_2^2
-    \end{matrix}\right)\right)
-\end{align*}
-}which we can now solve for $\pmat\delta_\sigma$:
-\empty{
-\begin{align*}
-\pmat\delta_\sigma = \mat{C}(\pmat\delta_\sigma)^{-1}\mat{D}(\pmat\delta_\sigma)
-\end{align*}
-}where
-\empty{
-\begin{align*}
-\mat{C}(\pmat\delta_\sigma)
-  = \left(\begin{matrix}
-      \tr\left(\mat{C}^*(\sigre) \mat{Z}\bar{\mat{I}}\mat{Z}^\top \right) &
-      \tr\left(\mat{C}^*(\sigre) \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right) \\
-      \tr\left(\mat{C}^*(\sigma_2^2) \mat{Z}\bar{\mat{I}}\mat{Z}^\top \right) &
-      \tr\left(\mat{C}^*(\sigma_2^2) \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right)
-    \end{matrix}\right)
-\end{align*}
-}and
-\empty{
-\begin{align*}
-\mat{D}(\pmat\delta_\sigma) =
-  \left(\begin{matrix}
-    \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigre}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
-    \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
-  \end{matrix}\right)
-\end{align*}
-}where we have to devine the derivatives. $\partial\mat{V} / \partial\sigre =
-\mat{Z}_1\mat{I}_D\mat{Z}_1^\top$ and
-$\partial\mat{V} / \partial\sigma_2^2 = \pmat\Omega_2$.
+}and with the definition of $\bar{\mat{V}}_{u1}$ and $\bar{\mat{V}}_{u2}$ and in
+conjunction with the results of Section \ref{sec:rfh_model_tfh} the iterative
+equation \eq{eq:fp_delta2} can be used.
 
-Now missing is still a solution for $\delta_\rho = (\rho_2)$. Starting from \eq{eq:rfhreed} we can write:
-\empty{
-\begin{align*}
-0 = \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
-  - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho}} \delta_{\rho}^{-1} \delta_{\rho}\right)
-\end{align*}
-}and solve for $\delta_{\rho}$:
-\empty{
-\begin{align*}
-\delta_{\rho} = 
-  \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho}} \delta_{\rho}^{-1} \right)
-  \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
-\end{align*}
-}where we have
-\empty{
-\begin{align*}
-\frac{\partial\mathbf{V}}{\partial\rho_2} = & \sigma_2^2 \Diag{\left\{\frac{\partial\pmat\Omega_{2i}}{\partial\rho_2}\right\}_{i = 1}^D} \\
-\intertext{with}
-\frac{\partial\pmat\Omega_{2i}}{\partial\rho_2} = & \frac{1}{1-\rho_2^2}
-\left(
-\begin{matrix}
-0 & 1 & \cdots & \cdots & (T-1)\rho_2^{T-2}\\
-1 & 0 & & & (T-2)\rho_2^{T-3} \\
-\vdots & & \ddots & & \vdots \\
-(T-2)\rho_2^{T-3} &&& 0 & 1 \\
-(T-1)\rho_2^{T-2} & \cdots & \cdots & 1 & 0\\
-\end{matrix}
-\right) \\ & + \frac{2\rho_2\pmat\Omega_{2d}}{1-\rho_2^2}
-\end{align*}
-}
+#### Solutions for the Spatio\hyp{}Temporal Robust FH Model
 
-
-### Solutions for the Spatio\hyp{}Temporal Model
-
-Starting from equation \eq{eq:rfhreed} where $\pmat\delta = (\rho_1, \sigma_1^2,
-\rho_2, \sigma_2^2)$ and we split again the problem into finding solutions for
-$\pmat\delta_\rho = (\rho_1, \rho_2)$ and $\pmat\delta_\sigma = (\sigma_1^2,
-\sigma_2^2)$. In both cases we can start from:
-\empty{
-\begin{align*}
-0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
-  & - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{l}} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_u\mat{Z}^\top) \right)
-\end{align*}
-}where $\partial\delta_{l}$ denotes an element in either $\pmat\delta_\rho$ or $\pmat\delta_\sigma$. For the solutions of $\pmat\delta_\sigma$ we begin similar to the temporal extension in that we can write:
+For the solutions under the spatio\hyp{}temporal model of Section
+\ref{sec:rfh_model_stfh} we recall that $\pmat\delta = (\rho_1, \sigma_1^2, 
+\rho_2, \sigma_2^2)$. With the same reasoning as before we can split the problem
+into finding solutions for $\pmat\delta_\sigma = (\sigma_1^2, \sigma_2^2)$ and 
+$\pmat\delta_\rho = (\rho_1, \rho_2)$. Beginning with deriving the matrices for
+$\pmat\delta_\sigma$ with known parameters $\pmat\delta_\rho$ we can take a
+similar approach as for the temporal model:
 \empty{
 \begin{align*}
 \mat{V}_u
@@ -757,45 +684,14 @@ $\pmat\delta_\rho = (\rho_1, \rho_2)$ and $\pmat\delta_\sigma = (\sigma_1^2,
     \left(\begin{matrix}
     \sigma_1^2 \\
     \sigma_2^2
-    \end{matrix}\right)
+    \end{matrix}\right).
 \end{align*}
-}and hence
-\empty{
-\begin{align*}
-0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
-  & - \tr\left(\underbrace{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\sigma l}} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}}_{\mat{C}^*(\delta_{\sigma l})}
-  \left(\begin{matrix}\mat{Z}\bar{\pmat\Omega}_1\mat{Z}^\top & \mat{Z}\bar{\pmat\Omega}_2\mat{Z}^\top\end{matrix}\right)
-    \left(\begin{matrix}
-    \sigma_1^2 \\
-    \sigma_2^2
-    \end{matrix}\right)\right)
-\end{align*}
-}which we can solve now for $\pmat\delta_\sigma$:
-\empty{
-\begin{align*}
-\pmat\delta_\sigma = \mat{C}(\pmat\delta_\sigma)^{-1}\mat{D}(\pmat\delta_\sigma)
-\end{align*}
-}where
-\empty{
-\begin{align*}
-\mat{C}(\pmat\delta_\sigma)
-  = \left(\begin{matrix}
-      \tr\left(\mat{C}^*(\sigma_1^2) \mat{Z}\bar{\pmat\Omega}_1\mat{Z}^\top \right) &
-      \tr\left(\mat{C}^*(\sigma_1^2) \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right) \\
-      \tr\left(\mat{C}^*(\sigma_2^2) \mat{Z}\bar{\pmat\Omega}_1\mat{Z}^\top \right) &
-      \tr\left(\mat{C}^*(\sigma_2^2) \mat{Z}\bar{\Omega}_2\mat{Z}^\top \right)
-    \end{matrix}\right)
-\end{align*}
-}and
-\empty{
-\begin{align*}
-\mat{D}(\pmat\delta_\sigma) =
-  \left(\begin{matrix}
-    \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_1^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
-    \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\sigma_2^2}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})
-  \end{matrix}\right)
-\end{align*}
-}where $\partial\mat{V} / \partial\sigma_2^2$ is defined as for the temporal model and $\partial\mat{V} / \partial\sigma_1^2 = \mat{Z}_1 \pmat\Omega_1 \mat{Z}_1^\top$. And for $\pmat\delta_\rho$:
+}With this result we can now adapt the iterative equation \eq{eq:fp_delta2} when
+we set $\bar{\mat{V}}_{u1} = \bar{\pmat\Omega}_1$ and $\bar{\mat{V}}_{u2} =
+\bar{\pmat\Omega}_2$ and use the results of Section \ref{sec:rfh_model_stfh}.
+
+Similarly we can derive solutions for $\pmat\delta_\rho$ with known parameters
+$\pmat\delta_\sigma$ as:
 \empty{
 \begin{align*}
 \mat{V}_u
@@ -819,7 +715,15 @@ $\pmat\delta_\rho = (\rho_1, \rho_2)$ and $\pmat\delta_\sigma = (\sigma_1^2,
     \rho_2
     \end{matrix}\right)
 \end{align*}
-}where $\pmat\Omega_1^*$ is defined as for the spatial FH model in section (?) and
+}where $\pmat\Omega_1^*$ can be derived by:
+\empty{
+\begin{align*}
+\pmat\Omega_1(\rho_1) 
+  & = \Paran{\Paran{\mat{I}_D - \rho_1\mat{W}}^\top\Paran{\mat{I}_D - \rho_1\mat{W}}}^{-1} \\
+  & = \pmat\Omega_1 \pmat\Omega_1 \Paran{\mat{I}_D - \rho_1\mat{W}}^\top\Paran{\mat{I}_D - \rho_1\mat{W}} \\
+  & = \rho_1 \underbrace{\pmat\Omega_1 \pmat\Omega_1 \Paran{\mat{I}_D - \rho_1\mat{W}}^\top\Paran{\rho_1^{-1} \mat{I}_D - \mat{W}}}_{\pmat\Omega_1^*}
+\end{align*}
+}and $\pmat\Omega_2^*$ can be derived by:
 \empty{
 \begin{align*}
 \pmat\Omega_2(\rho_2) & = \rho_2 \underbrace{\Diag{\left\{\pmat\Omega_{2i}^*\right\}_{i = 1}^D}}_{\pmat\Omega_2^*}
@@ -835,41 +739,53 @@ $\pmat\delta_\rho = (\rho_1, \rho_2)$ and $\pmat\delta_\sigma = (\sigma_1^2,
   \end{matrix}
 \right)_{T\times T}.
 \end{align*}
-}With this rewriting we can now write:
-\empty{
-\begin{align*}
-0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho l}}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \nonumber\\
-  & - \tr\left(\underbrace{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_{\rho l}} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}}_{\mat{C}^*(\delta_{\rho l})}
-  \left(\begin{matrix}\mat{Z}\bar{\pmat\Omega}_1^*\mat{Z}^\top & \mat{Z}\bar{\pmat\Omega}_2^*\mat{Z}^\top\end{matrix}\right)
-    \left(\begin{matrix}
-    \rho_1 \\
-    \rho_2
-    \end{matrix}\right)\right)
-\end{align*}
-}where $\partial\mat{V} / \partial\rho2$ is the same as for the temporal model and
-\empty{
-\begin{align*}
-\frac{\partial\mat{V}}{\partial\rho_1} 
-  =& -\sigma_1^2\mat{Z}_1\pmat\Omega_1\frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1}\pmat\Omega_1\mat{Z}^\top_1 \\
-\intertext{with}
-\frac{\partial\pmat\Omega_1^{-1}}{\partial\rho_1}
-  =& -\mathbf{W} - \mathbf{W}^\top + 2\rho_1\mathbf{W}^\top\mathbf{W}
-\end{align*}
-}
+}With these results we can adapt the iterative equation \eq{eq:fp_delta2} when 
+we set $\bar{\mat{V}}_{u1} = \bar{\pmat\Omega}^*_1$ and $\bar{\mat{V}}_{u2} = 
+\bar{\pmat\Omega}^*_2$ in conjunction with the results of Section
+\ref{sec:rfh_model_stfh}.
 
 ### Algorithm
 
-1. Choose initial values $\pmat\beta^{(0)}$ and $\pmat\delta^{(0)}$ and set $m = 0$.
-2. Compute $\pmat\beta^{(m + 1)}$ using equation (?) with given parameters
-$\pmat\delta^{(m)}$ until convergence is reached.
-3. With $\pmat\beta^{(m + 1)}$ compute $\pmat\delta^{(m + 1)}$ using equation (?).
-4. Set $m = m + 1$
-3. Repeat steps 2. to 4. until the set of parameters jointly reaches
-convergence. Declare these solutions to be the robust parameter estimates
-$\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$.
-4. With the solutions $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$ compute $\mat{u}^{(m +
-1)}$ using equation (?) until convergence is reached.
+Given the previously adapted and proposed iterative equations we can now define 
+the overall optimisation strategy. In fact the overall algorithm is similar to 
+the approach suggested by @Sin09 and the reviewed literature of Section 
+\ref{sec:robustee}. Of course the concrete implementations to find solutions for
+$\pmat\beta$, $\pmat\delta$, and $\mat{u}$ are different.
 
+1. Choose initial values $\pmat\beta^{(0)}$ and $\pmat\delta^{(0)}$ and set $m =
+0$. Initial values for $\pmat\beta$ are chosen by setting the diagonal elements
+in the weighting matrix to one. For $\pmat\delta$ an arbitrary value from the
+respective parameter space can be chosen - see Section (?) for details.
+2. Compute $\pmat\beta^{(m + 1)}$ using equation \eq{eq:fp_beta} with given
+parameters $\pmat\delta$ until convergence is reached.
+3. With the solution of 2. for $\pmat\beta$ compute $\pmat\delta^{(m + 1)}$ 
+using the model specifc solutions for \eq{eq:fp_delta} and \eq{eq:fp_delta2}. 
+This step itself can involve two algorithms for the respective variance and 
+correlation components of the variance\hyp{}coevariance structure as was layed
+out in \ref{sec:rfh_solutions_delta}
+4. Set $m = m + 1$.
+5. Repeat steps 2. to 4. until the set of parameters jointly reach convergence.
+Declare these solutions to be the robust parameter estimates 
+$\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$. 
+6. With the solutions $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$ 
+compute $\mat{u}^{(m + 1)}$ using equation \eq{eq:fp_re} until convergence is 
+reached. The starting values are chosen by setting the diagonal elements in
+$\mat{W}_3$ to one. Declare the solution to be the robust predictions
+$\hat{\mat{u}}^\psi$.
 
-
-
+The overall stopping rule is given by:
+\empty{
+\begin{align*}
+\frac{\mid p^{(m + 1)} - p^{(m)}\mid}{p^{(m)}} & < \epsilon & \text{ for } \mid p^{(m)} \mid & > 1 \\
+\mid p^{(m+1)} - p^{(m)} \mid & < \epsilon & \text{ for } \mid p^{(m)}\mid & \leq 1
+\end{align*}
+}where $p^{(m)}$ denotes a parameter value in the iteration $m$ and $\epsilon$ 
+is some small constant. This rule is applied to each element in the respective 
+parameter vector so that when the algorithm stops all parameter values fulfill 
+at least one of the two rules. In general the first stopping rule is used and it
+is the relative absolute change. This is not feasible if the true parameter
+value is 0, hence the distinction between the two cases. An advantage of these
+rules is that they are scale independent which can be beneficial if the true
+parameters have large absolute values as is pointed out by @Wei14[pp. 143-144].
+A general discussion of algorithms in statistics can be found in @McC04 and more
+specifically of robust regression estimates in @Mar06[pp. 325 ff].
