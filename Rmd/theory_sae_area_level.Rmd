@@ -154,34 +154,35 @@ domain prediction; see for example @Slu06. @Sug15 review and introduce several
 parametric transformations for the FH model and also discuss the possibility of
 MSPE estimation.
 
-One of the main motivations to consider area level models is based on the availability of
-data. Especially with census or administrative data it may not be possible to
-give unit level information directly to the analyst due to reasons of
-confidentiality. Thus only aggregates, i.e. direct domain estimations, are
-available. Even with the availability of information there are other reasons to
-consider. One is the integration of sampling weights which in general is not
-directly feasible in model based methodology. Area level models present a way to
-at least incorporate design weights into the direct estimation and then have a
-design unbiased estimator on the area level. Other reasons can be practical
-considerations, e.g. the reduction of computational demands because area level data 
-is often connected with a dramatic reduction in the number of observations hence more 
-complex variance structures can be modeled with less computational effort.
-Other reasons are discussed in more detail in @Nam15 who consider different
-scenarios for thie availability of auxiliary information, e.g. unit and area
-level variables and contextual variables. Their findings show that overall unit
-level models have more potential to reduce the MSPE of domain predictions; this
-is not surprising as parameter estimation under a unit level model uses more 
-information and thus is more precise. This leaves the availability of data as 
-the main reason to consider area level models.
+One of the main motivations to consider area level models is based on the
+availability of data. Especially with census or administrative data it may not
+be possible to give unit level information directly to the analyst due to
+reasons of confidentiality. Thus only aggregates, i.e. direct domain
+estimations, are available. Even with the availability of information there are
+other reasons to consider. One is the integration of sampling weights which in
+general is not directly feasible in model based methodology. Area level models
+present a way to at least incorporate design weights into the direct estimation
+and then have a design unbiased estimator on the area level. Other reasons can
+be practical considerations, e.g. the reduction of computational demands because
+area level data is often connected with a dramatic reduction in the number of
+observations hence more complex variance structures can be modeled with less
+computational effort. Other reasons are discussed in more detail in @Nam15 who
+consider different scenarios for thie availability of auxiliary information,
+e.g. unit and area level variables and contextual variables. Their findings show
+that overall unit level models have more potential to reduce the MSPE of domain
+predictions; this is not surprising as parameter estimation under a unit level
+model uses more information and thus is more precise. This leaves the
+availability of data as the main reason to consider area level models.
 
-Area level models in Small Area Estimation have been used in many applications and the
-Fay-Herriot model is explicitly subject to numerous extensions. See for example
-@Cle14 for a review in disease mapping; @Gua15 for a review of methods used for 
-  poverty mapping; and @Ben16 for an EBLUP under a multivariate FH model. A
-  comprehensive review of extensions to the FH model can be found in @Rao03[pp. 153 ff] and
-  @Rao15[pp 81 ff]. The following section reviews some advances for incorporating
-  structures in space and time into the estimation process. Some of these
-  results in addition to a robust extension is then the subject of chapter (?).
+Area level models in Small Area Estimation have been used in many applications 
+and the Fay-Herriot model is explicitly subject to numerous extensions. See for 
+example @Cle14 for a review in disease mapping; @Gua15 for a review of methods
+used for poverty mapping; and @Ben16 for an EBLUP under a multivariate FH model.
+A comprehensive review of extensions to the FH model can be found in @Rao03[pp. 
+153 ff] and @Rao15[pp 81 ff]. The following section reviews some advances for
+incorporating structures in space and time into the estimation process. Some of
+these results in addition to a robust extension is then the subject of chapter
+\ref{chap:rfh}.
 
 
 ## Spatial and Temporal Fay-Harriot Models

@@ -3,6 +3,7 @@
 ## Parametric Bootstrap Methods
 
 ## Pseudolinearization-based MSPE
+\label{sec:rfh_mse_pseudo_linear}
 
 $$
   \Exp{MSE}\Paran{\hat{\theta}|\mat{X}, \beta, \mat{\re}}

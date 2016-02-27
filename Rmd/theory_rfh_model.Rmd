@@ -294,6 +294,7 @@ and the spatio\hyp{}temporal REBLUP (STREBLUP) are special cases of
 
 
 ## Pseudolinear Representation
+\label{sec:rfh_model_peudo_linear}
 
 The solutions to the estimation equations \eq{eq:rfhreeb} and \eq{eq:rfheere} 
 are derived from the pseudolinear form of the RBLUP which follows a similar form
