@@ -355,8 +355,8 @@ To derive $\mat{B}$ note that:
 }and that the approach taken is similar as for $\mat{A}$. However the form of 
 $\mat{B}$ is different from the approach by @Cha14 because of the different 
 estimation equation for the random effects \eq{eq:rfheere}. This different form 
-simplifies the form of the two weighting matrices - $\mat{W}_1$ and $\mat{W}_2$
-in the following equations - as they are also diagonal matrices. Thus starting
+simplifies the form of the two weighting matrices - $\mat{W}_2$ and $\mat{W}_3$
+in the equations below - as they are also diagonal matrices. Thus starting
 from \eq{eq:rfheere} the specific form of $\mat{B}$ can be derived as:
 \empty{
 \begin{align*}
@@ -401,8 +401,8 @@ with elements:
 \empty{
 \begin{align*}
 w_{2i} = 
-  \psi\Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)} 
-  \Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta)}^{-1}
+  \psi\Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta - \mat{z}_i^\top\mat{u})} 
+  \Paran{U_{ei}^{-\half} (y_i - \mat{x}_i^\top\pmat\beta - \mat{z}_i^\top\mat{u})}^{-1}
 \end{align*}
 }where $U_{ei}^{-\half}$ denote the diagonal elements of $\mat{U}_e^{-\half}$; 
 and $\mat{W}_3 = \mat{W}_3(\mat{u})$ is a $(m \times m)$ diagonal matrix with
