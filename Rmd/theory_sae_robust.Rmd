@@ -18,8 +18,8 @@ can be adapted accordingly. This is also pointed out in @Sin08 and in @Rao15[pp.
 Chapter \ref{chap:rfh} where robust extensions to the FH model are proposed.
 
 In what follows the main results around the methodology introduced by @Sin09
-are reviewed. Together with the models reviewed in section \ref{sec:area} these
-results are the basis for the extensions proposed in this thesis. The section is
+are reviewed. Together with the models reviewed in Section \ref{sec:area} these
+results are the basis for the extensions proposed in this thesis. The Section is
 structured as follows: Section \ref{sec:robustee} reviews the methodology around
 robust estimation equations; in Section \ref{sec:robustbc} these results are
 extended to allow for a correction of the bias associated with these type of
@@ -298,7 +298,7 @@ sufficiently large part of the sample.
   their results are very promising, it is not entirely clear how to adapt this
   approach in the case of mixed linear models with correlated random effects
   which would be needed for the spatial and temporal extensions reviewed in
-  section \ref{sec:theory_sae_fh_extensions}.
+  Section \ref{sec:theory_sae_fh_extensions}.
 
 ### Pseudolinearisation\hyp{}based Approach
 \label{sec:theory_sae_robust_mspe}
@@ -430,7 +430,7 @@ has good repeated sampling properties - for details see the references in
 ## Discussion
 \label{sec:robustdiscussion}
 
-The discussion in this section has been narrowed to the SAE field and 
+The discussion in this Section has been narrowed to the SAE field and 
 specifically around the results by @Sin09. Their results are strongly influenced
 by @Ric95 who propose robust estimation equations for linear mixed models and by
 @Hug93 who propose similar methods. A further extension of these methods to 

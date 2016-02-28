@@ -38,7 +38,7 @@ independent. The unknown model parameters are $\pmat\beta$ and $\pmat\delta =
 ## Spatial Fay-Herriot Model
 \label{sec:rfh_model_sfh}
 
-For a review of the spatial extension to the FH model see section
+For a review of the spatial extension to the FH model see Section
 \ref{sec:theory_sae_fh_spatial}. Here model \eq{eq:sfh} is represented as linear
 mixed model and as such it can be represented as:
 \empty{
@@ -86,7 +86,7 @@ respect to each element in $\pmat\delta$ are given here: $\partial\mat{V} /
 ## Temporal Fay-Herriot Model
 \label{sec:rfh_model_tfh}
 
-A review of temporal extensions can be found in section
+A review of temporal extensions can be found in Section
 \ref{sec:theory_sae_fh_temporal}. In the following the representation of the
 temporal model in \eq{eq:tfh} is reviewed as a linear mixed model of the form:
 \empty{
@@ -430,8 +430,8 @@ $\hat{\mat{u}}^\psi$. The area level REBLUP is then given by:
 estimated model parameters. This representation leads to two important results.
 First the derivation of an iterative solution for the estimation equations
 \eq{eq:rfhreeb} and \eq{eq:rfheere} which are presented in the following
-section; and second an analytical MSPE estimator similar to the proposition by
-@Cha11 which is presented in section (?).
+Section; and second an analytical MSPE estimator similar to the proposition by
+@Cha11 which is presented in Section \ref{sec:rfh_mse_pseudo_linear}.
 
 
 ## Solutions for the Robust Estimation Equations
