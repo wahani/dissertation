@@ -5,6 +5,26 @@
 ## Pseudolinearization-based MSPE
 \label{sec:rfh_mse_pseudo_linear}
 
+\empty{
+\begin{align*}
+\Exp{V}\Paran{\hat{\theta}_i - \theta_i}
+  = & \Exp{V}\Paran{\sum_{k = 1}^n w_{ik} y_k - (\mat{x}_i^\top\pmat\beta + \mat{z}_i^\top\mat{u})} \\
+  = & \Exp{V}\Paran{\sum_{k = 1}^n w_{ik} (\mat{z}_k^\top\mat{u} + e_k) - \mat{z}_i^\top\mat{u}} \\
+  = & \Exp{V}\Paran{\sum_{k = 1}^n w_{ik} \mat{z}_k^\top\mat{u} + \sum_{k = 1}^n w_{ik} e_k - \mat{z}_i^\top\mat{u}} \\
+  = & \Exp{V}\Paran{\sum_{k = 1}^n a_{ik} \mat{z}_k^\top\mat{u} + \sum_{k = 1}^n w_{ik} e_k} \\
+  = & \sum_{k = 1}^n a_{ik}^2 \mat{z}_k^\top \mat{V}_u \mat{z}_k + \sum_{k = 1}^n w_{ik}^2 \sigma_{ek}^2
+\end{align*}
+}where $a_{ik} = \Paran{w_{ik} - I(k = i)}$ and $I(k = i)$ denotes an indicator 
+function which is one if $k = i$ and zero otherwise. Note that we need the term 
+$\mat{z}_k^\top \mat{V}_u \mat{z}_k$ for the case of correlated random effects
+in fact this reduces to $\sigre$ under the FH model. The variance of the sum can
+be seperated as above because $\mat{u}$ and $\mat{e}$ are independent under all 
+models under study. The difference to the approach by @Cha11 is that the first
+term here is stated for the more general case of correlated random effects; and
+that the second term is stated for a more specific case, i.e. when the sampling
+variances are known. This somewhat simplifies the approach for the area level
+models.
+
 $$
   \Exp{MSE}\Paran{\hat{\theta}|\mat{X}, \beta, \mat{\re}}
 = \Exp{E}\Paran{\Paran{\hat{\theta} - \theta}^2}
