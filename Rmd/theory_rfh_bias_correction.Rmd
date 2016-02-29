@@ -1,34 +1,72 @@
 # Bias Correction
 \label{sec:rfhbiascorrection}
-The two existing methodologies which are available to do bias correction for
-robust models in SAE are not easily adapted to the general context of the
-discussed area level models. Both approaches are based on a robust scale
-estimate of the residuals within in a domain. In the standard RFH and SRFH there
-is only one observation per domain, such that these estimates can not be
-directly transfered.
 
-However, the general problem remains. In the setting of the robustified score
-functions and a misspecified distribution in the sense that outlying
-observations have a different mean, the model can introduce a severe bias to
-those outlying estimations.
+The discussion in Section \ref{sec:robustbc} already highlighted the importance
+to address the potential bias of a robust prediction when we suspect
+non\hyp{}symmetric outliers. @Cha14 and @Jio13 heve suggested different
+corrections to the unit level REBLUP to take this prediction bias into account.
+However the reviewed methods are based on the estimation of the within domain
+prediction error; this approach is not directly feasible to area level model
+since we may only have a single *observation* per domain. 
 
-Independet of this question @Fay79 refer to @Efr71 and @Efr72 who argue that the
-Bayes Estimator and and the Emperical Bayes Estimator may improve the overall
-prediction performance but can be ill suited for specific domains. In essence
-this describes also the situation with the RFH models which introduce a bias to
-the prediction of outlying domains.
+However the general problem remains. To find a solution we need to review the 
+different kinds of outliers we can observe on the area level. In Section 
+\ref{sec:rfh_framework} we distiguished between two types: area level and unit
+level outliers. Following @Bel06 area level outliers are values with large 
+absolute values in the random effect and thus are values for which the synthetic
+regression estimator is a poor fit. Independet of this question @Fay79 refer to
+@Efr71 and @Efr72 who argue that the Bayes Estimator and the Emperical Bayes
+Estimator may improve the overall prediction performance but can be ill suited
+for specific domains. In essence this also describes the situation in which area
+level outliers are present in the data and we use a robust estimation procedure 
+since we shrink the prediction twowards a global conditional mean. Although this
+may improve the overall quality of the predictions it will not improve the
+prediction for the outlying domains.
 
-Efron and Morris also suggest a simple correction to the prediction which can be
-directly applied to the robust models under study. They suggest to restrict the 
-prediction by an interval around the direct estimator. The width of this 
-intervall can be constructed as a multiple of the known standard errors under
-the model:
-
-$$
-\theta^{BC}_i = 
+In this setting we can address area level outliers in the same way as was
+already discussed by @Fay79. Following their results the idea is to bound the
+area level predictions using the known sampling variances. Hence we can modify
+the REBLUP of equation \eq{eq:area_reblup} into a bias corrected version:
+\empty{
+\begin{align}
+\label{eq:area_reblup_bc}
+\hat{\theta}^{REBLUP-BC}_i = 
   \begin{cases}
-    \tilde{y}_i - c & \text{if } \theta^{RFH}_i < \tilde{y}_i - c  \\
-    \theta^{RFH}_i & \text{if } \tilde{y}_i - c \leq \theta^{RFH}_i \leq \tilde{y}_i + c \\
-    \tilde{y}_i + c & \text{if } \theta^{RFH}_i > \tilde{y}_i + c \\
+    y_i - c & \text{if } \hat{\theta}^{REBLUP}_i < y_i - c  \\
+    \hat{\theta}^{REBLUP}_i & \text{if } y_i - c \leq \hat{\theta}^{REBLUP}_i \leq y_i + c \\
+    y_i + c & \text{if } \hat{\theta}^{REBLUP}_i > y_i + c \\
   \end{cases}
-$$
+\end{align}
+}with $i = 1, \dots, n$ where $c$ is a constant. @Fay79 suggest to set $c =
+\sigma_{ei}$ to balance the tradeoff between loss in efficience and gain in
+reduced bias. This approach can be directly applied to the spatial and temporal
+extensions and thus similar to the area level REBLUP the area level REBLUP-BC in
+\eq{eq:area_reblup_bc} acts as a plcaholder for all extensions.
+
+Since we need the pseudo linear representation below, we can state
+\eq{eq:area_reblup_bc} as:
+\empty{
+\begin{align*}
+\hat{\theta}^{REBLUP-BC}_i = \hat{\mat{w}}^{*\top}_i \mat{y}
+\end{align*}
+}where $\hat{\mat{w}}^{*\top}_i$ denotes the vector of weights given the 
+parameter estimates for $\pmat\beta$, $\pmat\delta$, and the prediction of
+$\mat{u}$:
+\empty{
+\begin{align*}
+\hat{\mat{w}}^{*}_i = 
+  \begin{cases}
+    (1 - c / y_i) \mat{1}(j = i) & \text{if } \hat{\theta}^{REBLUP}_i < y_i - c  \\
+    \hat{\mat{w}}_i & \text{if } y_i - c \leq \hat{\theta}^{REBLUP}_i \leq y_i + c \\
+    (1 + c / y_i) \mat{1}(j = i) & \text{if } \hat{\theta}^{REBLUP}_i > y_i + c \\
+  \end{cases}
+\end{align*}
+}where $\mat{1}(j = i)$ denotes a vector where the element $j = i$ is equal to
+one and zero otherwise.
+
+This solution may be beneficial when we observe area level outliers. However it
+is unclear how this modification relates to the scenario in which we have 
+asymmetric unit level outliers. In fact this is a situation which can hardly be 
+targeted by an area level correction without additional information. In Section 
+(?) this issue is addressed again in a model based simulation study.
+
