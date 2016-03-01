@@ -482,19 +482,19 @@ $\pmat\beta$, and variance parameters, $\pmat\delta$:
 \begin{align}
 \mat{u}^{(m + 1)} 
   = & \mat{B}(\mat{u}^{(m)})\Paran{\mat{y} - \mat{X}\beta} \label{eq:fp_re} \\
-  = & \Paran{\mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \mat{Z} + \mat{V}_\re^{-1} \mat{W}_3 (\mat{u}^{(m)})}^{-1} \nonumber\\
-  & \times \mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 \Paran{\mat{y} - \mat{X}\beta} \nonumber
+  = & \Paran{\mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 (\mat{u}^{(m)}) \mat{Z} + \mat{V}_\re^{-1} \mat{W}_3 (\mat{u}^{(m)})}^{-1} \nonumber\\
+  & \times \mat{Z}^\top \mat{V}_e^{-1} \mat{W}_2 (\mat{u}^{(m)}) \Paran{\mat{y} - \mat{X}\beta} \nonumber
 \end{align}
 }with suitable starting values $\mat{u}^{(0)}$. The starting values can be 
 chosen similar to the IRWLS algorithm in that we set the diagonal elements in
-$\mat{W}_3$ to one. Similar to the IRWLS algorithm before, if the tuning 
-constant of the influence function is chosen to be infinity the algorithm has 
-the desiarable property that it reduces to the form of the non\hyp{}robust 
-estimation equation of \eq{eq:rfheere} because of the special form of 
-$\mat{W}_2$ and $\mat{W}_3$, i.e. they reduce to identity matrices. And - as it 
-was reviewed in Section \ref{sec:robustee} - the solution to the non\hyp{}robust
-equation \eq{eq:rfheere} is equivalent the the BLUP for $\mat{u}$ given by
-\eq{eq:blupre}.
+$\mat{W}_2$ and $\mat{W}_3$ to one. Similar to the IRWLS algorithm before, if
+the tuning constant of the influence function is chosen to be infinity the
+algorithm has the desiarable property that it reduces to the form of the
+non\hyp{}robust estimation equation of \eq{eq:rfheere} because of the special
+form of $\mat{W}_2$ and $\mat{W}_3$, i.e. they reduce to identity matrices. And
+- as it was reviewed in Section \ref{sec:robustee} - the solution to the
+non\hyp{}robust equation \eq{eq:rfheere} is equivalent the the BLUP for
+$\mat{u}$ given by \eq{eq:blupre}.
 
 
 ### Solutions for $\pmat\delta$
