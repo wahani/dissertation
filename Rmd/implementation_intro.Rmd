@@ -30,3 +30,12 @@
 
 - Alfons, Templ and Filzmoser (2010): An Object-Oriented Framework for Statistical Simulation: The R Package simFrame
 - Alfons et.al. (2010): Simulation of synthetic population data for houshold surveyes with application to EU-SILC
+
+![Intercept - Base Scenario \newline 
+  \hspace{\linewidth} bla](figs/stability_intercept_base.pdf)
+
+![Slope - Base Scenario \newline 
+  \hspace{\linewidth} bla](figs/stability_slope_base.pdf)
+
+![Variance - Base Scenario \newline 
+  \hspace{\linewidth} bla](figs/stability_variance_base.pdf)
