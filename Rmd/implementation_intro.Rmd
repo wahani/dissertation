@@ -39,3 +39,8 @@
 
 ![Variance - Base Scenario \newline 
   \hspace{\linewidth} bla](figs/stability_variance_base.pdf)
+
+![Random Effect \newline 
+  \hspace{\linewidth} bla](figs/stability_random_effect_base.pdf)
+
+\input{tmp.tex}

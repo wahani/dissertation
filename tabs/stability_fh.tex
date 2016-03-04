@@ -1,0 +1,21 @@
+%latex.default(x, file = fileName, ..., caption.loc = caption.loc,     rowname = rowname)%
+\begin{table}[!tbp]
+\begin{center}
+\resizebox{\linewidth}{!}{\begin{tabular}{llrrrrr}
+\hline\hline
+\multicolumn{1}{c}{}&\multicolumn{1}{c}{scenario}&\multicolumn{1}{c}{first}&\multicolumn{1}{c}{second}&\multicolumn{1}{c}{remaining}&\multicolumn{1}{c}{max}&\multicolumn{1}{c}{converged}\tabularnewline
+\hline
+Overall&Base&$$&$$&$  3$&$  12$&$1.000$\tabularnewline
+&Outlier&$$&$$&$  4$&$  12$&$1.000$\tabularnewline
+- Beta&Base&$ 9.0$&$ 6$&$  2$&$  24$&$1.000$\tabularnewline
+&Outlier&$14.0$&$ 6$&$  2$&$  27$&$1.000$\tabularnewline
+- Sigma&Base&$51.0$&$26$&$  6$&$ 100$&$1.000$\tabularnewline
+&Outlier&$48.5$&$25$&$  6$&$ 100$&$1.000$\tabularnewline
+Random Effect&Base&$$&$$&$  9$&$ 264$&$1.000$\tabularnewline
+&Outlier&$$&$$&$140$&$1000$&$0.955$\tabularnewline
+\hline
+\end{tabular}}
+
+\caption{Number of Iterations in Optimisation. Base vs. Deterministic Outlier Scenario.\label{tab:stability_fh}}\end{center}
+
+\end{table}
