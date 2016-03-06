@@ -17,4 +17,4 @@ installPackages(c(
 ))
 devtools::install_github("wahani/modules")
 devtools::install_github("wahani/dat")
-# devtools::install_github("wahani/saeRobustTools") needed but not public
+# devtools::install_github("wahani/saeRobust") needed but not public

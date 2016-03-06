@@ -43,4 +43,8 @@
 ![Random Effect \newline 
   \hspace{\linewidth} bla](figs/stability_random_effect_base.pdf)
 
-\input{tmp.tex}
+\input{tabs/stability_fh.tex}
+
+![Spatial Variance \newline 
+  \hspace{\linewidth} bla](figs/stability_variance_spatial.pdf)
+

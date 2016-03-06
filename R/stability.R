@@ -1,5 +1,5 @@
 library("modules")
-library("saeRobustTools")
+library("saeRobust")
 library("saeSim")
 library("dat")
 library("ggplot2")
@@ -8,13 +8,14 @@ library("gridExtra")
 theme <- use("R/graphics/themes.R")
 table <- use("R/graphics/tables.R")
 recompute <- FALSE
+recoputeSpatial <- FALSE
 
 # Graphic Params
 width <- 7
 height <- 3
 fontSize <- 14
-paramLabel <- "Parameter Estimate"
-scoreLabel <- "Estimation Equation"
+labelParam <- "Parameter Estimate"
+labelScore <- "Estimation Equation"
 
 # Simulation Params
 domains <- 40
@@ -24,11 +25,17 @@ sigv <- 100
 runs <- 200
 maxIter1 <- 100
 maxIter2 <- 1000
+maxIterParam <- 5
 cpus <- 3
 
 # The Simulation Config
 comp_rfh <- function(dat) {
-  rfh(y ~ x, dat, "dirVar", maxIter = maxIter1, maxIterRe = maxIter2)
+  rfh(y ~ x, dat, "dirVar", maxIter = maxIter1, maxIterParam = maxIter1, maxIterRe = maxIter2)
+}
+
+comp_rsfh <- function(dat) {
+  rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
+      maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1)
 }
 
 gen_extreme_cases <- function(dat) {
@@ -37,34 +44,62 @@ gen_extreme_cases <- function(dat) {
   dat
 }
 
-baseScenario <-
+baseData <-
   base_id(domains, units) %>%
   sim_gen_x() %>%
-  sim_gen_v(sd = sqrt(sigv)) %>%
   sim_gen_e(sd = sqrt(sige)) %>%
   sim_gen(comp_var(dirVar = sige)) %>%
-  sim_resp_eq(y = 100 + 10 * x + v + e) %>%
+  sim_resp_eq(y = 100 + 10 * x + v + e)
+
+scenarioBase <-
+  baseData %>%
+  sim_gen_v(sd = sqrt(sigv)) %>%
   sim_comp_agg(comp_rfh)
 
-extremeScenario <-
-  baseScenario %>%
+scenarioExtreme <-
+  scenarioBase %>%
+  sim_gen(gen_extreme_cases)
+
+scenarioSpatial <-
+  baseData %>%
+  sim_gen(gen_v_sar(sd = sqrt(sigv), name = "v")) %>%
+  sim_comp_agg(comp_rsfh)
+
+scenarioSpatialExtreme <-
+  scenarioSpatial %>%
   sim_gen(gen_extreme_cases)
 
 # Run simulation
 if (recompute) {
   set.seed(15)
-  baseResults <-
-    baseScenario %>%
+  resultsBase <-
+    scenarioBase %>%
     sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
-  save(list = "baseResults", file = "R/data/stability/baseResults.RData")
+  save(list = "resultsBase", file = "R/data/stability/resultsBase.RData")
 
-  extremeResults <-
-    extremeScenario %>%
+  resultsExtreme <-
+    scenarioExtreme %>%
     sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
-  save(list = "extremeResults", file = "R/data/stability/extremeResults.RData")
+  save(list = "resultsExtreme", file = "R/data/stability/resultsExtreme.RData")
 } else {
-  load("R/data/stability/baseResults.RData")
-  load("R/data/stability/extremeResults.RData")
+  load("R/data/stability/resultsBase.RData")
+  load("R/data/stability/resultsExtreme.RData")
+}
+
+if (recoputeSpatial) {
+  set.seed(15)
+  resultsSpatial <-
+    scenarioSpatial %>%
+    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  save(list = "resultsSpatial", file = "R/data/stability/resultsSpatial.RData")
+
+  resultsSpatialExtreme <-
+    scenarioSpatialExtreme %>%
+    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  save(list = "resultsSpatialExtreme", file = "R/data/stability/resultsSpatialExtreme.RData")
+} else {
+  load("R/data/stability/resultsSpatial.RData")
+  load("R/data/stability/resultsSpatialExtreme.RData")
 }
 
 
@@ -81,7 +116,7 @@ densPlot <- function(dat, intercept, xlab = NULL, var) {
 
 # Regression Coefficients
 coefs1 <-
-  map(baseResults, "coefficients") %>%
+  map(resultsBase, "coefficients") %>%
   unlist(recursive = FALSE) %>%
   do.call(what = rbind) %>%
   as.data.frame(row.names = FALSE) %>%
@@ -89,7 +124,7 @@ coefs1 <-
 names(coefs1)[1:2] <- c("Intercept", "Slope")
 
 coefs2 <-
-  map(extremeResults, "coefficients") %>%
+  map(resultsExtreme, "coefficients") %>%
   unlist(recursive = FALSE) %>%
   do.call(what = rbind) %>%
   as.data.frame(row.names = FALSE) %>%
@@ -99,14 +134,14 @@ names(coefs2)[1:2] <- c("Intercept", "Slope")
 coefs <- rbind(coefs1, coefs2)
 
 scores1 <-
-  flatmap(baseResults, score, "beta") %>%
+  flatmap(resultsBase, score, "beta") %>%
   do.call(what = rbind) %>%
   as.data.frame(row.names = FALSE) %>%
   mutar(scenario ~ "Base")
 names(scores1)[1:2] <- c("Intercept", "Slope")
 
 scores2 <-
-  flatmap(extremeResults, score, "beta") %>%
+  flatmap(resultsExtreme, score, "beta") %>%
   do.call(what = rbind) %>%
   as.data.frame(row.names = FALSE) %>%
   mutar(scenario ~ "Outlier")
@@ -114,15 +149,15 @@ names(scores2)[1:2] <- c("Intercept", "Slope")
 
 scores <- rbind(scores1, scores2)
 
-g1 <- densPlot(coefs, 100, paramLabel, var = "Intercept") + theme(strip.text = element_blank())
-g2 <- densPlot(scores, 0, scoreLabel, var = "Intercept")
+g1 <- densPlot(coefs, 100, labelParam, var = "Intercept") + theme(strip.text = element_blank())
+g2 <- densPlot(scores, 0, labelScore, var = "Intercept")
 
 cairo_pdf("figs/stability_intercept_base.pdf", width, 1.7 * height)
 grid.arrange(g1, g2, ncol = 2)
 dev.off()
 
-g1 <- densPlot(coefs, 10, paramLabel, var = "Slope") + theme(strip.text = element_blank())
-g2 <- densPlot(scores, 0, scoreLabel, var = "Slope")
+g1 <- densPlot(coefs, 10, labelParam, var = "Slope") + theme(strip.text = element_blank())
+g2 <- densPlot(scores, 0, labelScore, var = "Slope")
 
 cairo_pdf("figs/stability_slope_base.pdf", width, 1.7 * height)
 grid.arrange(g1, g2, ncol = 2)
@@ -131,7 +166,7 @@ dev.off()
 # Variance Parameters
 
 dat1 <-
-  map(baseResults, "variance") %>%
+  map(resultsBase, "variance") %>%
   unlist(recursive = FALSE) %>%
   do.call(what = rbind) %>%
   as.data.frame(row.names = FALSE) %>%
@@ -139,7 +174,7 @@ dat1 <-
 names(dat1)[1] <- c("Variance")
 
 dat2 <-
-  map(extremeResults, "variance") %>%
+  map(resultsExtreme, "variance") %>%
   unlist(recursive = FALSE) %>%
   do.call(what = rbind) %>%
   as.data.frame(row.names = FALSE) %>%
@@ -149,14 +184,14 @@ names(dat2)[1] <- c("Variance")
 dat <- rbind(dat1, dat2)
 
 scores1 <-
-  flatmap(baseResults, score, "delta") %>%
+  flatmap(resultsBase, score, "delta") %>%
   do.call(what = rbind) %>%
   as.data.frame(row.names = FALSE) %>%
   mutar(scenario ~ "Base")
 names(scores1)[1] <- c("Variance")
 
 scores2 <-
-  flatmap(extremeResults, score, "delta") %>%
+  flatmap(resultsExtreme, score, "delta") %>%
   do.call(what = rbind) %>%
   as.data.frame(row.names = FALSE) %>%
   mutar(scenario ~ "Outlier")
@@ -169,7 +204,7 @@ g2 <- ggplot(data.frame(estimate = dat$Variance, score = scores$Variance, scenar
   geom_point(aes(x = estimate, y = score)) +
   facet_grid(scenario ~ .) +
   theme$theme_thesis(fontSize) +
-  labs(x = paramLabel, y = scoreLabel)
+  labs(x = labelParam, y = labelScore)
 
 cairo_pdf("figs/stability_variance_base.pdf", width, 1.7 * height)
 grid.arrange(g1, g2, ncol = 2, widths = c(0.4 * width, 0.6 * width))
@@ -177,7 +212,7 @@ dev.off()
 
 # Random Effects
 re1 <-
-  map(baseResults, "re") %>%
+  map(resultsBase, "re") %>%
   unlist(recursive = FALSE) %>%
   do.call(what = rbind) %>%
   apply(1, median) %>%
@@ -185,7 +220,7 @@ re1 <-
   mutar(scenario ~ "Base")
 
 re2 <-
-  map(extremeResults, "re") %>%
+  map(resultsExtreme, "re") %>%
   unlist(recursive = FALSE) %>%
   do.call(what = rbind) %>%
   apply(1, median) %>%
@@ -206,9 +241,81 @@ ggplot(ggDat, aes(Variance, re)) +
   labs(y = "Median Random Effect")
 dev.off()
 
+# Graphics -- Spatial
+
+dat1 <-
+  flatmap(resultsSpatial, "variance") %>%
+  do.call(what = rbind) %>%
+  as.data.frame(row.names = FALSE) %>%
+  mutar(scenario ~ "Base")
+names(dat1)[1:2] <- c("Correlation", "Variance")
+
+dat2 <-
+  map(resultsSpatialExtreme, "variance") %>%
+  unlist(recursive = FALSE) %>%
+  do.call(what = rbind) %>%
+  as.data.frame(row.names = FALSE) %>%
+  mutar(scenario ~ "Outlier")
+names(dat2)[1:2] <- c("Correlation", "Variance")
+
+dat <- rbind(dat1, dat2)
+
+g1 <- densPlot(dat, 0.5, "Correlation", var = "Correlation")  +
+  theme(strip.text = element_blank())
+g2 <- densPlot(dat, 100, "Variance", var = "Variance")
+
+cairo_pdf("figs/stability_variance_spatial.pdf", width, 1.7 * height)
+grid.arrange(g1, g2, ncol = 2, widths = c(0.4 * width, 0.6 * width))
+dev.off()
+
+set.seed(19) # some value to have a scenario with a 'high number' of iterations
+dat <- baseData %>%
+  sim_gen(gen_v_sar(sd = sqrt(sigv), name = "v")) %>%
+  as.data.frame
+
+out1 <- rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
+           maxIter = 100, maxIterParam = 1, maxIterRe = 1)
+
+out2 <- rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
+            maxIter = 100, maxIterParam = 100, maxIterRe = 1)
+
+dat1 <- rbind(
+  out1$iterations$correlation %>%
+    as.data.frame(row.names = FALSE) %>%
+    mutar(parameter ~ "Correlation"),
+  out1$iterations$variance %>%
+    as.data.frame(row.names = FALSE) %>%
+    mutar(parameter ~ "Variance")
+) %>% mutar(strategy ~ "1 Iter")
+
+dat2 <- rbind(
+  out2$iterations$correlation %>%
+    as.data.frame(row.names = FALSE) %>%
+    mutar(parameter ~ "Correlation"),
+  out2$iterations$variance %>%
+    as.data.frame(row.names = FALSE) %>%
+    mutar(parameter ~ "Variance")
+) %>% mutar(strategy ~ "100 Iter")
+
+iterations2 <- flatmap(dat2, df ~ nrow(df), by = "parameter", combine = unlist)
+
+dat2 <- flatmap(dat2, df ~ df[nrow(df), ], by = c("i", "parameter"))
+
+dat <- rbind(dat1, dat2)
+dat$parameter <- factor(
+  dat$parameter, levels = c("Variance", "Correlation"), ordered = TRUE
+)
+
+cairo_pdf("figs/stability_convergence_spatial.pdf", width, 1.7 * height)
+ggplot(dat, aes(x = i, y = V1)) +
+  geom_line() +
+  facet_grid(parameter ~ strategy, scales = "free_y") +
+  theme$theme_thesis(14) +
+  labs(x = "Iteration", y = labelParam)
+dev.off()
 
 
-# Tables
+# Tables --- FH
 extractIterations <- function(resultList, type, identifier) {
   flatmap(resultList, "iterations") %>%
     flatmap(type) %>%
@@ -221,18 +328,18 @@ extractIterations <- function(resultList, type, identifier) {
 }
 
 iterCoefs <- rbind(
-  extractIterations(baseResults, "coefficients", "Base"),
-  extractIterations(extremeResults, "coefficients", "Outlier")
+  extractIterations(resultsBase, "coefficients", "Base"),
+  extractIterations(resultsExtreme, "coefficients", "Outlier")
 )
 
 iterSigma <- rbind(
-  extractIterations(baseResults, "variance", "Base"),
-  extractIterations(extremeResults, "variance", "Outlier")
+  extractIterations(resultsBase, "variance", "Base"),
+  extractIterations(resultsExtreme, "variance", "Outlier")
 )
 
 iterRe <- rbind(
-  extractIterations(baseResults, "re", "Base"),
-  extractIterations(extremeResults, "re", "Outlier")
+  extractIterations(resultsBase, "re", "Base"),
+  extractIterations(resultsExtreme, "re", "Outlier")
 )
 
 overall <-
@@ -295,3 +402,29 @@ tab <- table$saveResize(
   colheads = c("", names(tableDat)[-1]),
   caption = "Number of Iterations in Optimisation. Base vs. Deterministic Outlier Scenario."
 )
+
+
+### Tables - Remaining Models
+
+iterSpatialCorrelation <- rbind(
+  extractIterations(resultsSpatial, "correlation", "Base"),
+  extractIterations(resultsSpatial, "correlation", "Outlier")
+)
+
+overallSpatial <-
+  iterSpatialCorrelation %>%
+  mutar(
+    row ~ "Spatial",
+    first ~ NA_real_,
+    second ~ NA_real_,
+    remaining ~ median(i),
+    max ~ max(i),
+    converged ~ (runs - sum(i == maxIter1)) / runs,
+    by = "scenario"
+  )
+
+
+
+
+
+

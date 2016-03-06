@@ -1,7 +1,7 @@
 # devtools::install_github("wahani/dat")
 library("dat")
 library("saeSim")
-library("saeRobustTools")
+library("saeRobust")
 library("ggplot2")
 
 comp <- modules::use("R/comp")
