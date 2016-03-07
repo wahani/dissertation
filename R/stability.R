@@ -7,8 +7,10 @@ library("gridExtra")
 
 theme <- use("R/graphics/themes.R")
 table <- use("R/graphics/tables.R")
+
+# Cache
 recompute <- FALSE
-recoputeSpatial <- FALSE
+recomputeSpatial <- FALSE
 
 # Graphic Params
 width <- 7
@@ -26,7 +28,7 @@ runs <- 200
 maxIter1 <- 100
 maxIter2 <- 1000
 maxIterParam <- 5
-cpus <- 3
+cpus <- parallel::detectCores() - 1
 
 # The Simulation Config
 comp_rfh <- function(dat) {
@@ -86,7 +88,7 @@ if (recompute) {
   load("R/data/stability/resultsExtreme.RData")
 }
 
-if (recoputeSpatial) {
+if (recomputeSpatial) {
   set.seed(15)
   resultsSpatial <-
     scenarioSpatial %>%
