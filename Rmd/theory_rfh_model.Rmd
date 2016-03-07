@@ -130,9 +130,9 @@ $$
 \right)_{T\times T}
 $$
 with $i = 1, \dots, D$. Thus $\mat{V}_u = \mat{V}_u(\pmat\delta) = 
-\Diag{\sigma_\re^2 \mat{I}_{D}, \sigma_2^2\pmat\Omega(\rho_2)}$ is the variance 
+\Diag{\sigma_\re^2 \mat{I}_{D}, \sigma_2^2\pmat\Omega(\rho_2)}$ is the  
 covariance matrix of $\mat{u}$; and $\mat{V}_e = \Diag{\{\{\sigma_{eit}^2\}_{t =
-1}^T\}_{i = 1}^D}$ is the variance covariance matrix of $\mat{e}$ with known
+1}^T\}_{i = 1}^D}$ is the covariance matrix of $\mat{e}$ with known
 sampling variances for each time period and area. Hence the unknown model 
 parameters are $\pmat\beta$ and $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$. The partial derivates of $\mat{V}(\pmat\delta)$ with respect to the variance parameters are then given by:
 $\partial\mat{V} / \partial\sigre = \mat{Z}_1\mat{I}_D\mat{Z}_1^\top$, 
@@ -151,7 +151,7 @@ $\partial\mat{V} / \partial\sigma_2^2 = \pmat\Omega_2$, and
 (T-2)\rho_2^{T-3} &&& 0 & 1 \\
 (T-1)\rho_2^{T-2} & \cdots & \cdots & 1 & 0\\
 \end{matrix}
-\right) \\ & + \frac{2\rho_2\pmat\Omega_{2i}}{1-\rho_2^2}.
+\right) \\ & + \frac{2\rho_2}{1-\rho_2^2} \pmat\Omega_{2i}.
 \end{align*}
 }
 
@@ -197,7 +197,7 @@ special cases within this class of models.
 
 ## Robust Estimation Equations
 
-In principle I follow the approach by @Sin09 which is to start with the
+In principle I follow the results given by @Sin09 which is to start with the
 dirivatives with respect to $\pmat\beta$ and $\pmat\delta$ of the marginal
 log-likelihood of $\mat{y}$:
 \empty{
@@ -462,7 +462,7 @@ in @Mar06[pp. 104-105]. A natural choice as a starting value for the weighting
 matrix is to set the diagonal elements to one. This will lead to the non robust 
 generalised least squares estimator in the first iteration. This solution is 
 acceptabel since - as @Mar06[pp. 104-105] note - for a continuous choice of
-$\psi$ the algorithm is non sensetive to the starting values with respect to 
+$\psi$ the algorithm is non sensitive to the starting values with respect to 
 convergence. Bad starting values can however increase the number of iterations. 
 Note also that this iterative algorithm has the desirable property that it 
 reduces to the GLS estimator if we set the tuning constant of $\psi_b$ to 
@@ -506,8 +506,8 @@ $\pmat\delta$ was derived by @Chat12 for the case of the robust BHF model
 models under study which is to derive fixed point equations for the variance 
 parameters based on \eq{eq:rfhreed}. In order to stay as general as possible and
 yet present simple solutions I want to distinguish between two cases. First when
-$\pmat\delta$ is a scala under a given model. Second when $\pmat\delta$ has more
-than one element. This will lead to a form in which the solutions for the
+$\pmat\delta$ is a scalar under a given model. Second when $\pmat\delta$ has
+more than one element. This will lead to a form in which the solutions for the 
 spatial and temporal extensions are just special cases. When we set $\pmat\delta
 = \delta$, i.e. the first case, \eq{eq:rfhreed} can be written as:
 \empty{
@@ -547,8 +547,8 @@ general case. Starting from \eq{eq:rfhreed} we can write:
 \begin{align*}
 0 = & 
   \underbrace{\psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r})}_{c_{2l}(\pmat\delta)} \\
-  & - \tr\Paran{\underbrace{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}}_{\mat{C}^*_{l}(\pmat\delta)}
-  (\begin{matrix}\mat{Z}\bar{\mat{V}}_{u1}\mat{Z}^\top & \dots & \mat{Z}\bar{\mat{V}}_{uQ}\mat{Z}^\top\end{matrix}) \pmat\delta}
+  & - \tr\bigg(\underbrace{\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1}}_{\mat{C}^*_{l}(\pmat\delta)}
+  (\begin{matrix}\mat{Z}\bar{\mat{V}}_{u1}\mat{Z}^\top & \dots & \mat{Z}\bar{\mat{V}}_{uQ}\mat{Z}^\top\end{matrix}) \pmat\delta\bigg)
 \end{align*}
 }with $l = 1, \dots, Q$. Because the sum of matrices in the trace are square
 matrices we can now solve for $\pmat\delta$. To simplify the solution we can set
@@ -598,29 +598,30 @@ applicable when we set $\delta = \sigre$ and use the notation of Section
 
 #### Solutions for the Spatial Robust FH Model
 
-In principle $\pmat\delta = (\rho_1, \sigma_1^2)$ under the spatial FH model of 
-Section \ref{sec:rfh_model_sfh}. Hence the specific form of \eq{eq:fp_delta2}
-needs to be derived. In this case each $\bar{V}_{ul}$ with $l = 1, 2$ need to be
-defined. Albeit it is possible to find such matrices the implementation has lead
-to unstable results. This can be solved by splitting the problem into finding
-solutions for $\delta_\sigma = (\sigma_1^2)$ and $\delta_\rho = (\rho_1)$
-seperately. This means that each iterative equation depends on the other *known*
-parameter. This is numerically not optimal since it will lead to an increase in 
-overall iterations. However, as I will show later, it leads to acceptable and 
-stable results. For the specific adaption of the iterative equations for 
-$\pmat\delta$ this means that \eq{eq:fp_delta} is used to find solutions for 
-$\delta_\sigma$ and $\delta_\rho$ seperately and all other specifications under
-the spatial model can be found in Section \ref{sec:rfh_model_sfh}.
+\mbox{}\newline In principle $\pmat\delta = (\rho_1, \sigma_1^2)$ under the spatial FH
+model of Section \ref{sec:rfh_model_sfh}. Hence the specific form of
+\eq{eq:fp_delta2} needs to be derived. In this case each $\bar{V}_{ul}$ with $l
+= 1, 2$ need to be defined. Albeit it is possible to find such matrices the
+implementation has lead to unstable results. This can be solved by splitting the
+problem into finding solutions for $\delta_\sigma = (\sigma_1^2)$ and
+$\delta_\rho = (\rho_1)$ seperately. This means that each iterative equation
+depends on the other *known* parameter. This is numerically not optimal since it
+will lead to an increase in overall iterations. However, as I will show later,
+it leads to acceptable and stable results. For the specific adaption of the
+iterative equations for $\pmat\delta$ this means that \eq{eq:fp_delta} is used
+to find solutions for $\delta_\sigma$ and $\delta_\rho$ seperately and all other
+specifications under the spatial model can be found in Section
+\ref{sec:rfh_model_sfh}.
 
 #### Solutions for the Temporal Robust FH Model
 
-Under the temporal model of Section \ref{sec:rfh_model_tfh} $\pmat\delta =
-(\sigre, \rho_2, \sigma_2^2)$. Although not all combinations have been
-empirically validated the same numerical problems may be suspected when we try
-to optimise the variance and correlation parameter jointly. Hence in this case
-the problem is split into finding solutions for $\pmat\delta_\sigma = (\sigre,
-\sigma_2^2)$ and $\delta_\rho = (\rho_2)$. Both iterative equations assume
-known parameters if the left out elements.
+\mbox{}\newline Under the temporal model of Section \ref{sec:rfh_model_tfh}
+$\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$. Although not all combinations have
+been empirically validated the same numerical problems may be suspected when we
+try to optimise the variance and correlation parameter jointly. Hence in this
+case the problem is split into finding solutions for $\pmat\delta_\sigma =
+(\sigre, \sigma_2^2)$ and $\delta_\rho = (\rho_2)$. Both iterative equations
+assume known parameters if the left out elements.
 
 For $\delta_\rho$ we can simply use the iterative equation \eq{eq:fp_delta}
 which is directly applicable with the results of Section 
@@ -657,7 +658,7 @@ equation \eq{eq:fp_delta2} can be used.
 
 #### Solutions for the Spatio\hyp{}Temporal Robust FH Model
 
-For the solutions under the spatio\hyp{}temporal model of Section
+\mbox{}\newline For the solutions under the spatio\hyp{}temporal model of Section
 \ref{sec:rfh_model_stfh} we recall that $\pmat\delta = (\rho_1, \sigma_1^2, 
 \rho_2, \sigma_2^2)$. With the same reasoning as before we can split the problem
 into finding solutions for $\pmat\delta_\sigma = (\sigma_1^2, \sigma_2^2)$ and 
@@ -763,7 +764,7 @@ parameters $\pmat\delta$ until convergence is reached.
 using the model specifc solutions for \eq{eq:fp_delta} and \eq{eq:fp_delta2}. 
 This step itself can involve two algorithms for the respective variance and 
 correlation components of the variance\hyp{}coevariance structure as was layed
-out in \ref{sec:rfh_solutions_delta}
+out in Section \ref{sec:rfh_solutions_delta}.
 4. Set $m = m + 1$.
 5. Repeat steps 2. to 4. until the set of parameters jointly reach convergence.
 Declare these solutions to be the robust parameter estimates 
