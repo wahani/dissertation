@@ -48,3 +48,8 @@
 ![Spatial Variance \newline 
   \hspace{\linewidth} bla](figs/stability_variance_spatial.pdf)
 
+![Spatial Convergence \newline 
+  \hspace{\linewidth} bla](figs/stability_convergence_spatial.pdf)
+
+![Temporal Point Estimates \newline 
+  \hspace{\linewidth} bla](figs/stability_variance_temporal.pdf)

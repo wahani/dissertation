@@ -11,6 +11,7 @@ table <- use("R/graphics/tables.R")
 # Cache
 recompute <- FALSE
 recomputeSpatial <- FALSE
+recomputeTemporal <- FALSE
 
 # Graphic Params
 width <- 7
@@ -22,6 +23,7 @@ labelScore <- "Estimation Equation"
 # Simulation Params
 domains <- 40
 units <- 1
+nTime <- 10
 sige <- seq(5, 15, length.out = domains)^2
 sigv <- 100
 runs <- 200
@@ -38,6 +40,12 @@ comp_rfh <- function(dat) {
 comp_rsfh <- function(dat) {
   rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
       maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1)
+}
+
+comp_rtfh <- function(dat) {
+  rfh(y ~ x, dat, "dirVar", corAR1(nTime),
+      maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
+  )
 }
 
 gen_extreme_cases <- function(dat) {
@@ -71,18 +79,32 @@ scenarioSpatialExtreme <-
   scenarioSpatial %>%
   sim_gen(gen_extreme_cases)
 
+scenarioTemporal <-
+  base_id_temporal(domains, units, nTime) %>%
+  sim_gen_x() %>%
+  sim_gen_e(sd = sqrt(rep(sige, each = nTime))) %>%
+  sim_gen(comp_var(dirVar = rep(sige, each = nTime))) %>%
+  sim_gen(gen_v_ar1(sd = sqrt(sigv), name = "ar")) %>%
+  sim_gen_v(sd = sqrt(sigv)) %>%
+  sim_resp_eq(y = 100 + 10 * x + v + ar + e) %>%
+  sim_comp_agg(comp_rtfh)
+
+scenarioTemporalExtreme <-
+  scenarioTemporal %>%
+  sim_gen(gen_extreme_cases)
+
 # Run simulation
 if (recompute) {
   set.seed(15)
   resultsBase <-
     scenarioBase %>%
     sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
-  save(list = "resultsBase", file = "R/data/stability/resultsBase.RData")
+  save(list = "resultsBase", file = "R/data/stability/resultsBase.RData", compress = TRUE)
 
   resultsExtreme <-
     scenarioExtreme %>%
     sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
-  save(list = "resultsExtreme", file = "R/data/stability/resultsExtreme.RData")
+  save(list = "resultsExtreme", file = "R/data/stability/resultsExtreme.RData", compress = TRUE)
 } else {
   load("R/data/stability/resultsBase.RData")
   load("R/data/stability/resultsExtreme.RData")
@@ -93,17 +115,32 @@ if (recomputeSpatial) {
   resultsSpatial <-
     scenarioSpatial %>%
     sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
-  save(list = "resultsSpatial", file = "R/data/stability/resultsSpatial.RData")
+  save(list = "resultsSpatial", file = "R/data/stability/resultsSpatial.RData", compress = TRUE)
 
   resultsSpatialExtreme <-
     scenarioSpatialExtreme %>%
     sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
-  save(list = "resultsSpatialExtreme", file = "R/data/stability/resultsSpatialExtreme.RData")
+  save(list = "resultsSpatialExtreme", file = "R/data/stability/resultsSpatialExtreme.RData", compress = TRUE)
 } else {
   load("R/data/stability/resultsSpatial.RData")
   load("R/data/stability/resultsSpatialExtreme.RData")
 }
 
+if (recomputeTemporal) {
+  set.seed(15)
+  resultsTemporal <-
+    scenarioTemporal %>%
+    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  save(list = "resultsTemporal", file = "R/data/stability/resultsTemporal.RData", compress = TRUE)
+
+  resultsTemporalExtreme <-
+    scenarioTemporalExtreme %>%
+    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  save(list = "resultsTemporalExtreme", file = "R/data/stability/resultsTemporalExtreme.RData", compress = TRUE)
+} else {
+  load("R/data/stability/resultsTemporal.RData")
+  load("R/data/stability/resultsTemporalExtreme.RData")
+}
 
 # Make Plots
 densPlot <- function(dat, intercept, xlab = NULL, var) {
@@ -261,6 +298,7 @@ dat2 <-
 names(dat2)[1:2] <- c("Correlation", "Variance")
 
 dat <- rbind(dat1, dat2)
+dat <- dat %>% mutar(~Variance < 1000)
 
 g1 <- densPlot(dat, 0.5, "Correlation", var = "Correlation")  +
   theme(strip.text = element_blank())
@@ -314,6 +352,36 @@ ggplot(dat, aes(x = i, y = V1)) +
   facet_grid(parameter ~ strategy, scales = "free_y") +
   theme$theme_thesis(14) +
   labs(x = "Iteration", y = labelParam)
+dev.off()
+
+
+# Graphics Temporal
+
+dat1 <-
+  flatmap(resultsTemporal, "variance") %>%
+  do.call(what = rbind) %>%
+  as.data.frame(row.names = FALSE) %>%
+  mutar(scenario ~ "Base")
+names(dat1)[1:3] <- c("Correlation", "Variance1", "Variance2")
+
+dat2 <-
+  map(resultsTemporalExtreme, "variance") %>%
+  unlist(recursive = FALSE) %>%
+  do.call(what = rbind) %>%
+  as.data.frame(row.names = FALSE) %>%
+  mutar(scenario ~ "Outlier")
+names(dat2)[1:3] <- c("Correlation", "Variance1", "Variance2")
+
+dat <- rbind(dat1, dat2)
+
+g1 <- densPlot(dat, 0.5, "Correlation", var = "Correlation") +
+  theme(strip.text = element_blank())
+g2 <- densPlot(dat, 100, "Variance1", var = "Variance1") +
+  theme(strip.text = element_blank())
+g3 <- densPlot(dat, 100, "Variance2", var = "Variance2")
+
+cairo_pdf("figs/stability_variance_temporal.pdf", width, 1.7 * height)
+grid.arrange(g1, g2, g3, ncol = 3, widths = c(0.3 * width, 0.3 * width, 0.4 * width))
 dev.off()
 
 
@@ -410,7 +478,7 @@ tab <- table$saveResize(
 
 iterSpatialCorrelation <- rbind(
   extractIterations(resultsSpatial, "correlation", "Base"),
-  extractIterations(resultsSpatial, "correlation", "Outlier")
+  extractIterations(resultsSpatialExtreme, "correlation", "Outlier")
 )
 
 overallSpatial <-
@@ -425,6 +493,22 @@ overallSpatial <-
     by = "scenario"
   )
 
+iterTemporal <- rbind(
+  extractIterations(resultsTemporal, "correlation", "Base"),
+  extractIterations(resultsTemporalExtreme, "correlation", "Outlier")
+)
+
+overallTemporal <-
+  iterTemporal %>%
+  mutar(
+    row ~ "Temporal",
+    first ~ NA_real_,
+    second ~ NA_real_,
+    remaining ~ median(i),
+    max ~ max(i),
+    converged ~ (runs - sum(i == maxIter1)) / runs,
+    by = "scenario"
+  )
 
 
 
