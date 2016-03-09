@@ -4,6 +4,7 @@ library("saeSim")
 library("dat")
 library("ggplot2")
 library("gridExtra")
+library("BatchJobs")
 
 theme <- use("R/graphics/themes.R")
 table <- use("R/graphics/tables.R")
@@ -12,6 +13,8 @@ table <- use("R/graphics/tables.R")
 recompute <- FALSE
 recomputeSpatial <- FALSE
 recomputeTemporal <- FALSE
+recomputeSpatioTemporal <- TRUE
+makeOutput <- FALSE
 
 # Graphic Params
 width <- 7
@@ -32,20 +35,62 @@ maxIter2 <- 1000
 maxIterParam <- 5
 cpus <- parallel::detectCores() - 1
 
-# The Simulation Config
-comp_rfh <- function(dat) {
-  rfh(y ~ x, dat, "dirVar", maxIter = maxIter1, maxIterParam = maxIter1, maxIterRe = maxIter2)
-}
+mcSettings <- list(R = runs, mode = "BatchJobs")
+# mcSettings <- list(R = runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
 
-comp_rsfh <- function(dat) {
-  rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
-      maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1)
-}
+# reg <- makeRegistry(id = "minimal", file.dir = "parallelMap_BatchJobs_reg_68e139c0b420/", skip = TRUE)
+# showStatus(reg)
+# ids <- getJobIds(reg)
+# killJobs(reg, ids)
+# showStatus(reg)
+# res <- reduceResults(reg, fun = function(aggr, job, res) c(aggr, res))
+# print(res)
 
-comp_rtfh <- function(dat) {
-  rfh(y ~ x, dat, "dirVar", corAR1(nTime),
-      maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
-  )
+
+
+comp <- module({
+  # This module exists to handle the dependencies of the model functions
+  import("saeRobust")
+
+  domains <- .GlobalEnv$domains
+  nTime <- .GlobalEnv$nTime
+  maxIter1 <- .GlobalEnv$maxIter1
+  maxIterParam <- .GlobalEnv$maxIterParam
+
+  rbfh <- function(dat) {
+    rfh(y ~ x, dat, "dirVar", maxIter = maxIter1, maxIterParam = maxIter1, maxIterRe = maxIter2)
+  }
+
+  rsfh <- function(dat) {
+    rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
+        maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1)
+  }
+
+  rtfh <- function(dat) {
+    rfh(y ~ x, dat, "dirVar", corAR1(nTime),
+        maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
+    )
+  }
+
+  rstfh <- function(dat) {
+    out <- try({
+      rfh(
+        y ~ x, dat, "dirVar",
+        corSAR1AR1(W = testRook(domains), nTime = nTime),
+        maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
+      )
+    })
+    if (inherits(out, "try-error")) dat else out
+  }
+
+})
+
+comp_dirVar <- function(dirVar) {
+  force(dirVar)
+  function(dat) {
+    dat$dirVar <- dirVar
+    dat
+  }
 }
 
 gen_extreme_cases <- function(dat) {
@@ -58,13 +103,13 @@ baseData <-
   base_id(domains, units) %>%
   sim_gen_x() %>%
   sim_gen_e(sd = sqrt(sige)) %>%
-  sim_gen(comp_var(dirVar = sige)) %>%
+  sim_gen(comp_dirVar(sige)) %>%
   sim_resp_eq(y = 100 + 10 * x + v + e)
 
 scenarioBase <-
   baseData %>%
   sim_gen_v(sd = sqrt(sigv)) %>%
-  sim_comp_agg(comp_rfh)
+  sim_comp_agg(comp$rbfh)
 
 scenarioExtreme <-
   scenarioBase %>%
@@ -73,7 +118,7 @@ scenarioExtreme <-
 scenarioSpatial <-
   baseData %>%
   sim_gen(gen_v_sar(sd = sqrt(sigv), name = "v")) %>%
-  sim_comp_agg(comp_rsfh)
+  sim_comp_agg(comp$rsfh)
 
 scenarioSpatialExtreme <-
   scenarioSpatial %>%
@@ -83,64 +128,85 @@ scenarioTemporal <-
   base_id_temporal(domains, units, nTime) %>%
   sim_gen_x() %>%
   sim_gen_e(sd = sqrt(rep(sige, each = nTime))) %>%
-  sim_gen(comp_var(dirVar = rep(sige, each = nTime))) %>%
+  sim_gen(comp_dirVar(rep(sige, each = nTime))) %>%
   sim_gen(gen_v_ar1(sd = sqrt(sigv), name = "ar")) %>%
   sim_gen_v(sd = sqrt(sigv)) %>%
   sim_resp_eq(y = 100 + 10 * x + v + ar + e) %>%
-  sim_comp_agg(comp_rtfh)
+  sim_comp_agg(comp$rtfh)
 
 scenarioTemporalExtreme <-
   scenarioTemporal %>%
   sim_gen(gen_extreme_cases)
 
+scenarioSpatioTemporal <-
+  base_id_temporal(domains, units, nTime) %>%
+  sim_gen_x() %>%
+  sim_gen_e(sd = sqrt(rep(sige, each = nTime))) %>%
+  sim_gen(comp_dirVar(rep(sige, each = nTime))) %>%
+  sim_gen(gen_v_ar1(sd = sqrt(sigv), name = "ar")) %>%
+  sim_gen(gen_v_sar(sd = sqrt(sigv), name = "v")) %>%
+  sim_resp_eq(y = 100 + 10 * x + v + ar + e) %>%
+  sim_comp_agg(comp$rstfh)
+
+scenarioSpatioTemporalExtreme <-
+  scenarioSpatioTemporal %>%
+  sim_gen(gen_extreme_cases)
+
 # Run simulation
 if (recompute) {
   set.seed(15)
-  resultsBase <-
-    scenarioBase %>%
-    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  resultsBase <- do.call(sim, c(list(scenarioBase), mcSettings))
   save(list = "resultsBase", file = "R/data/stability/resultsBase.RData", compress = TRUE)
 
-  resultsExtreme <-
-    scenarioExtreme %>%
-    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  resultsExtreme <- do.call(sim, c(list(scenarioExtreme), mcSettings))
   save(list = "resultsExtreme", file = "R/data/stability/resultsExtreme.RData", compress = TRUE)
-} else {
-  load("R/data/stability/resultsBase.RData")
-  load("R/data/stability/resultsExtreme.RData")
 }
 
 if (recomputeSpatial) {
   set.seed(15)
-  resultsSpatial <-
-    scenarioSpatial %>%
-    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  resultsSpatial <- do.call(sim, c(list(scenarioSpatial), mcSettings))
   save(list = "resultsSpatial", file = "R/data/stability/resultsSpatial.RData", compress = TRUE)
 
-  resultsSpatialExtreme <-
-    scenarioSpatialExtreme %>%
-    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  resultsSpatialExtreme <- do.call(sim, c(list(scenarioSpatialExtreme), mcSettings))
   save(list = "resultsSpatialExtreme", file = "R/data/stability/resultsSpatialExtreme.RData", compress = TRUE)
-} else {
-  load("R/data/stability/resultsSpatial.RData")
-  load("R/data/stability/resultsSpatialExtreme.RData")
 }
 
 if (recomputeTemporal) {
   set.seed(15)
-  resultsTemporal <-
-    scenarioTemporal %>%
-    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  resultsTemporal <- do.call(sim, c(list(scenarioTemporal), mcSettings))
   save(list = "resultsTemporal", file = "R/data/stability/resultsTemporal.RData", compress = TRUE)
 
-  resultsTemporalExtreme <-
-    scenarioTemporalExtreme %>%
-    sim(runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+  resultsTemporalExtreme <- do.call(sim, c(list(scenarioTemporalExtreme), mcSettings))
   save(list = "resultsTemporalExtreme", file = "R/data/stability/resultsTemporalExtreme.RData", compress = TRUE)
-} else {
+}
+
+if (recomputeSpatioTemporal) {
+
+  set.seed(15)
+  resultsSpatioTemporal <-
+    do.call(sim, c(list(scenarioSpatioTemporal), mcSettings))
+  save(list = "resultsSpatioTemporal", file = "R/data/stability/resultsSpatioTemporal.RData", compress = TRUE)
+
+  resultsSpatioTemporalExtreme <-
+    do.call(sim, c(list(scenarioSpatioTemporalExtreme), mcSettings))
+  save(list = "resultsSpatioTemporalExtreme", file = "R/data/stability/resultsSpatioTemporalExtreme.RData", compress = TRUE)
+
+}
+
+if (makeOutput) {
+  load("R/data/stability/resultsBase.RData")
+  load("R/data/stability/resultsExtreme.RData")
+  load("R/data/stability/resultsSpatial.RData")
+  load("R/data/stability/resultsSpatialExtreme.RData")
   load("R/data/stability/resultsTemporal.RData")
   load("R/data/stability/resultsTemporalExtreme.RData")
+  load("R/data/stability/resultsSpatioTemporal.RData")
+  load("R/data/stability/resultsSpatioTemporalExtreme.RData")
+} else {
+  q("no")
 }
+
+
 
 # Make Plots
 densPlot <- function(dat, intercept, xlab = NULL, var) {

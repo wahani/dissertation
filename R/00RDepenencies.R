@@ -6,15 +6,20 @@ installPackages <- function(pkgs) {
       pkgs,
       dependencies = TRUE,
       Ncpus = 4,
-      repos = "https://cran.rstudio.com/"
+      repos = "http://mirrors.softliste.de/cran/"
     )
   }
 }
 
+update.packages(checkBuilt = TRUE)
+
 # overall package dependencies
 installPackages(c(
-  "saeSim", "sae", "aoos", "MASS", "dplyr", "reshape2", "ggplot2", "devtools", "tidyr", "Hmisc"
+  "saeSim", "sae", "aoos", "MASS", "dplyr", "reshape2", "ggplot2", "devtools", "tidyr", "Hmisc", "RcppArmadillo"
 ))
-devtools::install_github("wahani/modules")
-devtools::install_github("wahani/dat")
+
+devtools::install_github("wahani/dat", force = TRUE)
+
+if (file.exists("saeRobust.tar.gz")) install.packages("saeRobust.tar.gz", repos = NULL, type = "source")
+
 # devtools::install_github("wahani/saeRobust") needed but not public
