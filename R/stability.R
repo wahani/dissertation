@@ -13,8 +13,8 @@ table <- use("R/graphics/tables.R")
 recompute <- FALSE
 recomputeSpatial <- FALSE
 recomputeTemporal <- FALSE
-recomputeSpatioTemporal <- TRUE
-makeOutput <- FALSE
+recomputeSpatioTemporal <- FALSE
+makeOutput <- TRUE
 
 # Graphic Params
 width <- 7
@@ -32,11 +32,11 @@ sigv <- 100
 runs <- 200
 maxIter1 <- 100
 maxIter2 <- 1000
-maxIterParam <- 5
+maxIterParam <- 1
 cpus <- parallel::detectCores() - 1
 
-mcSettings <- list(R = runs, mode = "BatchJobs")
-# mcSettings <- list(R = runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+# mcSettings <- list(R = runs, mode = "BatchJobs")
+mcSettings <- list(R = runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
 
 # reg <- makeRegistry(id = "minimal", file.dir = "parallelMap_BatchJobs_reg_68e139c0b420/", skip = TRUE)
 # showStatus(reg)
@@ -55,30 +55,39 @@ comp <- module({
   domains <- .GlobalEnv$domains
   nTime <- .GlobalEnv$nTime
   maxIter1 <- .GlobalEnv$maxIter1
+  maxIter2 <- .GlobalEnv$maxIter2
   maxIterParam <- .GlobalEnv$maxIterParam
 
   rbfh <- function(dat) {
-    rfh(y ~ x, dat, "dirVar", maxIter = maxIter1, maxIterParam = maxIter1, maxIterRe = maxIter2)
+    res <- rfh(y ~ x, dat, "dirVar", maxIter = maxIter1, maxIterParam = maxIter1, maxIterRe = maxIter2)
+    res$psi <- NULL
+    res
   }
 
   rsfh <- function(dat) {
-    rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
-        maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1)
+    res <- rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
+               maxIter = 2 * maxIter1, maxIterParam = maxIterParam, maxIterRe = 1)
+    res$psi <- NULL
+    res
   }
 
   rtfh <- function(dat) {
-    rfh(y ~ x, dat, "dirVar", corAR1(nTime),
-        maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
+    res <- rfh(y ~ x, dat, "dirVar", corAR1(nTime),
+               maxIter = 2 * maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
     )
+    res$psi <- NULL
+    res
   }
 
   rstfh <- function(dat) {
     out <- try({
-      rfh(
+      res <- rfh(
         y ~ x, dat, "dirVar",
         corSAR1AR1(W = testRook(domains), nTime = nTime),
-        maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
+        maxIter = 2 * maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
       )
+      res$psi <- NULL
+      res
     })
     if (inherits(out, "try-error")) dat else out
   }
@@ -203,10 +212,11 @@ if (makeOutput) {
   load("R/data/stability/resultsSpatioTemporal.RData")
   load("R/data/stability/resultsSpatioTemporalExtreme.RData")
 } else {
+  files <- list.files("R/data/stability/", full.names = TRUE)
+  file.copy(files, "~/sf_Google_Drive/wahani@gmail.com/Dissertation/Data/stability/", overwrite = TRUE)
+  dir.exists("~/sf_Google_Drive/wahani@gmail.com/Dissertation/Data/")
   q("no")
 }
-
-
 
 # Make Plots
 densPlot <- function(dat, intercept, xlab = NULL, var) {
@@ -440,14 +450,44 @@ names(dat2)[1:3] <- c("Correlation", "Variance1", "Variance2")
 
 dat <- rbind(dat1, dat2)
 
-g1 <- densPlot(dat, 0.5, "Correlation", var = "Correlation") +
+g1 <- densPlot(dat, 0.5, "CorrelationAR", var = "Correlation") +
   theme(strip.text = element_blank())
-g2 <- densPlot(dat, 100, "Variance1", var = "Variance1") +
+g2 <- densPlot(dat, 100, "VarianceAR", var = "Variance2") +
   theme(strip.text = element_blank())
-g3 <- densPlot(dat, 100, "Variance2", var = "Variance2")
+g3 <- densPlot(dat, 100, "Variance1", var = "Variance1")
+
 
 cairo_pdf("figs/stability_variance_temporal.pdf", width, 1.7 * height)
 grid.arrange(g1, g2, g3, ncol = 3, widths = c(0.3 * width, 0.3 * width, 0.4 * width))
+dev.off()
+
+# Graphics Spatio-Temporal
+
+dat1 <-
+  flatmap(resultsSpatioTemporal, "variance") %>%
+  do.call(what = rbind) %>%
+  as.data.frame(row.names = FALSE) %>%
+  mutar(scenario ~ "Base")
+
+dat2 <-
+  map(resultsSpatioTemporalExtreme, "variance") %>%
+  unlist(recursive = FALSE) %>%
+  do.call(what = rbind) %>%
+  as.data.frame(row.names = FALSE) %>%
+  mutar(scenario ~ "Outlier")
+
+dat <- rbind(dat1, dat2)
+
+g1 <- densPlot(dat, 0.5, "CorrelationSAR", var = "SAR")  +
+  theme(strip.text = element_blank())
+g2 <- densPlot(dat, 100, "VarianceSAR", var = "varianceSAR")  +
+  theme(strip.text = element_blank())
+g3 <- densPlot(dat, 0.5, "CorrelationAR", var = "AR") +
+  theme(strip.text = element_blank())
+g4 <- densPlot(dat, 100, "VarianceAR", var = "varianceAR")
+
+cairo_pdf("figs/stability_variance_temporal.pdf", width, 1.7 * height)
+grid.arrange(g1, g2, g3, g4, ncol = 4, widths = c(0.25 * width, 0.25 * width, 0.25 * width, 0.3 * width))
 dev.off()
 
 
@@ -576,6 +616,22 @@ overallTemporal <-
     by = "scenario"
   )
 
+iterSpatioTemporal <- rbind(
+  extractIterations(resultsSpatioTemporal, "SAR", "Base"),
+  extractIterations(resultsSpatioTemporalExtreme, "SAR", "Outlier")
+)
+
+overallSpatioTemporal <-
+  iterSpatioTemporal %>%
+  mutar(
+    row ~ "Temporal",
+    first ~ NA_real_,
+    second ~ NA_real_,
+    remaining ~ median(i),
+    max ~ max(i),
+    converged ~ (runs - sum(i == maxIter1)) / runs,
+    by = "scenario"
+  )
 
 
 

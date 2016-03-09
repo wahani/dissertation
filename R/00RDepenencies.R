@@ -11,7 +11,7 @@ installPackages <- function(pkgs) {
   }
 }
 
-update.packages(checkBuilt = TRUE)
+update.packages(repos = "http://mirrors.softliste.de/cran/", checkBuilt = TRUE, ask = FALSE)
 
 # overall package dependencies
 installPackages(c(
