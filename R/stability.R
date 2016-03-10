@@ -356,7 +356,7 @@ g2 <- ggplot(ggDat, aes(Variance, re)) +
 
 # jpeg("figs/stability_random_effect_base.jpg", width = width, height = height,
 #      units = "in", quality = 100, res = 150)
-cairo_pdf("figs/stability_random_effect_base.pdf", width, height)
+cairo_pdf("figs/stability_random_effect_base.pdf", width, 1.7 * height)
 grid.arrange(g1, g2, ncol = 2, widths = c(0.4 * width, 0.6 * width))
 dev.off()
 
@@ -417,6 +417,7 @@ dat2 <- rbind(
     mutar(parameter ~ "Variance")
 ) %>% mutar(strategy ~ "100 Iter")
 
+iterations1 <- flatmap(dat1, df ~ nrow(df), by = "parameter", combine = unlist)
 iterations2 <- flatmap(dat2, df ~ nrow(df), by = "parameter", combine = unlist)
 
 dat2 <- flatmap(dat2, df ~ df[nrow(df), ], by = c("i", "parameter"))
@@ -497,7 +498,73 @@ cairo_pdf("figs/stability_variance_spatio_temporal.pdf", 1.1 * width, 1.7 * heig
 grid.arrange(g1, g2, g3, g4, ncol = 4, widths = c(0.25 * width, 0.25 * width, 0.25 * width, 0.35 * width))
 dev.off()
 
+
+# Random Effects Convergence
+
+pos <- which.max(flatmap(resultsExtreme, ~ nrow(.$iterations$re)))
+copy <- model <- resultsExtreme[[pos]]
+scores <- model$iterations$re
+
+for (i in 1:nrow(model$iterations$re)) {
+  copy$re <-  model$iterations$re[i, 1:domains]
+  scores[i, 1:domains] <- score(copy, "re")$re
+}
+
+colnames(scores)[1:domains] <- 1:domains
+ggDat <- tidyr::gather(as.data.frame(scores), domain, score, -i)
+g1 <- ggplot(mutar(ggDat, ~ i <= 10) , aes(x = i, y = score, group = domain)) +
+  geom_line() + labs(x = "Iteration", y = labelScore) + theme$theme_thesis(14) +
+  scale_x_continuous(breaks = c(1, 5, 10))
+
+ggDat <- tidyr::gather(as.data.frame(model$iterations$re), domain, param, -i)
+g2 <- ggplot(mutar(ggDat, ~ i <= 10) , aes(x = i, y = param, group = domain)) +
+  geom_line() + labs(x = "Iteration", y = labelParam) + theme$theme_thesis(14) +
+  scale_x_continuous(breaks = c(1, 5, 10))
+
+cairo_pdf("figs/stability_convergence_random_effects.pdf", width, height)
+grid.arrange(g1, g2, ncol = 2, widths = c(0.5 * width, 0.5 * width))
+dev.off()
+
+
 # Tables --- FH
+tableOrder <- c("row", "scenario", "first", "second", "remaining", "max", "converged")
+
+makeTable <- function(result1, result2, name1, name2) {
+
+  iterList <- map(name1, n ~ rbind(
+    extractIterations(result1, n, "Base"),
+    extractIterations(result2, n, "Outlier")
+  ))
+
+  overall <- iterList[[1]] %>%
+    mutar(
+      row ~ name2[1],
+      first ~ NA_real_,
+      second ~ NA_real_,
+      remaining ~ median(i),
+      max ~ max(i),
+      converged ~ (runs - sum(i == maxIter1)) / runs,
+      by = "scenario"
+    )
+
+  tabs <- map(ML(iterList, name2[-1]), f(iter, n) ~ {
+    iter %>%
+      mutar(
+        row ~ n,
+        first ~ median(iterations[i == 1]),
+        second ~ median(iterations[i == 2]),
+        remaining ~ median(iterations[i > 2]),
+        max ~ max(iterations),
+        converged ~ NA_real_,
+        by = "scenario"
+      )
+  })
+
+  tab <- do.call(rbind, c(list(overall), tabs))[tableOrder]
+  tab[((1:nrow(tab)) %% 2) == 0, "row"] <- NA
+  tab
+}
+
 extractIterations <- function(resultList, type, identifier) {
   flatmap(resultList, "iterations") %>%
     flatmap(type) %>%
@@ -509,54 +576,16 @@ extractIterations <- function(resultList, type, identifier) {
     mutar(iterations ~ n(), by = c("R", "i", "scenario"))
 }
 
-iterCoefs <- rbind(
-  extractIterations(resultsBase, "coefficients", "Base"),
-  extractIterations(resultsExtreme, "coefficients", "Outlier")
-)
-
-iterSigma <- rbind(
-  extractIterations(resultsBase, "variance", "Base"),
-  extractIterations(resultsExtreme, "variance", "Outlier")
+coefTab <- makeTable(
+  resultsBase, resultsExtreme,
+  c("coefficients", "variance"),
+  c("Overall", "- Coefficients", "- Variance")
 )
 
 iterRe <- rbind(
   extractIterations(resultsBase, "re", "Base"),
   extractIterations(resultsExtreme, "re", "Outlier")
 )
-
-overall <-
-  iterCoefs %>%
-  mutar(
-    row ~ "Overall",
-    first ~ NA_real_,
-    second ~ NA_real_,
-    remaining ~ median(i),
-    max ~ max(i),
-    converged ~ (runs - sum(i == maxIter1)) / runs,
-    by = "scenario"
-  )
-
-beta <- iterCoefs %>%
-  mutar(
-    row ~ "- Beta",
-    first ~ median(iterations[i == 1]),
-    second ~ median(iterations[i == 2]),
-    remaining ~ median(iterations[i > 2]),
-    max ~ max(iterations),
-    converged ~ (runs - sum(i == maxIter1)) / runs,
-    by = "scenario"
-  )
-
-sigma <- iterSigma %>%
-  mutar(
-    row ~ "- Sigma",
-    first ~ median(iterations[i == 1]),
-    second ~ median(iterations[i == 2]),
-    remaining ~ median(iterations[i > 2]),
-    max ~ max(iterations),
-    converged ~ (runs - sum(i == maxIter1)) / runs,
-    by = "scenario"
-  )
 
 re <- iterRe %>%
   mutar(
@@ -569,100 +598,50 @@ re <- iterRe %>%
     by = "scenario"
   )
 
-tableDat <- rbind(overall, beta, sigma, re) %>%
-  mutar(scenario ~ factor(scenario, c("Base", "Outlier"), ordered = TRUE),
-        row ~ factor(row, c("Overall", "- Beta", "- Sigma", "Random Effect"), ordered = TRUE)) %>%
-  mutar(~order(row, scenario))
-row.names(tableDat) <- NULL
-tableDat[c(2, 4, 6, 8), "row"] <- NA
-tableDat <- tableDat[c("row", "scenario", "first", "second", "remaining", "max", "converged")]
+tableDat <- rbind(coefTab, re)
+tableDat[c(8), "row"] <- NA
+
 
 tab <- table$saveResize(
   tableDat,
   "tabs/stability_fh.tex",
   label = "tab:stability_fh",
   colheads = c("", names(tableDat)[-1]),
-  caption = "Number of Iterations in Optimisation. Base vs. Deterministic Outlier Scenario."
+  caption = "Median Number of Iterations in Optimisation until Convergence was Reached. The columns \\textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations."
 )
 
 
 ### Tables - Remaining Models
 
-iterSpatialCorrelation <- rbind(
-  extractIterations(resultsSpatial, "correlation", "Base"),
-  extractIterations(resultsSpatialExtreme, "correlation", "Outlier")
+tabSpatial <- makeTable(
+  resultsSpatial, resultsSpatialExtreme,
+  c("correlation", "variance"),
+  c("SFH - Overall", "- CorSAR", "- VarSAR")
 )
 
-overallSpatial <-
-  iterSpatialCorrelation %>%
-  mutar(
-    row ~ "Spatial",
-    first ~ NA_real_,
-    second ~ NA_real_,
-    remaining ~ median(i),
-    max ~ max(i),
-    converged ~ (runs - sum(i == maxIter1)) / runs,
-    by = "scenario"
-  )
-
-correlationSpatial <-
-  iterSpatialCorrelation %>%
-  mutar(
-    row ~ "- CorSAR",
-    first ~ median(iterations[i == 1]),
-    second ~ median(iterations[i == 2]),
-    remaining ~ median(iterations[i > 2]),
-    max ~ max(iterations),
-    converged ~ (runs - sum(i == maxIter1)) / runs,
-    by = "scenario"
-  )
-
-sigma <- iterSigma %>%
-  mutar(
-    row ~ "- Sigma",
-    first ~ median(iterations[i == 1]),
-    second ~ median(iterations[i == 2]),
-    remaining ~ median(iterations[i > 2]),
-    max ~ max(iterations),
-    converged ~ (runs - sum(i == maxIter1)) / runs,
-    by = "scenario"
-  )
-
-
-iterTemporal <- rbind(
-  extractIterations(resultsTemporal, "correlation", "Base"),
-  extractIterations(resultsTemporalExtreme, "correlation", "Outlier")
+# Temporal
+tabTemporal <- makeTable(
+  resultsTemporal, resultsTemporalExtreme,
+  c("correlation", "variance"),
+  c("TFH - Overall", " - CorAR", " - Variances")
 )
 
-overallTemporal <-
-  iterTemporal %>%
-  mutar(
-    row ~ "Temporal",
-    first ~ NA_real_,
-    second ~ NA_real_,
-    remaining ~ median(i),
-    max ~ max(i),
-    converged ~ (runs - sum(i == maxIter1)) / runs,
-    by = "scenario"
-  )
-
-iterSpatioTemporal <- rbind(
-  extractIterations(resultsSpatioTemporal, "SAR", "Base"),
-  extractIterations(resultsSpatioTemporalExtreme, "SAR", "Outlier")
+# Spatio - Temporal
+tabSpatioTemporal <- makeTable(
+  resultsSpatioTemporal, resultsSpatioTemporalExtreme,
+  c("SAR", "AR", "variance"),
+  c("STFH - Overall", " - CorSAR", " - CorAR", " - Variances")
 )
 
-overallSpatioTemporal <-
-  iterSpatioTemporal %>%
-  mutar(
-    row ~ "Temporal",
-    first ~ NA_real_,
-    second ~ NA_real_,
-    remaining ~ median(i),
-    max ~ max(i),
-    converged ~ (runs - sum(i == maxIter1)) / runs,
-    by = "scenario"
-  )
+tableDat <- rbind(tabSpatial, tabTemporal, tabSpatioTemporal)
 
+tab <- table$saveResize(
+  tableDat,
+  "tabs/stability_all_fh.tex",
+  label = "tab:stability_all_fh",
+  colheads = c("", names(tableDat)[-1]),
+  caption = "Median Number of Iterations in Optimisation until Convergence was Reached. The columns \\textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations."
+)
 
 
 
