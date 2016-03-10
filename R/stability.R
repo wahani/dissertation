@@ -32,7 +32,7 @@ sigv <- 100
 runs <- 200
 maxIter1 <- 100
 maxIter2 <- 1000
-maxIterParam <- 1
+maxIterParam <- 100
 cpus <- parallel::detectCores() - 1
 
 # mcSettings <- list(R = runs, mode = "BatchJobs")
@@ -59,35 +59,32 @@ comp <- module({
   maxIterParam <- .GlobalEnv$maxIterParam
 
   rbfh <- function(dat) {
-    res <- rfh(y ~ x, dat, "dirVar", maxIter = maxIter1, maxIterParam = maxIter1, maxIterRe = maxIter2)
-    res$psi <- NULL
-    res
+    rfh(
+      y ~ x, dat, "dirVar",
+      maxIter = maxIter1, maxIterParam = maxIter1, maxIterRe = maxIter2
+    )
   }
 
   rsfh <- function(dat) {
-    res <- rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
-               maxIter = 2 * maxIter1, maxIterParam = maxIterParam, maxIterRe = 1)
-    res$psi <- NULL
-    res
+    rfh(
+      y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
+      maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
+    )
   }
 
   rtfh <- function(dat) {
-    res <- rfh(y ~ x, dat, "dirVar", corAR1(nTime),
-               maxIter = 2 * maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
+    rfh(
+      y ~ x, dat, "dirVar", corAR1(nTime),
+      maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
     )
-    res$psi <- NULL
-    res
   }
 
   rstfh <- function(dat) {
     out <- try({
-      res <- rfh(
-        y ~ x, dat, "dirVar",
-        corSAR1AR1(W = testRook(domains), nTime = nTime),
-        maxIter = 2 * maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
+      rfh(
+        y ~ x, dat, "dirVar", corSAR1AR1(W = testRook(domains), nTime = nTime),
+        maxIter = maxIter1, maxIterParam = maxIterParam, maxIterRe = 1
       )
-      res$psi <- NULL
-      res
     })
     if (inherits(out, "try-error")) dat else out
   }
@@ -264,14 +261,16 @@ names(scores2)[1:2] <- c("Intercept", "Slope")
 
 scores <- rbind(scores1, scores2)
 
-g1 <- densPlot(coefs, 100, labelParam, var = "Intercept") + theme(strip.text = element_blank())
+g1 <- densPlot(coefs, 100, labelParam, var = "Intercept") +
+  theme(strip.text = element_blank())
 g2 <- densPlot(scores, 0, labelScore, var = "Intercept")
 
 cairo_pdf("figs/stability_intercept_base.pdf", width, 1.7 * height)
 grid.arrange(g1, g2, ncol = 2)
 dev.off()
 
-g1 <- densPlot(coefs, 10, labelParam, var = "Slope") + theme(strip.text = element_blank())
+g1 <- densPlot(coefs, 10, labelParam, var = "Slope") +
+  theme(strip.text = element_blank())
 g2 <- densPlot(scores, 0, labelScore, var = "Slope")
 
 cairo_pdf("figs/stability_slope_base.pdf", width, 1.7 * height)
@@ -346,14 +345,19 @@ re <- rbind(re1, re2)
 
 ggDat <- cbind(dat, re[-2]) # dat should be the variance
 
+g1 <- densPlot(ggDat, 0, "Median Random Effect", "re") +
+  theme(strip.text = element_blank())
+
+g2 <- ggplot(ggDat, aes(Variance, re)) +
+  geom_smooth(colour = "black") +
+  facet_grid(scenario ~ .) +
+  theme$theme_thesis(fontSize) +
+  labs(y = "Median Random Effect")
+
 # jpeg("figs/stability_random_effect_base.jpg", width = width, height = height,
 #      units = "in", quality = 100, res = 150)
 cairo_pdf("figs/stability_random_effect_base.pdf", width, height)
-ggplot(ggDat, aes(Variance, re)) +
-  geom_point() +
-  facet_grid(. ~ scenario) +
-  theme$theme_thesis(fontSize) +
-  labs(y = "Median Random Effect")
+grid.arrange(g1, g2, ncol = 2, widths = c(0.4 * width, 0.6 * width))
 dev.off()
 
 # Graphics -- Spatial
@@ -449,6 +453,7 @@ dat2 <-
 names(dat2)[1:3] <- c("Correlation", "Variance1", "Variance2")
 
 dat <- rbind(dat1, dat2)
+dat <- dat %>% mutar(~ Variance1 < 1000)
 
 g1 <- densPlot(dat, 0.5, "CorrelationAR", var = "Correlation") +
   theme(strip.text = element_blank())
@@ -478,6 +483,8 @@ dat2 <-
 
 dat <- rbind(dat1, dat2)
 
+dat <- dat %>% mutar(~ varianceAR < 1000)
+
 g1 <- densPlot(dat, 0.5, "CorrelationSAR", var = "SAR")  +
   theme(strip.text = element_blank())
 g2 <- densPlot(dat, 100, "VarianceSAR", var = "varianceSAR")  +
@@ -486,10 +493,9 @@ g3 <- densPlot(dat, 0.5, "CorrelationAR", var = "AR") +
   theme(strip.text = element_blank())
 g4 <- densPlot(dat, 100, "VarianceAR", var = "varianceAR")
 
-cairo_pdf("figs/stability_variance_temporal.pdf", width, 1.7 * height)
-grid.arrange(g1, g2, g3, g4, ncol = 4, widths = c(0.25 * width, 0.25 * width, 0.25 * width, 0.3 * width))
+cairo_pdf("figs/stability_variance_spatio_temporal.pdf", 1.1 * width, 1.7 * height)
+grid.arrange(g1, g2, g3, g4, ncol = 4, widths = c(0.25 * width, 0.25 * width, 0.25 * width, 0.35 * width))
 dev.off()
-
 
 # Tables --- FH
 extractIterations <- function(resultList, type, identifier) {
@@ -598,6 +604,30 @@ overallSpatial <-
     converged ~ (runs - sum(i == maxIter1)) / runs,
     by = "scenario"
   )
+
+correlationSpatial <-
+  iterSpatialCorrelation %>%
+  mutar(
+    row ~ "- CorSAR",
+    first ~ median(iterations[i == 1]),
+    second ~ median(iterations[i == 2]),
+    remaining ~ median(iterations[i > 2]),
+    max ~ max(iterations),
+    converged ~ (runs - sum(i == maxIter1)) / runs,
+    by = "scenario"
+  )
+
+sigma <- iterSigma %>%
+  mutar(
+    row ~ "- Sigma",
+    first ~ median(iterations[i == 1]),
+    second ~ median(iterations[i == 2]),
+    remaining ~ median(iterations[i > 2]),
+    max ~ max(iterations),
+    converged ~ (runs - sum(i == maxIter1)) / runs,
+    by = "scenario"
+  )
+
 
 iterTemporal <- rbind(
   extractIterations(resultsTemporal, "correlation", "Base"),
