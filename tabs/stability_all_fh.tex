@@ -1,33 +1,33 @@
-%latex.default(x, file = fileName, ..., caption.loc = caption.loc,     rowname = rowname)%
+%latex.default(x, file = fileName, ..., label = label, caption.loc = caption.loc,     rowname = rowname)%
 \begin{table}[!tbp]
 \begin{center}
 \resizebox{\linewidth}{!}{\begin{tabular}{llrrrrr}
 \hline\hline
 \multicolumn{1}{c}{}&\multicolumn{1}{c}{scenario}&\multicolumn{1}{c}{first}&\multicolumn{1}{c}{second}&\multicolumn{1}{c}{remaining}&\multicolumn{1}{c}{max}&\multicolumn{1}{c}{converged}\tabularnewline
 \hline
-SFH - Overall&Base&$$&$$&$33$&$200$&$0.705$\tabularnewline
-&Outlier&$$&$$&$31$&$200$&$0.830$\tabularnewline
-- CorSAR&Base&$ 1.0$&$ 1.0$&$ 1$&$  1$&$$\tabularnewline
-&Outlier&$ 1.0$&$ 1.0$&$ 1$&$  1$&$$\tabularnewline
-- VarSAR&Base&$ 1.0$&$ 1.0$&$ 1$&$  1$&$$\tabularnewline
-&Outlier&$ 1.0$&$ 1.0$&$ 1$&$  1$&$$\tabularnewline
-TFH - Overall&Base&$$&$$&$21$&$ 99$&$1.000$\tabularnewline
-&Outlier&$$&$$&$22$&$200$&$0.985$\tabularnewline
- - CorAR&Base&$ 1.0$&$ 1.0$&$ 1$&$  1$&$$\tabularnewline
-&Outlier&$ 1.0$&$ 1.0$&$ 1$&$  1$&$$\tabularnewline
- - Variances&Base&$ 1.0$&$ 1.0$&$ 1$&$  1$&$$\tabularnewline
-&Outlier&$ 1.0$&$ 1.0$&$ 1$&$  1$&$$\tabularnewline
-STFH - Overall&Base&$$&$$&$11$&$200$&$0.925$\tabularnewline
-&Outlier&$$&$$&$ 9$&$200$&$0.940$\tabularnewline
- - CorSAR&Base&$12.0$&$10.0$&$ 8$&$100$&$$\tabularnewline
-&Outlier&$12.5$&$10.0$&$ 8$&$100$&$$\tabularnewline
- - CorAR&Base&$ 4.0$&$ 4.0$&$ 3$&$  8$&$$\tabularnewline
-&Outlier&$ 4.0$&$ 3.0$&$ 2$&$  5$&$$\tabularnewline
- - Variances&Base&$35.0$&$24.5$&$14$&$ 57$&$$\tabularnewline
-&Outlier&$36.0$&$22.0$&$12$&$ 51$&$$\tabularnewline
+SFH - Overall&Base&$$&$$&$ 8$&$100$&$0.925$\tabularnewline
+&Outlier&$$&$$&$ 5$&$100$&$0.985$\tabularnewline
+- CorSAR&Base&$19.0$&$14$&$ 8$&$100$&$$\tabularnewline
+&Outlier&$16.0$&$13$&$ 5$&$100$&$$\tabularnewline
+- VarSAR&Base&$45.0$&$26$&$17$&$100$&$$\tabularnewline
+&Outlier&$44.0$&$26$&$13$&$100$&$$\tabularnewline
+TFH - Overall&Base&$$&$$&$ 5$&$ 24$&$1.000$\tabularnewline
+&Outlier&$$&$$&$ 4$&$ 11$&$1.000$\tabularnewline
+ - CorAR&Base&$ 5.0$&$ 4$&$ 2$&$ 11$&$$\tabularnewline
+&Outlier&$ 4.0$&$ 3$&$ 2$&$  5$&$$\tabularnewline
+ - Variances&Base&$36.0$&$23$&$ 8$&$ 54$&$$\tabularnewline
+&Outlier&$37.0$&$20$&$ 4$&$ 53$&$$\tabularnewline
+STFH - Overall&Base&$$&$$&$ 8$&$100$&$0.915$\tabularnewline
+&Outlier&$$&$$&$ 8$&$100$&$0.935$\tabularnewline
+ - CorSAR&Base&$12.0$&$10$&$ 6$&$100$&$$\tabularnewline
+&Outlier&$12.5$&$10$&$ 6$&$100$&$$\tabularnewline
+ - CorAR&Base&$ 4.0$&$ 4$&$ 3$&$  8$&$$\tabularnewline
+&Outlier&$ 4.0$&$ 3$&$ 2$&$  5$&$$\tabularnewline
+ - Variances&Base&$35.0$&$24$&$12$&$ 48$&$$\tabularnewline
+&Outlier&$36.0$&$22$&$10$&$ 49$&$$\tabularnewline
 \hline
 \end{tabular}}
 
-\caption{Median Number of Iterations in Optimisation until Convergence was Reached. The columns \textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations.\label{tab:stability_all_fh}}\end{center}
+\caption[Median Number of Iterations in Optimisation -- Extensions]{\label{tab:stability_all_fh}Median Number of Iterations in Optimisation until Convergence was Reached. The columns \textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations.\label{tab:stability_all_fh}}\end{center}
 
 \end{table}

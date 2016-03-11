@@ -11,7 +11,11 @@ installPackages <- function(pkgs) {
   }
 }
 
-update.packages(repos = "http://mirrors.softliste.de/cran/", checkBuilt = TRUE, ask = FALSE)
+update.packages(
+  lib.loc = .libPaths()[1],
+  repos = "http://mirrors.softliste.de/cran/",
+  checkBuilt = TRUE, ask = FALSE
+)
 
 # overall package dependencies
 installPackages(c(

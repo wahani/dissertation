@@ -223,7 +223,8 @@ densPlot <- function(dat, intercept, xlab = NULL, var) {
     geom_vline(xintercept = intercept, linetype = 2, colour = "gray") +
     theme$theme_thesis(fontSize) +
     labs(title = NULL, y = NULL, x = xlab) +
-    theme(axis.text.y = element_blank())
+    theme(axis.text.y = element_blank(),
+          plot.margin = rep(unit(0,"null"), 4))
 }
 
 # Regression Coefficients
@@ -265,8 +266,9 @@ g1 <- densPlot(coefs, 100, labelParam, var = "Intercept") +
   theme(strip.text = element_blank())
 g2 <- densPlot(scores, 0, labelScore, var = "Intercept")
 
+
 cairo_pdf("figs/stability_intercept_base.pdf", width, 1.7 * height)
-grid.arrange(g1, g2, ncol = 2)
+grid.arrange(g1, g2, ncol = 2, padding = 0)
 dev.off()
 
 g1 <- densPlot(coefs, 10, labelParam, var = "Slope") +
@@ -313,7 +315,8 @@ names(scores2)[1] <- c("Variance")
 
 scores <- rbind(scores1, scores2)
 
-g1 <- densPlot(dat, 100, "Parameter Estimate", var = "Variance") + theme(strip.text = element_blank())
+g1 <- densPlot(dat, 100, "Parameter Estimate", var = "Variance") +
+  theme(strip.text = element_blank())
 g2 <- ggplot(data.frame(estimate = dat$Variance, score = scores$Variance, scenario = dat$scenario)) +
   geom_point(aes(x = estimate, y = score)) +
   facet_grid(scenario ~ .) +
@@ -487,12 +490,13 @@ dat <- rbind(dat1, dat2)
 dat <- dat %>% mutar(~ varianceAR < 1000)
 
 g1 <- densPlot(dat, 0.5, "CorrelationSAR", var = "SAR")  +
-  theme(strip.text = element_blank())
+  theme(strip.text = element_blank()) + scale_x_continuous(breaks = c(0, 0.5))
 g2 <- densPlot(dat, 100, "VarianceSAR", var = "varianceSAR")  +
-  theme(strip.text = element_blank())
+  theme(strip.text = element_blank()) + scale_x_continuous(breaks = c(100, 200))
 g3 <- densPlot(dat, 0.5, "CorrelationAR", var = "AR") +
-  theme(strip.text = element_blank())
-g4 <- densPlot(dat, 100, "VarianceAR", var = "varianceAR")
+  theme(strip.text = element_blank()) + scale_x_continuous(breaks = c(0, 0.5))
+g4 <- densPlot(dat, 100, "VarianceAR", var = "varianceAR") +
+  scale_x_continuous(breaks = c(100, 300))
 
 cairo_pdf("figs/stability_variance_spatio_temporal.pdf", 1.1 * width, 1.7 * height)
 grid.arrange(g1, g2, g3, g4, ncol = 4, widths = c(0.25 * width, 0.25 * width, 0.25 * width, 0.35 * width))
@@ -514,12 +518,14 @@ colnames(scores)[1:domains] <- 1:domains
 ggDat <- tidyr::gather(as.data.frame(scores), domain, score, -i)
 g1 <- ggplot(mutar(ggDat, ~ i <= 10) , aes(x = i, y = score, group = domain)) +
   geom_line() + labs(x = "Iteration", y = labelScore) + theme$theme_thesis(14) +
-  scale_x_continuous(breaks = c(1, 5, 10))
+  scale_x_continuous(breaks = c(1, 5, 10)) +
+  theme(plot.margin = rep(unit(0,"null"), 4))
 
 ggDat <- tidyr::gather(as.data.frame(model$iterations$re), domain, param, -i)
 g2 <- ggplot(mutar(ggDat, ~ i <= 10) , aes(x = i, y = param, group = domain)) +
   geom_line() + labs(x = "Iteration", y = labelParam) + theme$theme_thesis(14) +
-  scale_x_continuous(breaks = c(1, 5, 10))
+  scale_x_continuous(breaks = c(1, 5, 10)) +
+  theme(plot.margin = rep(unit(0,"null"), 4))
 
 cairo_pdf("figs/stability_convergence_random_effects.pdf", width, height)
 grid.arrange(g1, g2, ncol = 2, widths = c(0.5 * width, 0.5 * width))
@@ -607,7 +613,8 @@ tab <- table$saveResize(
   "tabs/stability_fh.tex",
   label = "tab:stability_fh",
   colheads = c("", names(tableDat)[-1]),
-  caption = "Median Number of Iterations in Optimisation until Convergence was Reached. The columns \\textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations."
+  caption = "\\label{tab:stability_fh}Median Number of Iterations in Optimisation until Convergence was Reached. The columns \\textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations.",
+  caption.lot = "Median Number of Iterations in Optimisation -- RFH"
 )
 
 
@@ -640,7 +647,8 @@ tab <- table$saveResize(
   "tabs/stability_all_fh.tex",
   label = "tab:stability_all_fh",
   colheads = c("", names(tableDat)[-1]),
-  caption = "Median Number of Iterations in Optimisation until Convergence was Reached. The columns \\textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations."
+  caption = "\\label{tab:stability_all_fh}Median Number of Iterations in Optimisation until Convergence was Reached. The columns \\textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations.",
+  caption.lot = "Median Number of Iterations in Optimisation -- Extensions"
 )
 
 

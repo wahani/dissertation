@@ -1,0 +1,9 @@
+\chapter{Simulation Tools for Small Area Estimation}
+
+# Outline
+
+- user stats
+- article
+
+# Discussion
+

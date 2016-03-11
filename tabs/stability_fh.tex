@@ -1,21 +1,21 @@
-%latex.default(x, file = fileName, ..., caption.loc = caption.loc,     rowname = rowname)%
+%latex.default(x, file = fileName, ..., label = label, caption.loc = caption.loc,     rowname = rowname)%
 \begin{table}[!tbp]
 \begin{center}
 \resizebox{\linewidth}{!}{\begin{tabular}{llrrrrr}
 \hline\hline
 \multicolumn{1}{c}{}&\multicolumn{1}{c}{scenario}&\multicolumn{1}{c}{first}&\multicolumn{1}{c}{second}&\multicolumn{1}{c}{remaining}&\multicolumn{1}{c}{max}&\multicolumn{1}{c}{converged}\tabularnewline
 \hline
-Overall&Base&$$&$$&$  3$&$  71$&$1.00$\tabularnewline
-&Outlier&$$&$$&$  3$&$  14$&$1.00$\tabularnewline
-- Coefficients&Base&$ 8$&$ 6$&$  1$&$  26$&$$\tabularnewline
-&Outlier&$13$&$ 5$&$  2$&$  34$&$$\tabularnewline
-- Variance&Base&$53$&$26$&$  8$&$ 100$&$$\tabularnewline
-&Outlier&$50$&$26$&$  8$&$ 100$&$$\tabularnewline
-Random Effect&Base&$$&$$&$ 12$&$ 937$&$1.00$\tabularnewline
-&Outlier&$$&$$&$106$&$1000$&$0.96$\tabularnewline
+Overall&Base&$$&$$&$  3$&$  13$&$1.000$\tabularnewline
+&Outlier&$$&$$&$  3$&$  13$&$1.000$\tabularnewline
+- Coefficients&Base&$ 9$&$ 6.0$&$  2$&$  21$&$$\tabularnewline
+&Outlier&$14$&$ 5.0$&$  2$&$  36$&$$\tabularnewline
+- Variance&Base&$51$&$26.0$&$  7$&$ 100$&$$\tabularnewline
+&Outlier&$49$&$25.5$&$  8$&$ 100$&$$\tabularnewline
+Random Effect&Base&$$&$$&$ 15$&$ 863$&$1.000$\tabularnewline
+&Outlier&$$&$$&$115$&$1000$&$0.965$\tabularnewline
 \hline
 \end{tabular}}
 
-\caption{Median Number of Iterations in Optimisation until Convergence was Reached. The columns \textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations.\label{tab:stability_fh}}\end{center}
+\caption[Median Number of Iterations in Optimisation -- RFH]{\label{tab:stability_fh}Median Number of Iterations in Optimisation until Convergence was Reached. The columns \textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations.\label{tab:stability_fh}}\end{center}
 
 \end{table}

@@ -1,0 +1,340 @@
+\chapter{Robust Small Area Estimation} \label{chap:saeRobust}
+
+# Outline
+
+In this Chapter the software package is introduced in which the discussed
+methods are implemented. The main reason to provide this package is to simplify
+the process of reproducing the results presented below. A second reason is to
+provide an initial version of a software package which is ready to be used in
+practice - albeit extensions and research is needed in order to provide a
+comprehensive suit of tools to conduct a *real world* analysis.
+
+- Other packages available
+
+Section \ref{sec:saeRobust_stability} provides details on the implemented
+algorithms and results with respect to stability in terms of software failures
+and stability in terms of number of iterations. In Section
+\ref{sec:saeRobust_discussion} are then the implications for practical use and
+references for extensions.
+
+
+# Stability
+\label{sec:saeRobust_stability}
+
+To test the stability of the implementation various configurations have been
+tested to provide sensible default settings. However a main concer has been
+stability with respect to software failure in combination with the ability to
+find solutions to the estimation equations. This lead to some choices which
+increase the number of iterations and hence the computational demand. When there
+is a known tradeoff it will be referenced.
+
+## Algorithm
+
+To avoid confusion when the results are discussed some details on the implemented algorithm need to be stated. 
+
+The algorithms where the parameter space is known to have restrictions are
+modified such that return values of the implemented fixed point functions are
+ensured to be values in the parameter space. Thus the correlation parameter in
+the spatial and temporal extensions are bounded between $-0.99999$ and
+$0.99999$; and all variance parameters have a lower bound of $0.00001$ to avoid
+zero or negative variance parameters - see the discussion in ?. These
+restrictions are relevant in optimisations with bad starting values and mainly
+prevent software failure. In these situations they also enable the algorithm to
+find solutions at all.
+
+The algorithm for the model parameters, i.e. the paramter in the fixed effects
+part and the variance components, is nested. That means that solutions for the
+regression coefficients are found in an own algorithm and also solutions for the
+variance parameter are searched for in one or more individual algorithms. These
+algorithms are then iterated over until all model parameter jointly reach one of
+the stopping rules. That means we observe an overall number of iterations and a
+number of iterations for each nested algorithm. Hence we have two maximum number
+of iterations as stopping rule: One for each nested algorithm and one for the
+overall optimisation.
+
+
+## Testing Framework
+
+To test the stability of the algorithms two scenarios are compared. In both
+scenarios non optimal starting values are used. A main focus lies on the ability
+of the algorithms to find a solution in a given number of iterations. The
+overall number of iterations as well as the number of iterations in each nested
+algorithm is restricted to $100$. The maximum number of iterations for the
+random effects is restricted to $1000$ and some problems with this optimisation
+strategy are discussed below. $500$ Monte Carlo repetitions are conducted in each scenario. The following two scenarios are compared:
+
+- *Base*: The basic scenario is an area level scenario in which we draw random
+numbers form:
+\empty{
+\begin{align*}
+y_i & = 100 + 10 x_i + \mat{z}_i^\top \mat{u} + e_i \\
+x_i & = \Distr{N}\Paran{0, 16} i.i.d. \\
+\mat{u} & = \Distr{N}\Paran{0, \mat{V}_u} \\
+e_i & = \Distr{N}\Paran{0, \sige}
+\end{align*}
+}where $\mat{V}_u$ and $\mat{z}_i$ are chosen for each model correctly. That
+means each model is specified with the correct variance structure during 
+testing. The variance parameter in all models are set to $100$ and correlation 
+parameter are set to $0.5$. $\sige$ is an equidistant sequence of real numbers 
+between $25$ and $225$ and are unique for each domain, but are time invariant in
+scenarios with a time dimension. They are also used as the values during model
+fitting. The number of domains is set to $40$ and the number of time periods -
+in scenarios with a time dimension - is set to $10$.
+- *Outlier*: The outlier scenario created is different in contrast to the
+scenarios below in that outliers are deterministic. I.e. they are not generated
+randomly but are fixed to a value of $10000$ in $e_i$ for $10$ per cent of the
+domains. The outlier domains are chosen randomly in each repetition to avoid an
+artificial scenario in combination with the values of $\sige$. The choice of 
+$10000$ is arbitrary and may reflect a numerically challenging situation.
+However it is more extreme than scenarios typically considered in the literature
+when studying robust methods.
+
+Starting values for the regression coefficients are computed by setting the
+values of the diagonal weighting matrix in the IRWLS algorithm to one, yielding
+non robust starting values. All variance parameters are being set to $1$ and
+correlation parameters are set to $0.01$. Starting values for the random effects
+are computed using the non iterative but robust estimator of equation ?.
+
+## Results
+
+To avoid unnecessary repetition for each model the solutions for the regression
+coefficients and random effects are discussed in more detail for the RFH model.
+The solutions for the spatial and temporal extensions then focus on the specific
+solutions for the variance components. Furthermore note that figures with kernel
+density estimates ommit the labels of the estimated density, i.e. the y-axis.
+Because of the scale of the different investigated entities the concrete
+realisations of these values are non informative and the figures should be used
+as a descriptive tool to evaluate the solutions.
+
+To begin with, consider Figures \ref{fig:stability_intercept_base} and
+\ref{fig:stability_slope_base} which present the estimates of the regression
+coefficients of the robust estimation under the FH model. The distribution on
+the right side presents the corresponding values of the estimation equation ? at
+the solution for the respective parameter. Since the algorithm aims to find the
+root of the estimation equation we should expect values close to zero. With this
+regard the IRWLS algorithm shows acceptable performance regardless of the
+scenario.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figs/stability_intercept_base.pdf}
+\caption[Stability Tests of Parameter Estimates: Intercept]{\label{fig:stability_intercept_base}RFH - Parameter Estimates: Intercept -- Robust parameter estimation under the FH model.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figs/stability_slope_base.pdf}
+\caption[Stability Tests of Parameter Estimates: Slope]{\label{fig:stability_slope_base}RFH - Parameter Estimates: Slope -- Robust parameter estimation under the FH model.}
+\end{figure}
+
+A difference between the two scenarios manifests itself in the different 
+estimation of the intercept parameter. Although a robust estimation technique is
+applied on average a higher intercept is estimated in the outlier scenario. The 
+reason we observe this effect is that outlying domains are not removed but 
+weighted down, hence on average more observations with higher values are present
+in the data which explains this effect.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figs/stability_variance_base.pdf}
+\caption[Stability Tests of Parameter Estimates: Variance]{\label{fig:stability_variance_base}RFH - Parameter Estimates: Variance -- Robust parameter estimation under the FH model.}
+\end{figure}
+
+The estimation of the variance parameter $\sigre$ yields overall stable results
+in the sense that the algorithms converges. A known issue also present in the
+proposed implementation is that we can estimate values close to zero which can
+be seen in Figure \ref{fig:stability_variance_base}. This effect is more visible
+under the *Base* scenario in combination with the situation that we have a non
+optimal ratio between observations and variablility in the data resulting in a
+wide range of solutions - betweem $0$ and $200$. The right hand side of Figure
+\ref{fig:stability_variance_base} also indicates that the algorithm may reach
+the stopping rule, however the solutions with respect to the estimation equation
+is not satisfying - again we would expect values close to zero - when the 
+solution for the parameter is close to zero. With this reagard evaluating the 
+value of the estimation equation may present a good indicator for the quality of
+the solution.
+
+Similarly to the solution of the intercept we can observe on average higher
+estimates for the outlier scenario - see Figure
+\ref{fig:stability_variance_base}. The solutions may suggest an over estimation
+of the parameter although we use a robust method. To put this result in
+perspective, if we estimate the variance with a non robust method solutions 
+commonly reach values close to $10^5$. Furthermore this effect is provoked with
+the choice of the magnitude of the outliers and is less immenent in the model
+based simulation studies.
+
+\input{tabs/stability_fh.tex}
+
+All results presented so far have been solutions in which the stopping rule to
+indicate convergence has been reached. Neither the optimisation in the base
+scenario nor in the outlier scenario have reached the maximum of allowed
+iterations - see Table \ref{tab:stability_fh}. In fact the maximum number of
+iterations is $13$ in both scenarios and in most cases few iterations are
+needed.
+
+These overall iterations are only part of the solution. We can observe that the 
+optimisation is more involved for the outlier scenario to optimise the 
+regression coefficients, i.e. more iterations are needed in the first overall 
+iteration. This can be explained by starting from non robust starting values 
+which may result in large absolute values for the intercept. We can also see
+that the algorithm of the variance parameter takes ca. $50$ iterations in the
+first overall iteration. In some cases even up to $100$, however iterating
+between finding solutions for the regression coefficients and variance parameter
+adjusts itself only after a few overall iterations. There is no notable
+difference between the two scenarios in both cases many iterations are needed
+due to the bad starting values.
+
+The solutions for the random effects are more concerning. Although in most cases
+$1000$ iterations are sufficient we still observe very high median values
+especially for the outlier scenario. With this effect in mind consider Figure
+\ref{fig:stability_random_effect_base} which shows the median of the predicted
+random effect in each solution. Given their distributional assumption we should
+expect values around zero which can be confirmed for the base scenario. Also
+their seems to be no relationship between the solution for the variance,
+$\sigre$, and the median value. This appears to be different for the outlier
+scenario. One possible explanation is that the prediction of the random effect
+compensates the over estimation of the intercept - thus we observe negative
+median values. This effect appears to be stronger for larger estimates for
+$\sigre$ which coincides with higher estimates of the intercept.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figs/stability_random_effect_base.pdf}
+\caption[Stability Test of Predictions]{\label{fig:stability_random_effect_base}RFH - Median of Predicted Random Effects -- Robust prediction under the FH model.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figs/stability_convergence_random_effects.pdf}
+\caption[Stability Test of Predictions -- Convergence]{\label{fig:stability_convergence_random_effects}RFH - Convergence of Random Effetcs -- Robust prediction under the FH model. First 10 iterations of 1000 total (no convergence according to stopping rule).}
+\end{figure}
+
+With respect to the relatively high median number of iterations for the random 
+effects presented in Table \ref{tab:stability_fh} this solution can be 
+unacceptable. In fact we do not only oberseve a large number of iterations for 
+the outlier scenario but in some cases also for the base scenario. To give some 
+details on the underlying process consider Figure 
+\ref{fig:stability_convergence_random_effects} which presents the first $10$ 
+iterations of $1000$ of one Monte Carlo repetition. Here we can compare the 
+evolution of the fitted values and the coresponding values of the estimation 
+equation (?) which - after all - is what should be close to zero at its 
+solution. What we observe is that for most domain predictions the value of the 
+estimation equation is close to zero after few iterations. Only for some domains
+better solutions are searched for. This effect becomes stronger with larger 
+number of domains. This suggests to investigate the solution for the random 
+effects, i.e. the values of the estimation equation, already after a few 
+iterations especially when computation time is relevant.
+
+Most of these effects are also present in the case of the spatial and temporal
+extensions to the FH model. Hence the main interest in the following discussion
+are the extensions with respect to the robust estimates of the variance
+parameters. When we look at Figure \ref{fig:stability_variance_spatial} we
+directly compare the estimates of the correlation parameter and variance.
+Remember that these results are for a scenario is based now on a model with
+spatial correlation and a true correlation parameter of $0.5$ and the variance
+is $100$. Two effects can be seen similar to before. First in the base scenario
+we estimate variance parameters close to zero which coincides with larger values
+for the estimation euqation as before. Furthermore we observe a higher value for
+the variance parameter and a lower value for the correlation parameter in the
+outlier scenario. What happens is, that the additional variation due to the
+outliers is captured be the variance component, however the correlation
+structure is somewhat shadowed.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figs/stability_variance_spatial.pdf}
+\caption[SFH - Stability Tests of Parameter Estimates under the Spatial FH Model]{\label{fig:stability_variance_spatial}SFH - Parameter Estimates: Variance Components -- Robust parameter estimation under the spatial FH model.}
+\end{figure}
+
+As said before the overall algorithm has a maximum number of iterations at $100$
+as well as each nested algorithm. This is a setting which is suboptimal with
+respect to the number of iterations however it is one which profed to be without
+a single software failure during the simulation. Figure
+\ref{fig:stability_convergence_spatial} illustrates the choice when we set the
+maximum number of iterations of each nested algorithm to one. It is counter
+intuitive that the *100 Iter* strategy needs a lot more iterations because the
+figure compares the results of each overall iteration. In fact it needs $1160$
+iterations to find a solution for the variance and $160$ for the correlation
+parameter compared to $100$ for the *1 Iter* strategy.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figs/stability_convergence_spatial.pdf}
+\caption[SFH - Stability Tests of Parameter Estimates under the Spatial FH Model -- Convergence]{\label{fig:stability_convergence_spatial}SFH - Parameter Estimates: Variance Components -- Different optimisation strategies: \textit{100 Iter} allows for a maximum of 100 nested iterations in each overall repetition; \textit{1 Iter} allows only for 1 iteration in nested algorithms. Cumulative number of iterations for \textit{100 Iter} is 1160 for the variance parameter and 160 for the correlation parameter.}
+\end{figure}
+
+Studying Figure \ref{fig:stability_convergence_spatial} further we can observe 
+how the choice of the number of iterations changes the overall behaviour. In the
+left panels we see that we start from a large initial estimate for the variance 
+and a lower for the correlation parameter. This happens because in the first 
+iteration all variation is captured by the variance parameter since the 
+correlation parameter is fixed at its initial value of $0.01$. In each further 
+iteration the relationship between correlation parameter and variance is 
+balanced out. The evolution in the right hand side panels presents a different 
+path where each algorithm only has one step. In this setting the correlation 
+parameter has a higher initial estimate and the variance a lower. Both 
+strategies yield approximately the same solutions as indicated by the figure. 
+The panel on the right side for the correlation parameter also reveals that the 
+algorithm can be unstable when we have bad starting values. The *1 Iter*
+strategy needs often fewer iterations which is a tradeoff with a software
+failure rate of ca. 10 per cent in this outlier setting. 
+
+In preliminary tests it often profed to be useful to set the maximum number of 
+iterations at some small number, say $5$, to achieve a balance between the two
+scenarios. In practice this suggests that even if the algorithm fails a
+different setting of the number of iterations may still provide results.
+
+Open for discussion are still the temporal and spatio\hyp{}temporal extensions.
+Figure \ref{fig:stability_variance_temporal} and
+\ref{fig:stability_variance_spatio_temporal} show the parameter estimates of the
+extensions respectively. A main overall effect which can be observed is that the
+estimation of the variance components of the AR(1) process are influenced by
+outliers under both models. In contrast to the results before the estimation of
+the variance parameter of the random intercept and SAR(1) process is much more
+stable. One explanation for this effect may be that the random effect
+components, i.e. the random intercept and SAR(1) process, are constant over time
+during this simulation. This may result in a stronger signal of the structure
+opposed to the AR(1) process. In this setting the AR(1) process captures the
+higher variablility in the data due to the outlying observations which masks the
+correlation structure in this case. What also may have its effect here is that
+we do not consider area level outliers; under area level outliers we would
+observe that all observations belonging to one domain to be abnormal. However
+the testing framework only sets single observations to $10000$. Hence these
+results may be artificial in their statistical properties but nevertheless
+reveal the numerical properties.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figs/stability_variance_temporal.pdf}
+\caption[Stability Tests of Parameter Estimates under the Temporal FH Model]{\label{fig:stability_variance_temporal}TFH - Parameter Estimates: Variance Components -- Robust parameter estimation under the temporal FH model.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{figs/stability_variance_spatio_temporal.pdf}
+\caption[Stability Tests of Parameter Estimates under the Spatio\hyp{}Temporal FH Model]{\label{fig:stability_variance_spatio_temporal}STFH - Parameter Estimates: Variance Components -- Robust parameter estimation under the spatio\hyp{}temporal FH model.}
+\end{figure}
+
+\input{tabs/stability_all_fh.tex}
+
+Finally we move to the number of iterations needed to find solutions for the 
+spatial and temporal extensions which can be seen in Table 
+\ref{tab:stability_all_fh}. Here we can see that not in all cases the stopping 
+criterion has been reached. The main cause of this result is the choice of the 
+starting values. Allowing for more iterations led to results in all cases. One 
+positiv aspect is that the overall number of iterations is kept relatively low
+in most scenarios. Furthermore the algorithm for the correlation parameter in
+the AR(1) shows very promising behaviour. Albeit it is based on a numeric 
+approximation of the dirivative of the estimation equation and uses a
+Newton-Raphson algorithm convergence is reached rapidly. The main reason may be
+the restriction of the parameter space being $\rho_2 < |1|$ which makes it more
+robust against the choice of starting values. This suggests that a
+Newton-Raphson algorithm may also be useful to optimise the correlation
+parameter in the SAR(1); however this has not been investigated any further.
+
+# Discussion
+\label{sec:saeRobust_discussion}
+
+
+
+
