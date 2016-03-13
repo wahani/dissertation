@@ -1,5 +1,14 @@
 \chapter{Robust Small Area Estimation} \label{chap:saeRobust}
 
+\begin{flushright}{\slshape    
+It is important to distinguish between an algorithm \\ 
+and its implementation. The former is a theoretical approach \\
+to a problem and leaves many practical details unanswered. \\
+The latter is how the approach is applied practically.} \\ \medskip
+--- \cite{McC04}
+\end{flushright}
+
+
 # Outline
 
 In the following the numerical properties of the software implementation are 
@@ -14,24 +23,26 @@ This Section provides a general discussion of the current version of the
 software but does not aim to be a manual. The package itself provides
 documentation which can be used to that extend.
 
-At this time several software packages are available for the R language. @Mol15
+At this time several software packages are available for the R language. @Mol15 
 introduced the package `sae` which is a comprehensive collection of common unit 
-level models, e.g. the BHF model of Section (?), as well as the non\hyp{}robust 
-spatial- and temporal extensions to the FH model reviewed in Section (?). Other 
-packages focus on the implementation of single estimators, e.g. `saery`
-\citep{Est14} implements the EBLUP of \eq{eq:eblup_tfh} by @Rao94. Robust
-methods for the SAE field are implemented in the package `rsae` \citep{Schoch14}
-which implements the methods introduced in @Schoch12 reviewed in Section (?).
+level models, e.g. the BHF model of Section \ref{sec:unit_level}, as well as the
+non\hyp{}robust spatial- and temporal extensions to the FH model reviewed in
+Section \ref{sec:theory_sae_fh_extensions}. Other packages focus on the
+implementation of single estimators, e.g. `saery` \citep{Est14} implements the
+EBLUP of \eq{eq:tfh} by @Rao94. Robust methods for the SAE field are
+implemented in the package `rsae` \citep{Schoch14} which implements the methods
+introduced in @Schoch12 reviewed in Section \ref{sec:robustee}.
 
-An implementation of robust methods for area level models is not available yet.
-Also the methods and advances reviewed in Section (?) have not been published in
-terms of software -- except the results by @Schoch12. With this respect
-`saeRobust` aims to provide a first but stable version implementing the models
-under study. It also may prove to be useful as a vessel for robust unit level
-models as most software components are designed to be reused. E.g. the robust
-score functions, the proposed algorithms for the regression coefficients and
-random effects, as well as more general features like the pseudo linear
-representation of a robust estimator are directly reusable as functions.
+An implementation of robust methods for area level models is not available yet. 
+Also the methods and advances reviewed in Section \ref{sec:robustee} have not
+been published in terms of software -- except the results by @Schoch12. With
+this respect `saeRobust` aims to provide a first but stable version implementing
+the models under study. It also may prove to be useful as a vessel for robust
+unit level models as most software components are designed to be reused. E.g.
+the robust score functions, the proposed algorithms for the regression
+coefficients and random effects, as well as more general features like the
+pseudo linear representation of a robust estimator are directly reusable as
+functions.
 
 In the following some numerical problems and in general the stability of the
 software implementation is investigated. This analysis is strongly influenced by
@@ -47,16 +58,17 @@ assume the correctness of the underlying subroutines in the `Matrix` package by
 respective models.
 
 Two scenarios are created and investigated in a Monte Carlo simulation study.
-Both suffer from bad starting values as the solutions should not be effected by
+Both suffer from bad starting values as the solutions should not be effected by 
 the choice of these values. In one of the scenario we can then see if and how 
 results change when we impose very extreme values to the data. With this regard 
 the current implementation is able to find solutions under both scenarios 
 without software failure; however this is a result of conducting this study and 
 tuning the implementation. *Finding solutions* refers to the implemented 
-algorithm being able to find solutions to the estimation equations in (?) and 
-(?) and (?). Hence some references are given to the value at the last iteration 
-of these estimation equations. The statistical properties of the estimators are 
-investigated separately in Section (?).
+algorithm being able to find solutions to the estimation equations in
+\eq{eq:rfhreeb}, \eq{eq:rfhreed}, and \eq{eq:rfheere}. Hence some references are
+given to the value at the last iteration of these estimation equations. The
+statistical properties of the estimators are investigated separately in Section
+(?).
 
 As stated before the current implementation may lack some software features
 which should be available during a data analysis. With this regard some remarks
@@ -77,19 +89,19 @@ at the price of stability and some remarks are given in Section
 
 ## Algorithm
 
-To avoid confusion when the results are discussed some details on the
-implementation which are not part of the introduced algorithms of Section (?)
-are given here.
+To avoid confusion when the results are discussed some details on the 
+implementation which are not part of the introduced algorithms of Section
+\ref{sec:rfh_solutions} are given here.
 
 The algorithms where the parameter space is known to have restrictions are
-modified such that return values of the implemented fixed point functions are
-ensured to be values in the parameter space. Thus the correlation parameter of
-the spatial and temporal extensions are bounded between $-0.99999$ and 
-$0.99999$; and all variance parameters have a lower bound of $0.00001$ to avoid 
-zero or negative variance parameters -- see also the discussion in @Rao15[?]. 
-These restrictions are mostly relevant in optimisations with bad starting values
-and mainly prevent software failure. In these situations they also enable the 
-algorithm to find solutions at all.
+modified such that return values of the implemented fixed point functions are 
+ensured to be values in the parameter space. Thus the correlation parameter of 
+the spatial and temporal extensions are bounded between $10^{-5} - 1$ and 
+$1 - 10^{-5}$; and all variance parameters have a lower bound of $10^{-5}$ to
+avoid zero or negative variance parameters -- see also the discussion in
+@Rao15[?]. These restrictions are mostly relevant in optimisations with bad
+starting values and mainly prevent software failure. In these situations they
+also enable the algorithm to find solutions at all.
 
 The algorithm for the model parameters, i.e. the parameter in the fixed effects 
 part and the variance components, is nested. That means that solutions for the 
@@ -101,6 +113,8 @@ and a number of iterations for each nested algorithm. Hence we have two maximum
 number of iterations as additional stopping rules: One for each nested algorithm
 and one for the overall optimisation.
 
+The value in the convergence criterion is set to $10^{-6}$ to guarantee
+sufficient numerical accuracy.
 
 ## Testing Scenarios
 
@@ -134,18 +148,19 @@ time periods - in scenarios with a time dimension - is set to $10$.
 The outlier scenario imposes deterministic outliers. I.e. they are not generated
 randomly but are fixed to a value of $10000$ in $e_i$ for $10$ per cent of the
 domains. The outlier domains are chosen randomly in each repetition to avoid an
-artificial scenario in combination with the values of $\sige$. The choice of
-$10000$ is arbitrary and may reflect a numerically challenging situation.
+artificial scenario in combination with the values of $\sige$. The choice of 
+$10000$ is arbitrary and may reflect a numerically challenging situation. 
 However it is more extreme than scenarios typically considered in the literature
-when studying robust methods - see the corresponding Section (?) and referenced
-literature.
+when studying robust methods - see the corresponding Section ?
+and referenced literature.
 
 Starting values for the regression coefficients are computed by setting the 
 values of the diagonal weighting matrix in the IRWLS algorithm to one, yielding 
 non robust starting values. All variance parameters are being set to $1$ and 
 correlation parameters are set to $0.01$. Starting values for the random effects
-are computed using the non iterative but robust estimator of equation ?. The
-tuning constant for the influence function is fixed at $1.345$.
+are computed using the non iterative but robust estimator of equation
+\eq{eq:reblupre}. The tuning constant for the influence function is fixed at
+$1.345$.
 
 ## Results
 
@@ -159,13 +174,13 @@ realisations of these values are non informative and the figures should be used
 as a descriptive tool to evaluate the solutions.
 
 To begin with, consider Figures \ref{fig:stability_intercept_base} and
-\ref{fig:stability_slope_base} which present the estimates of the regression
-coefficients of the robust estimation under the FH model. The distribution on
-the right side presents the corresponding values of the estimation equation ? at
-the solution for the respective parameter. Since the algorithm aims to find the
-root of the estimation equation we should expect values close to zero. With this
-regard the IRWLS algorithm shows acceptable performance regardless of the
-scenario.
+\ref{fig:stability_slope_base} which present the estimates of the regression 
+coefficients of the robust estimation under the FH model. The distribution on 
+the right side presents the corresponding values of the estimation equation
+\eq{eq:rfhreeb} at the solution for the respective parameter. Since the
+algorithm aims to find the root of the estimation equation we should expect
+values close to zero. With this regard the IRWLS algorithm shows acceptable
+performance regardless of the scenario.
 
 \begin{figure}[htbp]
 \centering
@@ -268,15 +283,15 @@ the outlier scenario but in some cases also for the base scenario. To give some
 details on the underlying process consider Figure 
 \ref{fig:stability_convergence_random_effects} which presents the first $10$ 
 iterations of $1000$ of one Monte Carlo repetition - this is one selected
-repetition for illustration. Here we can compare the evolution of the fitted
-values and the corresponding values of the estimation equation (?) which - after
-all - is what should be close to zero at its solution. What we observe is that
-for most domain predictions the value of the estimation equation is close to
-zero after few iterations. Only for some domains better solutions are searched
-for. This effect becomes stronger with larger number of domains. This suggests
-to investigate the solution for the random effects, i.e. the values of the
-estimation equation, already after a few iterations especially when computation
-time is relevant.
+repetition for illustration. Here we can compare the evolution of the fitted 
+values and the corresponding values of the estimation equation \eq{eq:rfhreere}
+which - after all - is what should be close to zero at its solution. What we
+observe is that for most domain predictions the value of the estimation equation
+is close to zero after few iterations. Only for some domains better solutions
+are searched for. This effect becomes stronger with larger number of domains.
+This suggests to investigate the solution for the random effects, i.e. the
+values of the estimation equation, already after a few iterations especially
+when computation time is relevant.
 
 Most of these effects are also present in the case of the spatial and temporal
 extensions to the FH model. Hence the main interest in the following discussion
@@ -388,23 +403,23 @@ parameter in the SAR(1); however this has not been investigated any further.
 \label{sec:saeRobust_discussion}
 
 In principle the results are promising as in both scenarios acceptable solutions
-can be found when we set the number of iterations to a higher value. This
+can be found when we set the number of iterations to a higher value. This 
 however presents a trade off between the number of iterations, stability, and 
 computational demand, which can become relevant quickly with temporal data. The 
-key to computationally less demanding solutions are the choice of starting values
-and the restriction of the maximum number of iterations of the nested
-algorithms. To address this trade-off the implementation in `saeRobust` allows to
-set both parameters as well as the number of iterations for the optimisation of
-the random effects.
+key to computationally less demanding solutions are the choice of starting
+values and the restriction of the maximum number of iterations of the nested 
+algorithms. To address this trade-off the implementation in `saeRobust` allows
+to set both parameters as well as the number of iterations for the optimisation
+of the random effects.
 
-Starting values for the regression coefficients, the variance parameters, and
-the random effects can be supplied by the user. And derived from this demand
-users can run a model with only a subset of the data at hand to produce better
-starting values and then update the analysis and continue with an updated data 
-set. This strategy was originally implemented to implement the parametric 
-bootstrap methods however it may also be valuable it situations with large data 
-sets. Also it may be important to first optimise the model parameters and then
-find solutions for the random effects which is possible by continuing a model
+Starting values for the regression coefficients, the variance parameters, and 
+the random effects can be supplied by the user. And related to computational
+demand users can run a model with only a subset of the data at hand to produce
+better starting values and then update the analysis and continue with an updated
+data set. This strategy was originally implemented to implement the parametric 
+bootstrap methods however it may also be valuable in situations with large data 
+sets. Also it may be important to first optimise the model parameters and then 
+find solutions for the random effects which is possible by continuing a model 
 fitting process with updated parameters.
 
 Furthermore it is important to investigate the estimation equations at their 

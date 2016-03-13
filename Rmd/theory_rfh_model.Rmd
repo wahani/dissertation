@@ -435,6 +435,7 @@ Section; and second an analytical MSPE estimator similar to the proposition by
 
 
 ## Solutions for the Robust Estimation Equations
+\label{sec:rfh_solutions}
 
 ### Solution for $\pmat\beta$
 
