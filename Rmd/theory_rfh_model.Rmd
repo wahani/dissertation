@@ -749,6 +749,8 @@ we set $\bar{\mat{V}}_{u1} = \bar{\pmat\Omega}^*_1$ and $\bar{\mat{V}}_{u2} =
 
 ### Algorithm
 
+\label{sec:rfh_algorithm}
+
 Given the previously adapted and proposed iterative equations we can now define 
 the overall optimisation strategy. In fact the overall algorithm is similar to 
 the approach suggested by @Sin09 and the reviewed literature of Section 

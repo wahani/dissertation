@@ -46,7 +46,7 @@ functions.
 
 In the following some numerical problems and in general the stability of the
 software implementation is investigated. This analysis is strongly influenced by
-the ideas in @Wei14[??] and @Zie74 which have been invaluable in creating a
+the ideas in @Wei14[87 ff] and @Zie74 which have been invaluable in creating a
 stable implementation. The idea which is borrowed here is to create a
 numerically challenging scenario by imposing a high condition number in the
 testing data. @Zie74 proposes simple testing matrices to this extend, and @Wei14
@@ -99,7 +99,7 @@ ensured to be values in the parameter space. Thus the correlation parameter of
 the spatial and temporal extensions are bounded between $10^{-5} - 1$ and 
 $1 - 10^{-5}$; and all variance parameters have a lower bound of $10^{-5}$ to
 avoid zero or negative variance parameters -- see also the discussion in
-@Rao15[?]. These restrictions are mostly relevant in optimisations with bad
+@Rao15[151 ff]. These restrictions are mostly relevant in optimisations with bad
 starting values and mainly prevent software failure. In these situations they
 also enable the algorithm to find solutions at all.
 
@@ -113,8 +113,9 @@ and a number of iterations for each nested algorithm. Hence we have two maximum
 number of iterations as additional stopping rules: One for each nested algorithm
 and one for the overall optimisation.
 
-The value in the convergence criterion is set to $10^{-6}$ to guarantee
-sufficient numerical accuracy.
+The value for $\epsilon$ in the convergence criterion given in Section
+\ref{sec:rfh_algorithm} is being set to $10^{-6}$ to guarantee sufficient
+numerical accuracy.
 
 ## Testing Scenarios
 
