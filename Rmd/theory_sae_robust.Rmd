@@ -299,6 +299,9 @@ sufficiently large part of the sample.
   approach in the case of mixed linear models with correlated random effects
   which would be needed for the spatial and temporal extensions reviewed in
   Section \ref{sec:theory_sae_fh_extensions}.
+  
+- An outlier robust block bootstrap for small area estimation
+
 
 ### Pseudolinearisation\hyp{}based Approach
 \label{sec:theory_sae_robust_mspe}
