@@ -7,10 +7,17 @@ gen <- modules::use("R/generators")
 comp <- modules::use("R/comp")
 gg <- modules::use("./R/graphics")
 
-# Constants:
+# Parameter in Simulation
 D <- 100
 Ud <- 1
 trueVar <- seq(1, 3.2, length.out = D)
+
+# Settings
+cpus <- parallel::detectCores() - 1
+
+set.seed(1)
+
+# Defining the Setups
 
 setup <- base_id(D, Ud) %>%
   # Area-Level Data
@@ -18,7 +25,8 @@ setup <- base_id(D, Ud) %>%
   sim_gen_v(sd = 1) %>%
   sim_gen_generic(gen$x$fixed_sequence, groupVars = "idD", name = "x") %>%
   sim_resp_eq(y = 100 + 10 * x + v + e) %>%
-  sim_comp_agg(comp_var(trueVar = trueVar))
+  sim_comp_agg(comp_var(trueVar = trueVar)) %>%
+  sim_gen(gen_v_sar(rho = 0, name = "sar"))
 
 setup %<>%
   sim_comp_agg(comp$area$fh("y", "trueVar", "FH")) %>%
@@ -32,9 +40,11 @@ setupV <- setup %>%
   sim_gen_vc(sd = 20, fixed = TRUE) %>%
   sim_simName("(v, 0)")
 
+
+# Trigger Simulation:
 simFun <- . %>%
   sim(100,
-      mode = "multicore", cpus = 3,
+      mode = "multicore", cpus = cpus,
       path = "./R/data/areaLevel", overwrite = FALSE) %>%
   do.call(what = rbind)
 

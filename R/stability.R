@@ -262,7 +262,7 @@ names(scores2)[1:2] <- c("Intercept", "Slope")
 
 scores <- rbind(scores1, scores2)
 
-g1 <- densPlot(coefs, 100, labelParam, var = "Intercept") +
+g1 <- densPlot(coefs, 100, "Intercept", var = "Intercept") +
   theme(strip.text = element_blank())
 g2 <- densPlot(scores, 0, labelScore, var = "Intercept")
 
@@ -271,7 +271,7 @@ cairo_pdf("figs/stability_intercept_base.pdf", width, 1.7 * height)
 grid.arrange(g1, g2, ncol = 2, padding = 0)
 dev.off()
 
-g1 <- densPlot(coefs, 10, labelParam, var = "Slope") +
+g1 <- densPlot(coefs, 10, "Slope", var = "Slope") +
   theme(strip.text = element_blank())
 g2 <- densPlot(scores, 0, labelScore, var = "Slope")
 
@@ -315,7 +315,7 @@ names(scores2)[1] <- c("Variance")
 
 scores <- rbind(scores1, scores2)
 
-g1 <- densPlot(dat, 100, "Parameter Estimate", var = "Variance") +
+g1 <- densPlot(dat, 100, "Variance", var = "Variance") +
   theme(strip.text = element_blank())
 g2 <- ggplot(data.frame(estimate = dat$Variance, score = scores$Variance, scenario = dat$scenario)) +
   geom_point(aes(x = estimate, y = score)) +

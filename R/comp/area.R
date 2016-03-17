@@ -5,9 +5,7 @@ fh <- function(dir_name, dir_var_name, pred_name = "fh") {
   force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
-    modelDat <- as.data.frame(dat) # package:sae needs this!
-    modelDat$varDir <- modelDat[[dir_var_name]]
-    dat[[pred_name]] <- sae::eblupFH(formula, varDir, data = modelDat)$eblup[, 1]
+    dat[[pred_name]] <- saeRobust::rfh(formula, dir_var_name, data = dat, k = 1e6)$reblup
     dat
   }
 }
@@ -17,7 +15,7 @@ rfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
-    dat[[pred_name]] <- predict(saeRobust::rfh(formula, dir_var_name, data = dat))$REBLUP
+    dat[[pred_name]] <- saeRobust::rfh(formula, dir_var_name, data = dat)$reblup
     dat
   }
 }
