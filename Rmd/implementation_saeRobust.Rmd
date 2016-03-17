@@ -1,4 +1,4 @@
-\chapter{Robust Small Area Estimation} \label{chap:saeRobust}
+\chapter{Robust Small Area Estimation in R} \label{chap:saeRobust}
 
 \begin{flushright}{\slshape    
 It is important to distinguish between an algorithm \\ 

@@ -2,26 +2,26 @@
 \label{sec:rfhbiascorrection}
 
 The discussion in Section \ref{sec:robustbc} already highlighted the importance
-to address the potential bias of a robust prediction when we suspect
-non\hyp{}symmetric outliers. @Cha14 and @Jio13 heve suggested different
+of addressing the potential bias of a robust prediction when we suspect
+non\hyp{}symmetric outliers. @Cha14 and @Jio13 have suggested different
 corrections to the unit level REBLUP to take this prediction bias into account.
-However the reviewed methods are based on the estimation of the within domain
-prediction error; this approach is not directly feasible to area level model
+However the methods reviewed are based on the estimation of the within domain
+prediction error; this approach is not directly applicable to area level model
 since we may only have a single *observation* per domain. 
 
 However the general problem remains. To find a solution we need to review the 
-different kinds of outliers we can observe on the area level. In Section 
-\ref{sec:rfh_framework} we distiguished between two types: area level and unit
+different kinds of outliers observable at the area level. In Section 
+\ref{sec:rfh_framework} we distiguished between two types: area level and unit 
 level outliers. Following @Bel06 area level outliers are values with large 
 absolute values in the random effect and thus are values for which the synthetic
-regression estimator is a poor fit. Independet of this question @Fay79 refer to
-@Efr71 and @Efr72 who argue that the Bayes Estimator and the Emperical Bayes
-Estimator may improve the overall prediction performance but can be ill suited
+regression estimator is a poor fit. Independetly of this question @Fay79 refer 
+to @Efr71 and @Efr72 who argue that the Bayes Estimator and the Emperical Bayes 
+Estimator may improve the overall prediction performance but may be ill suited 
 for specific domains. In essence this also describes the situation in which area
-level outliers are present in the data and we use a robust estimation procedure 
-since we shrink the prediction twowards a global conditional mean. Although this
-may improve the overall quality of the predictions it will not improve the
-prediction for the outlying domains.
+level outliers are present in the data and we are driven to use a robust
+estimation procedure since we shrink the prediction towards a global conditional
+mean. Although this may improve the overall quality of the predictions it will
+not improve the prediction for the outlying domains.
 
 In this setting we can address area level outliers in the same way as was
 already discussed by @Fay79. Following their results the idea is to bound the
@@ -38,10 +38,10 @@ the REBLUP of equation \eq{eq:area_reblup} into a bias corrected version:
   \end{cases}
 \end{align}
 }with $i = 1, \dots, n$ where $c$ is a constant. @Fay79 suggest to set $c =
-\sigma_{ei}$ to balance the tradeoff between loss in efficience and gain in
+\sigma_{ei}$ to balance the tradeoff between loss in efficiency and gain in
 reduced bias. This approach can be directly applied to the spatial and temporal
-extensions and thus similar to the area level REBLUP the area level REBLUP-BC in
-\eq{eq:area_reblup_bc} acts as a plcaholder for all extensions.
+extensions and thus similarly to the area level REBLUP the area level REBLUP-BC in
+\eq{eq:area_reblup_bc} acts as a placeholder for all extensions.
 
 Since we need the pseudo linear representation below, we can state
 \eq{eq:area_reblup_bc} as:

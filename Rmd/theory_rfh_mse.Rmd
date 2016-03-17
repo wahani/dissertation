@@ -1,16 +1,16 @@
 # Mean Squared Prediction Error
 
-In this Section the parametric bootstrap by @Sin09 is adapted for the methods
-under study. Also a pseudolinearisation\hyp{}based MSPE estimator is derived
-based on the results by @Cha11.
+In this Section the parametric bootstrap by @Sin09 is adapted for the methods 
+here under consideration. Also a pseudolinearisation\hyp{}based MSPE estimator
+is derived based on the results by @Cha11.
 
 ## Parametric Bootstrap Methods
 
 To estimate the MSPE of the robust prediction under the BHF model in 
-\eq{eq:reblupbhf} @Sin09 have proposed a parametric bootstrap method - see 
-Section \ref{sec:theory_sae_robust_bootstrap} for a review. This method is now 
-adapted for the case of robust area level models and - as before - kept in
-general notation to include all models under study.
+\eq{eq:reblupbhf} @Sin09 have proposed a parametric bootstrap method -- see 
+Section \ref{sec:theory_sae_robust_bootstrap} for a review. This method is here 
+adapted for the case of robust area level models and -- as before -- kept in
+general notation to include all models under consideration.
 
 With the robust parameter estimates, $\hat{\pmat\beta}^\psi$ and
 $\hat{\pmat\delta}^\psi$, the bootstrap samples are generated from:
@@ -25,17 +25,17 @@ $\hat{\pmat\delta}^\psi$, the bootstrap samples are generated from:
 \begin{align*}
 \pmat\theta^{*(b)} = \mat{X}\hat{\pmat\beta}^\psi + \mat{Z}\mat{u}^{*(b)}.
 \end{align*}
-}Using one of the robust area level models - including their respective bias
-corrected version - the target statistic is predicted using the $b$th bootstrap
+}Using one of the robust area level models -- including its respective bias
+corrected version -- the target statistic is predicted using the $b$th bootstrap
 sample. Hence the MSPE estimator is given by:
 \empty{
 \begin{align*}
 \widehat{MSPE}\Paran{\hat{\theta}^\psi_i} = \sum_{b = 1}^B \Paran{\hat{\theta}_i^{\psi (b)} - \theta_i^{*(b)}}^2
 \end{align*}
 }where $\hat{\theta}_i^{\psi (b)}$ denotes the robust prediction for area $i$
-using the $b$th bootstrap sample and $\theta_i^{*(b)}$ the true value of the 
+using the $b$th bootstrap sample and $\theta_i^{*(b)}$ denotes the true value of the 
 respective bootstrap sample for area $i$. The extension by @Jio13 to the 
-bootstrap method by @Sin09 can be applied directly when we use non\hyp{}robust 
+bootstrap method of @Sin09 can be applied directly when we use non\hyp{}robust 
 parameter estimates to generate the bootstrap samples. An empirical comparison
 of the different methods is given in Section (?).
 
@@ -43,15 +43,16 @@ of the different methods is given in Section (?).
 ## Pseudolinearisation-based MSPE
 \label{sec:rfh_mse_pseudo_linear}
 
-In the following I want to adapt the results of @Cha11 - the
-pseudolinearisation\hyp{}based approach to MSPE estimation - for the models 
-under study. This idea was adapted for the robust prediction under the BHF 
-model in @Cha14 and extended to account for the extra variablility associated 
-with the estimation of the variance parameters $\pmat\delta$. In principle the 
-extension would be desirable but is not being adapted for the models under 
-study; this can be an avenue for further research but at this point is beyond 
-the scope of the present Thesis. A review of the pseudolinear MSPE estimator for
-the unit level REBLUP can be found in Section \ref{sec:theory_sae_robust_mspe}.
+In the following I propose to adapt the results of @Cha11 -- the 
+pseudolinearisation\hyp{}based approach to MSPE estimation -- for the models 
+under consideration. This idea was adapted for the robust prediction under the
+BHF model in @Cha14 and extended to account for the extra variablility
+associated with the estimation of the variance parameters $\pmat\delta$. In
+principle the extension would be desirable but is not being adapted for the
+models under consideration; this can be an avenue for further research but at
+this point it is beyond the scope of the present Thesis. A review of the
+pseudolinear MSPE estimator for the unit level REBLUP can be found in Section
+\ref{sec:theory_sae_robust_mspe} above.
 
 The MSPE estimator can be formulated as:
 \empty{
@@ -60,12 +61,13 @@ The MSPE estimator can be formulated as:
   \widehat{\Exp{V}}\Paran{\hat{\theta}^\psi_i} + 
   \widehat{\Exp{B}}\Paran{\hat{\theta}^\psi_i}^2 \label{eq:rfh_cct}
 \end{align}
-}where we are now interested in an estimator for the prediction variance and
-bias. Following @Cha11 we can formulate a robust predictor as weighted sum of
-the direct estimators: $$\hat{\theta}^\psi_i = \mat{w}_i^\top \mat{y}$$ where
-$\mat{w}_i$ denotes the vector of fixed weights. *Fixed* here refers to the
-requirement that they do not depend on $\mat{y}$ and furthermore $\mat{w}_i^\top
-\mat{1}_n = 1$. The prediction bias can be derived by
+}where we are now interested in an estimator for the prediction variance and 
+bias. Following @Cha11 we can formulate a robust predictor as the weighted sum
+of the direct estimators:
+$$\hat{\theta}^\psi_i = \mat{w}_i^\top \mat{y}$$ 
+where $\mat{w}_i$ denotes the vector of fixed weights. *Fixed* here refers to
+the requirement that they do not depend on $\mat{y}$ and furthermore
+$\mat{w}_i^\top \mat{1}_n = 1$. The prediction bias can be derived as 
 \empty{
 \begin{align}
 \Exp{E}(\hat{\theta}^\psi_i - \theta_i) 
@@ -85,33 +87,33 @@ variance can be obtained by:
 \end{align}
 }where $a_{ik} = \Paran{w_{ik} - I(k = i)}$ and $I(k = i)$ denotes an indicator 
 function which is one if $k = i$ and zero otherwise. Note that we need the term 
-$\mat{z}_k^\top \mat{V}_u \mat{z}_k$ for the case of correlated random effects;
-and in fact it reduces to $\sigre$ under the FH model. The variance of the sum
-can be seperated as above because $\mat{u}$ and $\mat{e}$ are independent under
-all models under study. The difference to the approach by @Cha11 is that the
-first term here is stated for the more general case of correlated random
-effects; and that the second term is stated for a more specific case, i.e. when
+$\mat{z}_k^\top \mat{V}_u \mat{z}_k$ for the case of correlated random effects; 
+and in fact it reduces to $\sigre$ under the FH model. The variance of the sum 
+can be seperated as above because $\mat{u}$ and $\mat{e}$ are independent under 
+all models under consideration. The difference to the approach of @Cha11 is that
+the first term here is stated for the more general case of correlated random 
+effects; and the second term is stated for a more specific case, i.e. when 
 the sampling variances are known.
 
 Following the results by @Cha14 we can now find an estimator for the conditional
 MSPE of the REBLUP by using \eq{eq:prediction_variance} with an estimated
 variance covariance structure $\widehat{\mat{V}}_u$ and the weights defined in 
 Section \ref{sec:rfh_model_peudo_linear} for the robust area level EBLUP. The 
-bias can estimated accordingly when we use an estimator $\hat{\theta}_i$ for 
+bias can be estimated accordingly when we use an estimator $\hat{\theta}_i$ for 
 $\theta_i$ in \eq{eq:prediction_bias}. @Cha14 note that this estimator should be
-an unbiased estimator and suggested to use the unshrunken version of the
-respective method.
+an unbiased estimator and they have suggested to use the unshrunken version of
+the respective method.
 
 This MSPE estimator is based on the assumption that the weights are *fixed*. 
-This is of course not the case under the respective models hence it is based on
-a *pseudo*\hyp{}linear form. This approach directly extends to the bias
-correction when we use the derived weights of Section
-\ref{sec:rfhbiascorrection} instead. In this case @Cha14 suggest to ommit the
-squared bias term in \eq{eq:rfh_cct} because the unit level correction leads to
-an approximately unbiased estimator. This may not be the case for the area level
-models since we can not correct for a bias due to unit level asymmetric
-outliers. The estimator is evaluated in Section (?) where its properties are
-compared to the bootstrap methods presented before.
+This is of course not the case under the respective models and hence it is based
+on a *pseudo*\hyp{}linear form. This approach directly extends to the bias 
+correction when we use the derived weights of Section 
+\ref{sec:rfhbiascorrection} instead. In this case @Cha14 recommend that the 
+squared bias term in \eq{eq:rfh_cct} be omitted since the unit level correction
+leads to an approximately unbiased estimator. This may not be the case for the
+area level models since we cannot correct for a bias due to unit level
+asymmetric outliers. The estimator is evaluated in Section (?) where its
+properties are compared to the bootstrap methods presented earlier.
 
 
 
