@@ -2,6 +2,7 @@
 
 library("ggplot2")
 library("saeSim")
+library("dat")
 
 gen <- modules::use("R/generators")
 comp <- modules::use("R/comp")
@@ -15,7 +16,7 @@ trueVar <- seq(3.2, 1, length.out = D)
 sigre <- 2
 
 # Settings
-runs <- 20
+runs <- 200
 cpus <- parallel::detectCores() - 1
 # set.seed(1)
 reRun <- FALSE
@@ -93,6 +94,9 @@ ggDat %<>%
   dplyr::summarise(RBIAS = mean((prediction - popMean) / popMean),
                    RRMSE = sqrt(mean(((prediction - popMean) / popMean)^2)))
 
+ggDat %>%
+  as.data.frame %>%
+  mutar(rbias ~ mean(RBIAS[37:40]), by = c("method", "simName"))
 
 area_level_mc_rrmse_all <- gg$plots$mse(ggDat)
 area_level_mc_rbias_all <- gg$plots$bias(ggDat)
