@@ -46,14 +46,14 @@ setupSpatial <- setup %>%
 
 setupBaseOutlier <- setupBase %>%
   sim_gen_cont(
-    gen_norm(10, 10, "v"),
+    gen_norm(100, 10, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
   sim_simName("(0, u)")
 
 setupSpatialOutlier <- setupSpatial %>%
   sim_gen_cont(
-    gen_norm(10, 10, "v"),
+    gen_norm(100, 10, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
   sim_simName("(0.5, u)")
