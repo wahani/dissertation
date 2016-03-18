@@ -16,7 +16,7 @@ trueVar <- rev(seq(2, 6, length.out = D))
 sigre <- 2
 
 # Settings
-runs <- 200
+runs <- 500
 cpus <- parallel::detectCores() - 1
 # set.seed(1)
 reRun <- FALSE
@@ -76,6 +76,11 @@ if (reRun) {
   load("R/data/areaLevel.RData")
 }
 
+# To check if there are any errors. This only happens rarely so I do not see
+# reason to take action:
+simData %>% mutar(~is.na(SFH), n ~ length(unique(idR)), by = c("simName"))
+simData <- simData %>% mutar(~!is.na(SFH))
+
 # Graphics:
 simData$popMean <- simData$y - simData$e
 simData$Direct <- simData$y
@@ -88,15 +93,17 @@ ggDat <- reshape2::melt(
   value.name = "prediction"
 )
 
-ggDat %<>%
-  dplyr::group_by(idD, method, simName) %>%
-  dplyr::summarise(RBIAS = mean((prediction - popMean) / popMean),
-                   RRMSE = sqrt(mean(((prediction - popMean) / popMean)^2)))
+ggDat <- ggDat %>%
+  mutar(RBIAS ~ mean((prediction - popMean) / popMean),
+        RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)),
+        by = c("idD", "method", "simName"))
 
-ggDat %>%
-  as.data.frame %>%
-  mutar(rbias ~ mean(RBIAS[37:40]), by = c("method", "simName"))
-
-area_level_mc_rrmse_all <- gg$plots$mse(ggDat)
+area_level_mc_rrmse_all <- gg$plots$mse(ggDat) + scale_y_log10()
 area_level_mc_rbias_all <- gg$plots$bias(ggDat)
+
+ggDat %>% as.data.frame %>% mutar(~ RRMSE > 0.03)
+
+
+
+
 

@@ -35,10 +35,12 @@ rfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   force(dir_var_name); force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
-    dat[[pred_name]] <- saeRobust::rfh(
+    fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat,
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
-    )$reblup
+    )
+    dat[[pred_name]] <- fit$reblup
+    dat[[paste0(pred_name, "-BC")]] <- predict(fit, type = "reblupbc")$reblupbc
     dat
   }
 }
@@ -47,10 +49,12 @@ rsfh <- function(dir_name, dir_var_name, pred_name = "rsfh") {
   force(dir_var_name); force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
-    dat[[pred_name]] <- saeRobust::rfh(
+    fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat, correlation = corSAR1(testRook(nrow(dat))),
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
-    )$reblup
+    )
+    dat[[pred_name]] <- fit$reblup
+    dat[[paste0(pred_name, "-BC")]] <- predict(fit, type = "reblupbc")$reblupbc
     dat
   }
 }
