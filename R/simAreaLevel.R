@@ -18,6 +18,7 @@ sigre <- 2
 runs <- 20
 cpus <- parallel::detectCores() - 1
 # set.seed(1)
+reRun <- FALSE
 
 # Defining the Setups
 setup <- base_id(D, n) %>%
@@ -63,15 +64,19 @@ simFun <- . %>%
       path = "./R/data/areaLevel", overwrite = TRUE) %>%
   do.call(what = rbind)
 
-lapply(
-  list(setupBase, setupBaseOutlier, setupSpatial, setupSpatialOutlier),
-  simFun
-)
+if (reRun) {
+  lapply(
+    list(setupBase, setupBaseOutlier, setupSpatial, setupSpatialOutlier),
+    simFun
+  )
+  simData <- sim_read_data("./R/data/areaLevel")
+  save(list = "simData", file = "R/data/areaLevel/simData.RData")
+} else {
+  load("R/data/areaLevel/simData.RData")
+}
+
 
 # Graphics:
-
-simData <- sim_read_data("./R/data/areaLevel")
-
 simData$popMean <- simData$y - simData$e
 simData$Direct <- simData$y
 
