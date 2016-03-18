@@ -10,8 +10,10 @@ fh <- function(dir_name, dir_var_name, pred_name = "fh") {
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
     dat$dirVar <- dat[[dir_var_name]]
-    fit <- sae::eblupFH(formula, dirVar, data = dat)
-    dat[[pred_name]] <- as.numeric(fit$eblup)
+    fit <- try({
+      sae::eblupFH(formula, dirVar, data = dat)
+    })
+    dat[[pred_name]] <- if (inherits(fit, "try-error")) NA else as.numeric(fit$eblup)
     dat
   }
 }
@@ -21,8 +23,10 @@ sfh <- function(dir_name, dir_var_name, pred_name = "sfh") {
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
     dat$dirVar <- dat[[dir_var_name]]
-    fit <- sae::eblupSFH(formula, dirVar, proxmat = testRook(nrow(dat)), data = dat)
-    dat[[pred_name]] <- as.numeric(fit$eblup)
+    fit <- try({
+      sae::eblupSFH(formula, dirVar, proxmat = testRook(nrow(dat)), data = dat)
+    })
+    dat[[pred_name]] <- if (inherits(fit, "try-error")) NA else as.numeric(fit$eblup)
     dat
   }
 }
