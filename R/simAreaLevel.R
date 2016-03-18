@@ -12,7 +12,7 @@ gg <- modules::use("./R/graphics")
 D <- 40
 nCont <- round(0.1 * D)
 n <- 1
-trueVar <- seq(3.2, 1, length.out = D)
+trueVar <- rev(seq(2, 6, length.out = D))
 sigre <- 2
 
 # Settings
@@ -71,11 +71,10 @@ if (reRun) {
     simFun
   )
   simData <- sim_read_data("./R/data/areaLevel")
-  save(list = "simData", file = "R/data/areaLevel/simData.RData")
+  save(list = "simData", file = "R/data/areaLevel.RData")
 } else {
-  load("R/data/areaLevel/simData.RData")
+  load("R/data/areaLevel.RData")
 }
-
 
 # Graphics:
 simData$popMean <- simData$y - simData$e
