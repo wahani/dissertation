@@ -28,6 +28,6 @@ scenario $\sigre = 1$.
 of the areas, i.e. for $i \in \{1, \dots, 95\}$, and $\sigre = 20^2$ for $i \in
 \{96, \dots, 100\}$.
 
-![\textrrmse](figs/area_level_mc_rrmse_all.pdf)
+![\textrrmse](figs/area_level_rrmse.pdf)
 
-![\textrbias](figs/area_level_mc_rbias_all.pdf)
+![\textrbias](figs/area_level_rbias.pdf)

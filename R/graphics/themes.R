@@ -14,6 +14,6 @@ theme_thesis_nogrid <- function(base_size = 12, base_family = "serif") {
 
 theme_thesis_boxplot <- function(base_size = 12, base_family = "serif") {
   theme_thesis(base_size, base_family) %+replace%
-    theme(panel.border = element_rect(fill = "transparent"),
+    theme(panel.margin = unit(1.2, "lines"),
           axis.title.y = element_blank())
 }
