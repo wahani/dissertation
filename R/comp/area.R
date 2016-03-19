@@ -2,7 +2,7 @@ modules::import(stats)
 modules::import(saeRobust)
 
 maxIter <- 200
-maxIterParam <- 5
+maxIterParam <- 10
 maxIterRe <- 1000
 
 fh <- function(dir_name, dir_var_name, pred_name = "fh") {

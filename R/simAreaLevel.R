@@ -17,7 +17,7 @@ trueVar <- rev(seq(2, 6, length.out = D))
 sigre <- 2
 
 # Settings
-runs <- 100
+runs <- 500
 cpus <- parallel::detectCores() - 1
 # set.seed(1)
 reRun <- FALSE
@@ -73,12 +73,11 @@ setupTemporal <- base_id_temporal(D, n, T) %>%
   sim_gen_e(sd = sqrt(trueVarTemporal)) %>%
   sim_gen_generic(gen$x$fixed_sequence, groupVars = "idD", name = "x") %>%
   sim_resp_eq(y = 100 + 5 * x + v + e) %>%
-  sim_comp_agg(comp_var(trueVar = trueVarTemporal))
-# %>%
-#   sim_comp_agg(comp$area$tfh("y", "trueVar", "TFH")) %>%
-#   sim_comp_agg(comp$area$rtfh("y", "trueVar", "RTFH")) %>%
-#   sim_comp_agg(comp$area$stfh("y", "trueVar", "STFH")) %>%
-#   sim_comp_agg(comp$area$rstfh("y", "trueVar", "RSTFH"))
+  sim_comp_agg(comp_var(trueVar = trueVarTemporal)) %>%
+  sim_comp_agg(comp$area$tfh("y", "trueVar", "TFH")) %>%
+  sim_comp_agg(comp$area$rtfh("y", "trueVar", "RTFH")) %>%
+  sim_comp_agg(comp$area$stfh("y", "trueVar", "STFH")) %>%
+  sim_comp_agg(comp$area$rstfh("y", "trueVar", "RSTFH"))
 
 setupTemporalBase <- setupTemporal %>%
   sim_gen(gen_v_norm(sd = sigre)) %>%
@@ -110,7 +109,7 @@ setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
 simFun <- . %>%
   sim(runs,
       mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
-      path = "./R/data/areaLevel", overwrite = TRUE) %>%
+      path = "./R/data/areaLevel", overwrite = FALSE) %>%
   do.call(what = rbind)
 
 if (reRun) {
