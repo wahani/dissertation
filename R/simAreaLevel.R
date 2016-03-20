@@ -80,7 +80,9 @@ setupTemporal <- base_id_temporal(D, n, T) %>%
   sim_comp_agg(comp$area$rstfh("y", "trueVar", "RSTFH"))
 
 setupTemporalBase <- setupTemporal %>%
-  sim_gen(gen_v_norm(sd = sigre)) %>%
+  sim_gen(gen_v_sar(rho = 0, sd = sqrt(sigre), name = "v")) %>%
+  sim_gen(gen_v_ar1(rho = 0, sd = sqrt(sigre), name = "ar")) %>%
+  sim_resp_eq(y = y + ar) %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
   sim_simName("(0, 0)")
 
@@ -142,12 +144,8 @@ if (reRunTemporal) {
   load("R/data/areaLevelTemporal.RData")
 }
 
-# To check if there are any errors. This only happens rarely so I do not see
-# reason to take action:
 simData %>% mutar(~is.na(SFH), n ~ length(unique(idR)), by = c("simName"))
-simData <- simData %>% mutar(~!is.na(SFH))
 simData %>% mutar(function(col) any(is.na(col))) # check for missings
-#
 simDataTemporal %>% mutar(function(col) any(is.na(col))) # check for missings
 # ar is missing in scenarios with no ar process
 
@@ -199,7 +197,8 @@ simDataTemporal <- as.DataFrame(simDataTemporal)
 simDataTemporal[~is.na(STFH), n ~ length(unique(idR)), by = c("simName")]
 simDataTemporal[~is.na(TFH), n ~ length(unique(idR)), by = c("simName")]
 
-simDataTemporal <- simDataTemporal[~!is.na(STFH)]
+# We are interested in the current time period:
+simDataTemporal <- simDataTemporal[~idT == 10]
 
 
 ggDat <- reshape2::melt(
