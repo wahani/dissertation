@@ -1,7 +1,7 @@
 modules::import(stats)
 modules::import(saeRobust)
 
-maxIter <- 50
+maxIter <- 100
 maxIterParam <- 10
 maxIterRe <- 1000
 
