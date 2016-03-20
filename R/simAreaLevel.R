@@ -10,10 +10,10 @@ gg <- modules::use("./R/graphics")
 
 # Parameter in Simulation
 D <- 40
-nCont <- round(0.1 * D)
+nCont <- c(5, 15, 25, 35)
 n <- 1
 T <- 10
-trueVar <- rev(seq(2, 6, length.out = D))
+trueVar <- seq(2, 6, length.out = D)
 sigre <- 2
 
 # Settings
@@ -109,7 +109,7 @@ setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
 simFun <- . %>%
   sim(runs,
       mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
-      path = "./R/data/areaLevel", overwrite = FALSE) %>%
+      path = "./R/data/areaLevel", overwrite = TRUE) %>%
   do.call(what = rbind)
 
 if (reRun) {
@@ -128,7 +128,7 @@ if (reRunTemporal) {
   simFun <- . %>%
     sim(runs,
         mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
-        path = "./R/data/areaLevelTemporal", overwrite = FALSE) %>%
+        path = "./R/data/areaLevelTemporal", overwrite = TRUE) %>%
     do.call(what = rbind)
 
   lapply(
@@ -146,9 +146,9 @@ if (reRunTemporal) {
 # reason to take action:
 simData %>% mutar(~is.na(SFH), n ~ length(unique(idR)), by = c("simName"))
 simData <- simData %>% mutar(~!is.na(SFH))
-# simData %>% mutar(function(col) any(is.na(col))) # check for missings
+simData %>% mutar(function(col) any(is.na(col))) # check for missings
 #
-# simDataTemporal %>% mutar(function(col) any(is.na(col))) # check for missings
+simDataTemporal %>% mutar(function(col) any(is.na(col))) # check for missings
 # ar is missing in scenarios with no ar process
 
 
@@ -196,6 +196,12 @@ simDataTemporal$Direct <- simDataTemporal$y
 
 simDataTemporal <- as.DataFrame(simDataTemporal)
 
+simDataTemporal[~is.na(STFH), n ~ length(unique(idR)), by = c("simName")]
+simDataTemporal[~is.na(TFH), n ~ length(unique(idR)), by = c("simName")]
+
+simDataTemporal <- simDataTemporal[~!is.na(STFH)]
+
+
 ggDat <- reshape2::melt(
   simDataTemporal,
   id.vars = c("idD", "popMean", "simName"),
@@ -217,8 +223,7 @@ ggDat <- ggDat %>%
         method ~ factor(method, ordered = TRUE, levels = methodOrder))
 
 cairo_pdf("figs/area_level_rrmse.pdf", width, 2 * height)
-gg$plots$mse(ggDat, fontsize = fontSize) +
-  scale_y_log10(breaks = c(0.01, 0.02, 0.1))
+gg$plots$mse(ggDat, fontsize = fontSize)
 dev.off()
 
 cairo_pdf("figs/area_level_rbias.pdf", width, 2 * height)

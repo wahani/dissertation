@@ -1,7 +1,7 @@
 modules::import(stats)
 modules::import(saeRobust)
 
-maxIter <- 200
+maxIter <- 50
 maxIterParam <- 10
 maxIterRe <- 1000
 
@@ -9,11 +9,12 @@ fh <- function(dir_name, dir_var_name, pred_name = "fh") {
   force(dir_var_name); force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
-    dat$dirVar <- dat[[dir_var_name]]
-    fit <- try({
-      sae::eblupFH(formula, dirVar, data = dat)
-    })
-    dat[[pred_name]] <- if (inherits(fit, "try-error")) NA else as.numeric(fit$eblup)
+    fit <- saeRobust::rfh(
+      formula, dir_var_name, data = dat,
+      x0Var = c(4), k = 1e6,
+      maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
+    )
+    dat[[pred_name]] <- fit$reblup
     dat
   }
 }
@@ -22,11 +23,12 @@ sfh <- function(dir_name, dir_var_name, pred_name = "sfh") {
   force(dir_var_name); force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
-    dat$dirVar <- dat[[dir_var_name]]
-    fit <- try({
-      sae::eblupSFH(formula, dirVar, proxmat = testRook(nrow(dat)), data = dat)
-    })
-    dat[[pred_name]] <- if (inherits(fit, "try-error")) NA else as.numeric(fit$eblup)
+    fit <- saeRobust::rfh(
+      formula, dir_var_name, data = dat, correlation = corSAR1(testRook(nrow(dat))),
+      x0Var = c(0.5, 4), k = 1e6,
+      maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
+    )
+    dat[[pred_name]] <- fit$reblup
     dat
   }
 }
@@ -37,6 +39,7 @@ rfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   function(dat) {
     fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat,
+      x0Var = c(4),
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
     )
     dat[[pred_name]] <- fit$reblup
@@ -51,6 +54,7 @@ rsfh <- function(dir_name, dir_var_name, pred_name = "rsfh") {
   function(dat) {
     fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat, correlation = corSAR1(testRook(nrow(dat))),
+      x0Var = c(0.5, 4),
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
     )
     dat[[pred_name]] <- fit$reblup
@@ -67,12 +71,14 @@ stfh <- function(dir_name, dir_var_name, pred_name = "sfh") {
     T <- length(unique(dat$idT))
     D <- length(unique(dat$idD))
 
-    dat$dirVar <- dat[[dir_var_name]]
-    fit <- try({
-      sae::eblupSTFH(formula, D, T, dirVar, proxmat = testRook(D), data = dat,
-                     MAXITER = maxIter * maxIterParam)
-    })
-    dat[[pred_name]] <- if (inherits(fit, "try-error")) NA else as.numeric(fit$eblup)
+    fit <- saeRobust::rfh(
+      formula, dir_var_name, data = dat,
+      correlation = corSAR1AR1(W = testRook(D), nTime = T),
+      k = 1e6, x0Var = c(0.5, 0.5, 2, 2),
+      maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
+    )
+
+    dat[[pred_name]] <- fit$reblup
     dat
   }
 }
@@ -84,7 +90,7 @@ tfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
     T <- length(unique(dat$idT))
     fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat,
-      correlation = corAR1(T), k = 1e6,
+      correlation = corAR1(T), k = 1e6, x0Var = c(0.5, 2, 2),
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
     )
     dat[[pred_name]] <- fit$reblup
@@ -99,7 +105,7 @@ rtfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
     T <- length(unique(dat$idT))
     fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat,
-      correlation = corAR1(T),
+      correlation = corAR1(T), x0Var = c(0.5, 2, 2),
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
     )
     dat[[pred_name]] <- fit$reblup
@@ -119,6 +125,7 @@ rstfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
     fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat,
       correlation = corSAR1AR1(W = testRook(D), nTime = T),
+      x0Var = c(0.5, 0.5, 2, 2),
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
     )
 
