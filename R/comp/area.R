@@ -136,19 +136,3 @@ rstfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   }
 }
 
-rfh_mse <- function(dir_name, dir_var_name, pred_name = "rfh") {
-  force(dir_var_name)
-  force(pred_name)
-  formula <- as.formula(paste(dir_name, "~", "x"))
-  function(dat) {
-    modelFit <- saeRobust::rfh(
-      formula, dir_var_name, data = dat,
-      maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
-    )
-    prediction <- predict(modelFit, mse = c("pseudo", "boot"), B = 100)
-    dat[[pred_name]] <- prediction$REBLUP
-    dat[[paste0(pred_name, "PseudoMse")]] <- prediction$pseudo
-    dat[[paste0(pred_name, "BootMse")]] <- prediction$boot
-    dat
-  }
-}

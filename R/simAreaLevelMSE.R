@@ -1,60 +1,237 @@
 # devtools::install_github("wahani/dat")
+
 library("dat")
 library("saeSim")
 library("saeRobust")
 library("ggplot2")
 
-comp <- modules::use("R/comp")
+comp <- modules::use("R/comp/mse.R")
 gg <- modules::use("R/graphics/")
+gen <- modules::use("R/generators/x.R")
 
+# Constants
+
+## Scenario:
 D <- 40
-ssd <- sqrt(seq(16, 16, length.out = D))
+n <- 1
+nTime <- 10
+nCont <- c(5, 15, 25, 35)
+sige <- sqrt(seq(2, 6, length.out = D))
+sigre <- 2
 
-makeSim <- function(D, ssd, vsd) {
-  base_id(D, 1) %>%
-    sim_gen_x() %>%
-    as.data.frame() %>%
-    sim_gen_v(sd = vsd) %>%
-    sim_gen_e(sd = ssd) %>%
-    sim_comp_pop(function(dat) {dat$samplingVar <- ssd^2; dat}) %>%
-    sim_resp_eq(y = 100 + 2 * x + v + e, trueVal = 100 + 2 * x + v) %>%
-    sim_comp_agg(comp$area$rfh_mse("y", "samplingVar")) %>%
-    sim_simName(paste0(vsd, "-4"))
+## Simulation
+runs <- 50
+cpus <- parallel::detectCores() - 1
+# number <- as.numeric(Sys.getenv("I"))
+rerunBase <- FALSE
+rerunSpatial <- FALSE
+rerunTemporal <- FALSE
+rerunSpatioTemporal <- FALSE
+
+# Setup
+setup <- base_id(D, 1) %>%
+  sim_gen_generic(gen$fixed_sequence, groupVars = "idD", name = "x") %>%
+  sim_gen_e(sd = sige) %>%
+  sim_comp_pop(function(dat) {dat$trueVar <- sige^2; dat}) %>%
+  sim_resp_eq(y = 100 + 5 * x + v + e, trueVal = 100 + 5 * x + v)
+
+
+## Base
+setupBase <- setup %>%
+  sim_gen_v(sd = sigre)  %>%
+  sim_comp_agg(comp$rfh("y", "trueVar")) %>%
+  sim_simName("(0, 0)")
+
+setupOutlier <- setup %>%
+  sim_gen_v(sd = sigre)  %>%
+  sim_comp_agg(comp$rfh("y", "trueVar")) %>%
+  sim_gen_cont(
+    gen_norm(9, 2.5 * sigre, "v"),
+    type = "area", areaVar = "idD", fixed = TRUE,
+    nCont = nCont) %>%
+  sim_simName("(0, u)")
+
+## Spatial
+setupSpatial <- setup %>%
+  sim_gen(gen_v_sar(sd = sigre, name = "v"))  %>%
+  sim_comp_agg(comp$rsfh("y", "trueVar")) %>%
+  sim_simName("(0.5, 0)")
+
+setupOutlierSpatial <- setupSpatial %>%
+  sim_gen_cont(
+    gen_norm(9, 2.5 * sigre, "v"),
+    type = "area", areaVar = "idD", fixed = TRUE,
+    nCont = nCont) %>%
+  sim_simName("(0.5, u)")
+
+## Temporal
+
+trueVarTemporal <- rep(sige^2, each = nTime)
+
+setupTemporal <- base_id_temporal(D, n, nTime) %>%
+  # Area-Level Data
+  sim_gen_e(sd = sqrt(trueVarTemporal)) %>%
+  sim_gen_generic(gen$fixed_sequence, groupVars = "idD", name = "x") %>%
+  sim_gen(gen_v_ar1(rho = 0.5, sd = sigre, name = "ar")) %>%
+  sim_resp_eq(y = 100 + 5 * x + v + ar + e) %>%
+  sim_comp_agg(comp_var(trueVar = trueVarTemporal))
+
+setupTemporalBase <- setupTemporal %>%
+  sim_gen(gen_v_sar(rho = 0, sd = sigre, name = "v")) %>%
+  sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
+  sim_comp_agg(comp$rtfh("y", "trueVar")) %>%
+  sim_simName("(0.5, 0)")
+
+setupTemporalBaseOutlier <- setupTemporalBase %>%
+  sim_gen_cont(
+    gen_norm(9, 2.5 * sigre, "v"),
+    type = "area", areaVar = "idD", fixed = TRUE,
+    nCont = nCont) %>%
+  sim_comp_agg(comp$rtfh("y", "trueVar")) %>%
+  sim_simName("(0, u)")
+
+## Spatio Temporal
+setupSpatioTemporal <- setupTemporal %>%
+  sim_gen(gen_v_sar(rho = 0.5, sd = sqrt(sigre), name = "v")) %>%
+  sim_gen(gen_v_ar1(rho = 0.5, sd = sqrt(sigre), name = "ar")) %>%
+  sim_comp_agg(comp$rstfh("y", "trueVar")) %>%
+  sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
+  sim_simName("(0.5, 0)")
+
+setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
+  sim_gen_cont(
+    gen_norm(9, 2.5 * sigre, "v"),
+    type = "area", areaVar = "idD", fixed = TRUE,
+    nCont = nCont) %>%
+  sim_simName("(0.5, u)")
+
+# Simulation
+
+simFun <- function(s, path = "R/data/areaLevelMSE") {
+  sim(s, runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
+    path = path, overwrite = FALSE)
 }
 
-startSim <- function(setup) {
-  sim(setup, 30, mode = "multicore", cpus = 3,
-      path = "R/data/areaLevelMSE", overwrite = FALSE)
+if (rerunBase) {
+  lapply(list(setupBase, setupOutlier), simFun)
+  simDat <- sim_read_data("R/data/areaLevelMSE/")
+  save(list = "simDat", file = "R/data/areaLevelMse.RData")
+} else {
+  load("R/data/areaLevelMse.RData")
 }
 
-map(4, ~ makeSim(D, ssd, .)) %>% map(startSim)
+if (rerunSpatial) {
+  lapply(list(setupSpatial, setupOutlierSpatial), simFun, path = "R/data/areaLevelMSESpatial/")
+  simDatSpatial <- sim_read_data("R/data/areaLevelMSESpatial/")
+  save(list = "simDatSpatial", file = "R/data/areaLevelMseSpatial.RData")
+} else {
+  load("R/data/areaLevelMseSpatial.RData")
+}
 
-simDat <- sim_read_data("R/data/areaLevelMSE/")
+if (rerunTemporal) {
+  lapply(list(setupTemporalBase, setupTemporalBaseOutlier), simFun, path = "R/data/areaLevelMSETemporal/")
+  simDatTemporal <- sim_read_data("R/data/areaLevelMSETemporal/")
+  save(list = "simDatTemporal", file = "R/data/areaLevelMseTemporal.RData")
+} else {
+  load("R/data/areaLevelMseTemporal.RData")
+}
 
-# ggplot(simDat, aes(x = rfh, y = trueVal)) + geom_point()
+if (rerunSpatioTemporal) {
+  lapply(list(setupSpatioTemporal, setupSpatioTemporalOutlier), simFun, path = "R/data/areaLevelMSESpatioTemporal/")
+  simDatSpatioTemporal <- sim_read_data("R/data/areaLevelMSESpatioTemporal/")
+  save(list = "simDatSpatioTemporal", file = "R/data/areaLevelMseSpatioTemporal.RData")
+} else {
+  load("R/data/areaLevelMseSpatioTemporal.RData")
+}
 
-ggDat <- simDat %>%
-  mutar(MCRFH ~ mean((rfh - mean(trueVal))^2),
-        PseudoRFH ~ mean(rfhPseudoMse),
-        BootRFH ~ mean(rfhBootMse),
-        by = c("idD", "simName")) %>%
-  tidyr::gather(estimator, mse, -idD, -simName)
+plotRMSE <- function(simDat) {
+  mseDat <- simDat %>%
+    mutar(
+      MCRFH ~ sqrt(mean((rfh - trueVal)^2)),
+      MCRFH.BC ~ sqrt(mean((rfh.BC - trueVal)^2)),
+      PseudoRFH ~ mean(sqrt(rfhPseudoMse)),
+      BootRFH ~ mean(sqrt(rfhBootMse)),
+      PseudoRFH.BC ~ mean(sqrt(rfhPseudoMse.BC)),
+      BootRFH.BC ~ mean(sqrt(rfhBootMse.BC)),
+      by = c("idD", "simName"))
 
-areaLevelMse <- ggplot(ggDat, aes(x = idD, y = mse, colour = estimator)) +
-  geom_line() + facet_wrap(~simName, ncol = 4) + gg$themes$theme_thesis_nogrid()
+  ggDat <- mseDat %>%
+    tidyr::gather(estimator, RMSE, -idD, -simName) %>%
+    mutar(~ estimator %in% c("MCRFH.BC", "PseudoRFH.BC", "BootRFH.BC"))
 
-gg$save$default(areaLevelMse)
+  ggplot(ggDat, aes(x = idD, y = RMSE, colour = estimator)) +
+    geom_line() + gg$themes$theme_thesis_nogrid() + labs(x = "domain", colour = NULL) +
+    theme(legend.position = "bottom") + facet_wrap(~simName, ncol = 2)
 
-# ggplot(ggDat, aes(x = mse, fill = estimator)) +
-#   geom_density(alpha = 0.2) +
-#   facet_wrap(~simName, ncol = 4)
+}
 
-ggDat <- simDat %>%
-  map(mutar, By(c("idD", "simName")), MCRFH ~ mean((rfh - mean(trueVal))^2)) %>%
-  mutar(RBIAS ~ mean((rfhPseudoMse - MCRFH) / MCRFH),
-        RRMSE ~ sqrt(mean(((rfhPseudoMse - MCRFH) / MCRFH)^2)),
-        RBIASBoot ~ mean((rfhBootMse - MCRFH) / MCRFH),
-        RRMSEBoot ~ sqrt(mean(((rfhBootMse - MCRFH) / MCRFH)^2)),
-        by = c("idD", "simName")) %>%
-  tidyr::gather(estimator, mse, -idD, -simName) %>%
-  mutar(m ~ mean(mse), by = c("estimator", "simName"))
+plotRMSE(simDat)
+plotRMSE(simDatSpatial)
+
+
+tableMSE <- function(simDat) {
+  mseDat <- simDat %>%
+    mutar(
+      MCRFH ~ sqrt(mean((rfh - trueVal)^2)),
+      MCRFH.BC ~ sqrt(mean((rfh.BC - trueVal)^2)),
+      by = c("idD", "simName")
+    )
+
+  simDat <- dplyr::left_join(
+    simDat,
+    mseDat[c("idD", "simName", "MCRFH", "MCRFH.BC")],
+    by = c("idD", "simName")
+  )
+
+  # RBIAS
+  bias <- simDat %>%
+    mutar(
+      PseudoRFH ~ mean((sqrt(rfhPseudoMse) - MCRFH) / MCRFH),
+      BootRFH ~ mean((sqrt(rfhBootMse) - MCRFH) / MCRFH),
+      PseudoRFH.BC ~ mean((sqrt(rfhPseudoMse.BC) - MCRFH.BC) / MCRFH.BC),
+      BootRFH.BC ~ mean((sqrt(rfhBootMse.BC) - MCRFH.BC) / MCRFH.BC),
+      by = c("idD", "simName")
+    ) %>%
+    mutar(ind ~ ifelse(grepl("u\\)$", simName) & (idD %in% nCont), 1, 0)) %>%
+    mutar(RFH.PSEUDO ~ median(PseudoRFH),
+          RFH.BOOT ~ median(BootRFH),
+          RFH.BC.PSEUDO ~ median(PseudoRFH.BC),
+          RFH.BC.BOOT ~ median(BootRFH.BC),
+          by = c("ind", "simName"))
+
+  colNames <- paste(
+    bias$simName,
+    ifelse(bias$ind == 0, "Regular", "Outlier"),
+    sep = "-"
+  )
+
+  biasMat <- t(as.matrix(mutar(bias, "^RFH")))
+  colnames(biasMat) <- colNames
+
+  # RRMSE
+  mse <- simDat %>%
+    mutar(
+      PseudoRFH ~ sqrt(mean(((sqrt(rfhPseudoMse) - MCRFH) / MCRFH)^2)),
+      BootRFH ~ sqrt(mean(((sqrt(rfhBootMse) - MCRFH) / MCRFH)^2)),
+      PseudoRFH.BC ~ sqrt(mean(((sqrt(rfhPseudoMse.BC) - MCRFH.BC) / MCRFH.BC)^2)),
+      BootRFH.BC ~ sqrt(mean(((sqrt(rfhBootMse.BC) - MCRFH.BC) / MCRFH.BC)^2)),
+      by = c("idD", "simName")
+    ) %>%
+    mutar(ind ~ ifelse(grepl("u\\)$", simName) & (idD %in% nCont), 1, 0)) %>%
+    mutar(RFH.PSEUDO ~ median(PseudoRFH),
+          RFH.BOOT ~ median(BootRFH),
+          RFH.BC.PSEUDO ~ median(PseudoRFH.BC),
+          RFH.BC.BOOT ~ median(BootRFH.BC),
+          by = c("ind", "simName"))
+
+  mseMat <- t(as.matrix(mutar(mse, "^RFH")))
+  colnames(mseMat) <- colNames
+
+  list(bias = biasMat, mse = mseMat)
+
+}
+
+tableMSE(simDat)
+tableMSE(simDatSpatial)
+
+
