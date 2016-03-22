@@ -111,7 +111,7 @@ setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
 simFun <- . %>%
   sim(runs,
       mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
-      path = "./R/data/areaLevel", overwrite = TRUE) %>%
+      path = "./R/data/areaLevel", overwrite = FALSE) %>%
   do.call(what = rbind)
 
 if (reRun) {
@@ -130,7 +130,7 @@ if (reRunTemporal) {
   simFun <- . %>%
     sim(runs,
         mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
-        path = "./R/data/areaLevelTemporal", overwrite = TRUE) %>%
+        path = "./R/data/areaLevelTemporal", overwrite = FALSE) %>%
     do.call(what = rbind)
 
   lapply(
@@ -221,11 +221,11 @@ ggDat <- ggDat %>%
   mutar(simName ~ factor(simName, ordered = TRUE, levels = scenarioOrder),
         method ~ factor(method, ordered = TRUE, levels = methodOrder))
 
-cairo_pdf("figs/area_level_rrmse.pdf", width, 2 * height)
+cairo_pdf("figs/area_level_temporal_rrmse.pdf", width, 2 * height)
 gg$plots$mse(ggDat, fontsize = fontSize)
 dev.off()
 
-cairo_pdf("figs/area_level_rbias.pdf", width, 2 * height)
+cairo_pdf("figs/area_level_temporal_rbias.pdf", width, 2 * height)
 gg$plots$bias(ggDat, fontsize = fontSize)
 dev.off()
 
