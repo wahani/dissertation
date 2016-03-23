@@ -10,6 +10,7 @@ gg <- modules::use("R/graphics/")
 gen <- modules::use("R/generators/x.R")
 
 # Constants
+LOCAL <- identical(commandArgs(TRUE), character(0))
 
 ## Graphic Parameter
 width <- 7
@@ -26,12 +27,12 @@ sigre <- 2
 
 ## Simulation
 runs <- 10
-cpus <- if (identical(commandArgs(TRUE), character(0))) parallel::detectCores() - 1 else 1
-number <- commandArgs(TRUE)
+cpus <- if (LOCAL) parallel::detectCores() - 1 else 1
+number <- if (LOCAL) NULL else commandArgs(TRUE)
 rerunBase <- FALSE
 rerunSpatial <- FALSE
 rerunTemporal <- FALSE
-rerunSpatioTemporal <- FALSE
+rerunSpatioTemporal <- TRUE
 
 # Setup
 setup <- base_id(D, 1) %>%
@@ -44,7 +45,7 @@ setup <- base_id(D, 1) %>%
 setupBase <- setup %>%
   sim_gen_v(sd = sigre)  %>%
   sim_comp_agg(comp$rfh("y", "trueVar")) %>%
-  sim_simName(paste0(number, "(0)"))
+  sim_simName("(0)")
 
 setupOutlier <- setup %>%
   sim_gen_v(sd = sigre)  %>%
@@ -53,20 +54,20 @@ setupOutlier <- setup %>%
     gen_norm(9, 2.5 * sigre, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
-  sim_simName(paste0(number, "(u)"))
+  sim_simName("(u)")
 
 ## Spatial
 setupSpatial <- setup %>%
   sim_gen(gen_v_sar(sd = sigre, name = "v"))  %>%
   sim_comp_agg(comp$rsfh("y", "trueVar")) %>%
-  sim_simName(paste0(number, "(0)"))
+  sim_simName("(0)")
 
 setupOutlierSpatial <- setupSpatial %>%
   sim_gen_cont(
     gen_norm(9, 2.5 * sigre, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
-  sim_simName(paste0(number, "(u)"))
+  sim_simName("(u)")
 
 ## Temporal
 
@@ -84,7 +85,7 @@ setupTemporalBase <- setupTemporal %>%
   sim_gen(gen_v_sar(rho = 0, sd = sigre, name = "v")) %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
   sim_comp_agg(comp$rtfh("y", "trueVar")) %>%
-  sim_simName(paste0(number, "(0)"))
+  sim_simName("(0)")
 
 setupTemporalBaseOutlier <- setupTemporalBase %>%
   sim_gen_cont(
@@ -92,7 +93,7 @@ setupTemporalBaseOutlier <- setupTemporalBase %>%
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
   sim_comp_agg(comp$rtfh("y", "trueVar")) %>%
-  sim_simName(paste0(number, "(u)"))
+  sim_simName("(u)")
 
 ## Spatio Temporal
 setupSpatioTemporal <- setupTemporal %>%
@@ -100,57 +101,52 @@ setupSpatioTemporal <- setupTemporal %>%
   sim_gen(gen_v_ar1(rho = 0.5, sd = sqrt(sigre), name = "ar")) %>%
   sim_comp_agg(comp$rstfh("y", "trueVar")) %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
-  sim_simName(paste0(number, "(0)"))
+  sim_simName("(0)")
 
 setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
   sim_gen_cont(
     gen_norm(9, 2.5 * sigre, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
-  sim_simName(paste0(number, "(u)"))
+  sim_simName("(u)")
 
 # Simulation
 
 simFun <- function(s, path = "R/data/areaLevelMSE") {
   sim(s, runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
-    path = path, overwrite = FALSE)
-}
-
-fixName <- function(x) {
-  sub("^.*\\(", "(", x)
+    path = path, overwrite = FALSE, suffix = number)
 }
 
 if (rerunBase) {
   lapply(list(setupBase, setupOutlier), simFun)
-  simDat <- sim_read_data("R/data/areaLevelMSE/") %>%
-    mutar(simName ~ fixName(simName))
+  simDat <- sim_read_data("R/data/areaLevelMSE/")
   save(list = "simDat", file = "R/data/areaLevelMse.RData")
 } else {
   load("R/data/areaLevelMse.RData")
 }
 
 if (rerunSpatial) {
-  lapply(list(setupSpatial, setupOutlierSpatial), simFun, path = "R/data/areaLevelMSESpatial/")
-  simDatSpatial <- sim_read_data("R/data/areaLevelMSESpatial/") %>%
-    mutar(simName ~ fixName(simName))
+  lapply(list(setupSpatial, setupOutlierSpatial), simFun,
+         path = "R/data/areaLevelMSESpatial/")
+  simDatSpatial <- sim_read_data("R/data/areaLevelMSESpatial/")
   save(list = "simDatSpatial", file = "R/data/areaLevelMseSpatial.RData")
 } else {
   load("R/data/areaLevelMseSpatial.RData")
 }
 
 if (rerunTemporal) {
-  lapply(list(setupTemporalBase, setupTemporalBaseOutlier), simFun, path = "R/data/areaLevelMSETemporal/")
-  simDatTemporal <- sim_read_data("R/data/areaLevelMSETemporal/") %>%
-    mutar(simName ~ fixName(simName))
+  lapply(list(setupTemporalBase, setupTemporalBaseOutlier), simFun,
+         path = "R/data/areaLevelMSETemporal/")
+  simDatTemporal <- sim_read_data("R/data/areaLevelMSETemporal/")
   save(list = "simDatTemporal", file = "R/data/areaLevelMseTemporal.RData")
 } else {
   load("R/data/areaLevelMseTemporal.RData")
 }
 
 if (rerunSpatioTemporal) {
-  lapply(list(setupSpatioTemporal, setupSpatioTemporalOutlier), simFun, path = "R/data/areaLevelMSESpatioTemporal/")
-  simDatSpatioTemporal <- sim_read_data("R/data/areaLevelMSESpatioTemporal/") %>%
-    mutar(simName ~ fixName(simName))
+  lapply(list(setupSpatioTemporal, setupSpatioTemporalOutlier), simFun,
+         path = "R/data/areaLevelMSESpatioTemporal/")
+  simDatSpatioTemporal <- sim_read_data("R/data/areaLevelMSESpatioTemporal/")
   save(list = "simDatSpatioTemporal", file = "R/data/areaLevelMseSpatioTemporal.RData")
 } else {
   load("R/data/areaLevelMseSpatioTemporal.RData")
