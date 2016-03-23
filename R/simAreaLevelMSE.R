@@ -11,6 +11,11 @@ gen <- modules::use("R/generators/x.R")
 
 # Constants
 
+## Graphic Parameter
+width <- 7
+height <- 3
+fontSize <- 14
+
 ## Scenario:
 D <- 40
 n <- 1
@@ -23,10 +28,10 @@ sigre <- 2
 runs <- 10
 cpus <- if (identical(commandArgs(TRUE), character(0))) parallel::detectCores() - 1 else 1
 number <- commandArgs(TRUE)
-rerunBase <- TRUE
-rerunSpatial <- TRUE
-rerunTemporal <- TRUE
-rerunSpatioTemporal <- TRUE
+rerunBase <- FALSE
+rerunSpatial <- FALSE
+rerunTemporal <- FALSE
+rerunSpatioTemporal <- FALSE
 
 # Setup
 setup <- base_id(D, 1) %>%
@@ -167,15 +172,19 @@ plotRMSE <- function(simDat) {
     mutar(~ estimator %in% c("MCRFH.BC", "PseudoRFH.BC", "BootRFH.BC"))
 
   ggplot(ggDat, aes(x = idD, y = RMSE, colour = estimator)) +
-    geom_line() + gg$themes$theme_thesis_nogrid() + labs(x = "domain", colour = NULL) +
+    geom_line() + gg$themes$theme_thesis_nogrid(fontSize) + labs(x = "domain", colour = NULL) +
     theme(legend.position = "bottom") + facet_wrap(~simName, ncol = 2)
 
 }
 
+cairo_pdf("figs/area_level_mse.pdf", width, height)
 plotRMSE(simDat)
-plotRMSE(simDatSpatial)
-plotRMSE(simDatTemporal)
-plotRMSE(simDatSpatioTemporal)
+dev.off()
+
+
+# plotRMSE(simDatSpatial)
+# plotRMSE(simDatTemporal)
+# plotRMSE(simDatSpatioTemporal)
 
 
 tableMSE <- function(simDat) {

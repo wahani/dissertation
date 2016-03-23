@@ -1,3 +1,4 @@
+.libPaths("~/R/x86_64-redhat-linux-gnu-library/3.2")
 installPackages <- function(pkgs) {
   # install packages if necessary:
   pkgs <- pkgs[sapply(pkgs, Negate(require), character.only = TRUE)]
