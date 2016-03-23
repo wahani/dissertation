@@ -1,5 +1,5 @@
 # devtools::install_github("wahani/dat")
-
+.libPaths("~/R/x86_64-redhat-linux-gnu-library/3.2")
 library("dat")
 library("saeSim")
 library("saeRobust")
@@ -20,9 +20,9 @@ sige <- sqrt(seq(2, 6, length.out = D))
 sigre <- 2
 
 ## Simulation
-runs <- 2
-cpus <- if (Sys.getenv("I") == "") parallel::detectCores() - 1 else 1
-number <- Sys.getenv("I")
+runs <- 10
+cpus <- if (identical(commandArgs(TRUE), character(0))) parallel::detectCores() - 1 else 1
+number <- commandArgs(TRUE)
 rerunBase <- TRUE
 rerunSpatial <- TRUE
 rerunTemporal <- TRUE
@@ -111,9 +111,14 @@ simFun <- function(s, path = "R/data/areaLevelMSE") {
     path = path, overwrite = FALSE)
 }
 
+fixName <- function(x) {
+  sub("^.*\\(", "(", x)
+}
+
 if (rerunBase) {
   lapply(list(setupBase, setupOutlier), simFun)
-  simDat <- sim_read_data("R/data/areaLevelMSE/")
+  simDat <- sim_read_data("R/data/areaLevelMSE/") %>%
+    mutar(simName ~ fixName(simName))
   save(list = "simDat", file = "R/data/areaLevelMse.RData")
 } else {
   load("R/data/areaLevelMse.RData")
@@ -121,7 +126,8 @@ if (rerunBase) {
 
 if (rerunSpatial) {
   lapply(list(setupSpatial, setupOutlierSpatial), simFun, path = "R/data/areaLevelMSESpatial/")
-  simDatSpatial <- sim_read_data("R/data/areaLevelMSESpatial/")
+  simDatSpatial <- sim_read_data("R/data/areaLevelMSESpatial/") %>%
+    mutar(simName ~ fixName(simName))
   save(list = "simDatSpatial", file = "R/data/areaLevelMseSpatial.RData")
 } else {
   load("R/data/areaLevelMseSpatial.RData")
@@ -129,7 +135,8 @@ if (rerunSpatial) {
 
 if (rerunTemporal) {
   lapply(list(setupTemporalBase, setupTemporalBaseOutlier), simFun, path = "R/data/areaLevelMSETemporal/")
-  simDatTemporal <- sim_read_data("R/data/areaLevelMSETemporal/")
+  simDatTemporal <- sim_read_data("R/data/areaLevelMSETemporal/") %>%
+    mutar(simName ~ fixName(simName))
   save(list = "simDatTemporal", file = "R/data/areaLevelMseTemporal.RData")
 } else {
   load("R/data/areaLevelMseTemporal.RData")
@@ -137,7 +144,8 @@ if (rerunTemporal) {
 
 if (rerunSpatioTemporal) {
   lapply(list(setupSpatioTemporal, setupSpatioTemporalOutlier), simFun, path = "R/data/areaLevelMSESpatioTemporal/")
-  simDatSpatioTemporal <- sim_read_data("R/data/areaLevelMSESpatioTemporal/")
+  simDatSpatioTemporal <- sim_read_data("R/data/areaLevelMSESpatioTemporal/") %>%
+    mutar(simName ~ fixName(simName))
   save(list = "simDatSpatioTemporal", file = "R/data/areaLevelMseSpatioTemporal.RData")
 } else {
   load("R/data/areaLevelMseSpatioTemporal.RData")

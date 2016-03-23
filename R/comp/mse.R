@@ -4,7 +4,7 @@ modules::import(saeRobust)
 maxIter <- 50
 maxIterParam <- 10
 maxIterRe <- 1000
-B <- 1
+B <- 100
 
 rfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   force(dir_var_name)

@@ -19,11 +19,9 @@ update.packages(
 
 # overall package dependencies
 installPackages(c(
-  "saeSim", "sae", "aoos", "MASS", "dplyr", "reshape2", "ggplot2", "devtools", "tidyr", "Hmisc", "RcppArmadillo"
+  "sae", "aoos", "MASS", "dplyr", "reshape2", "ggplot2", "devtools", "tidyr", "Hmisc", "RcppArmadillo"
 ))
 
 devtools::install_github("wahani/dat", force = TRUE)
-
-if (file.exists("saeRobust.tar.gz")) install.packages("saeRobust.tar.gz", repos = NULL, type = "source")
-
-# devtools::install_github("wahani/saeRobust") needed but not public
+devtools::install_github("wahani/saeSim", force = TRUE)
+devtools::install_github("wahani/saeRobustTools", force = TRUE)
