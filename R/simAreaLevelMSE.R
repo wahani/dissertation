@@ -20,13 +20,13 @@ sige <- sqrt(seq(2, 6, length.out = D))
 sigre <- 2
 
 ## Simulation
-runs <- 50
-cpus <- parallel::detectCores() - 1
-# number <- as.numeric(Sys.getenv("I"))
-rerunBase <- FALSE
-rerunSpatial <- FALSE
-rerunTemporal <- FALSE
-rerunSpatioTemporal <- FALSE
+runs <- 2
+cpus <- if (Sys.getenv("I") == "") parallel::detectCores() - 1 else 1
+number <- Sys.getenv("I")
+rerunBase <- TRUE
+rerunSpatial <- TRUE
+rerunTemporal <- TRUE
+rerunSpatioTemporal <- TRUE
 
 # Setup
 setup <- base_id(D, 1) %>%
@@ -35,12 +35,11 @@ setup <- base_id(D, 1) %>%
   sim_comp_pop(function(dat) {dat$trueVar <- sige^2; dat}) %>%
   sim_resp_eq(y = 100 + 5 * x + v + e, trueVal = 100 + 5 * x + v)
 
-
 ## Base
 setupBase <- setup %>%
   sim_gen_v(sd = sigre)  %>%
   sim_comp_agg(comp$rfh("y", "trueVar")) %>%
-  sim_simName("(0, 0)")
+  sim_simName(paste0(number, "(0)"))
 
 setupOutlier <- setup %>%
   sim_gen_v(sd = sigre)  %>%
@@ -49,20 +48,20 @@ setupOutlier <- setup %>%
     gen_norm(9, 2.5 * sigre, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
-  sim_simName("(0, u)")
+  sim_simName(paste0(number, "(u)"))
 
 ## Spatial
 setupSpatial <- setup %>%
   sim_gen(gen_v_sar(sd = sigre, name = "v"))  %>%
   sim_comp_agg(comp$rsfh("y", "trueVar")) %>%
-  sim_simName("(0.5, 0)")
+  sim_simName(paste0(number, "(0)"))
 
 setupOutlierSpatial <- setupSpatial %>%
   sim_gen_cont(
     gen_norm(9, 2.5 * sigre, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
-  sim_simName("(0.5, u)")
+  sim_simName(paste0(number, "(u)"))
 
 ## Temporal
 
@@ -73,14 +72,14 @@ setupTemporal <- base_id_temporal(D, n, nTime) %>%
   sim_gen_e(sd = sqrt(trueVarTemporal)) %>%
   sim_gen_generic(gen$fixed_sequence, groupVars = "idD", name = "x") %>%
   sim_gen(gen_v_ar1(rho = 0.5, sd = sigre, name = "ar")) %>%
-  sim_resp_eq(y = 100 + 5 * x + v + ar + e) %>%
+  sim_resp_eq(y = 100 + 5 * x + v + ar + e, trueVal = 100 + 5 * x + v + ar) %>%
   sim_comp_agg(comp_var(trueVar = trueVarTemporal))
 
 setupTemporalBase <- setupTemporal %>%
   sim_gen(gen_v_sar(rho = 0, sd = sigre, name = "v")) %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
   sim_comp_agg(comp$rtfh("y", "trueVar")) %>%
-  sim_simName("(0.5, 0)")
+  sim_simName(paste0(number, "(0)"))
 
 setupTemporalBaseOutlier <- setupTemporalBase %>%
   sim_gen_cont(
@@ -88,7 +87,7 @@ setupTemporalBaseOutlier <- setupTemporalBase %>%
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
   sim_comp_agg(comp$rtfh("y", "trueVar")) %>%
-  sim_simName("(0, u)")
+  sim_simName(paste0(number, "(u)"))
 
 ## Spatio Temporal
 setupSpatioTemporal <- setupTemporal %>%
@@ -96,14 +95,14 @@ setupSpatioTemporal <- setupTemporal %>%
   sim_gen(gen_v_ar1(rho = 0.5, sd = sqrt(sigre), name = "ar")) %>%
   sim_comp_agg(comp$rstfh("y", "trueVar")) %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
-  sim_simName("(0.5, 0)")
+  sim_simName(paste0(number, "(0)"))
 
 setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
   sim_gen_cont(
     gen_norm(9, 2.5 * sigre, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
-  sim_simName("(0.5, u)")
+  sim_simName(paste0(number, "(u)"))
 
 # Simulation
 
@@ -167,6 +166,8 @@ plotRMSE <- function(simDat) {
 
 plotRMSE(simDat)
 plotRMSE(simDatSpatial)
+plotRMSE(simDatTemporal)
+plotRMSE(simDatSpatioTemporal)
 
 
 tableMSE <- function(simDat) {
@@ -233,5 +234,7 @@ tableMSE <- function(simDat) {
 
 tableMSE(simDat)
 tableMSE(simDatSpatial)
+tableMSE(simDatTemporal)
+tableMSE(simDatSpatioTemporal)
 
 
