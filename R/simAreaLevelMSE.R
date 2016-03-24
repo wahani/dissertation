@@ -27,13 +27,13 @@ sige <- sqrt(seq(2, 6, length.out = D))
 sigre <- 2
 
 ## Simulation
-runs <- 10
+runs <- 100
 cpus <- if (LOCAL) parallel::detectCores() - 1 else 1
 number <- if (LOCAL) NULL else commandArgs(TRUE)
-rerunBase <- FALSE
-rerunSpatial <- FALSE
-rerunTemporal <- FALSE
-rerunSpatioTemporal <- FALSE
+rerunBase <- TRUE
+rerunSpatial <- TRUE
+rerunTemporal <- TRUE
+rerunSpatioTemporal <- TRUE
 
 # Setup
 setup <- base_id(D, 1) %>%
@@ -120,14 +120,15 @@ fixName <- function(x) {
 
 # mutar(simName ~ fixName(simName))
 simFun <- function(s, path = "R/data/areaLevelMSE") {
+  Sys.sleep(runif(1, 10, 30))
+  gc()
   sim(s, runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
-    path = path, overwrite = FALSE, suffix = number)
+    path = path, overwrite = FALSE)
 }
 
 if (rerunBase) {
   lapply(list(setupBase, setupOutlier), simFun)
-  simDat <- sim_read_data("R/data/areaLevelMSE/") %>%
-    mutar(simName ~ fixName(simName))
+  simDat <- sim_read_data("R/data/areaLevelMSE/")
   save(list = "simDat", file = "R/data/areaLevelMse.RData")
 } else {
   load("R/data/areaLevelMse.RData")
@@ -136,8 +137,7 @@ if (rerunBase) {
 if (rerunSpatial) {
   lapply(list(setupSpatial, setupOutlierSpatial), simFun,
          path = "R/data/areaLevelMSESpatial/")
-  simDatSpatial <- sim_read_data("R/data/areaLevelMSESpatial/") %>%
-    mutar(simName ~ fixName(simName))
+  simDatSpatial <- sim_read_data("R/data/areaLevelMSESpatial/")
   save(list = "simDatSpatial", file = "R/data/areaLevelMseSpatial.RData")
 } else {
   load("R/data/areaLevelMseSpatial.RData")
@@ -146,8 +146,7 @@ if (rerunSpatial) {
 if (rerunTemporal) {
   lapply(list(setupTemporalBase, setupTemporalBaseOutlier), simFun,
          path = "R/data/areaLevelMSETemporal/")
-  simDatTemporal <- sim_read_data("R/data/areaLevelMSETemporal/") %>%
-    mutar(simName ~ fixName(simName))
+  simDatTemporal <- sim_read_data("R/data/areaLevelMSETemporal/")
   save(list = "simDatTemporal", file = "R/data/areaLevelMseTemporal.RData")
 } else {
   load("R/data/areaLevelMseTemporal.RData")
@@ -156,8 +155,7 @@ if (rerunTemporal) {
 if (rerunSpatioTemporal) {
   lapply(list(setupSpatioTemporal, setupSpatioTemporalOutlier), simFun,
          path = "R/data/areaLevelMSESpatioTemporal/")
-  simDatSpatioTemporal <- sim_read_data("R/data/areaLevelMSESpatioTemporal/") %>%
-    mutar(simName ~ fixName(simName))
+  simDatSpatioTemporal <- sim_read_data("R/data/areaLevelMSESpatioTemporal/")
   save(list = "simDatSpatioTemporal", file = "R/data/areaLevelMseSpatioTemporal.RData")
 } else {
   load("R/data/areaLevelMseSpatioTemporal.RData")
