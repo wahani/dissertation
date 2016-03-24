@@ -8,6 +8,7 @@ library("ggplot2")
 comp <- modules::use("R/comp/mse.R")
 gg <- modules::use("R/graphics/")
 gen <- modules::use("R/generators/x.R")
+tab <- modules::use("R/graphics/tables.R")
 
 # Constants
 LOCAL <- identical(commandArgs(TRUE), character(0))
@@ -258,9 +259,46 @@ tableMSE <- function(simDat) {
 
 }
 
-tableMSE(simDat)
-tableMSE(simDatSpatial)
-tableMSE(simDatTemporal)
-tableMSE(simDatSpatioTemporal)
+
+tabRFH <- tableMSE(simDat)
+tabRSFH <- tableMSE(simDatSpatial)
+tabRTFH <- tableMSE(simDatTemporal)
+tabRSTFH <- tableMSE(simDatSpatioTemporal)
+
+makeTable <- function(tabRFH, tabRSFH, tabRTFH, tabRSTFH, type) {
+
+  datBIAS <- as.data.frame(rbind(
+    tabRFH[[type]],
+    tabRSFH[[type]],
+    tabRTFH[[type]],
+    tabRSTFH[[type]]
+  ) * 100, row.names = FALSE) %>%
+    round(2) %>%
+    mutar(
+      Predictor ~ c(c("RFH", NA),
+                    c("RFH.BC", NA),
+                    c("RSFH", NA),
+                    c("RSFH.BC", NA),
+                    c("RTFH", NA),
+                    c("RTFH.BC", NA),
+                    c("RSTFH", NA),
+                    c("RSTFH.BC", NA)),
+      MSPE ~ rep(c("CCT", "BOOT"), 8)
+    )
+  datBIAS[c(4, 5, 1, 2, 3)]
+}
+
+rbias <- makeTable(tabRFH, tabRSFH, tabRTFH, tabRSTFH, "bias")
+rbiasRow <- rbias[FALSE, ]
+rbiasRow[1, 1] <- "Median RBIAS:"
+rbias <- rbind(rbiasRow, rbias)
+
+rrmse <- makeTable(tabRFH, tabRSFH, tabRTFH, tabRSTFH, "mse")
+rrmseRow <- rrmse[FALSE, ]
+rrmseRow[1, 1] <- "Median RRMSE:"
+rrmse <- rbind(rrmseRow, rrmse)
+
+dump <- tab$save(rbind(rbias, rrmse), fileName = "tabs/mse_template.tex")
+
 
 
