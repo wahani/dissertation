@@ -1,3 +1,5 @@
+# From Unit to Area Level
+
 In this section we want to present a different perspective for simulation
 studies on area level models. Namely by starting from the unit level population
 data. This allows for a number of interesting aspects which can be investigated

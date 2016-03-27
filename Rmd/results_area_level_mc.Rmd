@@ -1,4 +1,6 @@
-## The Area-Level Perspective
+# Robust Area Level Predictions
+
+## Simulation Scenarios
 
 In this section we present some results of a simulation study. To make the
 results comparable to other model based simulations on area level models we
@@ -28,6 +30,13 @@ scenario $\sigre = 1$.
 of the areas, i.e. for $i \in \{1, \dots, 95\}$, and $\sigre = 20^2$ for $i \in
 \{96, \dots, 100\}$.
 
+## Quality Measures
+
+## Results
+
 ![\textrrmse](figs/area_level_rrmse.pdf)
 
 ![\textrbias](figs/area_level_rbias.pdf)
+
+
+## Discussion
