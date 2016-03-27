@@ -45,12 +45,12 @@ literature into account in Section \ref{sec:area_level_sim_results}.
 
 In the following the concrete choices are presented regarding the setup of the
 simulation study. To avoid the specification of too many scenarios only a
-temporal setting is considered. Similar to the approach by @Mar13 the FH model
-and spatial FH model is treated as special case when we only use the data from 
+temporal setting is considered. Similar to the approach by @Mar13 the FH model 
+and spatial FH model are treated as special cases when we only use the data from
 the current time period. The temporal and spatio\hyp{}temporal extensions then 
 use all available information, however predictions are only made for the current
-time period. In this setting it is possible to compare the different model
-specification under a unified strategy.
+time period. In this setting it is possible to compare the different model 
+specifications under a unified strategy.
 
 The area level model from which data is generated in each Monte Carlo repetition
 is chosen to be:
@@ -87,13 +87,43 @@ are the domains for which $i \in \{5, 15, 25, 35\}$ to avoid an artificial
 setting in combination with $\sige$. For regular observations $\sigre = 2$.
 Outliers are drawn from $\re_i \sim \Distr{N}(9, 25)$ and ignore any correlation
 structure. Furthermore areas are also outlying observations over time. 
-- *(0.5, u)* denotes the scenario in which outliers are generated in the same
-way as for *(0, u)* however $\rho = 0.5$ for the generation of the regular observations.
+- *(0.5, u)* denotes the scenario in which outliers are generated in the same 
+way as for *(0, u)* however $\rho = 0.5$ for the generation of the regular
+observations.
 
 
 ## Quality Measures
 
+The methods to be compared are the robust spatial and temporal extensions to the
+FH model. The non\hyp{}robust methods are denoted by FH, SFH, TFH, and STFH; and
+their robust counterparts by RFH, RSFH, RTFH, and RSTFH. In fact these methods
+have been introduced as area level REBLUP, SREBLUP, TREBLUP, and STREBLUP in
+Section (?) and are here abbreviated for notational simplicity. Furthermore we
+have the bias corrected versions of the predictors using the correction of
+Section (?). This correction is only applied to the robust predictions and the
+respective models are referred to by RFH.BC, RSFH.BC, RTFH.BC, and RSTFH.BC.
 
+To asses the quality of predictions under the various methods two measures are 
+utilised: the relative bias (RBIAS) and relative root mean squared error 
+(RRMSE). These measures are computed over all realisations of the Monte Carlo 
+repetitions; overall $R = 500$ repetitions have been conducted. Let 
+$\hat{\theta}^M_{ir}$ denote the the prediction for the $i$th area in the $r$th 
+repetition with $r = 1, \dots, R$ under the model $M$ where $M$ is one of the
+models under consideration, e.g. the RFH. The Monte Carlo RRMSE can then be
+defined by:
+$$
+\text{RRMSE}_i^M = \sqrt{\frac{1}{R}\sum_{r = 1}^R \Paran{\frac{\hat{\theta}^M_{ir} - \theta_{ir}}{\theta_{ir}}}^2}
+$$
+where $\theta_{ir}$ denotes the true target statistic in the Monte Carlo
+repitition $r$ and is defined by:
+$$
+\theta_{ir} = \theta_{iTr} = 100 + 5x_i + \re_{1ir} + \re_{2iTr}
+$$
+where the target statistic is defined as the true value in time period $t = T$.
+The relative bias can be defined accordingly as:
+$$
+\text{RBIAS}_i^M = \frac{1}{R}\sum_{r = 1}^R \frac{\hat{\theta}^M_{ir} - \theta_{ir}}{\theta_{ir}}.
+$$
 
 
 ## Results

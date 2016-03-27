@@ -1,5 +1,5 @@
 # Monte Carlo simulation starting from area level data for the standard fh
-
+.libPaths("~/R/x86_64-redhat-linux-gnu-library/3.2")
 library("ggplot2")
 library("saeSim")
 library("dat")
@@ -8,11 +8,13 @@ gen <- modules::use("R/generators")
 comp <- modules::use("R/comp")
 gg <- modules::use("./R/graphics")
 
+LOCAL <- identical(commandArgs(TRUE), character(0))
+
 # Parameter in Simulation
 D <- 40
 nCont <- c(5, 15, 25, 35)
 n <- 1
-T <- 10
+nTime <- 10
 trueVar <- seq(2, 6, length.out = D)
 sigre <- 2
 
@@ -20,104 +22,75 @@ sigre <- 2
 runs <- 500
 cpus <- parallel::detectCores() - 1
 # set.seed(1)
-reRun <- FALSE
-reRunTemporal <- FALSE
+reRun <- TRUE
 
 # Graphic Parameter
 width <- 7
 height <- 3
 fontSize <- 14
 
-# Defining the Setups
-setup <- base_id(D, n) %>%
-  # Area-Level Data
-  sim_gen_e(sd = sqrt(trueVar)) %>%
-  sim_gen_generic(gen$x$fixed_sequence, groupVars = "idD", name = "x") %>%
-  sim_resp_eq(y = 100 + 5 * x + v + e) %>%
-  sim_comp_agg(comp_var(trueVar = trueVar)) %>%
-  sim_comp_agg(comp$area$fh("y", "trueVar", "FH")) %>%
-  sim_comp_agg(comp$area$rfh("y", "trueVar", "RFH")) %>%
-  sim_comp_agg(comp$area$sfh("y", "trueVar", "SFH")) %>%
-  sim_comp_agg(comp$area$rsfh("y", "trueVar", "RSFH"))
+simFun <- function(s, path) {
+  if (LOCAL) {
+    sim(s, runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
+        path = path, overwrite = FALSE)
+  } else {
+    Sys.sleep(runif(1, 10, 30))
+    gc()
+    sim(s, runs, path = path, overwrite = FALSE)
+  }
+}
 
-setupBase <- setup %>%
-  sim_gen(gen_v_norm(sd = sigre)) %>%
-  sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
-  sim_simName("(0, 0)")
+trueVarTemporal <- rep(trueVar, each = nTime)
 
-setupSpatial <- setup %>%
-  sim_gen(gen_v_sar(rho = 0.5, sd = sigre, name = "v")) %>%
-  sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
-  sim_simName("(0.5, 0)")
-
-setupBaseOutlier <- setupBase %>%
-  sim_gen_cont(
-    gen_norm(100, 10, "v"),
-    type = "area", areaVar = "idD", fixed = TRUE,
-    nCont = nCont) %>%
-  sim_simName("(0, u)")
-
-setupSpatialOutlier <- setupSpatial %>%
-  sim_gen_cont(
-    gen_norm(100, 10, "v"),
-    type = "area", areaVar = "idD", fixed = TRUE,
-    nCont = nCont) %>%
-  sim_simName("(0.5, u)")
-
-# Temporal Scenarios
-
-trueVarTemporal <- rep(trueVar, each = T)
-
-setupTemporal <- base_id_temporal(D, n, T) %>%
+setupTemporal <- base_id_temporal(D, n, nTime) %>%
   # Area-Level Data
   sim_gen_e(sd = sqrt(trueVarTemporal)) %>%
   sim_gen_generic(gen$x$fixed_sequence, groupVars = "idD", name = "x") %>%
-  sim_resp_eq(y = 100 + 5 * x + v + e) %>%
+  sim_resp_eq(y = 100 + 5 * x + v + ar + e) %>%
   sim_comp_agg(comp_var(trueVar = trueVarTemporal)) %>%
-  sim_comp_agg(comp$area$tfh("y", "trueVar", "TFH")) %>%
-  sim_comp_agg(comp$area$rtfh("y", "trueVar", "RTFH")) %>%
-  sim_comp_agg(comp$area$stfh("y", "trueVar", "STFH")) %>%
-  sim_comp_agg(comp$area$rstfh("y", "trueVar", "RSTFH"))
+  # All the models:
+  sim_comp_agg(comp$area_temporal$fh("y", "trueVar", "FH")) %>%
+  sim_comp_agg(comp$area_temporal$rfh("y", "trueVar", "RFH")) %>%
+  sim_comp_agg(comp$area_temporal$sfh("y", "trueVar", "SFH")) %>%
+  sim_comp_agg(comp$area_temporal$rsfh("y", "trueVar", "RSFH")) %>%
+  sim_comp_agg(comp$area_temporal$tfh("y", "trueVar", "TFH")) %>%
+  sim_comp_agg(comp$area_temporal$rtfh("y", "trueVar", "RTFH")) %>%
+  sim_comp_agg(comp$area_temporal$stfh("y", "trueVar", "STFH")) %>%
+  sim_comp_agg(comp$area_temporal$rstfh("y", "trueVar", "RSTFH"))
 
 setupTemporalBase <- setupTemporal %>%
   sim_gen(gen_v_sar(rho = 0, sd = sqrt(sigre), name = "v")) %>%
   sim_gen(gen_v_ar1(rho = 0, sd = sqrt(sigre), name = "ar")) %>%
-  sim_resp_eq(y = y + ar) %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
   sim_simName("(0, 0)")
 
 setupSpatioTemporal <- setupTemporal %>%
   sim_gen(gen_v_sar(rho = 0.5, sd = sqrt(sigre), name = "v")) %>%
   sim_gen(gen_v_ar1(rho = 0.5, sd = sqrt(sigre), name = "ar")) %>%
-  sim_resp_eq(y = y + ar) %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
   sim_simName("(0.5, 0)")
 
 setupTemporalBaseOutlier <- setupTemporalBase %>%
   sim_gen_cont(
-    gen_norm(100, 10, "v"),
+    gen_norm(9, 5, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
   sim_simName("(0, u)")
 
 setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
   sim_gen_cont(
-    gen_norm(100, 10, "v"),
+    gen_norm(9, 5, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
   sim_simName("(0.5, u)")
 
 # Trigger Simulation:
-simFun <- . %>%
-  sim(runs,
-      mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
-      path = "./R/data/areaLevel", overwrite = FALSE) %>%
-  do.call(what = rbind)
 
 if (reRun) {
   lapply(
-    list(setupBase, setupBaseOutlier, setupSpatial, setupSpatialOutlier),
-    simFun
+    list(setupTemporalBase, setupSpatioTemporal, setupTemporalBaseOutlier,
+         setupSpatioTemporalOutlier),
+    simFun, path = "R/data/areaLevel/"
   )
   simData <- sim_read_data("./R/data/areaLevel")
   save(list = "simData", file = "R/data/areaLevel.RData")
@@ -125,23 +98,10 @@ if (reRun) {
   load("R/data/areaLevel.RData")
 }
 
-if (reRunTemporal) {
+sim_clear_data("R/data/areaLevel/")
 
-  simFun <- . %>%
-    sim(runs,
-        mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
-        path = "./R/data/areaLevelTemporal", overwrite = FALSE) %>%
-    do.call(what = rbind)
-
-  lapply(
-    list(setupTemporalBase, setupTemporalBaseOutlier, setupSpatioTemporal,
-         setupSpatioTemporalOutlier),
-    simFun
-  )
-  simDataTemporal <- sim_read_data("./R/data/areaLevelTemporal")
-  save(list = "simDataTemporal", file = "R/data/areaLevelTemporal.RData")
-} else {
-  load("R/data/areaLevelTemporal.RData")
+if (!LOCAL) {
+  q("no")
 }
 
 simData %>% mutar(~is.na(SFH), n ~ length(unique(idR)), by = c("simName"))

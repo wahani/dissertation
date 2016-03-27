@@ -171,6 +171,10 @@ save(list = "simDatTemporal", file = "R/data/areaLevelMseTemporal.RData")
 simDatSpatioTemporal <- sim_read_data("R/data/areaLevelMSESpatioTemporal/")
 save(list = "simDatSpatioTemporal", file = "R/data/areaLevelMseSpatioTemporal.RData")
 
+if (!LOCAL) {
+  q("no")
+}
+
 simDatSpatioTemporal <- simDatSpatioTemporal %>% mutar(~idT == nTime)
 simDatTemporal <- simDatTemporal %>% mutar(~idT == nTime)
 
