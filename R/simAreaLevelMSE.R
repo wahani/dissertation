@@ -27,13 +27,13 @@ sige <- sqrt(seq(2, 6, length.out = D))
 sigre <- 2
 
 ## Simulation
-runs <- 100
+runs <- 300
 cpus <- if (LOCAL) parallel::detectCores() - 1 else 1
 number <- if (LOCAL) NULL else commandArgs(TRUE)
-rerunBase <- TRUE
-rerunSpatial <- TRUE
-rerunTemporal <- TRUE
-rerunSpatioTemporal <- TRUE
+rerunBase <- FALSE
+rerunSpatial <- FALSE
+rerunTemporal <- FALSE
+rerunSpatioTemporal <- FALSE
 
 # Setup
 setup <- base_id(D, 1) %>%
@@ -156,6 +156,11 @@ if (rerunSpatioTemporal) {
 } else {
   load("R/data/areaLevelMseSpatioTemporal.RData")
 }
+
+sim_clear_data("R/data/areaLevelMSE/")
+sim_clear_data("R/data/areaLevelMSESpatial//")
+sim_clear_data("R/data/areaLevelMSETemporal//")
+sim_clear_data("R/data/areaLevelMSESpatioTemporal//")
 
 simDat <- sim_read_data("R/data/areaLevelMSE/")
 save(list = "simDat", file = "R/data/areaLevelMse.RData")
