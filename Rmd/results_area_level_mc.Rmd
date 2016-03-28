@@ -246,7 +246,7 @@ The aim of this study has not been to promote the use of a specific model -- in
 terms of a correlation structure -- but rather focused on revealing differences 
 between the robust and non\hyp{}robust estimation methods. The benefit of
 utilising temporal autocorrelation has been demonstrated in different studies --
-see @You94 for the temporal model and @Mar13 for the spatio-temporal model. The
+see @Rao94 for the temporal model and @Mar13 for the spatio-temporal model. The
 main findings are:
 
 - Using an over parameterised model may have a positive effect in terms of RBIAS
