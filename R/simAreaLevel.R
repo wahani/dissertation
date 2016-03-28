@@ -104,10 +104,9 @@ if (!LOCAL) {
   q("no")
 }
 
+simData <- mutar(simData, ~idT == 10)
 simData %>% mutar(~is.na(SFH), n ~ length(unique(idR)), by = c("simName"))
 simData %>% mutar(function(col) any(is.na(col))) # check for missings
-simDataTemporal %>% mutar(function(col) any(is.na(col))) # check for missings
-# ar is missing in scenarios with no ar process
 
 
 # Graphics:
@@ -119,7 +118,10 @@ simData <- as.DataFrame(simData)
 ggDat <- reshape2::melt(
   simData,
   id.vars = c("idD", "popMean", "simName"),
-  measure.vars = c("Direct", "FH", "RFH", "SFH", "RSFH", "RFH.BC", "RSFH.BC"),
+  measure.vars = c(
+    "Direct", "FH", "RFH", "RFH.BC", "SFH", "RSFH", "RSFH.BC", "TFH", "RTFH",
+    "RTFH.BC", "STFH", "RSTFH", "RSTFH.BC"
+  ),
   variable.name = "method",
   value.name = "prediction"
 )
@@ -130,65 +132,27 @@ ggDat <- ggDat %>%
         by = c("idD", "method", "simName"))
 
 scenarioOrder <- c("(0, 0)", "(0, u)", "(0.5, 0)", "(0.5, u)")
-methodOrder <- c("Direct", "FH", "SFH", "RFH", "RSFH", "RFH.BC", "RSFH.BC")
+methodOrder <- c(
+  "Direct",
+  "FH", "SFH", "RFH", "RSFH", "RFH.BC", "RSFH.BC",
+  "TFH", "STFH", "RTFH", "RSTFH", "RTFH.BC", "RSTFH.BC"
+)
 
 ggDat <- ggDat %>%
   mutar(simName ~ factor(simName, ordered = TRUE, levels = scenarioOrder),
         method ~ factor(method, ordered = TRUE, levels = methodOrder))
 
-cairo_pdf("figs/area_level_rrmse.pdf", width, 2 * height)
-gg$plots$mse(ggDat, fontsize = fontSize) +
-  scale_y_log10(breaks = c(0.01, 0.02, 0.1))
+cairo_pdf("figs/area_level_rrmse.pdf", width, 4 * height)
+gg$plots$mse(ggDat, fontsize = fontSize)
 dev.off()
 
-cairo_pdf("figs/area_level_rbias.pdf", width, 2 * height)
+cairo_pdf("figs/area_level_rbias.pdf", width, 4 * height)
 gg$plots$bias(ggDat, fontsize = fontSize)
 dev.off()
 
 ggDat %>% as.data.frame %>% mutar(~ RRMSE > 0.03)
-
-## Graphics Temporal
-
-simDataTemporal$popMean <- simDataTemporal$y - simDataTemporal$e
-simDataTemporal$Direct <- simDataTemporal$y
-
-simDataTemporal <- as.DataFrame(simDataTemporal)
-
-simDataTemporal[~is.na(STFH), n ~ length(unique(idR)), by = c("simName")]
-simDataTemporal[~is.na(TFH), n ~ length(unique(idR)), by = c("simName")]
-
-# We are interested in the current time period:
-simDataTemporal <- simDataTemporal[~idT == 10]
-
-
-ggDat <- reshape2::melt(
-  simDataTemporal,
-  id.vars = c("idD", "popMean", "simName"),
-  measure.vars = c("Direct", "TFH", "RTFH", "STFH", "RSTFH", "RTFH.BC", "RSTFH.BC"),
-  variable.name = "method",
-  value.name = "prediction"
+ggDat %>% mutar(
+  RBIAS ~ round(median(RBIAS) * 100, 2),
+  RRMSE ~ round(median(RRMSE) * 100, 2),
+  by = c("method", "simName")
 )
-
-ggDat <- ggDat %>%
-  mutar(RBIAS ~ mean((prediction - popMean) / popMean),
-        RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)),
-        by = c("idD", "method", "simName"))
-
-scenarioOrder <- c("(0, 0)", "(0, u)", "(0.5, 0)", "(0.5, u)")
-methodOrder <- c("Direct", "TFH", "STFH", "RTFH", "RSTFH", "RTFH.BC", "RSTFH.BC")
-
-ggDat <- ggDat %>%
-  mutar(simName ~ factor(simName, ordered = TRUE, levels = scenarioOrder),
-        method ~ factor(method, ordered = TRUE, levels = methodOrder))
-
-cairo_pdf("figs/area_level_temporal_rrmse.pdf", width, 2 * height)
-gg$plots$mse(ggDat, fontsize = fontSize)
-dev.off()
-
-cairo_pdf("figs/area_level_temporal_rbias.pdf", width, 2 * height)
-gg$plots$bias(ggDat, fontsize = fontSize)
-dev.off()
-
-
-
-

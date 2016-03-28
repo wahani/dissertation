@@ -67,7 +67,7 @@ rsfh <- function(dir_name, dir_var_name, pred_name = "rsfh") {
   }
 }
 
-stfh <- function(dir_name, dir_var_name, pred_name = "sfh") {
+stfh <- function(dir_name, dir_var_name, pred_name = "stfh") {
   force(dir_var_name); force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
@@ -87,14 +87,14 @@ stfh <- function(dir_name, dir_var_name, pred_name = "sfh") {
   }
 }
 
-tfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
+tfh <- function(dir_name, dir_var_name, pred_name = "tfh") {
   force(dir_var_name); force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
-    T <- length(unique(dat$idT))
+    nTime <- length(unique(dat$idT))
     fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat,
-      correlation = corAR1(T), k = 1e6, x0Var = c(0.5, 2, 2),
+      correlation = corAR1(nTime), k = 1e6, x0Var = c(0.5, 2, 2),
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
     )
     dat[[pred_name]] <- fit$reblup
@@ -102,14 +102,14 @@ tfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   }
 }
 
-rtfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
+rtfh <- function(dir_name, dir_var_name, pred_name = "rtfh") {
   force(dir_var_name); force(pred_name)
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
-    T <- length(unique(dat$idT))
+    nTime <- length(unique(dat$idT))
     fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat,
-      correlation = corAR1(T), x0Var = c(0.5, 2, 2),
+      correlation = corAR1(nTime), x0Var = c(0.5, 2, 2),
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
     )
     dat[[pred_name]] <- fit$reblup
@@ -123,12 +123,12 @@ rstfh <- function(dir_name, dir_var_name, pred_name = "rfh") {
   formula <- as.formula(paste(dir_name, "~", "x"))
   function(dat) {
 
-    T <- length(unique(dat$idT))
+    nTime <- length(unique(dat$idT))
     D <- length(unique(dat$idD))
 
     fit <- saeRobust::rfh(
       formula, dir_var_name, data = dat,
-      correlation = corSAR1AR1(W = testRook(D), nTime = T),
+      correlation = corSAR1AR1(W = testRook(D), nTime = nTime),
       x0Var = c(0.5, 0.5, 2, 2),
       maxIter = maxIter, maxIterParam = maxIterParam, maxIterRe = maxIterRe
     )
