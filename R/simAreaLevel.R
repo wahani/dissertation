@@ -127,8 +127,8 @@ ggDat <- reshape2::melt(
 )
 
 ggDat <- ggDat %>%
-  mutar(RBIAS ~ mean((prediction - popMean) / popMean),
-        RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)),
+  mutar(RBIAS ~ mean((prediction - popMean) / popMean) * 100,
+        RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)) * 100,
         by = c("idD", "method", "simName"))
 
 scenarioOrder <- c("(0, 0)", "(0, u)", "(0.5, 0)", "(0.5, u)")
@@ -143,14 +143,14 @@ ggDat <- ggDat %>%
         method ~ factor(method, ordered = TRUE, levels = methodOrder))
 
 cairo_pdf("figs/area_level_rrmse.pdf", width, 4 * height)
-gg$plots$mse(ggDat, fontsize = fontSize)
+gg$plots$mse(ggDat, fontsize = fontSize) + labs(y = "RRMSE in %")
 dev.off()
 
 cairo_pdf("figs/area_level_rbias.pdf", width, 4 * height)
-gg$plots$bias(ggDat, fontsize = fontSize)
+gg$plots$bias(ggDat, fontsize = fontSize) + labs(y = "RBIAS in %")
 dev.off()
 
-ggDat %>% as.data.frame %>% mutar(~ RRMSE > 0.03)
+# ggDat %>% as.data.frame %>% mutar(~ RRMSE > 0.03)
 ggDat %>% mutar(
   RBIAS ~ round(median(RBIAS) * 100, 2),
   RRMSE ~ round(median(RRMSE) * 100, 2),
