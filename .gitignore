@@ -27,3 +27,4 @@ Rmd/figs/*
 figs/*.pdf
 Rmd/*.md
 Rmd/*.tex
+*.RData
