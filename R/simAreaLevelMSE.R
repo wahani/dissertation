@@ -32,8 +32,8 @@ cpus <- if (LOCAL) parallel::detectCores() - 1 else 1
 number <- if (LOCAL) NULL else commandArgs(TRUE)
 rerunBase <- TRUE
 rerunSpatial <- TRUE
-rerunTemporal <- TRUE
-rerunSpatioTemporal <- TRUE
+rerunTemporal <- FALSE
+rerunSpatioTemporal <- FALSE
 
 # Setup
 setup <- base_id(D, 1) %>%
@@ -93,7 +93,7 @@ setupTemporalBaseOutlier <- setupTemporalBase %>%
     gen_norm(9, 5, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
-  sim_gen(function(dat) { dat[nCont, "ar"] <- 0 ; dat }) %>%
+  sim_gen(function(dat) { dat[dat$idD %in% nCont, "ar"] <- 0 ; dat }) %>%
   sim_comp_agg(comp$rtfh("y", "trueVar")) %>%
   sim_simName("(u)")
 
@@ -110,7 +110,7 @@ setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
     gen_norm(9, 5, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
-  sim_gen(function(dat) { dat[nCont, "ar"] <- 0 ; dat }) %>%
+  sim_gen(function(dat) { dat[dat$idD %in% nCont, "ar"] <- 0 ; dat }) %>%
   sim_simName("(u)")
 
 # Simulation
@@ -134,29 +134,21 @@ simFun <- function(s, path = "R/data/areaLevelMSE") {
 
 if (rerunBase) {
   lapply(list(setupBase, setupOutlier), simFun)
-} else {
-  load("R/data/areaLevelMse.RData")
 }
 
 if (rerunSpatial) {
   lapply(list(setupSpatial, setupOutlierSpatial), simFun,
          path = "R/data/areaLevelMSESpatial/")
-} else {
-  load("R/data/areaLevelMseSpatial.RData")
 }
 
 if (rerunTemporal) {
   lapply(list(setupTemporalBase, setupTemporalBaseOutlier), simFun,
          path = "R/data/areaLevelMSETemporal/")
-} else {
-  load("R/data/areaLevelMseTemporal.RData")
 }
 
 if (rerunSpatioTemporal) {
   lapply(list(setupSpatioTemporal, setupSpatioTemporalOutlier), simFun,
          path = "R/data/areaLevelMSESpatioTemporal/")
-} else {
-  load("R/data/areaLevelMseSpatioTemporal.RData")
 }
 
 sim_clear_data("R/data/areaLevelMSE/")
