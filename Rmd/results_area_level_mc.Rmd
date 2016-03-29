@@ -1,33 +1,263 @@
-## The Area-Level Perspective
+# Robust Area Level Predictions
 
-In this section we present some results of a simulation study. To make the
-results comparable to other model based simulations on area level models we
-begin in this section with a simulation study on area level. Thus we can discuss
-area level outliers which is what all the others do. Section? will then
-introduce then a simulation study in which we start with a unit-level population
-and can thus introduce both, outlying observations and areas.
+In this Section the statistical properties of the proposed predictors are 
+investigated. Using model based simulation studies the empirical bias 
+and mean squared prediction error are compared over a veriety of simulation 
+scenarios and between the spatial and temporal extensions to the FH model. The
+proposed methods to estimate the MSPE of the predictions are presented
+seperately in Section (?).
 
-To begin with we define the area level model from which we draw the data:
+The simulation scenarios are developed under an area level model; meaning that
+we consider the situation where we know the true sampling variances and generate
+the Monte Carle repetitions directly from the area level model. This is a 
+conceptual contrast to the setting in section (?) in which we consider the 
+situation in which we estimate the sampling variances as part of the study and 
+thus need to generate the data on the unit level. However the area level 
+perspective is what is typically considered in the literature to evaluate area 
+level models -- see for example @Fab10 and @Mar13 -- and hence is considered 
+first.
 
-  $$\bar{y}_i = 100 + 1 \cdot x_i + v_i + \bar{e}_i$$
+Although the area level perspective on the data generating process may be 
+incomplete, i.e. we assume the sampling variances to be known, it is in fact the
+model under consideration. It presents the possibility to study the performance 
+of the estimation procedures when the model assumptions appear to be violated 
+due to outlying observations. However in this setting we are limited to the 
+study of area level outliers since it is not obvious how we can impose unit
+level outliers into an area level data generating process -- see also Section
+(?) for a discussion of unit and area level outliers.
 
-- The single regressor, $x$, is a deterministic sequence defined as $x_i = 
-\frac{i}{2D} + 1$ where $D$ is the number of domains (taken from spatio temporal
-FH).
-- The random effect, $v$, is drawn from a normal distribution, i.e. $v_i\sim
-\Distr{N}(0, \sigre)$ where $\sigre$ is defined with respect to the scenario.
-- The sampling error, $e$, is drawn from $e_i\sim \Distr{N}(0, \sige)$ where
-$\sige$ is an equidistant sequence from $0.8$ to $1.2$ with $D$ elements.
-- General characteristics: $D = 100$ and $R = 500$ being the sumber of Monte Carlo repetitions.
+Since several models with various correlation structures are considered it is
+tempting to investigate a multitude of specifications. With this respect some
+choices have been made to restrict the presentation of results to a concise set
+supporting the understanding of different model specifications in the context of
+outliers. Although we will see some benefits of utilizing spatial and temporal
+correlation structures the study does not aim to show the superiority of such
+methods but focus on the effect of outliers. With respect to outliers we only
+consider non\hyp{}symmetric outliers since they represent a more realistic use
+case. The choices of the simulation settings are presented in Section
+\ref{sec:area_level_sim_setting} in detail; the results are then presented in
+Section \ref{sec:area_level_sim_results}; followed by a discussion taking other
+literature into account in Section \ref{sec:area_level_sim_results}.
 
-To illustrate the greatness of the model we investigate two different scenarios:
 
-1. *(0, 0)* This is the scenario where the Fay Herriot model holds. In this
-scenario $\sigre = 1$.
-2. *(v, 0)* This is the scenario with area level outliers. $\sigre = 1$ for 95 \%
-of the areas, i.e. for $i \in \{1, \dots, 95\}$, and $\sigre = 20^2$ for $i \in
-\{96, \dots, 100\}$.
+## Simulation Scenarios
+\label{sec:area_level_sim_setting}
 
-![\textrrmse](figs/area_level_rrmse.pdf)
+In the following the concrete choices are presented regarding the setup of the
+simulation study. To avoid the specification of too many scenarios only a
+temporal setting is considered. Similar to the approach by @Mar13 the FH model 
+and spatial FH model are treated as special cases when we only use the data from
+the current time period. The temporal and spatio\hyp{}temporal extensions then 
+use all available information, however predictions are only made for the current
+time period. In this setting it is possible to compare the different model 
+specifications under a unified strategy.
 
-![\textrbias](figs/area_level_rbias.pdf)
+The area level model from which the data is generated in each Monte Carlo
+repetition is chosen to be:
+$$y_{it} = 100 + 5  x_i + \re_{1i} + \re_{2it} + e_{it}$$
+with $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D = 40$ and $T = 10$. The
+*current* time period is defined to be $t = T$.
+
+- The single regressor, $x_i$, is a deterministic sequence defined as $x_i = 
+\frac{i}{2D} + 1$ where $D = 40$ is the number of domains. This is a very
+similar setting to the choice made by @Mar13, however it is constant over time.
+- The sampling errors, $e_{it}$, are drawn from $e_{it} \sim \Distr{N}(0,
+\sige)$. The sampling variances, $\sigma_{eit}^2 = \sige$, are known during the
+estimation; they are defined as an ascending and equidistant sequence between 2
+and 6: $\sige = \frac{4 (i - 1)}{D - 1} + 2$.
+- The random effects components are generated generally from the spatio-temporal
+model, i.e. $\re_{1i} \sim \text{SAR}(1)$ and $\re_{2it} \sim \text{AR}(1)$ --
+see also the more concrete presentation in Section (?). Models with uncorrelated
+random effects are deduced when the respective correlation parameter is set to 
+zero. Since the impact of outliers is our main concern only scenarios are 
+considered where $\rho = \rho_1 = \rho_2$ and $\sigma_u^2 = \sigma_1^2 = 
+\sigma_2^2$. The concrete choices for $\rho$ and $\sigma_u^2$ depend on the 
+respective scenario and are defined below.
+
+The considered scenarios are now defined by the combination of spatial and
+temporal correlation in combination with the presence of outliers:
+
+- *(0, 0)* denotes the scenario in which we set $\rho = 0$ and $\sigma_u^2 = 2$,
+i.e. we have uncorrelated random effects and no outliers.
+- *(0.5, 0)* denotes the scenario in which we set $\rho = 0.5$ and $\sigma_u^2 =
+2$. Here we have no outliers but both spatial and temporal correlation in the
+random effects.
+- *(0, u)* denotes the outlier scenario when we set $\rho = 0$. Area outliers
+are the domains for which $i \in \{5, 15, 25, 35\}$ to avoid an artificial
+setting in combination with $\sige$. For regular observations $\sigre = 2$.
+Outliers are drawn from $\re_i \sim \Distr{N}(9, 25)$ and ignore any correlation
+structure. Furthermore areas are also outlying observations over time. 
+- *(0.5, u)* denotes the scenario in which outliers are generated in the same 
+way as for *(0, u)* however $\rho = 0.5$ for the generation of the regular
+observations.
+
+
+## Quality Measures
+
+The methods to be compared are the robust spatial and temporal extensions to the
+FH model. The non\hyp{}robust methods are denoted by FH, SFH, TFH, and STFH; and
+their robust counterparts by RFH, RSFH, RTFH, and RSTFH. In fact these methods
+have been introduced as area level REBLUP, SREBLUP, TREBLUP, and STREBLUP in
+Section (?) and are here abbreviated for notational simplicity. Furthermore we 
+have the bias corrected versions of the predictors using the correction proposed
+in Section (?). This correction is only applied to the robust predictions and 
+the respective models are referred to by RFH.BC, RSFH.BC, RTFH.BC, and RSTFH.BC.
+Furthermore the direct estimator is denoted by *Direct*; it is simply the
+generated value for $y_i$.
+
+To asses the quality of predictions under the various methods two measures are 
+utilised: the relative bias (RBIAS) and relative root mean squared prediction
+error (RRMSPE). These measures are computed over all realisations of the Monte
+Carlo repetitions; overall $R = 500$ repetitions have been conducted. Let 
+$\hat{\theta}^M_{ir}$ denote the prediction for the $i$th area in the $r$th 
+repetition with $r = 1, \dots, R$ under the model $M$ where $M$ is one of the 
+models under consideration, e.g. the RFH model. The Monte Carlo RRMSE can then 
+be defined by:
+$$
+\text{RRMSE}_i^M = \sqrt{\frac{1}{R}\sum_{r = 1}^R \Paran{\frac{\hat{\theta}^M_{ir} - \theta_{ir}}{\theta_{ir}}}^2}
+$$
+where $\theta_{ir}$ denotes the true target statistic in the Monte Carlo
+repitition $r$ and is defined by:
+$$
+\theta_{ir} = \theta_{iTr} = 100 + 5x_i + \re_{1ir} + \re_{2iTr}
+$$
+where the target statistic is defined as the true value in time period $t = T$.
+The relative bias for the $i$th area can be defined accordingly as:
+$$
+\text{RBIAS}_i^M = \frac{1}{R}\sum_{r = 1}^R \frac{\hat{\theta}^M_{ir} - \theta_{ir}}{\theta_{ir}}.
+$$
+
+
+## Results
+\label{sec:area_level_sim_results}
+
+The main results are summarised in Figures \ref{fig:area_level_rrmse} and
+\ref{fig:area_level_rbias}. They present the RBIAS and RRMSPE in *per cent* over
+500 Monte Carlo repetitions. Most of the findings are according to expectations 
+in that the robust methods have a beneficial effect in terms of MSPE when 
+outliers are present and are comparable but never superior otherwise. However 
+some findings are more surprising and need some explanation. To that extend
+consider the three observations we can make when studdying the figures.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width = \textwidth]{figs/area_level_rrmse.pdf}
+\caption[Relative Root Mean Squared Error of Spatial and Temporal REBLUPs]{\label{fig:area_level_rrmse}Relative Root Mean Squared Error of Spatial and Temporal REBLUPs}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width = \textwidth]{figs/area_level_rbias.pdf}
+\caption[Relative BIAS of Spatial and Temporal REBLUPs]{\label{fig:area_level_rbias}Relative BIAS of Spatial and Temporal REBLUPs}
+\end{figure}
+
+1. In terms of bias the robust temporal and spatio\hyp{}temporal extensions
+are unbiased in the presence of outliers, whereas all other methods are
+positively biased.
+2. The non\hyp{}robust temporal and spatio\hyp{}temporal models are
+less efficient in terms of MSPE even in scenarios without outliers.
+3. The bias correction shows good overall results. However it seems to add to
+the MSPE in the case of the temporal and spatio\hyp{}temporal models.
+
+The first observation is that the models that take the temporal structure into 
+account are unbiased. Several properties of the models and also the simulation 
+setting contribute to this effect. Identifiying the spatial correlation 
+structure is problematic in this simulation scenario. One point is the amount of
+variance which is due to the spatial correlation structure; this variation has a
+variance parameter set to $\sigma_1^2 = 2$ which is small compared to the 
+overall variance in the data. Also the small sample size of $D = 40$ may have 
+its effect -- the more data we have the easier it is to identify small effects 
+or in this case correlation structure. This is also immenent in the comparison 
+between the FH and SFH model where no difference in terms of MSPE is visible
+even in the scenarios *(0.5, 0)* and *(0.5, u)*.
+
+The inability to identify this spatial effect results in a similar result as was
+visible in Figure \ref{figs/stability_variance_spatio_temporal} where we 
+observed that under severe contamination the temporal correlation structure 
+would be influenced by outliers and at the same time the spatial structure has 
+been identified correctly. Here we observe a similar effect yet in contrast the 
+spatial structure captures the outlier contamination and the temporal 
+autocorrelation can be identified correctly. So in contrast to the stability 
+tests the effect has changed which is due to the different nature of outlying 
+areas; in Section (?) outliers are single observations even over time, here 
+outlying areas include all units over time. This results in the ability of the 
+temporal models to borrow strength from the correctly identified temporal
+autocorrelation. The reduced bias for outlying areas is due to the spatial
+correlation structure used for the prediction of such domains. In fact this
+effect would not only be present for the robust methods but also for the
+non\hyp{}robust methods. Basically we have an over parameterised model --
+since the signal of the spatial correlation is too weak -- which captures the
+mixture distribution used to induce outlier contamination.
+
+Now the question is why the non\hyp{}robust methods seem to be less beneficial 
+in terms of MSPE even when there are no outliers; this is the second 
+observation. As this is a surprising result a comparisson has been conducted 
+using the implementation from the R-package `sae` \citep{Mol15} to rule out 
+errors in the software. The results remain the same. What we really observe here
+is that in circa 30\% of the simulation runs the variance parameters for the 
+temporal and spatio\hyp{}temporal models are estimated to be close to zero. 
+Using the implementation in `sae` such results are sometimes denoted as *not 
+converged*; using `saeRobust` the evaluation of the estimation equations at 
+their respective solutions reveal non satifying results, i.e. values which can 
+not be considered to be close to zero. In terms of predictions the estimation of
+zero variance parameters results in random effects close to zero and hence only 
+the regression estimates are used as a synthetic estimator. This also explains 
+the small variation between area predictions which is revealed by the *small*
+boxes in Figure \ref{fig:area_level_rrmse} for the TFH and STFH model.
+
+Two settings in the simulation can be changed to improve the results for the 
+non\hyp{}robust methods. First, the ratio of variance due to the random effects 
+can be increased simplifying the identification of these correlation structures.
+Second, the strength of the outlier contamination can be increased. In a study
+where the mean of the outlier distribution was set to 100 the estimation under
+the TFH and STFH models yielded comparable results to their robust counterparts.
+As was discussed before in such a setting these models are over parameterised
+and can model the mixture distribution used for inducing the outlier
+contamination.
+
+Still questionable in this line of argumentation is why the predictions under
+the RTFH and RSTFH model do not suffer from this effect. The concrete mechanism
+explaining the difference is unknown at this time. In various simulations the
+robust methods revealed to be less sensitive to the misspecification of the
+sampling variances. In many cases zero variance parameters for the random 
+effects can be explained by a setting in which the specified sampling variances 
+are large compared to the overall variance in the data. Using the *true*
+sampling variances means that we use the parameters from a super population 
+model, such values may be less optimal in concrete realisations. However this is
+a broad and more conceptual discussion which is again addressed in Section (?)
+and somewhat beyond the scope of the discussion here.
+
+The third observation is that the bias correction is not improving the results
+for the temporal models. The bias correction is constructing an intervall around
+the inefficient but unbiased direct estimates in which we allow predictions to
+be made. The choice made in Section (?) for the size of this intervall may be
+too conservative in this simulation study. This effectively leads to many
+repetitions in which domain predictions are unnecessarily bias corrected. 
+However, for the models which do not take the temporal structure into account we
+can see that the bias correction has a beneficial effect on the prediction of 
+the outlying domains, both in terms of bias and consequently also in terms of 
+MSPE. For the non\hyp{}outlying areas we can see no additional gain from this
+correction.
+ 
+## Discussion
+\label{sec:area_level_sim_results}
+
+The aim of this study has not been to promote the use of a specific model -- in 
+terms of a correlation structure -- but rather focused on revealing differences 
+between the robust and non\hyp{}robust estimation methods. The benefit of
+utilising temporal autocorrelation has been demonstrated in different studies --
+see @Rao94 for the temporal model and @Mar13 for the spatio-temporal model. The
+main findings are:
+
+- Using an over parameterised model may have a positive effect in terms of RBIAS
+and RRMSPE in the presence of outliers. Allthough not shown explicitly this can
+be true also for the non\hyp{}robust methods. This may be due to the ability of
+the fitting process to approximate the mixture distribution.
+- The proposed bias correction may prove to be useful especially for outlying
+domains. However the choice of the width of the intervall in which predictions
+can be made should be chosen with care in a practical application.
+- The robust methods have an expected positive effect in terms of RRMSE in the
+presence of outliers. Also they may be more robust against the choice of the
+sampling variances -- however this claim needs further investigation.
+
+

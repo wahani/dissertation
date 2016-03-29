@@ -1,8 +1,19 @@
-### Estimation of the MSE
+# Mean Squared Prediction Error
 
+## Simulation Scenarios
 
 To begin with we define the area level model from which we draw the data:
 
   $$\tilde{y}_i = 100 + 2 \cdot x_i + \re_i + e_i$$
 
+## Quality Measures
+
+## Results
+
 ![Absolute values of the estimated Mean Squared Error using the pseudo linearizatin compared to the Monte Carlo MSE](figs/area_level_mse.pdf)
+
+\input{tabs/mse_template.tex}
+
+
+## Discussion
+
