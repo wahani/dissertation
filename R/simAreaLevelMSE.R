@@ -24,7 +24,8 @@ n <- 1
 nTime <- 10
 nCont <- c(5, 15, 25, 35)
 sige <- sqrt(seq(2, 6, length.out = D))
-sigre <- 3
+sigre <- 8
+sigre2 <- 4
 
 ## Simulation
 runs <- 100
@@ -32,8 +33,8 @@ cpus <- if (LOCAL) parallel::detectCores() - 1 else 1
 number <- if (LOCAL) NULL else commandArgs(TRUE)
 rerunBase <- TRUE
 rerunSpatial <- TRUE
-rerunTemporal <- FALSE
-rerunSpatioTemporal <- FALSE
+rerunTemporal <- TRUE
+rerunSpatioTemporal <- TRUE
 
 # Setup
 setup <- base_id(D, 1) %>%
@@ -44,12 +45,12 @@ setup <- base_id(D, 1) %>%
 
 ## Base
 setupBase <- setup %>%
-  sim_gen_v(sd = sigre)  %>%
+  sim_gen_v(sd = sqrt(sigre))  %>%
   sim_comp_agg(comp$rfh("y", "trueVar")) %>%
   sim_simName("(0)")
 
 setupOutlier <- setup %>%
-  sim_gen_v(sd = sigre)  %>%
+  sim_gen_v(sd = sqrt(sigre))  %>%
   sim_comp_agg(comp$rfh("y", "trueVar")) %>%
   sim_gen_cont(
     gen_norm(9, 5, "v"),
@@ -59,7 +60,7 @@ setupOutlier <- setup %>%
 
 ## Spatial
 setupSpatial <- setup %>%
-  sim_gen(gen_v_sar(sd = sigre, name = "v"))  %>%
+  sim_gen(gen_v_sar(sd = sqrt(sigre), name = "v"))  %>%
   sim_comp_agg(comp$rsfh("y", "trueVar")) %>%
   sim_simName("(0)")
 
@@ -78,12 +79,12 @@ setupTemporal <- base_id_temporal(D, n, nTime) %>%
   # Area-Level Data
   sim_gen_e(sd = sqrt(trueVarTemporal)) %>%
   sim_gen_generic(gen$fixed_sequence, groupVars = "idD", name = "x") %>%
-  sim_gen(gen_v_ar1(rho = 0.5, sd = sigre, name = "ar")) %>%
+  sim_gen(gen_v_ar1(rho = 0.5, sd = sqrt(sigre2), name = "ar")) %>%
   sim_resp_eq(y = 100 + 5 * x + v + ar + e, trueVal = 100 + 5 * x + v + ar) %>%
   sim_comp_agg(comp_var(trueVar = trueVarTemporal))
 
 setupTemporalBase <- setupTemporal %>%
-  sim_gen(gen_v_sar(rho = 0, sd = sigre, name = "v")) %>%
+  sim_gen(gen_v_sar(rho = 0, sd = sqrt(sigre2), name = "v")) %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
   sim_comp_agg(comp$rtfh("y", "trueVar")) %>%
   sim_simName("(0)")
@@ -99,8 +100,8 @@ setupTemporalBaseOutlier <- setupTemporalBase %>%
 
 ## Spatio Temporal
 setupSpatioTemporal <- setupTemporal %>%
-  sim_gen(gen_v_sar(rho = 0.5, sd = sigre, name = "v")) %>%
-  sim_gen(gen_v_ar1(rho = 0.5, sd = sigre, name = "ar")) %>%
+  sim_gen(gen_v_sar(rho = 0.5, sd = sqrt(sigre2), name = "v")) %>%
+  sim_gen(gen_v_ar1(rho = 0.5, sd = sqrt(sigre2), name = "ar")) %>%
   sim_comp_agg(comp$rstfh("y", "trueVar")) %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
   sim_simName("(0)")
@@ -175,21 +176,21 @@ simDatTemporal <- simDatTemporal %>% mutar(~idT == nTime)
 plotRMSE <- function(simDat) {
   mseDat <- simDat %>%
     mutar(
-      MCRFH ~ sqrt(mean((rfh - trueVal)^2)),
-      MCRFH.BC ~ sqrt(mean((rfh.BC - trueVal)^2)),
-      PseudoRFH ~ mean(sqrt(rfhPseudoMse)),
-      BootRFH ~ mean(sqrt(rfhBootMse)),
-      PseudoRFH.BC ~ mean(sqrt(rfhPseudoMse.BC)),
-      BootRFH.BC ~ mean(sqrt(rfhBootMse.BC)),
+      MC ~ sqrt(mean((rfh - trueVal)^2)),
+      MC.BC ~ sqrt(mean((rfh.BC - trueVal)^2)),
+      CCT ~ mean(sqrt(rfhPseudoMse)),
+      BOOT ~ mean(sqrt(rfhBootMse)),
+      CCT.BC ~ mean(sqrt(rfhPseudoMse.BC)),
+      BOOT.BC ~ mean(sqrt(rfhBootMse.BC)),
       by = c("idD", "simName")
     )
 
   ggDat <- mseDat %>%
-    tidyr::gather(estimator, RMSE, -idD, -simName) %>%
-    mutar(~ estimator %in% c("MCRFH.BC", "PseudoRFH.BC", "BootRFH.BC"))
+    tidyr::gather(estimator, RMSPE, -idD, -simName) %>%
+    mutar(~ estimator %in% c("MC.BC", "CCT.BC", "BOOT.BC"))
 
-  ggplot(ggDat, aes(x = idD, y = RMSE, colour = estimator)) +
-    geom_line() + gg$themes$theme_thesis(fontSize) + labs(x = "domain", colour = NULL) +
+  ggplot(ggDat, aes(x = idD, y = RMSPE, colour = estimator)) +
+    geom_line() + gg$themes$theme_thesis(fontSize) + labs(x = "Domain", colour = NULL) +
     theme(legend.position = "bottom") + facet_wrap(~simName, ncol = 2)
 
 }
