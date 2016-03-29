@@ -1,19 +1,85 @@
 # Mean Squared Prediction Error
 
+In Section (?) some insights on the Monte Carlo MSPE and bias have been gained. 
+In addition to the prediction of a target statistic we are of course also 
+interested in a measure of uncertainty with respect to this quantity. To this 
+extend two MSPE estimators have been proposed in Section (?): an adaption of the
+parameteric bootstrap proposed by @Sin09 and a MSPE estimator based on the 
+pseudolinerisation approach by @Cha11. In the following these two MSPE estimator
+are compared in different simulation settings.
+
+In the proviously conducted simulation study we saw that the simulation setting
+revealed advantages and disadvantages of the robust methods. With respect to the
+MSPE estimation the scenarios are chosen to be more confirmatory in terms of the
+underlying model. However the computational effort with respect to the boostrap
+estimator is relatively high which makes it necessary to restrict the number of
+scenarios to a minimum. Thus for each model -- RFH, RSFH, RTFH, and RSTFH --
+data is generated under the correct model and only a non\hyp{}outlier with a
+outlier scenario is compared.
+
+Also the results for the non\hyp{}robust methods are ommitted to reduce the
+number of necessary comparissons. In principle a comparisson with established
+methods like the MSPE estimator from @Pra90 would be valuable. However the MSPE
+estimators associated to the non\hyp{}robust predictors are diverse -- see the
+coresponding review in Section (?). 
+
+In the following Section (?) the simulation settings for each model are
+described in detail. A presentation of the results can be found in Section (?);
+followed by a discussion of the results in the context of the existing
+literature in Section (?).
+
 ## Simulation Scenarios
 
-To begin with we define the area level model from which we draw the data:
+In the simulation study each model is fitted on data generated using the
+coresponding model which can be represented in general form as:
+$$
+y_{it} = 100 + 5x_i + \mat{z}_{it}^\top\mat{u} + e_{it}
+$$
+with $i = 1, \dots, D$ and $t = 1, \dots, T$. The regressor is defined as
+before: $x_i = \frac{i}{2D} + 1$; and the sampling error structure is the same
+for all scenarios: $e_{it} \sim \Distr{N}(0, \sige)$ with $\sigma_{eit}^2 =
+\sige$ and $\sige = \frac{4 (i - 1)}{D - 1} + 2$. Furthermore it is distinguised
+between:
 
-  $$\tilde{y}_i = 100 + 2 \cdot x_i + \re_i + e_i$$
+- RFH-(0): $D = 40$ and $T = 1$; $\mat{z}_{it}^\top\mat{u} = u_i$ with $u_i \sim \Distr{N}(0, 9)$.
+- RSFH-(0): $D = 40$ and $T = 1$; $\mat{z}_{it}^\top\mat{u} = u_{1i}$ with $u_{1i} \sim SAR(1)$ where $\rho_1 = 0.5$ and $\sigma_1^2 = 9$.
+- RTFH-(0): $D = 40$ and $T = 10$; $\mat{z}_{it}^\top\mat{u} = u_{0i} + u_{2it}$ with $u_{0i} \sim \Distr{N}(0, 9)$ and $u_{2it} \sim AR(1)$ where $\rho_2 = 0.5$ and $\sigma_2^2 = 9$.
+- RSTFH-(0): $D = 40$ and $T = 10$; $\mat{z}_{it}^\top\mat{u} = u_{1i} + u_{2it}$ with $u_{1i} \sim SAR(1)$ where $\rho_1 = 0.5$ and $\sigma_1^2 = 9$ and $u_{2it} \sim AR(1)$ where $\rho_2 = 0.5$ and $\sigma_2^2 = 9$.
+
+\noindent Here *(0)* is used to denote the non\hyp{}outlier scenario. For each
+of these scenarios one outlier scenario is considered which is denoted by *(u)*
+where we replace the random effect for the outlying domains:
+
+- *-(u): $\mat{z}_{it}^\top\mat{u} = u_{i}$ with $u_i \sim \Distr{N}(9, 25)$
+for all $i \in \{5, 15, 25, 35\}$. The set of outlying domains is chosen to
+avoid an artificial scenario in combination with the choice for $\sige$.
 
 ## Quality Measures
 
+In this setting we are interested in the performance of the MSPE estimators. To 
+asses the quality of these estimators the RRMSE and RBIAS of the estimated root
+MSPE (RMSPE) are compared with the *true* values. Let $\widehat{RMSPE}^M_{ir}$
+denote the estimated RMSPE for area $i$ in the $r$th Monte Carlo repetition
+using method $M$. $M$ is either the parameteric bootstrap referred to by BOOT or
+the pseudolinearisation based approach which is refered to by CCT. We can then
+define the RRMSE as:
+$$
+RRMSE_i^M = \sqrt{\frac{1}{R} \sum_{r = 1}^R \Paran{\frac{\widehat{RMSPE}^M_{ir} - RMSPE^M_{i}}{RMSPE^M_{i}}}^2}
+$$
+where we define the *true* MSPE as the Monte Carlo MSPE over all repetitions as
+it was defined in Section (?). Furthermore we have the RBIAS of the MSPE
+estimator defined as:
+$$
+RBIAS_i^M = \frac{1}{R} \sum_{r = 1}^R \frac{\widehat{RMSPE}^M_{ir} - RMSPE^M_{i}}{RMSPE^M_{i}}
+$$
+These measures are computed for both MSPE estimators for the robust predictions referred to by RFH, RSFH, RTFH, and RSTFH; and their bias\hyp{}corrected counterparts RFH.BC, RSFH.BC, RTFH.BC, and RSTFH.BC.
+
 ## Results
 
-![Absolute values of the estimated Mean Squared Error using the pseudo linearizatin compared to the Monte Carlo MSE](figs/area_level_mse.pdf)
 
 \input{tabs/mse_template.tex}
 
+![Absolute values of the estimated Mean Squared Error using the pseudo linearizatin compared to the Monte Carlo MSE](figs/area_level_mse.pdf)
 
 ## Discussion
 
