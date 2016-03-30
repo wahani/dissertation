@@ -75,6 +75,7 @@ setupTemporalBaseOutlier <- setupTemporalBase %>%
     gen_norm(9, 5, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
+  sim_gen(function(dat) { dat[dat$idD %in% nCont, "ar"] <- 0 ; dat }) %>%
   sim_simName("(0, u)")
 
 setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
@@ -82,6 +83,7 @@ setupSpatioTemporalOutlier <- setupSpatioTemporal %>%
     gen_norm(9, 5, "v"),
     type = "area", areaVar = "idD", fixed = TRUE,
     nCont = nCont) %>%
+  sim_gen(function(dat) { dat[dat$idD %in% nCont, "ar"] <- 0 ; dat }) %>%
   sim_simName("(0.5, u)")
 
 # Trigger Simulation:

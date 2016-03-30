@@ -123,12 +123,12 @@ fixName <- function(x) {
 
 # mutar(simName ~ fixName(simName))
 simFun <- function(s, path = "R/data/areaLevelMSE") {
-  Sys.sleep(runif(1, 10, 30))
-  gc()
   if (LOCAL) {
     sim(s, runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE,
       path = path, overwrite = FALSE)
   } else {
+    Sys.sleep(runif(1, 10, 30))
+    gc()
     sim(s, runs, path = path, overwrite = FALSE)
   }
 }
