@@ -1,4 +1,4 @@
-# Mean Squared Prediction Error
+# Performance of Mean Squared Prediction Error
 
 In Section (?) some insights on the Monte Carlo MSPE and bias have been gained. 
 In addition to the prediction of a target statistic we are of course also 

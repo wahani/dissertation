@@ -1,12 +1,56 @@
-# From Unit to Area Level
+# From Unit to Area Level Contamination
 
-In this section we want to present a different perspective for simulation
-studies on area level models. Namely by starting from the unit level population
-data. This allows for a number of interesting aspects which can be investigated
-and explained:
+In this section a different perspective is taken in that a model\hyp{}based
+simulation study is conducted beginning from a unit level population. This is an
+approach taken typical for unit level models; see for example @Cha14 and @Sin09.
+However results for robust area level models are typically produced on area level
+data -- see for example @Fab10 -- or studied using survey data -- see for 
+example @Bel06 and @Xie07. This area level perspective implicitly rules out any
+impact of unit level outliers on area level models; and whether such
+observations can influence predictions is subject of this Section.
 
-## From Unit to Area Level Models
+This change in perspective enables a more thorough investigation of the impact
+of unit level contamination when applying area level models. Furthermore it must
+be stated how we estimate the sampling variance of the direct estimator which
+can have an impact as well; these quantities have been assumed to be known so
+far. In the literature the estimation of the sampling variances is often 
+connected to the application of smoothing techniques -- see Section (?) for a 
+review -- to stabilise these parameters. Hence in this context several points
+motivate this study:
 
+- Under the FH model we specify an area level model with a heteroscedastic
+sampling distribution. The model does not explain the source for this
+heteroscedasticity. In the following two different sources are induced: one is
+the sampling size varying across domains, and the other one are unit level
+outliers.
+- When we begin from the unit level we may ask what the true sampling variance 
+is; this quantity is assumed to be known under the model. In practice these
+values are estimated and are themselves unreliable if the target is the
+population variance. So it will be relevant to discuss how the FH estimator and
+the robust extension perform when the direct variance estimator is an additional
+source of uncertainty. Also it is unclear how smoothing techniques relate to
+unit level outliers.
+- In the context of unit level outliers it can be intuitive to suggest a robust 
+direct estimator instead of the sample mean. Hence different robust direct
+estimators are used as an alternative to a sample mean.
+
+These questions have more practical relevance and are conceptually unrelated to
+the question if we exploit spatial and temporal correlation structures in the 
+data. For this reason the following study has a focus on the FH model and 
+excludes the spatial and temporal extensions. The results should in principle 
+apply also to these extensions however this remains an avenue for further
+research.
+
+This study is structured as follows: the following Section (?) completes the
+formal link between the unit and area level. Essentially we need to specify
+assumptions with respect to the unit level population model to have a coherent
+link between the population level, the sampled level, and the area level. Based
+on these results Section (?) presents the simulation settings; Section (?) the
+investigated estimation strategies; and in Section (?) the results of the Monte
+Carlo Simulation are presented.
+
+
+## From Unit to Area Level Data
 
 In later simulation studies we will consider data in which area level statistics
 are computed from individual information. From a contextual point of view, 
@@ -43,22 +87,6 @@ unit level model a sufficient estimator for $\sige$ can be derived from
 estimating $\sige$, which can be done robust and non-robust in many ways.
 
 
-- Under the Fay Herriot model we specify an area level model with
-heteroscedastic sampling distribution. The model does not explain what the
-source of heteroscedasticity is. We induce two different sources, one is the
-sampling size varying accros domains, and the other one are unit level outliers.
-- When we begin from the unit level we may ask what the true sampling variance
-is; which is assumed to be known under the model. In practice it is an estimated
-quantity which itself, like a direct estimator of the mean, is unreliable. So it
-will be relevant to discuss how the Fay Herriot estimator is performing when the
-direct variance estimator is an additional source of uncertainty. Recent
-research suggests that smoothed variances should be plugged into the FH
-estimator. In contrast to this discussion we will argue that direct variance
-estimators are a viable source of information when unit level outliers are an
-issue.
-- In the context of unit level outliers it can be intuitive to suggest a robust
-direct estimator instead of the sample mean. Hence we compare how the use of a
-median and a huber type estimator of the mean compete against the sampling mean.
 
 In general our simulation setup borrows from unit level scenarios from the literature to make this exercise as convenient as possible. The basis is again a linear mixed model, this time defined on the unit population level:
 
