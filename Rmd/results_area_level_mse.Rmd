@@ -57,29 +57,118 @@ avoid an artificial scenario in combination with the choice for $\sige$.
 ## Quality Measures
 
 In this setting we are interested in the performance of the MSPE estimators. To 
-asses the quality of these estimators the RRMSE and RBIAS of the estimated root
-MSPE (RMSPE) are compared with the *true* values. Let $\widehat{RMSPE}^M_{ir}$
-denote the estimated RMSPE for area $i$ in the $r$th Monte Carlo repetition
+asses the quality of these estimators the RRMSE and RBIAS of the estimated root 
+MSPE (RMSPE) are compared with the *true* values. Let $\widehat{RMSPE}^M_{ir}$ 
+denote the estimated RMSPE for area $i$ in the $r$th Monte Carlo repetition 
 using method $M$. $M$ is either the parameteric bootstrap referred to by BOOT or
-the pseudolinearisation based approach which is refered to by CCT. We can then
-define the RRMSE as:
+the pseudolinearisation based approach which is refered to by CCT. Similar to 
+the previous study predictions are made for the *current* time period, which is 
+again defined as $t = T$ under the respective scenario. This also means that we 
+evaluate only the RMSPE for these predictions. We can then define the RRMSE as:
 $$
 RRMSE_i^M = \sqrt{\frac{1}{R} \sum_{r = 1}^R \Paran{\frac{\widehat{RMSPE}^M_{ir} - RMSPE^M_{i}}{RMSPE^M_{i}}}^2}
 $$
-where we define the *true* MSPE as the Monte Carlo MSPE over all repetitions as
-it was defined in Section (?). Furthermore we have the RBIAS of the MSPE
+where we define the *true* RMSPE as the Monte Carlo RMSPE over all repetitions:
+$$
+RMSPE_i^M = \sqrt{\frac{1}{R} \sum_{r = 1}^R \Paran{\widehat{RMSPE}^M_{ir} - RMSPE^M_{i}}^2}
+$$
+Furthermore we have the RBIAS of the MSPE
 estimator defined as:
 $$
 RBIAS_i^M = \frac{1}{R} \sum_{r = 1}^R \frac{\widehat{RMSPE}^M_{ir} - RMSPE^M_{i}}{RMSPE^M_{i}}
 $$
-These measures are computed for both MSPE estimators for the robust predictions referred to by RFH, RSFH, RTFH, and RSTFH; and their bias\hyp{}corrected counterparts RFH.BC, RSFH.BC, RTFH.BC, and RSTFH.BC.
+These measures are computed for both MSPE estimators and for all robust 
+predictions; the respective predictors are referred to by RFH, RSFH, RTFH, and 
+RSTFH; and their bias\hyp{}corrected counterparts by RFH.BC, RSFH.BC, RTFH.BC,
+and RSTFH.BC.
 
 ## Results
 
+The main results of the simulation study can be found in Table
+\ref{tab:mse_performace}. The following observations need to be discussed:
+
+1. The CCT has not for all estimators a negative bias.
+2. The CCT has a high MSE for the bias corrected predictors.
+3. The advantage of the CCT compared to BOOT is small for the outlying domains.
 
 \input{tabs/mse_template.tex}
 
-![Absolute values of the estimated Mean Squared Error using the pseudo linearizatin compared to the Monte Carlo MSE](figs/area_level_mse.pdf)
+The first observation is that the CCT has not a negative bias in all cases. 
+However as we neglect the uncertainty due to the estimation of the variance 
+parameters and assume independence between the weights and the response in the 
+pseudolinear form we should expect an under estimation. For the RFH and RSFH in
+the non\hyp{}outlier scenario this can be observed. Under the same scenario the
+RTFH and RSTFH can have a positive bias since only the estimated MSPE for the
+*current* time period is considered. In an analysis using all time periods the 
+median RBIAS is indeed negative. The estimation for regular domains under the
+outlier scenario can also have a positive bias. This happens since the variation
+due to the random effect is higher when outliers are present. Thus the variance
+parameters used to compute the MSPE for the regular observations are slightly
+higher which is reflected in a higher estimate for the MSPE.
+
+The second observation is the higher MSE of the CCT for the predictions with 
+bias correction. The bias correction will bind the domain prediction. The choice
+of the intervall in which predictions can be made leads -- in this simulation --
+to the situation that more predictions than necessary are *bias corrected*. 
+Since the weights for the bias correction -- see Section (?) -- are also used 
+for estimating the MSPE more weight is given to the sampling variance. Leading
+to more unstable results over all. This may be less relevant in an application
+in which we can choose the width of the intervall. Also this effect was visible
+in the model\hyp{}based simulation in Section (?).
+
+The third observation we can make is that the CCT only has a small benefit in
+terms of bias and MSE for the outlying observations. In general the results
+regarding the performace of the MSPE estimators are very sensitive with respect
+to the choices made for the model. In this setting the bias we can make in a
+prediction is relatively small since the mean for outlying domains is shifted by
+9 units compared to an overall intercept of 100. In the design\hyp{}based study
+of Section (?) we will observe outlying observations which are multiple times
+larger than the main body of observations. Hence the benefit in terms of bias
+depends largely on the magnitude of the intercept of the outlying observations.
+Furthermore it must be noted that the MSPE predictor will gain an advantage in
+terms of MSE due to the reduced bias in the prediction. 
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width = \textwidth]{figs/area_level_mse.pdf}
+\caption[Estimated Root Mean Squared Prediction Error for the Bias Corrected Robust Spatial FH Model]{\label{fig:area_level_mse}Estimated Root Mean Squared Prediction Error for the Bias Corrected Robust Spatial FH Model. Compared are the bootstrap (BOOT.BC) and the pseudolinearisation\hyp{}based estimator (CCT.BC) with the Monte Carlo MSPE (MC.BC).}
+\end{figure}
+
+Figure \ref{fig:area_level_mse} also illustrates how the estimated RMSPE relates
+to outliers. Note that observations 5, 15, 25, and 35 are outlying domains and 
+that the sampling variances increase with $i$. What we see here is that the CCT 
+for the bias corrected RSFH is able to follow the Monte Carlo MSPE better when 
+the sampling variances are large. Since there is no information on the *true* 
+variation in the outlier distribution we observe a better fit the more relevant 
+the sampling variance is. This shows that these results largely depend on the
+scenario in which the CCT method is applied. The bootstrap in contrast has no
+means of mirroring the Monte Carlo MSPE for outlying observations regardless of
+the scenario.
+
 
 ## Discussion
 
+The performane of the MSPE estimators are overall promising. However the
+concrete results strongly depend on the scenario settings. What we can generally
+observe is that the CCT for the bias correction suffers under repeated sampling
+when the prediction intervall of the correction is too conservative. For the
+same reason we observe a correlation between the sampling variances and the
+bias. The bootstrap in contrast showed very stable results -- approximately 10
+per cent in terms of RRMSE -- over a variety of different settings. However this
+method cannot capture the variation for outlying domains. In scenarios in which
+the respective models repeatedly estimate close to zero variances the bootstrap
+will underestimate the true variation since more weights is given to the linear
+predictor. This setting has been -- in contrast to Section (?) -- avoided by
+choosing larger values for the variance parameters in the above study.
+
+The settings of this study have been chosen to be close to the approach taken by
+@Cha14. Although a comparison is difficult to make because of the transition 
+between area level and unit level models some similarities in the results can be
+found. Most notably @Cha14 report values of the RRMSE for the bootstrap for the 
+unit level REBLUP of approximately 10 per cent in scenarios with area level 
+outliers and scenario without contamination. This result is very close to what 
+we can observe in this study. In the specific scenario above the results for the
+CCT show similar performance in terms of RRMSE to the bootstrap at least for the
+not bias corrected predictions. In the study conducted by @Cha14 the CCT method 
+shows not as good results as we can see here, however this can very well be due 
+to the differences in the scenarios.

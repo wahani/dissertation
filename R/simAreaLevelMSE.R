@@ -306,7 +306,12 @@ rrmseRow <- rrmse[FALSE, ]
 rrmseRow[1, 1] <- "Median RRMSE:"
 rrmse <- rbind(rrmseRow, rrmse)
 
-dump <- tab$save(rbind(rbias, rrmse), fileName = "tabs/mse_template.tex")
+dump <- tab$saveResize(
+  rbind(rbias, rrmse),
+  fileName = "tabs/mse_template.tex",
+  caption = "\\label{tab:mse_performace}Performance of RMSPE Estimators in Model\\hyp{}Based Simulation. Results are in \\%. \\textit{Regular} denotes non\\hyp{}outlier observations. (0) is the model specific scenario without contamination; (u) is with outlier contamination.",
+  caption.lot = "Performance of RMSPE Estimators in Model\\hyp{}Based Simulation"
+)
 
 
 

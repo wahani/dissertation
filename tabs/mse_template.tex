@@ -1,45 +1,47 @@
 %latex.default(x, file = fileName, ..., caption.loc = caption.loc,     rowname = rowname)%
 \begin{table}[!tbp]
 \begin{center}
-\begin{tabular}{llrrr}
+\resizebox{\linewidth}{!}{\begin{tabular}{llrrr}
 \hline\hline
 \multicolumn{1}{c}{Predictor}&\multicolumn{1}{c}{MSPE}&\multicolumn{1}{c}{(0)-Regular}&\multicolumn{1}{c}{(u)-Regular}&\multicolumn{1}{c}{(u)-Outlier}\tabularnewline
 \hline
 Median RBIAS:&&$$&$$&$$\tabularnewline
-RFH&CCT&$-13.53$&$-1.20$&$-68.52$\tabularnewline
-&BOOT&$ -9.02$&$ 3.43$&$-68.60$\tabularnewline
-RFH.BC&CCT&$  5.87$&$ 5.87$&$-16.85$\tabularnewline
-&BOOT&$ -5.24$&$ 2.43$&$-39.92$\tabularnewline
-RSFH&CCT&$-12.80$&$-2.25$&$-59.88$\tabularnewline
-&BOOT&$ -4.93$&$ 2.66$&$-59.74$\tabularnewline
-RSFH.BC&CCT&$  2.84$&$ 2.84$&$-17.93$\tabularnewline
-&BOOT&$ -4.49$&$ 1.54$&$-34.97$\tabularnewline
-RTFH&CCT&$  0.22$&$ 3.07$&$-43.20$\tabularnewline
-&BOOT&$  1.57$&$ 4.33$&$-43.66$\tabularnewline
-RTFH.BC&CCT&$  9.67$&$ 8.45$&$ -8.52$\tabularnewline
-&BOOT&$  1.85$&$ 3.60$&$-25.79$\tabularnewline
-RSTFH&CCT&$ -2.14$&$-0.51$&$-29.30$\tabularnewline
-&BOOT&$  1.39$&$ 0.74$&$-29.44$\tabularnewline
-RSTFH.BC&CCT&$  3.09$&$ 4.12$&$-13.77$\tabularnewline
-&BOOT&$ -1.02$&$ 0.60$&$-22.25$\tabularnewline
+RFH&CCT&$-6.25$&$ 0.74$&$-35.24$\tabularnewline
+&BOOT&$-3.23$&$ 2.94$&$-34.78$\tabularnewline
+RFH.BC&CCT&$ 0.36$&$ 2.36$&$-21.44$\tabularnewline
+&BOOT&$-2.67$&$ 2.34$&$-29.67$\tabularnewline
+RSFH&CCT&$-6.42$&$-1.20$&$-32.04$\tabularnewline
+&BOOT&$-1.68$&$ 1.95$&$-31.54$\tabularnewline
+RSFH.BC&CCT&$-3.00$&$-0.15$&$-17.66$\tabularnewline
+&BOOT&$-3.58$&$ 0.67$&$-24.27$\tabularnewline
+RTFH&CCT&$-0.11$&$ 0.56$&$-37.39$\tabularnewline
+&BOOT&$ 1.40$&$ 1.29$&$-38.11$\tabularnewline
+RTFH.BC&CCT&$ 8.63$&$ 6.79$&$ -2.36$\tabularnewline
+&BOOT&$ 1.23$&$ 0.56$&$-23.88$\tabularnewline
+RSTFH&CCT&$ 0.12$&$-0.70$&$-14.67$\tabularnewline
+&BOOT&$ 0.61$&$ 0.34$&$-14.46$\tabularnewline
+RSTFH.BC&CCT&$ 3.69$&$ 1.71$&$ -8.35$\tabularnewline
+&BOOT&$ 1.12$&$-0.26$&$-12.58$\tabularnewline
 Median RRMSE:&&$$&$$&$$\tabularnewline
-RFH&CCT&$ 21.30$&$15.04$&$ 68.68$\tabularnewline
-&BOOT&$ 20.81$&$16.08$&$ 68.78$\tabularnewline
-RFH.BC&CCT&$ 43.25$&$28.76$&$ 27.21$\tabularnewline
-&BOOT&$ 15.58$&$13.54$&$ 40.70$\tabularnewline
-RSFH&CCT&$ 18.56$&$ 9.84$&$ 60.00$\tabularnewline
-&BOOT&$ 31.16$&$11.71$&$ 59.90$\tabularnewline
-RSFH.BC&CCT&$ 34.28$&$19.83$&$ 26.33$\tabularnewline
-&BOOT&$ 13.95$&$10.76$&$ 35.61$\tabularnewline
-RTFH&CCT&$  4.18$&$ 5.36$&$ 43.28$\tabularnewline
-&BOOT&$  8.63$&$ 9.07$&$ 43.87$\tabularnewline
-RTFH.BC&CCT&$ 29.46$&$27.85$&$ 27.62$\tabularnewline
-&BOOT&$  8.52$&$ 8.88$&$ 26.43$\tabularnewline
-RSTFH&CCT&$  3.83$&$ 3.67$&$ 29.37$\tabularnewline
-&BOOT&$ 47.78$&$ 8.08$&$ 29.87$\tabularnewline
-RSTFH.BC&CCT&$ 19.71$&$17.08$&$ 23.55$\tabularnewline
-&BOOT&$  7.85$&$ 8.05$&$ 22.97$\tabularnewline
+RFH&CCT&$11.55$&$ 6.70$&$ 35.37$\tabularnewline
+&BOOT&$12.68$&$ 9.95$&$ 35.20$\tabularnewline
+RFH.BC&CCT&$19.95$&$12.29$&$ 27.76$\tabularnewline
+&BOOT&$11.98$&$10.20$&$ 30.25$\tabularnewline
+RSFH&CCT&$10.28$&$ 6.60$&$ 32.28$\tabularnewline
+&BOOT&$11.70$&$ 8.98$&$ 32.20$\tabularnewline
+RSFH.BC&CCT&$18.07$&$10.22$&$ 22.93$\tabularnewline
+&BOOT&$11.19$&$ 9.10$&$ 25.13$\tabularnewline
+RTFH&CCT&$ 6.95$&$ 5.29$&$ 37.49$\tabularnewline
+&BOOT&$ 9.61$&$ 9.10$&$ 38.45$\tabularnewline
+RTFH.BC&CCT&$27.87$&$24.74$&$ 28.48$\tabularnewline
+&BOOT&$ 9.62$&$ 9.02$&$ 24.64$\tabularnewline
+RSTFH&CCT&$ 5.83$&$ 3.73$&$ 14.77$\tabularnewline
+&BOOT&$ 8.90$&$ 8.02$&$ 15.72$\tabularnewline
+RSTFH.BC&CCT&$13.07$&$11.68$&$ 18.02$\tabularnewline
+&BOOT&$ 8.76$&$ 8.14$&$ 14.14$\tabularnewline
 \hline
-\end{tabular}\end{center}
+\end{tabular}}
+
+\caption[Performance of RMSPE Estimators in Model\hyp{}Based Simulation]{\label{tab:mse_performace}Performance of RMSPE Estimators in Model\hyp{}Based Simulation. Results are in \%. \textit{Regular} denotes non\hyp{}outlier observations. (0) is the model specific scenario without contamination; (u) is with outlier contamination.\label{x}}\end{center}
 
 \end{table}

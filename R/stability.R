@@ -645,6 +645,7 @@ tableDat <- rbind(tabSpatial, tabTemporal, tabSpatioTemporal)
 tab <- table$saveResize(
   tableDat,
   "tabs/stability_all_fh.tex",
+  where = "t",
   label = "tab:stability_all_fh",
   colheads = c("", names(tableDat)[-1]),
   caption = "\\label{tab:stability_all_fh}Median Number of Iterations in Optimisation until Convergence was Reached. The columns \\textit{converged} contains the relative frequency of runs in which the stopping rule was reached before the maximum number of iterations.",

@@ -145,7 +145,7 @@ ggDat <- ggDat %>%
         method ~ factor(method, ordered = TRUE, levels = methodOrder))
 
 cairo_pdf("figs/area_level_rrmse.pdf", width, 4 * height)
-gg$plots$mse(ggDat, fontsize = fontSize) + labs(y = "RRMSE in %")
+gg$plots$mse(ggDat, fontsize = fontSize) + labs(y = "RRMSPE in %")
 dev.off()
 
 cairo_pdf("figs/area_level_rbias.pdf", width, 4 * height)
