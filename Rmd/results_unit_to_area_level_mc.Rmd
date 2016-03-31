@@ -3,7 +3,7 @@
 In this section a different perspective is taken in that a model\hyp{}based
 simulation study is conducted beginning from a unit level population. This is an
 approach taken typical for unit level models; see for example @Cha14 and @Sin09.
-However results for robust area level models are typically produced on area level
+However results for robust area level models are often produced using area level
 data -- see for example @Fab10 -- or studied using survey data -- see for 
 example @Bel06 and @Xie07. This area level perspective implicitly rules out any
 impact of unit level outliers on area level models; and whether such
@@ -32,25 +32,32 @@ source of uncertainty. Also it is unclear how smoothing techniques relate to
 unit level outliers.
 - In the context of unit level outliers it can be intuitive to suggest a robust 
 direct estimator instead of the sample mean. Hence different robust direct
-estimators are used as an alternative to a sample mean.
+estimators are used as an alternative to the domain specific sample mean.
 
-These questions have more practical relevance and are conceptually unrelated to
+This discussion is of practical relevance but is conceptually unrelated to
 the question if we exploit spatial and temporal correlation structures in the 
 data. For this reason the following study has a focus on the FH model and 
-excludes the spatial and temporal extensions. The results should in principle 
-apply also to these extensions however this remains an avenue for further
+excludes the spatial and temporal extensions. In principle these results should 
+apply to these extensions also; however this remains an avenue for further
 research.
 
-This study is structured as follows: the following Section (?) completes the
-formal link between the unit and area level. Essentially we need to specify
-assumptions with respect to the unit level population model to have a coherent
-link between the population level, the sampled level, and the area level. Based
-on these results Section (?) presents the simulation settings; Section (?) the
-investigated estimation strategies; and in Section (?) the results of the Monte
-Carlo Simulation are presented.
+This simulation study is structured as follows: the following Section 
+\ref{sec:results_unit_level_model} completes the formal link between the unit 
+and area level. Essentially we need to specify assumptions with respect to the 
+unit level population model to have a coherent link between the population 
+level, the sampled level, and the area level. Based on these results Section
+\ref{sec:results_unit_sim_setting} presents the simulation settings; Section
+\ref{sec:results_unit_measures} the investigated estimation strategies; and in
+Section \ref{sec:results_unit_results} the results of the Monte Carlo Simulation
+are presented.
 
 
-## From Unit to Area Level Data
+## A Unit Level Population Model
+\label{sec:results_unit_level_model}
+
+In the following a similar unit level model to the model in Section (?) is
+considered. In contrast here we do not need the distinction between sampled and
+non\hyp{}sampled units to adress the points motivating this study. Hence we begin with a liner mixed model
 
 In later simulation studies we will consider data in which area level statistics
 are computed from individual information. From a contextual point of view, 
@@ -86,7 +93,8 @@ mean. Hence, $\si{e} \sim \Distr{N}(0, \sige = \sigma^2_e / \si{n})$. Under this
 unit level model a sufficient estimator for $\sige$ can be derived from
 estimating $\sige$, which can be done robust and non-robust in many ways.
 
-
+## Simulation Scenarios
+\label{sec:results_unit_sim_setting}
 
 In general our simulation setup borrows from unit level scenarios from the literature to make this exercise as convenient as possible. The basis is again a linear mixed model, this time defined on the unit population level:
 
@@ -127,6 +135,16 @@ comparable to simulation studies in the literature we choose $\sigma_e^2 =
 4. *(v, e)* This scenario is the combination of 2 and 3 where we have area level
 and unit level outliers, however not in the same domains.
 
+## Quality Measures and Considered Methods
+\label{sec:results_unit_measures}
+
+## Results
+\label{sec:results_unit_results}
+
 ![\textrrmse](figs/unit_to_area_level_mc_rrmse_all.pdf)
 
 ![\textrbias](figs/unit_to_area_level_mc_rbias_all.pdf)
+
+
+## Discussion
+
