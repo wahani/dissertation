@@ -21,7 +21,7 @@ motivate this study:
 - Under the FH model we specify an area level model with a heteroscedastic
 sampling distribution. The model does not explain the source for this
 heteroscedasticity. In the following two different sources are induced: one is
-the sampling size varying across domains, and the other one are unit level
+the sample size varying across domains, and the other one are unit level
 outliers.
 - When we begin from the unit level we may ask what the true sampling variance 
 is; this quantity is assumed to be known under the model. In practice these
@@ -55,43 +55,32 @@ are presented.
 ## A Unit Level Population Model
 \label{sec:results_unit_level_model}
 
-In the following a similar unit level model to the model in Section (?) is
-considered. In contrast here we do not need the distinction between sampled and
-non\hyp{}sampled units to adress the points motivating this study. Hence we begin with a liner mixed model
-
-In later simulation studies we will consider data in which area level statistics
-are computed from individual information. From a contextual point of view, 
-starting from individual information is advantageous in the sense that outlying 
-areas can be motivated more easily. Also the question for a good estimator for 
-the sampling variances can be motivated when knowing the underlying individual 
-model. Hence, I will derive the Fay-Herriot model starting from unit-level. 
-Consider the following model:
+In the following the unit level population model assumed for this study is 
+presented. In contrast to the BHF model reviewed in Section (?) here we do not
+need the distinction between sampled and non\hyp{}sampled units. Hence we begin
+with a liner mixed model for the population of the form:
 $$
-\sij{y} = x_i^\top\beta + \re + e_i \text{ ,}
+y_{ij} = x_i^\top \beta + \re_i + e_{ij}
 $$
-where $\sij{y}$ is the response in domain $i$ of unit $j$ with $i = 1, \dots,
-\si{n}$, where $\si{n}$ is the number of units in domain $i$. $\re$ is an area
-specific random effect following (i.i.d.) a normal distribution with zero mean
-and $\sigre$ as variance parameter. $\sij{e}$ is the remaining deviation from
-the model, following (i.i.d.) a normal distribution with zero mean and $\sige$
-as variance parameter. This unit level model is defined under strong
-assumptions, still, assumptions most practitioner are willing to make which
-could simplify the identification of the sampling variances under the area level
-model.
-
-From this model consider the area statistics $\tilde{y}_i = \frac{1}{n_j}
-\sum_{j = 1}^{\si{n}}\sij{y}$, for which an area level model can be derived as:
+with $i = 1, \dots, D$ and $j = 1, \dots, N_i$. Here $x_i$ is a vector of 
+auxiliary information and $\beta$ the vector of regression coefficients; $\re_i$
+is a i.i.d. random variable: $\re_i \sim \Distr{N}(0, \sigre)$; and 
+$e_{ij}$ is also a i.i.d. random variable: $e_{ij} \sim \Distr{N}(0, 
+\sigma_e^2)$. Given this simple unit level model consider the case in which we
+draw samples with simple random sampling without replacement (SRSWOR) in each
+domain. Here we only consider the case where units are observed for all domains.
+The domain specific sample sizes are denoted by $n_i$. When we use the sample
+mean as a direct estimator we can derive the area level model as:
 $$
-\tilde{y}_i = \si{x}^\top\beta + \si{\re} + \si{e}
+\bar{y}_i = \underbrace{x_i^\top \beta + \re_i}_{\theta_i} + \bar{e}_i
 $$
-Considering the mean in a linear model, it can be expressed as $\bar{y} = 
-\bar{x}\beta$; the random effect was defined for each area, hence it remains 
-unaltered for the area level model. The error term in this model can be 
-expressed as the sampling error and its standard deviation as the (conditional) 
-standard deviation of the aggregated area statistic, which in this case is a 
-mean. Hence, $\si{e} \sim \Distr{N}(0, \sige = \sigma^2_e / \si{n})$. Under this
-unit level model a sufficient estimator for $\sige$ can be derived from
-estimating $\sige$, which can be done robust and non-robust in many ways.
+with $i = 1, \dots, D$. Here $\bar{y}_i$ denotes the direct estimator and
+$\theta_i$ the true target statistic. The sampling errors, $\bar{e}_i$, are
+i.i.d. with $\bar{e}_i \sim \Distr{N}(0, \sige)$ where $\sige =
+\frac{\sigma_e^2}{n_i}$. In this simple setting $x_i$ and $\re_i$ are the same
+for the unit and area level since they are constant within domains. Also we see
+in the definition of $\sige$ that the only source for the heteroscedasticity are
+the sample sizes, $n_i$. An additional source for heteroscedastic sample errors may also be induced by unit level outliers. 
 
 ## Simulation Scenarios
 \label{sec:results_unit_sim_setting}

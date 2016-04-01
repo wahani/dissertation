@@ -23,6 +23,7 @@ installPackages(c(
   "sae", "aoos", "MASS", "dplyr", "reshape2", "ggplot2", "devtools", "tidyr", "Hmisc", "RcppArmadillo"
 ))
 
+devtools::install_github("wahani/modules", force = TRUE)
 devtools::install_github("wahani/dat", force = TRUE)
 devtools::install_github("wahani/saeSim", force = TRUE)
 devtools::install_github("wahani/saeRobustTools", force = TRUE)

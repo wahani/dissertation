@@ -1,20 +1,21 @@
+.libPaths("~/R/x86_64-redhat-linux-gnu-library/3.2")
 library("modules")
 library("saeRobust")
 library("saeSim")
 library("dat")
 library("ggplot2")
 library("gridExtra")
-library("BatchJobs")
 
 theme <- use("R/graphics/themes.R")
 table <- use("R/graphics/tables.R")
+LOCAL <- identical(commandArgs(TRUE), character(0))
 
 # Cache
-recompute <- FALSE
-recomputeSpatial <- FALSE
-recomputeTemporal <- FALSE
-recomputeSpatioTemporal <- FALSE
-makeOutput <- TRUE
+recompute <- TRUE
+recomputeSpatial <- TRUE
+recomputeTemporal <- TRUE
+recomputeSpatioTemporal <- TRUE
+makeOutput <- FALSE
 
 # Graphic Params
 width <- 7
@@ -29,27 +30,21 @@ units <- 1
 nTime <- 10
 sige <- seq(5, 15, length.out = domains)^2
 sigv <- 100
-runs <- 200
+runs <- 100
 maxIter1 <- 100
 maxIter2 <- 1000
 maxIterParam <- 100
-cpus <- parallel::detectCores() - 1
+cpus <- 2
 
-# mcSettings <- list(R = runs, mode = "BatchJobs")
-mcSettings <- list(R = runs, mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
-
-# reg <- makeRegistry(id = "minimal", file.dir = "parallelMap_BatchJobs_reg_68e139c0b420/", skip = TRUE)
-# showStatus(reg)
-# ids <- getJobIds(reg)
-# killJobs(reg, ids)
-# showStatus(reg)
-# res <- reduceResults(reg, fun = function(aggr, job, res) c(aggr, res))
-# print(res)
-
-
+mcSettings <- if (LOCAL) {
+  list(mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
+} else {
+  NULL
+}
 
 comp <- module({
   # This module exists to handle the dependencies of the model functions
+  import("methods")
   import("saeRobust")
 
   domains <- .GlobalEnv$domains
@@ -158,44 +153,93 @@ scenarioSpatioTemporalExtreme <-
   scenarioSpatioTemporal %>%
   sim_gen(gen_extreme_cases)
 
+simFun <- function(scenario, path) {
+  path <- paste0("R/data/stability/", path)
+  do.call(sim, c(
+    list(scenario),
+    R = runs,
+    path = path,
+    overwrite = FALSE, fileExt = ".RData",
+    mcSettings)
+  )
+  sim_read_list(path)
+}
+
 # Run simulation
 if (recompute) {
   set.seed(15)
-  resultsBase <- do.call(sim, c(list(scenarioBase), mcSettings))
-  save(list = "resultsBase", file = "R/data/stability/resultsBase.RData", compress = TRUE)
 
-  resultsExtreme <- do.call(sim, c(list(scenarioExtreme), mcSettings))
-  save(list = "resultsExtreme", file = "R/data/stability/resultsExtreme.RData", compress = TRUE)
+  resultsBase <- simFun(scenarioBase, "base")
+
+  save(
+    list = "resultsBase",
+    file = "R/data/stability/resultsBase.RData",
+    compress = TRUE
+  )
+
+  resultsExtreme <- simFun(scenarioExtreme, "extreme")
+
+  save(
+    list = "resultsExtreme",
+    file = "R/data/stability/resultsExtreme.RData",
+    compress = TRUE
+  )
 }
 
 if (recomputeSpatial) {
   set.seed(15)
-  resultsSpatial <- do.call(sim, c(list(scenarioSpatial), mcSettings))
-  save(list = "resultsSpatial", file = "R/data/stability/resultsSpatial.RData", compress = TRUE)
 
-  resultsSpatialExtreme <- do.call(sim, c(list(scenarioSpatialExtreme), mcSettings))
-  save(list = "resultsSpatialExtreme", file = "R/data/stability/resultsSpatialExtreme.RData", compress = TRUE)
+  resultsSpatial <- simFun(scenarioSpatial, "spatial")
+
+  save(
+    list = "resultsSpatial",
+    file = "R/data/stability/resultsSpatial.RData",
+    compress = TRUE
+  )
+
+  resultsSpatialExtreme <- simFun(scenarioSpatialExtreme, "spatialExtreme")
+
+  save(
+    list = "resultsSpatialExtreme",
+    file = "R/data/stability/resultsSpatialExtreme.RData",
+    compress = TRUE
+  )
 }
 
 if (recomputeTemporal) {
   set.seed(15)
-  resultsTemporal <- do.call(sim, c(list(scenarioTemporal), mcSettings))
-  save(list = "resultsTemporal", file = "R/data/stability/resultsTemporal.RData", compress = TRUE)
+  resultsTemporal <- simFun(scenarioTemporal, "temporal")
+  save(
+    list = "resultsTemporal",
+    file = "R/data/stability/resultsTemporal.RData",
+    compress = TRUE
+  )
 
-  resultsTemporalExtreme <- do.call(sim, c(list(scenarioTemporalExtreme), mcSettings))
-  save(list = "resultsTemporalExtreme", file = "R/data/stability/resultsTemporalExtreme.RData", compress = TRUE)
+  resultsTemporalExtreme <- simFun(scenarioTemporalExtreme, "temporalExtreme")
+  save(
+    list = "resultsTemporalExtreme",
+    file = "R/data/stability/resultsTemporalExtreme.RData",
+    compress = TRUE
+  )
 }
 
 if (recomputeSpatioTemporal) {
 
   set.seed(15)
-  resultsSpatioTemporal <-
-    do.call(sim, c(list(scenarioSpatioTemporal), mcSettings))
-  save(list = "resultsSpatioTemporal", file = "R/data/stability/resultsSpatioTemporal.RData", compress = TRUE)
+  resultsSpatioTemporal <- simFun(scenarioSpatioTemporal, "spatioTemporal")
+  save(
+    list = "resultsSpatioTemporal",
+    file = "R/data/stability/resultsSpatioTemporal.RData",
+    compress = TRUE
+  )
 
   resultsSpatioTemporalExtreme <-
-    do.call(sim, c(list(scenarioSpatioTemporalExtreme), mcSettings))
-  save(list = "resultsSpatioTemporalExtreme", file = "R/data/stability/resultsSpatioTemporalExtreme.RData", compress = TRUE)
+    simFun(scenarioSpatioTemporalExtreme, "spatioTemporalExtreme")
+  save(
+    list = "resultsSpatioTemporalExtreme",
+    file = "R/data/stability/resultsSpatioTemporalExtreme.RData",
+    compress = TRUE
+  )
 
 }
 
@@ -209,9 +253,6 @@ if (makeOutput) {
   load("R/data/stability/resultsSpatioTemporal.RData")
   load("R/data/stability/resultsSpatioTemporalExtreme.RData")
 } else {
-  files <- list.files("R/data/stability/", full.names = TRUE)
-  file.copy(files, "~/sf_Google_Drive/wahani@gmail.com/Dissertation/Data/stability/", overwrite = TRUE)
-  dir.exists("~/sf_Google_Drive/wahani@gmail.com/Dissertation/Data/")
   q("no")
 }
 

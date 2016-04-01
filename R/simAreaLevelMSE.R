@@ -1,4 +1,3 @@
-# devtools::install_github("wahani/dat")
 .libPaths("~/R/x86_64-redhat-linux-gnu-library/3.2")
 library("dat")
 library("saeSim")
