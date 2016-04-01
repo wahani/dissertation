@@ -15,7 +15,6 @@ recompute <- TRUE
 recomputeSpatial <- TRUE
 recomputeTemporal <- TRUE
 recomputeSpatioTemporal <- TRUE
-makeOutput <- FALSE
 
 # Graphic Params
 width <- 7
@@ -30,7 +29,7 @@ units <- 1
 nTime <- 10
 sige <- seq(5, 15, length.out = domains)^2
 sigv <- 100
-runs <- 100
+runs <- 500
 maxIter1 <- 100
 maxIter2 <- 1000
 maxIterParam <- 100
@@ -167,7 +166,6 @@ simFun <- function(scenario, path) {
 
 # Run simulation
 if (recompute) {
-  set.seed(15)
 
   resultsBase <- simFun(scenarioBase, "base")
 
@@ -187,7 +185,6 @@ if (recompute) {
 }
 
 if (recomputeSpatial) {
-  set.seed(15)
 
   resultsSpatial <- simFun(scenarioSpatial, "spatial")
 
@@ -207,7 +204,7 @@ if (recomputeSpatial) {
 }
 
 if (recomputeTemporal) {
-  set.seed(15)
+
   resultsTemporal <- simFun(scenarioTemporal, "temporal")
   save(
     list = "resultsTemporal",
@@ -225,7 +222,6 @@ if (recomputeTemporal) {
 
 if (recomputeSpatioTemporal) {
 
-  set.seed(15)
   resultsSpatioTemporal <- simFun(scenarioSpatioTemporal, "spatioTemporal")
   save(
     list = "resultsSpatioTemporal",
@@ -243,7 +239,7 @@ if (recomputeSpatioTemporal) {
 
 }
 
-if (makeOutput) {
+if (LOCAL) {
   load("R/data/stability/resultsBase.RData")
   load("R/data/stability/resultsExtreme.RData")
   load("R/data/stability/resultsSpatial.RData")
@@ -253,6 +249,14 @@ if (makeOutput) {
   load("R/data/stability/resultsSpatioTemporal.RData")
   load("R/data/stability/resultsSpatioTemporalExtreme.RData")
 } else {
+  sim_clear_list("R/data/stability/base/")
+  sim_clear_list("R/data/stability/extreme/")
+  sim_clear_list("R/data/stability/spatial/")
+  sim_clear_list("R/data/stability/spatialExtreme//")
+  sim_clear_list("R/data/stability/temporal//")
+  sim_clear_list("R/data/stability/temporalExtreme//")
+  sim_clear_list("R/data/stability/spatioTemporal//")
+  sim_clear_list("R/data/stability/spatioTemporalExtreme//")
   q("no")
 }
 
