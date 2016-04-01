@@ -252,11 +252,11 @@ if (LOCAL) {
   sim_clear_list("R/data/stability/base/")
   sim_clear_list("R/data/stability/extreme/")
   sim_clear_list("R/data/stability/spatial/")
-  sim_clear_list("R/data/stability/spatialExtreme//")
-  sim_clear_list("R/data/stability/temporal//")
-  sim_clear_list("R/data/stability/temporalExtreme//")
-  sim_clear_list("R/data/stability/spatioTemporal//")
-  sim_clear_list("R/data/stability/spatioTemporalExtreme//")
+  sim_clear_list("R/data/stability/spatialExtreme/")
+  sim_clear_list("R/data/stability/temporal/")
+  sim_clear_list("R/data/stability/temporalExtreme/")
+  sim_clear_list("R/data/stability/spatioTemporal/")
+  sim_clear_list("R/data/stability/spatioTemporalExtreme/")
   q("no")
 }
 
