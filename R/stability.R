@@ -11,10 +11,10 @@ table <- use("R/graphics/tables.R")
 LOCAL <- identical(commandArgs(TRUE), character(0))
 
 # Cache
-recompute <- TRUE
-recomputeSpatial <- TRUE
-recomputeTemporal <- TRUE
-recomputeSpatioTemporal <- TRUE
+recompute <- FALSE
+recomputeSpatial <- FALSE
+recomputeTemporal <- FALSE
+recomputeSpatioTemporal <- FALSE
 
 # Graphic Params
 width <- 7
