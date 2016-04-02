@@ -6,18 +6,31 @@ gen <- modules::use("./R/generators/")
 comp <- modules::use("./R/comp")
 gg <- modules::use("./R/graphics")
 
+LOCAL <- identical(commandArgs(TRUE), character(0))
 
 # Constants:
-D <- 100
+D <- 40
 Ud <- 1000
 S <- round(seq(5, 15, length.out = D))
+sige <- 32
+sigre <- 4
+runs <- 500
+
+simFun <- if (LOCAL) {
+  . %>% sim(
+    runs, mode = "multicore", cpus = parallel::detectCores() - 2,
+    path = "./R/data/fromUnitToAreaLevel", overwrite = FALSE
+  )
+} else {
+  . %>% sim(runs, path = "./R/data/fromUnitToAreaLevel", overwrite = FALSE)
+}
 
 setup <- base_id(D, Ud) %>%
   # Population
-  sim_gen_e(sd = 4) %>%
-  sim_gen_v(sd = 1) %>%
+  sim_gen_e(sd = sqrt(sige)) %>%
+  sim_gen_v(sd = sqrt(sigre)) %>%
   sim_gen_generic(gen$x$fixed_sequence, groupVars = "idD", name = "x") %>%
-  sim_resp_eq(y = 100 + 10 * x + v + e) %>%
+  sim_resp_eq(y = 100 + 5 * x + v + e) %>%
   sim_comp_N %>%
   sim_comp_popMean %>%
   # Sample
@@ -46,19 +59,33 @@ setup <- setup %>%
   sim_simName("(0, 0)")
 
 setupE <- setup %>%
-  sim_gen_ec(sd = 150, areaVar = "idD",
-             nCont = c(rep(0, 90), rep(0.5, 5), rep(0, 5))) %>%
+  sim_gen_ec(
+    mean = 20,
+    sd = sqrt(200),
+    areaVar = "idD",
+    nCont = replace(rep(0, 40), c(4, 14, 24, 34), 0.2)
+  ) %>%
   sim_simName("(0, e)")
 
-setupV <- setup %>%
-  sim_gen_vc(sd = 20, fixed = TRUE) %>%
-  sim_simName("(v, 0)")
+setupU <- setup %>%
+  sim_gen_vc(mean = 9, sd = 5, nCont = c(5, 15, 25, 35), fixed = TRUE) %>%
+  sim_simName("(u, 0)")
 
-simFun <- . %>%
-  sim(500, mode = "multicore", cpus = 3, path = "./R/data/fromUnitToAreaLevel", overwrite = FALSE) %>%
-  do.call(what = rbind)
+setupUE <- setup %>%
+  sim_gen_ec(
+    mean = 20,
+    sd = sqrt(200),
+    areaVar = "idD",
+    nCont = replace(rep(0, 40), c(4, 14, 24, 34), 0.2)
+  ) %>%
+  sim_gen_vc(mean = 9, sd = 5, nCont = c(5, 15, 25, 35), fixed = TRUE) %>%
+  sim_simName("(u, e)")
 
-lapply(list(setup, setupE, setupV), simFun)
+lapply(list(setup, setupE, setupU, setupUE), simFun)
+
+sim_clear_data("./R/data/fromUnitToAreaLevel")
+
+if (!LOCAL) q("no")
 
 simData <- sim_read_data("./R/data/fromUnitToAreaLevel") %>%
   mutar(c("idD", "popMean", "simName", "sMean", "rMean", "FH", "FHGVF",
@@ -74,24 +101,5 @@ ggDat %<>% mutar(RBIAS ~ mean((prediction - popMean) / popMean),
                  RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)),
                  by = c("idD", "method", "simName"))
 
-unit_to_area_level_mc_rrmse_00 <- gg$plots$mse(subset(ggDat, simName == "(0, 0)"))
-unit_to_area_level_mc_rrmse_0e <- gg$plots$mse(subset(ggDat, simName == "(0, e)"))
-unit_to_area_level_mc_rrmse_v0 <- gg$plots$mse(subset(ggDat, simName == "(v, 0)")) + ggplot2::scale_y_log10()
-
-unit_to_area_level_mc_rbias_00 <- gg$plots$bias(subset(ggDat, simName == "(0, 0)"))
-unit_to_area_level_mc_rbias_0e <- gg$plots$bias(subset(ggDat, simName == "(0, e)"))
-unit_to_area_level_mc_rbias_v0 <- gg$plots$bias(subset(ggDat, simName == "(v, 0)"))
-
-unit_to_area_level_mc_rrmse_all <- gg$plots$mse(ggDat) + ggplot2::scale_y_log10()
-unit_to_area_level_mc_rbias_all <- gg$plots$bias(ggDat)
-
-gg$save$default(unit_to_area_level_mc_rrmse_00)
-gg$save$default(unit_to_area_level_mc_rrmse_0e)
-gg$save$default(unit_to_area_level_mc_rrmse_v0)
-
-gg$save$default(unit_to_area_level_mc_rbias_00)
-gg$save$default(unit_to_area_level_mc_rbias_0e)
-gg$save$default(unit_to_area_level_mc_rbias_v0)
-
-gg$save$default(unit_to_area_level_mc_rrmse_all, height = 5)
-gg$save$default(unit_to_area_level_mc_rbias_all, height = 5)
+gg$plots$mse(ggDat)
+gg$plots$bias(ggDat)

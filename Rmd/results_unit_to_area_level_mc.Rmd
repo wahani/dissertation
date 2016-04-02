@@ -85,44 +85,38 @@ the sample sizes, $n_i$. An additional source for heteroscedastic sample errors 
 ## Simulation Scenarios
 \label{sec:results_unit_sim_setting}
 
-In general our simulation setup borrows from unit level scenarios from the literature to make this exercise as convenient as possible. The basis is again a linear mixed model, this time defined on the unit population level:
+The model underlying the Monte Carlo study is given by:
+$$y_{ij} = 100 + 5 x_i + \re_i + e_{ij}$$
 
-  $$\sij{y} = 100 + 1 \cdot \si{x} + v_i + \sij{e}$$
+- The regressor, $x_i$, is a deterministic sequence defined as in the 
+model\hyp{}based scenarios before: $x_i = \frac{i}{2D} + 1$
+- From this model a population is generated in each Monte Carlo repetition. Each
+domain is of size $N_i = 1000$ and we consider $D = 40$ as before.
+- Samples are drawn with SRSWOR in each domain. The sample sizes are defined as 
+$n_i \in \{5, \dots, 15\}$. They are sorted as ascending sequence in $i$. The 
+sample sizes are chosen in corespondence to the variance of the unit error in
+the non\hyp{}outlier scenario such that the sampling variances of the sample
+means are an ascending sequence between 2 and 6.
 
-- The regressor, $x_i$, and random effect, $v_i$, are defined in the same way as
-for the area level scenario.
-- The error term, $\sij{e}$, is defined as $\sij{e} \sim \Distr{N}(0, 
-\sigma_e^2)$ where $\sigma_e^2$ is varies across simulation scenarios.
-- From this populatin model we draw samples with simple random sampling without
-replacement. The sample sizes are $n_i \in \{5, \dots, 15\}$ and $N_i = 1000$;
-$D$ is again 100.
-- The sample is then aggregated using different direct estimators. The sample
-mean, the sample median and a robust direct estimator (huber m-type). Note that
-$x_i$ is constant within domains. For the variance estimation we use the sample
-variance, a generalized variance function which can be considered optimal under
-the population model and the median absolute deviance from the median within
-domains.
-- On area level the standard Fay Herriot model is used with different variance
-estimators and corresponding direct estimators and compared with the RFH.
+With these settings several different choices for outlier contamination are
+investigated. Here we can now consider unit and area level outliers:
 
-With these settings we are interested in several different choices varying
-across simulation scenarios. We want to emphasise how unit and area level
-outliers can influence area level predictions.
+- *(0, 0)* -- no contamination. Here $\re_i \sim \Distr{N}(0, 4)$ and
+$e_{ij} \sim \Distr{N}(0, 32)$.
+- *(u, 0)* -- area level outliers. Similar to the generation before the 
+non\hyp{}contaminated domains are generated from $\re_i \sim \Distr{N}(0, 4)$
+and $e_{ij} \sim \Distr{N}(0, 32)$. Outlying domains are domains with $i \in
+\{5, 15, 25, 35\}$ and their respective random effect is given by $\re_i \sim
+\Distr{N}(9, 25)$.
+- *(0, e)* -- unit level outliers. The random effect is drawn from $\re_i \sim 
+\Distr{N}(0, 4)$. Individual outliers are generated from a mixtrue of two 
+normals: $e_{ij} \sim \delta \Distr{N}(0, 32) + (1 - \delta) \Distr{N}(20, 200)$
+where $\delta$ is a Bernoulli random variable with $\Exp{P}(\delta = 1) = 0.9$.
+I.e. 10 per cent of the unit level observations are from the outlier
+distribution.
+- *(u, e)* -- unit and area level outliers. The area level contamination is
+imposed as in *(u, 0)* and the unit level contamination as in *(0, e)*.
 
-1. *(0, 0)* This is the scenario in which the area level model as described in 
-section? holds, i.e. there are no outliers. Here $\sigma_e^2 = 4^2$ and $\sigre =
-1$ for all domains. However, the sampling variances ($\sige =
-\frac{\sigma_e^2}{n_i}$) derived under the unit level population model range
-from 1 to 3.2 for their respective sample size. $\sigre = 1$.
-2. *(v, 0)* This scenario is close to the area level data generation in the 
-previous section where we induced area level outliers. For that purpose we 
-choose $\sigre = 1$ for the areas where $i \in \{1, \dots, 95\}$ and $\sigre = 
-20^2$ for $i \in \{96, \dots, 100\}$
-3. *(0, e)* In this scenario unit level outliers do exist. To make the magnitude
-comparable to simulation studies in the literature we choose $\sigma_e^2 = 
-150^2$ for $i \in \{90, \dots, 95\}$.
-4. *(v, e)* This scenario is the combination of 2 and 3 where we have area level
-and unit level outliers, however not in the same domains.
 
 ## Quality Measures and Considered Methods
 \label{sec:results_unit_measures}
