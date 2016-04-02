@@ -1,3 +1,4 @@
+.libPaths("~/R/x86_64-redhat-linux-gnu-library/3.2")
 library("saeSim")
 library("dat")
 modules::import(magrittr, "%<>%")
