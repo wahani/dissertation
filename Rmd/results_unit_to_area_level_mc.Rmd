@@ -110,10 +110,11 @@ and $e_{ij} \sim \Distr{N}(0, 32)$. Outlying domains are domains with $i \in
 \Distr{N}(9, 25)$.
 - *(0, e)* -- unit level outliers. The random effect is drawn from $\re_i \sim 
 \Distr{N}(0, 4)$. Individual outliers are generated from a mixtrue of two 
-normals: $e_{ij} \sim \delta \Distr{N}(0, 32) + (1 - \delta) \Distr{N}(20, 200)$
-where $\delta$ is a Bernoulli random variable with $\Exp{P}(\delta = 1) = 0.9$.
-I.e. 10 per cent of the unit level observations are from the outlier
-distribution.
+independent normals: $e_{ij} \sim \delta_i \Distr{N}(0, 32) + (1 - \delta_i) 
+\Distr{N}(20, 200)$ where $\delta$ is a Bernoulli random variable with 
+$\Exp{P}(\delta = 1) = 0.8$ for domains with $i \in \{4, 14, 24, 34\}$ and set
+to one otherwise. I.e. 10 per cent of the areas have 20 per cent of unit level 
+observations which are generated from the outlier distribution.
 - *(u, e)* -- unit and area level outliers. The area level contamination is
 imposed as in *(u, 0)* and the unit level contamination as in *(0, e)*.
 
@@ -124,9 +125,17 @@ imposed as in *(u, 0)* and the unit level contamination as in *(0, e)*.
 ## Results
 \label{sec:results_unit_results}
 
-![\textrrmse](figs/unit_to_area_level_mc_rrmse_all.pdf)
+\begin{figure}[htbp]
+\centering
+\includegraphics[width = \textwidth]{figs/unit_mse.pdf}
+\caption[Unit Level MSE]{\label{fig:unit_mse}ads}
+\end{figure}
 
-![\textrbias](figs/unit_to_area_level_mc_rbias_all.pdf)
+\begin{figure}[htbp]
+\centering
+\includegraphics[width = \textwidth]{figs/unit_bias.pdf}
+\caption[Unit Level BIAS]{\label{fig:unit_bias}ads}
+\end{figure}
 
 
 ## Discussion

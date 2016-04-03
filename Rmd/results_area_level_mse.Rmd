@@ -41,10 +41,16 @@ for all scenarios: $e_{it} \sim \Distr{N}(0, \sige)$ with $\sigma_{eit}^2 =
 \sige$ and $\sige = \frac{4 (i - 1)}{D - 1} + 2$. Furthermore it is distinguised
 between:
 
-- RFH-(0): $D = 40$ and $T = 1$; $\mat{z}_{it}^\top\mat{u} = u_i$ with $u_i \sim \Distr{N}(0, 9)$.
-- RSFH-(0): $D = 40$ and $T = 1$; $\mat{z}_{it}^\top\mat{u} = u_{1i}$ with $u_{1i} \sim SAR(1)$ where $\rho_1 = 0.5$ and $\sigma_1^2 = 9$.
-- RTFH-(0): $D = 40$ and $T = 10$; $\mat{z}_{it}^\top\mat{u} = u_{0i} + u_{2it}$ with $u_{0i} \sim \Distr{N}(0, 9)$ and $u_{2it} \sim AR(1)$ where $\rho_2 = 0.5$ and $\sigma_2^2 = 9$.
-- RSTFH-(0): $D = 40$ and $T = 10$; $\mat{z}_{it}^\top\mat{u} = u_{1i} + u_{2it}$ with $u_{1i} \sim SAR(1)$ where $\rho_1 = 0.5$ and $\sigma_1^2 = 9$ and $u_{2it} \sim AR(1)$ where $\rho_2 = 0.5$ and $\sigma_2^2 = 9$.
+- RFH-(0): $D = 40$ and $T = 1$; $\mat{z}_{it}^\top\mat{u} = u_i$ with $u_i \sim
+\Distr{N}(0, 9)$.
+- RSFH-(0): $D = 40$ and $T = 1$; $\mat{z}_{it}^\top\mat{u} = u_{1i}$ with
+$u_{1i} \sim SAR(1)$ where $\rho_1 = 0.5$ and $\sigma_1^2 = 9$.
+- RTFH-(0): $D = 40$ and $T = 10$; $\mat{z}_{it}^\top\mat{u} = u_{0i} + u_{2it}$
+with $u_{0i} \sim \Distr{N}(0, 9)$ and $u_{2it} \sim AR(1)$ where $\rho_2 = 0.5$
+and $\sigma_2^2 = 9$.
+- RSTFH-(0): $D = 40$ and $T = 10$; $\mat{z}_{it}^\top\mat{u} = u_{1i} +
+u_{2it}$ with $u_{1i} \sim SAR(1)$ where $\rho_1 = 0.5$ and $\sigma_1^2 = 9$ and
+$u_{2it} \sim AR(1)$ where $\rho_2 = 0.5$ and $\sigma_2^2 = 9$.
 
 \noindent Here *(0)* is used to denote the non\hyp{}outlier scenario. For each
 of these scenarios one outlier scenario is considered which is denoted by *(u)*

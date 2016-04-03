@@ -1,6 +1,8 @@
 .libPaths("~/R/x86_64-redhat-linux-gnu-library/3.2")
 library("saeSim")
 library("dat")
+library("ggplot2")
+modules::import(gridExtra, grid.arrange)
 modules::import(magrittr, "%<>%")
 
 gen <- modules::use("./R/generators/")
@@ -9,13 +11,21 @@ gg <- modules::use("./R/graphics")
 
 LOCAL <- identical(commandArgs(TRUE), character(0))
 
+# Cache
+rerun <- TRUE
+
+# Graphic Params
+width <- 7
+height <- 3
+fontSize <- 14
+
 # Constants:
 D <- 40
 Ud <- 1000
 S <- round(seq(5, 15, length.out = D))
 sige <- 32
 sigre <- 4
-runs <- 500
+runs <- 100
 
 simFun <- if (LOCAL) {
   . %>% sim(
@@ -49,11 +59,9 @@ setup %<>%
   sim_comp_agg(comp$area$fh("sMean", "sMVar", "FH")) %>%
   sim_comp_agg(comp$area$fh("sMean", "sMGVF", "FHGVF")) %>%
   sim_comp_agg(comp$area$fh("rMean", "rMVar", "FHRMean")) %>%
-  sim_comp_agg(comp$area$fh("mMean", "rMVar", "FHMMean")) %>%
   sim_comp_agg(comp$area$rfh("sMean", "sMVar", "RFH")) %>%
   sim_comp_agg(comp$area$rfh("sMean", "sMGVF", "RFHGVF")) %>%
-  sim_comp_agg(comp$area$rfh("rMean", "rMVar", "RFHRMean")) %>%
-  sim_comp_agg(comp$area$rfh("mMean", "rMVar", "RFHMMean"))
+  sim_comp_agg(comp$area$rfh("rMean", "rMVar", "RFHRMean"))
 
 setup <- setup %>%
   sim_agg(function(dat) { dat$idC <- FALSE; dat }) %>%
@@ -82,9 +90,10 @@ setupUE <- setup %>%
   sim_gen_vc(mean = 9, sd = 5, nCont = c(5, 15, 25, 35), fixed = TRUE) %>%
   sim_simName("(u, e)")
 
-lapply(list(setup, setupE, setupU, setupUE), simFun)
-
-sim_clear_data("./R/data/fromUnitToAreaLevel")
+if (rerun) {
+  lapply(list(setup, setupE, setupU, setupUE), simFun)
+  sim_clear_data("./R/data/fromUnitToAreaLevel")
+}
 
 if (!LOCAL) q("no")
 
@@ -98,9 +107,43 @@ ggDat <- tidyr::gather(
   -idD, -popMean, -simName
 )
 
-ggDat %<>% mutar(RBIAS ~ mean((prediction - popMean) / popMean),
-                 RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)),
-                 by = c("idD", "method", "simName"))
+ggDat %<>%
+  mutar(method ~ replace(method, ~ . == "sMean", "SM"),
+        method ~ replace(method, ~ . == "rMean", "RM"),
+        method ~ replace(method, ~ . == "FHGVF", "FH.SM.GVF"),
+        method ~ replace(method, ~ . == "RFHGVF", "RFH.SM.GVF"),
+        method ~ replace(method, ~ . == "RFH", "RFH.SM"),
+        method ~ replace(method, ~ . == "FH", "FH.SM"),
+        method ~ replace(method, ~ . == "RFHRMean", "RFH.RM"),
+        method ~ replace(method, ~ . == "FHRMean", "FH.RM"))
 
-gg$plots$mse(ggDat)
-gg$plots$bias(ggDat)
+methodOrder <- c("SM", "RM", "FH.SM", "FH.SM.GVF", "FH.RM", "RFH.SM", "RFH.SM.GVF", "RFH.RM")
+ggDat %<>% mutar(
+  method ~ factor(method, methodOrder, ordered = TRUE)
+)
+
+ggDat %<>% mutar(
+  RBIAS ~ mean((prediction - popMean) / popMean),
+  RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)),
+  by = c("idD", "method", "simName")
+)
+
+ggDat %<>% mutar(
+  idC ~ ifelse(idD %in% c(5, 15, 25, 35) & simName %in% c("(u, 0)", "(u, e)"), 1, NA_integer_),
+  idC ~ ifelse(idD %in% c(4, 14, 24, 34) & simName %in% c("(0, e)", "(u, e)"), 2, idC),
+  idC ~ factor(idC, labels = c("area-outlier", "unit-outlier"))
+)
+
+cairo_pdf("figs/unit_mse.pdf", width, 4 * height)
+gg$plots$mse(ggDat, fontsize = fontSize) +
+  geom_point(aes(colour = idC), ggDat %>% mutar(~!is.na(idC))) +
+  theme(legend.position = "bottom") +
+  labs(colour = NULL)
+dev.off()
+
+cairo_pdf("figs/unit_bias.pdf", width, 4 * height)
+gg$plots$bias(ggDat, fontsize = fontSize) +
+  geom_point(aes(colour = idC), ggDat %>% mutar(~!is.na(idC))) +
+  theme(legend.position = "bottom") +
+  labs(colour = NULL)
+dev.off()

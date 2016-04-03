@@ -1,5 +1,5 @@
 modules::import("saeSim")
-modules::import(stats, median)
+modules::import(stats, median, mad)
 modules::import(MASS, huber)
 
 sim_comp_sampleMean <- . %>%
@@ -19,8 +19,9 @@ global_var <- function(dat) {
 
 robust_mean <- function(dat) {
   # robust mean and variance
-  dat$mMean <- median(dat$y)
-  dat$rMean <- huber(dat$y, k = 1.345)$mu
-  dat$rMVar <- huber(dat$y, k = 1.345)$s^2 / dat$n
+  dat$rMean <- median(dat$y)
+  dat$rMVar <- mad(dat$y)^2 / dat$n
+  # dat$rMean <- huber(dat$y, k = 1.345)$mu
+  # dat$rMVar <- huber(dat$y, k = 1.345)$s^2 / dat$n
   dat
 }
