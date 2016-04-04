@@ -1,4 +1,5 @@
 # Mean Squared Prediction Error
+\label{sec:theory_rfh_mse}
 
 In this Section the parametric bootstrap by @Sin09 is adapted for the methods 
 here under consideration. Also a pseudolinearisation\hyp{}based MSPE estimator

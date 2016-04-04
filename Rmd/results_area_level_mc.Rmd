@@ -1,4 +1,5 @@
 # Performance of Robust Area Level Predictions
+\label{sec:results_predictions}
 
 In this Section the statistical properties of the proposed predictors are 
 investigated. Using model based simulation studies the empirical bias 
