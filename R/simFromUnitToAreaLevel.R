@@ -24,7 +24,7 @@ D <- 40
 Ud <- 1000
 S <- round(seq(5, 15, length.out = D))
 sige <- 32
-sigre <- 4
+sigre <- 2
 runs <- 500
 
 simFun <- if (LOCAL) {
@@ -69,7 +69,7 @@ setup <- setup %>%
 
 setupE <- setup %>%
   sim_gen_ec(
-    mean = 40,
+    mean = 20,
     sd = sqrt(200),
     areaVar = "idD",
     nCont = replace(rep(0, 40), c(4, 14, 24, 34), 0.2)
@@ -91,12 +91,12 @@ setupU <- setup %>%
 
 setupUE <- setup %>%
   sim_gen_ec(
-    mean = 40,
+    mean = 20,
     sd = sqrt(200),
     areaVar = "idD",
     nCont = replace(rep(0, 40), c(4, 14, 24, 34), 0.2)
   ) %>%
-  sim_gen_vc(mean = 20, sd = 5, nCont = c(5, 15, 25, 35), fixed = TRUE) %>%
+  sim_gen_vc(mean = 9, sd = 5, nCont = c(5, 15, 25, 35), fixed = TRUE) %>%
   sim_simName("(u, e)")
 
 if (rerun) {

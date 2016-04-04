@@ -95,6 +95,7 @@ observations.
 
 
 ## Quality Measures
+\label{sec:area_level_sim_qm}
 
 The methods to be compared are the robust spatial and temporal extensions to the
 FH model. The non\hyp{}robust methods are denoted by FH, SFH, TFH, and STFH; and
