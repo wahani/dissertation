@@ -193,6 +193,7 @@ and
 
 
 # Robust Predictions under Area Level Models
+\label{sec:theory_reblup}
 
 The concrete approach for the outlier robust predictions the under area level
 models is set out hereunder. The approach is kept in confomity with the general

@@ -1,4 +1,5 @@
 # Performance of Mean Squared Prediction Error
+\label{sec:results_mse}
 
 In Section (?) some insights on the Monte Carlo MSPE and bias have been gained. 
 In addition to the prediction of a target statistic we are of course also 
