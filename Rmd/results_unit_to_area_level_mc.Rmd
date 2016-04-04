@@ -1,4 +1,5 @@
 # From Unit to Area Level Contamination
+\label{sec:results_unit}
 
 In this section a different perspective is taken in that a model\hyp{}based
 simulation study is conducted beginning from a unit level population. This is an
@@ -232,20 +233,49 @@ because we create overly influencial observations which from their design do not
 differ from area level outlier; at least from the area level perspective.
 
 The third observation is that a robust direct estimator, here the median, has no
-additional advantage over the sample mean. Here several points need to be
-mentioned. First, using a robust estimator may be problematic when we consider
+additional advantage over the sample mean. Here several points need to be 
+mentioned. First, using a robust estimator may be problematic when we consider 
 small samples in that the median will have itself an even higher variance than 
-the sample mean. The additional gain -- at least in the considered scenarios --
+the sample mean. The additional gain -- at least in the considered scenarios -- 
 with respect to unit level contamination does not seem to outweigh this. This is
 also true when we consider the same symmetric unit level outlier setting in all 
-instead of only a small number of domains. Second the variance estimation of a 
+instead of only a small number of domains. Second, the variance estimation of a 
 robust direct method is problematic, again, because we consider small samples. 
-In practice it might be desiarable to use a bootstrap to estimate the variance 
-of the sample median which showed to be unreliable with these small samples. 
-Hence leading to utilising the MAD to this extend. Third, it may be argued that 
-a different robust method should be considered. In a simulation using a M-type 
+In practice it may be desiarable to use a bootstrap for estimating the variance 
+of the sample median. With these small samples the results have been 
+discouraging have not lead to an improvement for the area level predictions. 
+Hence the MAD seemed to provide a sensible alternative. Third, it may be argued
+that a different robust method should be considered. In a simulation a M-type 
 estimator for the sample mean in conjunction with a robust variance estimator
-yielded very similar results as we can observe for the median.
+has been considered. Very similar results as we can observe for the median have
+been observed since these results have been omitted.
+
 
 ## Discussion
+
+There are two main reasons to consider a robust area level model. First to make
+the prediction robust against area level outliers. Second to protect against the
+creation of overly influencial observations as they can occure after using GVFs
+to smooth the sampling variances. However a more thorough investigation of the
+use of GVFs may be necessary to come to a recommendation since the simulation
+setup has not shown a significant improvement of the overall predictions.
+
+With respect to unit level outliers we can see a self adjusting effect of the 
+robust and non\hyp{}robust prediction under the FH model. This adjustment 
+replaces the predictions for outliers with the linear predictor which is an 
+improvement in cases in which this predictor is suitable, e.g. unbiased. In 
+principle we face the same problem as for robust methods using unit level data
+in that we introduce a bias. However at present it is unclear as to how a bias
+correction can be developed for these situations when only area level data is
+observed. The proposed bias correction can have a beneficial effect when we
+consider area level contamination however it does not provide any advantage with
+respect to unit level outliers.
+
+The use of robust direct estimators has not been encouraging. It may be that to 
+try to solve an efficiency problem of the sample mean by replacing it with an
+even less efficient estimator is the main reason here. This effect can well be 
+due to the small sample sizes considered in SAE but specifically in this 
+simulation setup. These small sample sizes then lead to an less efficient 
+estimate for the domain mean and also its variance. Using an area level model
+has not showed to outweigh this effect here.
 
