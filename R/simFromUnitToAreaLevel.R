@@ -12,7 +12,7 @@ gg <- modules::use("./R/graphics")
 LOCAL <- identical(commandArgs(TRUE), character(0))
 
 # Cache
-rerun <- FALSE
+rerun <- TRUE
 
 # Graphic Params
 width <- 7
@@ -69,12 +69,21 @@ setup <- setup %>%
 
 setupE <- setup %>%
   sim_gen_ec(
-    mean = 20,
+    mean = 40,
     sd = sqrt(200),
     areaVar = "idD",
     nCont = replace(rep(0, 40), c(4, 14, 24, 34), 0.2)
   ) %>%
   sim_simName("(0, e)")
+
+setupES <- setup %>%
+  sim_gen_ec(
+    mean = 0,
+    sd = sqrt(200),
+    areaVar = "idD",
+    nCont = replace(rep(0, 40), c(4, 14, 24, 34), 0.2)
+  ) %>%
+  sim_simName("(0, e-sym)")
 
 setupU <- setup %>%
   sim_gen_vc(mean = 9, sd = 5, nCont = c(5, 15, 25, 35), fixed = TRUE) %>%
@@ -82,16 +91,16 @@ setupU <- setup %>%
 
 setupUE <- setup %>%
   sim_gen_ec(
-    mean = 20,
+    mean = 40,
     sd = sqrt(200),
     areaVar = "idD",
     nCont = replace(rep(0, 40), c(4, 14, 24, 34), 0.2)
   ) %>%
-  sim_gen_vc(mean = 9, sd = 5, nCont = c(5, 15, 25, 35), fixed = TRUE) %>%
+  sim_gen_vc(mean = 20, sd = 5, nCont = c(5, 15, 25, 35), fixed = TRUE) %>%
   sim_simName("(u, e)")
 
 if (rerun) {
-  lapply(list(setup, setupE, setupU, setupUE), simFun)
+  lapply(list(setup, setupE, setupU, setupUE, setupES), simFun)
   sim_clear_data("./R/data/fromUnitToAreaLevel")
 }
 
@@ -131,7 +140,7 @@ ggDat %<>% mutar(
 
 ggDat %<>% mutar(
   idC ~ ifelse(idD %in% c(5, 15, 25, 35) & simName %in% c("(u, 0)", "(u, e)"), 1, NA_integer_),
-  idC ~ ifelse(idD %in% c(4, 14, 24, 34) & simName %in% c("(0, e)", "(u, e)"), 2, idC),
+  idC ~ ifelse(idD %in% c(4, 14, 24, 34) & simName %in% c("(0, e)", "(0, e-sym)", "(u, e)"), 2, idC),
   idC ~ factor(idC, labels = c("Area-outlier", "Unit-outlier"))
 )
 
