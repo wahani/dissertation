@@ -122,8 +122,56 @@ imposed as in *(u, 0)* and the unit level contamination as in *(0, e)*.
 ## Quality Measures and Considered Methods
 \label{sec:results_unit_measures}
 
+We compare here two quantities, the Monte Carlo RRMSPE and Monte Carlo RBIAS. 
+These two measures are computed according to Section (?). The methods that 
+performence is studied are the non\hyp{}robust predictions under the FH model 
+and robust predection refered to as RFH. To give a concise overview of the
+different modelling strategies:
+
+- SM -- denotes the sample mean. Since we sample with SRSWOR an unbiased direct
+estimator is the sample mean.
+- RM -- denotes a robust direct estimator. Here we consider the sample median.
+Also a M-type estimator has been investigated with similar results.
+- FH.SM -- is the non\hyp{}robust prediction under the FH model. This model is
+based on the sample mean and uses the direct variance estimate as sampling
+variance: $\sige \coloneqq \frac{s_i^2}{n_i}$.
+- RFH.SM -- is the robust prediction using the sample mean. The same setup is
+used as for FH.SM.
+- FH.SM.GVF -- is the non\hyp{}robust prediction under the FH model using a 
+generilsed variance function. In contrast to FH.SM a generalised variance 
+function is used as an estimator for the sampling variance: $\sige \coloneqq 
+\frac{\tilde{s}^2}{n_i}$ with
+$$
+\tilde{s}^2 = \frac{1}{n - D} \sum_{i = 1}^D (n_i - 1) s_i^2
+$$
+where $s^2_i$ denotes the sample variance for domain $i$.
+- RFH.SM.GVF -- is the robust prediction using a generilsed variance function.
+This has the same setup as the FH.SM.GVF.
+- RFH.SM.BC -- is the robust prediction with the sample mean as direct estimator
+and direct variance estimates. The predictions are bias corrected as described
+in Section (?).
+- FH.RM -- is the non\hyp{}robust prediction based on the sample median. As 
+sampling variance an estimator is used based on the median absolute deviation 
+(MAD): $\sige \coloneqq \frac{\text{MAD}_i^2}{n_i}$.
+- RFH.RM -- is the robust prediction based on the sample median. The sampling
+variances are estimated as for the FH.RM method.
+
+It would have been possible to investigate more settings than the above. However there is a trade off between the amount of models which can be consistently presented and what we understand. abalabla.
+
 ## Results
 \label{sec:results_unit_results}
+
+To summarise the results of this study consider Figure \ref{fig:unit_mse} and
+\ref{fig:unit_bias}. To structure the discussion note the following observations
+we can make:
+
+- There is only a small advantage of using genaralised variance functions as an
+alternative to direct variance estimates.
+- The robust FH prediction has no additional effect under unit level outliers.
+- A robust direct estimator has no advantage over the sample mean.
+
+
+
 
 \begin{figure}[htbp]
 \centering

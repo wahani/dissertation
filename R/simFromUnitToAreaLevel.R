@@ -12,7 +12,7 @@ gg <- modules::use("./R/graphics")
 LOCAL <- identical(commandArgs(TRUE), character(0))
 
 # Cache
-rerun <- TRUE
+rerun <- FALSE
 
 # Graphic Params
 width <- 7
@@ -25,7 +25,7 @@ Ud <- 1000
 S <- round(seq(5, 15, length.out = D))
 sige <- 32
 sigre <- 4
-runs <- 100
+runs <- 500
 
 simFun <- if (LOCAL) {
   . %>% sim(
@@ -99,7 +99,7 @@ if (!LOCAL) q("no")
 
 simData <- sim_read_data("./R/data/fromUnitToAreaLevel") %>%
   mutar(c("idD", "popMean", "simName", "sMean", "rMean", "FH", "FHGVF",
-          "FHRMean", "RFH", "RFHGVF", "RFHRMean"))
+          "FHRMean", "RFH", "RFHGVF", "RFHRMean", "RFH.BC"))
 
 ggDat <- tidyr::gather(
   simData,
@@ -112,38 +112,37 @@ ggDat %<>%
         method ~ replace(method, ~ . == "rMean", "RM"),
         method ~ replace(method, ~ . == "FHGVF", "FH.SM.GVF"),
         method ~ replace(method, ~ . == "RFHGVF", "RFH.SM.GVF"),
+        method ~ replace(method, ~ . == "RFH.BC", "RFH.SM.BC"),
         method ~ replace(method, ~ . == "RFH", "RFH.SM"),
         method ~ replace(method, ~ . == "FH", "FH.SM"),
         method ~ replace(method, ~ . == "RFHRMean", "RFH.RM"),
         method ~ replace(method, ~ . == "FHRMean", "FH.RM"))
 
-methodOrder <- c("SM", "RM", "FH.SM", "FH.SM.GVF", "FH.RM", "RFH.SM", "RFH.SM.GVF", "RFH.RM")
+methodOrder <- c("SM", "RM", "FH.SM", "FH.SM.GVF", "FH.RM", "RFH.SM", "RFH.SM.GVF", "RFH.RM", "RFH.SM.BC")
 ggDat %<>% mutar(
   method ~ factor(method, methodOrder, ordered = TRUE)
 )
 
 ggDat %<>% mutar(
-  RBIAS ~ mean((prediction - popMean) / popMean),
-  RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)),
+  RBIAS ~ mean((prediction - popMean) / popMean) * 100,
+  RRMSE ~ sqrt(mean(((prediction - popMean) / popMean)^2)) * 100,
   by = c("idD", "method", "simName")
 )
 
 ggDat %<>% mutar(
   idC ~ ifelse(idD %in% c(5, 15, 25, 35) & simName %in% c("(u, 0)", "(u, e)"), 1, NA_integer_),
   idC ~ ifelse(idD %in% c(4, 14, 24, 34) & simName %in% c("(0, e)", "(u, e)"), 2, idC),
-  idC ~ factor(idC, labels = c("area-outlier", "unit-outlier"))
+  idC ~ factor(idC, labels = c("Area-outlier", "Unit-outlier"))
 )
 
 cairo_pdf("figs/unit_mse.pdf", width, 4 * height)
 gg$plots$mse(ggDat, fontsize = fontSize) +
   geom_point(aes(colour = idC), ggDat %>% mutar(~!is.na(idC))) +
-  theme(legend.position = "bottom") +
-  labs(colour = NULL)
+  labs(colour = NULL, y = "RRMSPE in %")
 dev.off()
 
 cairo_pdf("figs/unit_bias.pdf", width, 4 * height)
 gg$plots$bias(ggDat, fontsize = fontSize) +
   geom_point(aes(colour = idC), ggDat %>% mutar(~!is.na(idC))) +
-  theme(legend.position = "bottom") +
-  labs(colour = NULL)
+  labs(colour = NULL, y = "RBIAS in %")
 dev.off()
