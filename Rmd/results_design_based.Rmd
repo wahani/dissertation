@@ -1,0 +1,39 @@
+# Outline
+
+In this final chapter I want to present a design based simulation study in which
+the robust and non\hyp{}robust predictions under the FH model are compared. In
+contrast to the model based simulations of Chapter
+\ref{chap:results_model_based} the following study is based on one synthetic
+population. The data is generated and provided by Statistics Netherlands (CBS)
+and based on the Structural Business Survey (SBS). The target domains are here
+industry sectors and the target statistic is the anual tax\hyp{}turnover within
+domains. Using this data we can study several effects on the domain predictions
+in a more realisitc setting. In particular in this study we combine the effect
+of outlying units and domains in combination with a sampling design.
+
+More details on the data and aim of the study from a contextual point of view 
+are given in Section \ref{sec:results_design_data}. The sampling design and 
+setup for the simulation as well as details on the used methods can be found in 
+Section \ref{sec:results_design_scenario}. The results are then given in Section
+\ref{sec:results_design_results} and a discussion of the results in a broader
+context is provided in Section \ref{sec:results_design_discussion}.
+
+# The Synthetic Population
+\label{sec:results_design_data}
+
+# Simulation Scenario
+\label{sec:results_design_scenario}
+
+# Results
+\label{sec:results_design_results}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width = \textwidth]{figs/design_rrmspe.pdf}
+\caption[Estimated Root Mean Squared Prediction Error]{Estimated Root Mean Squared Prediction Error}
+\end{figure}
+
+# Discussion
+\label{sec:results_design_discussion}
+
+asd

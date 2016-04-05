@@ -1,6 +1,7 @@
 modules::import("saeSim")
-modules::import(stats, median, mad)
-modules::import(MASS, huber)
+modules::import("stats", median, mad)
+modules::import("MASS", huber)
+modules::import("samplingbook")
 
 sim_comp_sampleMean <- . %>%
   # sample mean and standard deviation
@@ -24,4 +25,23 @@ robust_mean <- function(dat) {
   # dat$rMean <- huber(dat$y, k = 1.345)$mu
   # dat$rMVar <- huber(dat$y, k = 1.345)$s^2 / dat$n
   dat
+}
+
+ht <- function(probSample, var) {
+  # Function to calculate the direct estimator
+  force(probSample)
+  force(var)
+  function(dat) {
+    dat <- dat[order(dat$idOrd), ]
+    dat$pk <- probSample
+    dat <- split(dat, dat$idD) %>%
+      lapply(function(dat) {
+        tmp <- htestimate(dat[[var]], N = dat$N[1], pk = dat$pk, method = "hh")
+        dat[var] <- tmp$mean
+        dat[paste0(var, "Se")] <- tmp$se
+        dat
+      }) %>%
+      do.call(what = rbind)
+    dat
+  }
 }
