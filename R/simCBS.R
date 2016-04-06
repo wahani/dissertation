@@ -29,6 +29,7 @@ probSample <- read.table(
 dat$idOrd <- 1:nrow(dat)
 idOrd <- as.data.frame(base_add_id(dat, domainId = c("group"))) [["idOrd"]]
 
+agg_all()(base_add_id(dat, domainId = c("group")))
 
 # (2) Defining simulation
 ################################################################################
@@ -51,6 +52,7 @@ setup <- base_add_id(dat, domainId = c("group")) %>%
 
   # Calc on Sample:
   sim_comp_n() %>%
+  # as.data.frame %>% mutar(n ~ n(), by = "sc")
 
   # Aggregate:
   sim_agg(comp$direct$ht(probSample, "y")) %>%

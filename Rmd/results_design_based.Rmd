@@ -6,10 +6,11 @@ contrast to the model based simulations of Chapter
 \ref{chap:results_model_based} the following study is based on one synthetic
 population. The data is generated and provided by Statistics Netherlands (CBS)
 and based on the Structural Business Survey (SBS). The target domains are here
-industry sectors and the target statistic is the anual tax\hyp{}turnover within
-domains. Using this data we can study several effects on the domain predictions
-in a more realisitc setting. In particular in this study we combine the effect
-of outlying units and domains in combination with a sampling design.
+industry sectors and the target statistic is the anual tax\hyp{}turnover within 
+domains. Using this data we can study several effects on the domain predictions 
+in a more realisitc setting. In particular we will see how domain predictions
+are influenced by outlying units and domains in combination with a sampling
+design.
 
 More details on the data and aim of the study from a contextual point of view 
 are given in Section \ref{sec:results_design_data}. The sampling design and 
@@ -21,8 +22,68 @@ context is provided in Section \ref{sec:results_design_discussion}.
 # The Synthetic Population
 \label{sec:results_design_data}
 
-# Simulation Scenario
-\label{sec:results_design_scenario}
+The population data is a synthetic population generated using the SBS. The SBS 
+is an annual survey in the Netherlands. The data used in this study is a 
+synthetic population generated based on this survey. Furthermore the sampling 
+scheme used in this study is similar to that used in the SBS and also provided 
+and used without change. The context of this study is the interest in predicting
+the total tax-turnover for 20 industry domains. Possible predictor variables are
+the tax-turnover in the previous year, the size class in terms of number of
+employees, and the number of employees.
+
+The unit level population consists of 63981 observations spread across 20 
+industry sectors. The target variable, tax turnover, has a median value in the 
+population of 0.16 million, a mean of 0.42 million, and a maximum of 83 million 
+Euro. Thus the distribution is skewed and contains unit level outliers which are
+here assumed to be representative. The domain specific population means range 
+between 0.1 and 2.9 million Euro with a median of 0.42 and a mean of 0.62. Only
+three domains have values larger than one million Euro and may be suspected to
+be outlying areas.
+
+A similar sampling design to the one used in the SBS has been used to draw 500
+samples from this population. It is stratified for the size class within
+domains. Within each stratum samples are drawn with SRSWOR. In addition larger
+firms are selected with a probability of one. The sample always consists of 5074
+units. The sample sizes between domains vary between 6 and approximately 1050
+observations; however they have some variation over the 500 repetitions.
+
+First results showed that for an area level model it is sufficient to use only
+one predictor variable, the tax turnover of the previous year, which has the
+most predictive power in this setting. Furthermore on the area level we have
+only 20 observations, the 20 industry sectors, and even in a setting with one
+predictor we need to estimate three parameters. Hence a simple regression model
+is estimated:
+$$
+\bar{y}_i = \beta_0 + \beta_1 \tilde{y}_{it-1} + \re_i + e_i
+$$
+which is here assumed to follow the FH model. Here $i = 1, \dots, 20$ and 
+$\re_i$ is assumed to follow a normal distributions with zero mean and variance 
+$\sigre$. The sampling error, $e_i$, is also assumed to follow a normal 
+distribution with zero mean and variance $\sige$. The direct estimator, 
+$\bar{y}_i$, is a weighted mean using the inverse first order inclusion 
+probabilities as weights, i.e. the HT estimator of Section (?). The standard 
+error is computed using the approximation by Hansen-Hurwitz (?) since only the 
+first order inclusion probabilities are known. These standard errors are then 
+squared and used as the true sampling variances, $\sige$, in the model. The 
+regressor variable, $\tilde{y}_{it-1}$, is the mean value of the previous year. 
+Here the population mean is used; since the target variable is tax turnover it 
+may be plausible that at some point the true or realized values are known to the
+analyst. An investigation in which also the lagged dependent variable was 
+estimated using either a HT estimator or the sample mean showed little
+improvement over the direct estimator.
+
+The assesment of the quality of predictions follows along the lines of Section 
+(?) in that the RBIAS and RRMSPE over all repetitions are computed. The true 
+target statistic is the domain specific population mean of tax-turnover and 
+constant over all repetitions. Predictions are made under the FH model comparing
+the standard model refered to by FH, the robust prediction (RFH), and the 
+bias\hyp{}corrected robust prediction (RFH.BC).
+
+Also the MSPE estimators are compared using the RBIAS and RRMSE as they are
+defined also in Section (?). The target is here again the estimated root MSPE
+(RMSPE). The used methods are the pseudolinearisation based approach (CCT) and
+the parameteric bootstrap (BOOT); both are introduced in Section (?).
+
 
 # Results
 \label{sec:results_design_results}

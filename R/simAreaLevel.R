@@ -154,7 +154,8 @@ dev.off()
 
 # ggDat %>% as.data.frame %>% mutar(~ RRMSE > 0.03)
 ggDat %>% mutar(
-  RBIAS ~ round(median(RBIAS) * 100, 2),
-  RRMSE ~ round(median(RRMSE) * 100, 2),
+  RBIAS ~ round(median(RBIAS), 2),
+  RRMSE ~ round(median(RRMSE), 2),
   by = c("method", "simName")
 )
+
