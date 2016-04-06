@@ -106,16 +106,16 @@ ggDat$simName <- ""
 g1 <- gg$plots$bias(ggDat, fontsize = fontSize) +
   labs(y = "RBIAS in %")
 g2 <- gg$plots$mse(ggDat, fontsize = fontSize) +
-  labs(y = "RRMSPE in %") +
+  labs(y = "RRMSPE in %", x = NULL) +
   coord_flip(ylim = c(0, 80)) +
   theme(axis.text.y = element_blank())
 
 cairo_pdf("figs/design_rrmspe.pdf", width, height)
-gridExtra::grid.arrange(g1, g2, ncol = 2, widths = c(0.6, 0.4) * width)
+gridExtra::grid.arrange(g1, g2, ncol = 2, widths = c(0.55, 0.45) * width)
 dev.off()
 
 ## MSPE estimation:
-plotRMSE <- function(simDat) {
+plotRMSE <- function(simDat, filter = c("MC", "CCT",  "BOOT")) {
   mseDat <- simDat %>%
     mutar(
       MC ~ sqrt(mean((RFH - popMean)^2)),
@@ -129,10 +129,7 @@ plotRMSE <- function(simDat) {
 
   ggDat <- mseDat %>%
     tidyr::gather(estimator, RMSPE, -idD, -simName) %>%
-    mutar(~ estimator %in% c(
-      "MC", "CCT",  "BOOT"
-      # "MC.BC", "CCT.BC", "BOOT.BC"
-    ))
+    mutar(~ estimator %in% filter)
 
   ggplot(ggDat, aes(x = idD, y = RMSPE, colour = estimator)) +
     geom_line() + gg$themes$theme_thesis(fontSize) + labs(x = "Domain", colour = NULL) +
@@ -140,11 +137,15 @@ plotRMSE <- function(simDat) {
 
 }
 
-plotRMSE(simData)
+g1 <- plotRMSE(simData) + coord_cartesian(ylim = c(0, 0.4))
+g2 <- plotRMSE(simData, c("MC.BC", "CCT.BC", "BOOT.BC")) +
+  theme(axis.text.y = element_blank()) +
+  labs(y = NULL) +
+  coord_cartesian(ylim = c(0, 0.4))
 
-# cairo_pdf("figs/area_level_mse.pdf", width, 1.2 * height)
-#
-# dev.off()
+cairo_pdf("figs/design_mspe_point.pdf", width, 1.2 * height)
+gridExtra::grid.arrange(g1, g2, ncol = 2, widths = c(0.55, 0.45) * width)
+dev.off()
 
 tableMSE <- function(simDat) {
   mseDat <- simDat %>%
@@ -220,8 +221,8 @@ tabRFH <- tableMSE(simData)
 tabData <- data.frame(
   Predictor = c("FH", NA, "RFH", NA, "RFH.BC", NA),
   MSPE = c("CCT", "BOOT"),
-  RBIAS = tabRFH$bias * 100,
-  RRMSE = tabRFH$mse * 100
+  RBIAS = round(tabRFH$bias * 100, 2),
+  RRMSE = round(tabRFH$mse * 100, 2)
 )
 rownames(tabData) <- NULL
 

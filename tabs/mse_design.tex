@@ -1,0 +1,19 @@
+%latex.default(x, file = fileName, ..., caption.loc = caption.loc,     rowname = rowname)%
+\begin{table}[!tbp]
+\begin{center}
+\begin{tabular}{llrr}
+\hline\hline
+\multicolumn{1}{c}{Predictor}&\multicolumn{1}{c}{MSPE}&\multicolumn{1}{c}{RBIAS}&\multicolumn{1}{c}{RRMSE}\tabularnewline
+\hline
+FH&CCT&$-31.70$&$55.50$\tabularnewline
+&BOOT&$-29.77$&$56.03$\tabularnewline
+RFH&CCT&$-36.91$&$48.06$\tabularnewline
+&BOOT&$-34.48$&$49.15$\tabularnewline
+RFH.BC&CCT&$  1.87$&$88.19$\tabularnewline
+&BOOT&$-20.28$&$47.11$\tabularnewline
+\hline
+\end{tabular}
+
+\caption[Performance of RMSPE Estimators in Design\hyp{}Based Simulation]{\label{tab:mse_performace_design}Performance of RMSPE Estimators in Design\hyp{}Based Simulation. Results are in \%. \textit{Regular} denotes non\hyp{}outlier observations. (0) is the model specific scenario without contamination; (u) is with outlier contamination.\label{x}}\end{center}
+
+\end{table}

@@ -30,8 +30,17 @@ context is provided in Section \ref{sec:results_design_discussion}.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width = \textwidth]{figs/design_rrmspe.pdf}
-\caption[Estimated Root Mean Squared Prediction Error]{Estimated Root Mean Squared Prediction Error}
+\caption[Performance of Domain Predictions]{Performance of Domain Predictions -- Estimated root mean squared prediction error (RRMSPE) and relative bias (RBIAS)}
 \end{figure}
+
+\input{tabs/mse_design}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width = \textwidth]{figs/design_mspe_point}
+\caption[Performance of the Estimated Root Mean Squared Prediction Error]{Performance of the Estimated Root Mean Squared Prediction Error -- Compared are the root MSPE estimates using the methods CCT and BOOT with the MSPE under the Monte Carlo simulation.}
+\end{figure}
+
 
 # Discussion
 \label{sec:results_design_discussion}
