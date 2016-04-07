@@ -24,10 +24,12 @@ estimators associated to the non\hyp{}robust predictors are diverse -- see the
 corresponding review in Section \ref{sec:theory_sae_fh_extensions}. 
 
 In the following Section \ref{sec:results_mse_scenarios} the simulation settings
-for each model are described in detail. A presentation of the results can be
-found in Section \ref{sec:results_mse_results}; followed by a discussion of the
-results in the context of the existing literature in Section
-\ref{sec:results_mse_discussion}.
+for each model are described in detail. Section \ref{sec:results_mse_qm}
+describes which measures are used to asses the performance of the MSPE
+estimators. A presentation of the results can be found in Section
+\ref{sec:results_mse_results}; followed by a discussion of the results in the
+context of the existing literature in Section \ref{sec:results_mse_discussion}.
+
 
 ## Simulation Scenarios
 \label{sec:results_mse_scenarios}
@@ -63,6 +65,7 @@ for all $i \in \{5, 15, 25, 35\}$. The set of outlying domains is chosen to
 avoid an artificial scenario in combination with the choice for $\sige$.
 
 ## Quality Measures
+\label{sec:results_mse_qm}
 
 In this study we are interested in the performance of the MSPE estimators. To 
 asses the quality of these estimators the relative root mean squared error

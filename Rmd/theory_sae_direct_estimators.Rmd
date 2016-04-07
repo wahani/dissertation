@@ -1,4 +1,5 @@
 # Direct Estimators
+\label{sec:theory_sae_direct}
 
 In this section I introduce a simple direct estimator and notation which 
 is then used throughout the thesis. The estimator is of interest as it will be

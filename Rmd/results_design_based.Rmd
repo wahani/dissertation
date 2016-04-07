@@ -13,10 +13,10 @@ are influenced by outlying units and domains in combination with a sampling
 design.
 
 More details on the data and aim of the study from a contextual point of view 
-are given in Section \ref{sec:results_design_data}. The sampling design and 
-setup for the simulation as well as details on the used methods can be found in 
-Section \ref{sec:results_design_scenario}. The results are then given in Section
-\ref{sec:results_design_results} and a discussion of the results in a broader
+are given in Section \ref{sec:results_design_data}. Here also the sampling
+design and setup for the simulation as well as details on the used methods can
+be found. The results are then presented in Section 
+\ref{sec:results_design_results} and a discussion of the results in a broader 
 context is provided in Section \ref{sec:results_design_discussion}.
 
 # The Synthetic Population
@@ -61,45 +61,77 @@ $\re_i$ is assumed to follow a normal distributions with zero mean and variance
 $\sigre$. The sampling error, $e_i$, is also assumed to follow a normal 
 distribution with zero mean and variance $\sige$. The direct estimator, 
 $\bar{y}_i$, is a weighted mean using the inverse first order inclusion 
-probabilities as weights, i.e. the HT estimator of Section (?). The standard 
-error is computed using the approximation by Hansen-Hurwitz (?) since only the 
-first order inclusion probabilities are known. These standard errors are then 
-squared and used as the true sampling variances, $\sige$, in the model. The 
-regressor variable, $\tilde{y}_{it-1}$, is the mean value of the previous year. 
-Here the population mean is used; since the target variable is tax turnover it 
-may be plausible that at some point the true or realized values are known to the
+probabilities as weights, i.e. the HT estimator of Section
+\ref{sec:theory_sae_direct}. The standard error is computed using the
+approximation based on the results of @Han43 since only the first order
+inclusion probabilities are known. These standard errors are then squared and
+used as the true sampling variances, $\sige$, in the model. The regressor
+variable, $\tilde{y}_{it-1}$, is the mean value of the previous year. Here the
+population mean is used; since the target variable is tax turnover it may be
+plausible that at some point the true or realized values are known to the 
 analyst. An investigation in which also the lagged dependent variable was 
-estimated using either a HT estimator or the sample mean showed little
+estimated using either a HT estimator or the sample mean showed little 
 improvement over the direct estimator.
 
-The assesment of the quality of predictions follows along the lines of Section 
-(?) in that the RBIAS and RRMSPE over all repetitions are computed. The true 
-target statistic is the domain specific population mean of tax-turnover and 
-constant over all repetitions. Predictions are made under the FH model comparing
-the standard model refered to by FH, the robust prediction (RFH), and the 
-bias\hyp{}corrected robust prediction (RFH.BC).
+The assesment of the quality of the predictions follows along the lines of
+Section \ref{sec:area_level_sim_qm} in that the RBIAS and RRMSPE over all
+repetitions are computed. The true target statistic is the domain specific
+population mean of tax-turnover and constant over all repetitions. Predictions
+are made under the FH model comparing the standard model refered to by FH, the
+robust prediction (RFH), and the bias\hyp{}corrected robust prediction (RFH.BC).
 
-Also the MSPE estimators are compared using the RBIAS and RRMSE as they are
-defined also in Section (?). The target is here again the estimated root MSPE
-(RMSPE). The used methods are the pseudolinearisation based approach (CCT) and
-the parameteric bootstrap (BOOT); both are introduced in Section (?).
+Also the MSPE estimators are compared using the RBIAS and RRMSE as they are 
+defined also in Section \ref{sec:results_mse_qm}. The target is here again the 
+estimated root MSPE (RMSPE). The used methods are the pseudolinearisation based 
+approach (CCT) and the parameteric bootstrap (BOOT); both are introduced in 
+Section \ref{sec:theory_rfh_mse}.
 
 
 # Results
 \label{sec:results_design_results}
 
-\begin{figure}[htbp]
+The performance of the predictions can be evaluated using Figure 
+\ref{fig:design_rrmspe}. The median values of the RBIAS and RRMSPE for the 
+respective method are additionally given in Table 
+\ref{tab:preds_performace_design}. A main result we can observe here is that the
+prediction can be improved in terms of MSPE using the robust and non\hyp{}robust
+methods compared to the direct estimator. This has the price of an introduced 
+bias which is present with all methods. We can also see that the robust 
+prediction can improve the prediction for approximately another two per centage 
+points in terms of RRMSPE. The bias correction cannot add any advantage over the
+robust method and is even a draw back compared to the non\hyp{}robust
+predictions.
+
+\begin{figure}[tbp]
 \centering
 \includegraphics[width = \textwidth]{figs/design_rrmspe.pdf}
-\caption[Performance of Domain Predictions]{Performance of Domain Predictions -- Estimated root mean squared prediction error (RRMSPE) and relative bias (RBIAS)}
+\caption[Performance of Domain Predictions]{\label{fig:design_rrmspe}Performance of Domain Predictions -- Estimated root mean squared prediction error (RRMSPE) and relative bias (RBIAS).}
 \end{figure}
+
+\input{tabs/preds_design}
+
+Turning now towards the performance of the MSPE estimators the main results can 
+be found in Table \ref{tab:mse_performace_design} and Figure
+\ref{fig:design_mspe_estimators}. What we see here is that for predictions under
+the FH and RFH method the CCT and parameteric bootstrap methods perform equally
+good. Although in both cases we have a strong negative bias. This negative bias
+stems from the fact that the estimated variance parameter under both methods --
+FH and RFH -- are close zero. In terms of predictions this means that we
+strongly rely on the linear predictor -- and as discussed earlier we see the
+overall improvement of the predictions in terms of MSPE. However these small
+variance parameters mean that the bootstrap samples have too small variation and
+the CCT estimator also relies on this parameter; however neither the bootstrap
+nor the CCT can account for the uncertainty related to these parameter
+estimates. In terms of bias the CCT produces acceptable results for the
+predictions using RFH.BC, i.e. the robust bias corrected predictions. However
+compared to the bootstrap we observe a higher RRMSE.
 
 \input{tabs/mse_design}
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \centering
 \includegraphics[width = \textwidth]{figs/design_mspe_point}
-\caption[Performance of the Estimated Root Mean Squared Prediction Error]{Performance of the Estimated Root Mean Squared Prediction Error -- Compared are the root MSPE estimates using the methods CCT and BOOT with the MSPE under the Monte Carlo simulation.}
+\caption[\label{fig:design_mspe_estimators}Performance of the Estimated Root Mean Squared Prediction Error]{Performance of the Estimated Root Mean Squared Prediction Error -- Compared are the root MSPE estimates using the methods CCT and BOOT with the MSPE under the Monte Carlo simulation.}
 \end{figure}
 
 

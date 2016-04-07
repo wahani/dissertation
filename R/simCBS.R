@@ -149,6 +149,24 @@ cairo_pdf("figs/design_mspe_point.pdf", width, 1.2 * height)
 gridExtra::grid.arrange(g1, g2, ncol = 2, widths = c(0.55, 0.45) * width)
 dev.off()
 
+medianPerformance <-
+  ggDat %>% mutar(
+  RBIAS ~ round(median(RBIAS), 2),
+  RRMSPE ~ round(median(RRMSE), 2),
+  by = "method"
+) %>%
+  mutar(~4:1)
+
+names(medianPerformance)[1] <- "Predictor"
+
+dump <- gg$tables$save(
+  medianPerformance,
+  fileName = "tabs/preds_design.tex",
+  where = "ht",
+  caption = "\\label{tab:preds_performace_design}Performance of the Domain Predictions in Design\\hyp{}Based Simulation -- Results are in \\%. Presented are the median values of 20 industry sectors.",
+  caption.lot = "Performance of the Domain Predictions in Design\\hyp{}Based Simulation"
+)
+
 tableMSE <- function(simDat) {
   mseDat <- simDat %>%
     mutar(
@@ -231,12 +249,10 @@ rownames(tabData) <- NULL
 dump <- gg$tables$save(
   tabData,
   fileName = "tabs/mse_design.tex",
-  caption = "\\label{tab:mse_performace_design}Performance of RMSPE Estimators in Design\\hyp{}Based Simulation. Results are in \\%. \\textit{Regular} denotes non\\hyp{}outlier observations. (0) is the model specific scenario without contamination; (u) is with outlier contamination.",
+  where = "ht",
+  caption = "\\label{tab:mse_performace_design}Performance of RMSPE Estimators in Design\\hyp{}Based Simulation. Results are in \\%. Presented are the median values of 20 industry sectors.",
   caption.lot = "Performance of RMSPE Estimators in Design\\hyp{}Based Simulation"
 )
-
-
-
 
 
 
