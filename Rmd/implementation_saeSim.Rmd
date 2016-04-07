@@ -2,8 +2,181 @@
 
 # Outline
 
-- user stats
-- article
+The demand for reliable small area statistics from sample surveys has
+substantially grown over the last decades due to their use in public and private
+sectors. In this paper we present a framework for simulation studies within the
+field of small area estimation. This tool might be useful for the prospective
+researcher or data analyst to provide reproducible research.
+
+Reproducible research has become a widely discussed topic. In the field of
+statistics many open source tools like the `R`-language \citep{r14} and
+\LaTeX, dynamic reporting packages like `knitr` \citep{yihui13},
+`sweave` \citep{leisch02} and more recently `rmarkdown`
+\citep{allaire14}, make the integration of text and source code for statistical
+analysis possible. Publishing source code and data alongside research results
+draws special attention to authoring the analysis. However, the requirements for
+source code are different from the written words in the article itself.
+
+Besides the combination of text and source code, reproducible research aims at
+the availability of the full academic research, which is the paper combined with
+the full computational environment, like data and source code. However, real
+data is often very sensitive and governed by strict confidentiality rules.
+Synthetic data generation mechanisms as discussed in \cite{alfons2011} or
+\cite{Kol11} can be used to provide safe data which is publicly available to
+enable the community to reproduce the analysis and results. \cite{Bur14}
+interpreted this as an open research philosophy. Such synthetic data sets can be
+used to test newly proposed statistical methods in a close-to-reality framework.
+In general, simulation studies in statistics can be divided into two concepts:
+
+- Design-based: The simulation study is based on true or synthetic data of a
+fixed population. Then, samples are selected repeatedly from the underlying
+finite population and different estimation methods are applied in each
+replication. The estimates so obtained are compared to the true values of the
+population, for instance, in terms of relative bias (RB) or relative root mean
+squared error (RRMSE).
+- Model-based: The simulation study uses data drawn from certain
+distributions. In each iteration, the population is generated from a model and a
+sample is selected according to a specific sampling scheme. The sample is used
+to estimate the quantity of interest for which quality measures (like RB and
+RRMSE) are derived.
+
+Further discussion regarding model- and design-based simulations is available in
+\cite{Mue03}, \cite{Sal10} or \cite{Alf10}.
+
+\cite{Alf10} provide the `R`-package `simFrame` which helps to
+conduct simulation studies in a reproducible environment. It includes a wide
+range of features (like data generation, sampling schemes, outlier contamination
+mechanisms and missing values) to conduct simulation studies.
+`simFrame` was originally developed for simulations in the context of
+survey statistics but is now designed to be as general as possible
+\citep[cf.][]{Alf10}. Furthermore the package `simPop` \citep{Alf14}
+supports the generation of synthetic population data. This can be a suitable
+environment in scenarios where the reproducibility of results and
+confidentiality issues play an important role.
+
+However, simulation studies in the context of small area estimation are often
+presented very briefly. Thus there is a need to have a suitable framework to
+guarantee the reproducibility of analysis. To the best of our knowledge, there
+is no `R`-package or framework adjusted for the special case of small
+area estimation which provides a simulation environment.
+
+The aim of this article is to introduce a new `R`-package,
+`saeSim`, which supports the process of making simulation studies in
+the field of small area estimation reproducible. To be more precise, the
+suggested package has three main objectives: First, to provide tools for data
+generation. Second, to unify the process of simulation studies. Third, to make
+the source code of simulation studies available, such that it supports the
+conducted research in a transparent manner.
+
+This paper is organised as follows. In Section \ref{sec:SAE} we give a short
+introduction to small area estimation focusing mainly on unit-level
+\citep{battese88} and area-level models \citep{fay79}. Section
+\ref{sec:framework} introduces a framework for simulation studies and how it is
+supported by the  `R`-package `saeSim`. To illustrate some of
+the features of the package we present a model- and design-based simulation
+study in Section \ref{sec:caseStudy}. We conclude the paper in Section
+\ref{sec:outlook} by summarising the main findings and by providing some avenues
+for further research.
+
+
+# A simulation Framework
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{figs/flowdiagram}
+\caption[Process of Simulation]{\label{fig:flowdiagram}Process of simulation. Left column are the steps in a simulation. Right column are the corresponding function names to represent those steps in R.} 
+\end{figure}
+
+In this section we will present the simulation framework implemented in
+`saeSim`. The framework relies strongly on the idea to describe a
+simulation as a process of data manipulation. Independent of simulation studies,
+\cite{wickham14a} and \cite{wickham14b} strongly promote this idea by providing
+tools for cleaning and transforming data. In those frameworks every defined
+function takes a `data.frame` as input and returns it modified. This
+leads to a natural connection between all defined functions since the result of
+one function can be directly passed to the next as an argument. The symbioses of
+these packages with the pipe operator (`\%>\%`) from the package
+`magrittr` \citep{bache14} only emphasizes the process of data
+manipulation. To avoid nested function calls the operator can be used to improve
+the readability as expressions can be read from left to right (cf. Section
+\ref{sec:caseStudy}).
+
+In `saeSim` we extend this approach to simulation studies in the field
+of small area estimation. The main focus lies in the description of a simulation
+as a process of data manipulation. Each step in this process can be defined as a
+self contained component (function) and thus can be easily replaced, extended
+and most importantly reused. Before we go into the details of the functionality
+of the package we discuss the process behind simulation studies and how
+`saeSim` maps this process into `R`.
+
+Simulation studies in small area estimation address three different levels;
+these are the population, the sample and data on aggregated level. Figure
+\ref{fig:flowdiagram} illustrates these levels. The left column describes the
+steps of data manipulation, the right column presents the function names to
+define the corresponding steps. The \textbf{population-level} defines the data
+on which a study is conducted and may be a true population, synthetic population
+data or randomly generated variates from a model. We see two different points of
+view to define a population: Firstly, \textit{design-based} simulations, which
+means that a simulation study is based on true or synthetic data of \textit{one}
+population. Secondly, \textit{model-based} simulations, which have changing
+random populations drawn from a model.
+
+The scope of this article is not to opt for viewpoints. The aim is to
+incorporate the different simulation concepts in a common framework. The
+\textit{base} (first component in Figure \ref{fig:flowdiagram}) of a simulation
+study is a data table; here the question is whether this data is \textit{fixed}
+or \textit{random} over simulations. Or from a more technical point of view, is
+the data generation (the second step in Figure \ref{fig:flowdiagram}) repeated
+in each simulation run or omitted. Depending on the choice of a fixed or random
+population it is necessary to re-compute the population domain-statistics like
+domain means and variances, or other statistics of interest (third component in
+Figure \ref{fig:flowdiagram}).
+
+The \textbf{sample-level} is necessary when domain predictions are conducted for
+unit-level models. Independently of how the population is treated - whether as
+fixed or random - this phase consists of two steps: Firstly, drawing a sample
+according to a specific sampling scheme. {Secondly, conducting} computations on
+the samples (fourth and fifth component in Figure \ref{fig:flowdiagram}). Given
+a sample, small area methods are applied. Of interest are, for instance,
+estimated model parameters, domain predictions or measures of uncertainty (MSE)
+for the estimates.
+
+Since the sample-level is necessary when unit-level models are applied, the
+\textbf{aggregate-level} is conducted when area-level models are applied (the
+seventh and last component in Figure \ref{fig:flowdiagram}). Area-level models
+in small area estimation typically only use information available for domains
+(in contrast to units). Thus the question for simulation studies for area-level
+methods is whether the data is generated on unit-level and is used after the
+aggregation (sixth component in Figure \ref{fig:flowdiagram}) or whether the
+data is generated directly on area-level, i.e. drawn from an area-level model.
+Depending on whether or not unit-level data and sampling are part of the
+simulation process, the aggregate-level follows the generation of the population
+or is based on the aggregated sample. %Again, we do not promote a specific
+viewpoint but simply allow steps in the process of simulation to be omitted.
+
+Depending on the topic of research, some steps in this simulation framework can
+be more relevant than others. From our perspective, these steps are more a
+complete list of phases one can conduct. Single components may be omitted if not
+relevant in specific applications. For example \textit{data generation} is not
+relevant if you have population data, or the \textit{sample-level} is not used,
+when the sample is directly drawn from the model.
+
+Seen this way, `saeSim` maps the different steps into `R`. Two
+layers with separate responsibilities need to be discussed. The first is
+\textit{how} different simulation components can be combined, and the second is
+\textit{when} they are applied. Regarding the first, in `saeSim` we put
+a special emphasis on the interface of each component. To be precise, we use
+functions which take a `data.frame` as argument and have a
+`data.frame` as return value. The return value of one component is the
+input of the next. This definition of interfaces is used for all existing tools
+in `saeSim`. The second column in Figure \ref{fig:flowdiagram} shows
+how the different steps in a simulation can be accessed. It is important to note
+that the functions in Figure \ref{fig:flowdiagram} control the process, the
+second layer, i.e. \textit{when} components are applied. Each of these functions
+take a simulation setup object to be modified and a function with the discussed
+interface as arguments. Hence, the pipe operator (`\%>\%`) can be used
+to combine separate components to a simulation setup.
+
 
 # Discussion
 
