@@ -117,31 +117,30 @@ from a population model in each repetition.
 
 The scope of the framework is not to opt for viewpoints. The aim is to 
 incorporate the different simulation concepts in a common framework. The *base* 
--- first component in Figure \ref{fig:flowdiagram} -- of a simulation study is a
+(first component in Figure \ref{fig:flowdiagram}) of a simulation study is a
 data table; here the question is whether this data is *fixed* or *random* over 
-simulations. Or from a more technical point of view, is the data generation -- 
-the second step in Figure \ref{fig:flowdiagram} -- repeated in each repetition 
+simulations. Or from a more technical point of view, is the data generation (the second step in Figure \ref{fig:flowdiagram}) repeated in each repetition 
 or omitted in the study. Depending on the choice of a fixed or random population
 it is necessary to re\hyp{}compute the population target statistics like domain
-means and variances, or other statistics of interest -- third component in
-Figure \ref{fig:flowdiagram}.
+means and variances, or other statistics of interest (third component in
+Figure \ref{fig:flowdiagram}).
 
 The *sample\hyp{}level* is necessary when domain predictions are conducted for 
 unit-level models. Independently of how the population is treated - whether as 
 fixed or random - this phase consists of two steps: Firstly, drawing a sample 
 according to a specific sampling scheme. Secondly, conducting computations on 
-the samples -- fourth and fifth component in Figure \ref{fig:flowdiagram}. Given
+the samples (fourth and fifth component in Figure \ref{fig:flowdiagram}). Given
 a sample, small area methods are applied. Of interest are, for instance, 
 estimated model parameters, domain predictions, or measures of uncertainty for
 the estimates.
 
 Since the sample\hyp{}level is necessary when unit level models are applied, the
-*aggregate\hyp{}level* is conducted when area level models are applied -- the 
-seventh and last component in Figure \ref{fig:flowdiagram}. Area level models in
+*aggregate\hyp{}level* is conducted when area level models are applied (the 
+seventh and last component in Figure \ref{fig:flowdiagram}). Area level models in
 SAE typically only use information available for domains -- in
 contrast to units. Thus the question for simulation studies for area level 
 methods is whether the data is generated on unit level and is used after the 
-aggregation -- sixth component in Figure \ref{fig:flowdiagram} -- or whether the
+aggregation (sixth component in Figure \ref{fig:flowdiagram}) or whether the
 data is generated directly on area level, i.e. drawn from an area level model. 
 Depending on whether or not unit-level data and sampling are part of the 
 simulation process, the aggregate-level follows the generation of the population
