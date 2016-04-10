@@ -1,3 +1,12 @@
+\begin{flushright}{\slshape    
+In 2002, small area estimation (SAE) was flourishing \\
+both in research and applications, but my own feeling then was \\
+that the topic has been more or less exhausted in terms of research and \\
+that it will just turn into a routine application in sample survey practice. \\
+As the past 9 years show, I was completely wrong.} \\ \medskip
+--- \textcite{Pfe13}
+\end{flushright}
+
 # Overview
 
 In the following I give a general overview of the field of Small Area Estimation

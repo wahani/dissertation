@@ -1,25 +1,31 @@
 \chapter{Simulation Tools for Small Area Estimation}
 
+\begin{flushright}{\slshape    
+Instead of imagining that our main task is \\ 
+to instruct a computer what to do, \\
+let us concentrate rather on explaining \\
+to human beings what we want a computer to do.} \\ \medskip
+--- \textcite[p.99]{Knu92}
+\end{flushright}
+
 # Outline
 
 In this Chapter I want to present a framework for simulation studies within the 
-SAE field. The framework is in principle valuable in itself however here it is 
-tightly coupled to its implementation: the R-package `saeSim` \citep{War15}. At 
-this point it is important to note that the following content has in part been 
-published as an article: \citetitle{War16a} -- @War16a. Here a shorter version 
-of this article is presented. Content which is related to a general introduction
-to the SAE field is omitted; in contrast to the article code examples use the
-SAE methods implemented in `saeRobust` \citep{War16} instead of `sae`
-\citep{Mol15} to present the tools in a more concise setting. Furthermore text
-passages have been changed to integrate the content into the general line of
-argumentation of this Thesis.
+SAE field. The framework is implemented in the `R`-package `saeSim` \citep{War15}.
+At this point it is important to note that the following content has in part
+been published as an article: \citetitle{War16a} -- @War16a. Here a shorter 
+version of this article is presented. Content which is related to a general 
+introduction to the SAE field is omitted; in contrast to the article code 
+examples use the SAE methods implemented in `saeRobust` \citep{War16} instead of
+`sae` \citep{Mol15}. Furthermore text passages have been changed to integrate
+the content into the general line of argumentation of this Thesis.
 
 The set of tools contributed by the package `saeSim` are motivated by providing 
 an infrastructure which makes it easier to reproduce results of model and design
 based simulation studies. Reproducible research aims at the availability of the 
 full academic research, which is the article combined with the full 
 computational environment, including data and source code. Open source tools 
-like the R\hyp{}language \citep{R} and \LaTeX \space can be used in tight 
+like the `R`\hyp{}language \citep{R} and \LaTeX \space can be used in tight 
 integration to combine the statistical analysis with the written words in an 
 article. This can be achieved by using tools like `knitr` \citep{Xie13}, 
 `sweave` \citep{Lei02}, and more recently `rmarkdown` \citep{All14}. Such tools 
@@ -52,7 +58,7 @@ are derived.
 Further discussion regarding model- and design-based simulations can be found in
 @Mue03, @Sal10, and @Alf10.
 
-A closely related software packages in the R-language is `simFrame`
+A closely related software packages in the `R`-language is `simFrame`
 \citep{Alf10} which helps to configure simulation studies in a reproducible
 environment. It includes a wide range of features -- like data generation,
 sampling schemes, outlier contamination mechanisms, and missing values -- and
@@ -69,9 +75,9 @@ package. This framework defines the overall structure and aims to unify the
 shared elements between simulation studies. A simulation is here defined
 as a stream of data to be manipulated in a sequence of steps. Furthermore it
 provides the definition of the interface between these steps. The package 
-`saeSim` maps this framework into the R-language and combines it with commonly 
+`saeSim` maps this framework into the `R`-language and combines it with commonly 
 used facilities in this context; e.g. tools for data generation, sampling, and a
-link to the parallel computing capabilities in R.
+link to the parallel computing capabilities in `R`.
 
 The framework is more concretely presented in the following Section 
 \ref{sec:saeSim_framework}. This presentation is followed by code examples in 
@@ -95,7 +101,7 @@ the package `magrittr` \citep{Bac14} only emphasizes this process.
 In `saeSim` this approach is extended to simulation studies in the SAE field.
 The main focus is the description of a simulation as a process of data
 manipulation. Each step in this process can be defined as a self contained
-component -- a function in R -- and thus can be easily replaced, extended, and
+component -- a function in `R` -- and thus can be easily replaced, extended, and
 reused.
 
 Simulation studies address three different levels; these are the population, the
@@ -112,7 +118,7 @@ from a population model in each repetition.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/flowdiagram.pdf}
-\caption[Process of Simulation]{\label{fig:flowdiagram}Process of Simulation -- Left column are the steps in a simulation. Right column are the corresponding function names to represent those steps in R.} 
+\caption[Process of Simulation]{\label{fig:flowdiagram}Process of Simulation -- Left column are the steps in a simulation. Right column are the corresponding function names to represent those steps in \texttt{R}.} 
 \end{figure}
 
 The scope of the framework is not to opt for viewpoints. The aim is to 

@@ -5,7 +5,7 @@ It is important to distinguish between an algorithm \\
 and its implementation. The former is a theoretical approach \\
 to a problem and leaves many practical details unanswered. \\
 The latter is how the approach is applied practically.} \\ \medskip
---- \cite{McC04}
+--- \textcite{McC04}
 \end{flushright}
 
 
