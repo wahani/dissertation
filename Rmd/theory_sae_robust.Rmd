@@ -4,8 +4,11 @@
 The quality of predictions using model based methods are strongly dependent upon
 their distributional assumptions. Serious problems with these methods can arise 
 already when single outlying observations are present in the data. Hence 
-discussion and some progress has been made in connection with methods robust
-against outliers.
+discussion and some progress has been made in connection with methods robust 
+against outliers. Outliers are here defined as representative outliers as in
+@Cha86 and already reviewed in Section \ref{sec:sae_overview}. A thorough
+discussion of what exactly outlying observations on the area level are will be given
+in Section \ref{sec:rfh_framework} ahead.
 
 In the broader context of this subfield within SAE the present thesis relies
 strongly on the results of @Sin09 who propose robust estimation equations for
@@ -131,11 +134,14 @@ With given robust estimates for $\pmat\beta$ and $\pmat\delta$, @Sin09 solve the
 robust mixed model equation \eq{eq:rmmere} proposed by @Fel86 in order to derive
 a robust EBLUP (REBLUP). Although they also suggest to use a NR algorithm which 
 is developed using a Taylor series expansion, the numerical solution appears to 
-be less problematic. This is indicated by @Sch11, @Aue15, and @Chat12 whose main
-concern centre around stable solutions for $\pmat\delta$. On the other hand
-@Schoch12 suggests finding solutions on the basis of a robust version of a
-method of moments estimator; and a similar suggestion can be found in
-@Rao15[196]: they propose the use of a robust version of \eq{eq:blupre}:
+be less problematic. 
+
+- Schmid (?) spatial algorithmis fisher scoring
+
+On the other hand @Schoch12 suggests finding solutions on 
+the basis of a robust version of a method of moments estimator; and a similar 
+suggestion can be found in @Rao15[196]: they propose the use of a robust version
+of \eq{eq:blupre}:
 \empty{
 \begin{align}
 \hat{\mat{\re}}^\psi = \mat{V}_u\mat{Z}^\top\mat{V}^{-1}\mat{U}^\half\psi(\mat{r}) \label{eq:reblupre}
@@ -224,7 +230,7 @@ the random effects in their two approaches. In their simulation study they find
 an improvement in terms of bias for all three bias corrections for the REBLUP in
 \eq{eq:reblupbhf}. However, especially in terms of stability measured by 
 relative efficiency - relative to the EBLUP in \eq{eq:bhfeblup} - the two 
-approaches by @Jio13 are promising and outperform the solution by @Cha14.
+approaches by @Jio13 show promising results in their simulation study.
 
 At this point it is important to note that for area level robust predictions the
 application of the results of @Cha14 and @Jio13 are not immediately obvious. All
@@ -300,7 +306,7 @@ sufficiently large part of the sample.
   which would be needed for the spatial and temporal extensions reviewed in
   Section \ref{sec:theory_sae_fh_extensions}.
   
-- An outlier robust block bootstrap for small area estimation
+- An outlier robust block bootstrap for small area estimation: ... & chambers
 
 
 ### Pseudolinearisation\hyp{}based Approach
@@ -441,20 +447,20 @@ generalised linear mixed models can be found in @Yau02.
 
 Recent extensions to to the robust methods by @Sin09 can be found in @Sch14 who 
 use a unit level model with spatially correlated random effects; they propose a 
-sptial REBLUP (SREBLUP). @Rao14 have extended the unit level mixed model to
+spatial REBLUP (SREBLUP). @Rao14 have extended the unit level mixed model to
 allow for P-splines in the fixed part of the model. It is interesting to note
 that they also report problems with their originally proposed Newton-Raphson
 algorithm and suggest using a fixed point algorithm for the variance parameters
 instead.
 
 In general the approach to outlier robust predictions, as it was discussed 
-above, is but one possible approach; it is plausible to apply it in an
-application when the analyst believes that the population model is correctly
-specified for a substential part of the population. When the model is incorrect -
-for example in the case of a mixture distribution or in general in the context
+above, is but one possible approach; it is plausible to apply it in an 
+application when the analyst believes that the population model is correctly 
+specified for a substential part of the population. When the model is incorrect
+- for example in the case of a mixture distribution or in general in the context
 of non-symmteric outliers - the proposed methods can easily lead to a prediction
-bias. However solutions have been suggested to overcome this issue. Similar
-methods - in that they use robust estimation equations - with respect to survey
+bias. However solutions have been suggested to overcome this issue. Similar 
+methods - in that they use robust estimation equations - with respect to survey 
 methods can be found in @Bea09 and @Hul99 who recommend for example a robust HT 
 estimator; and @Bea04 has introduced robust extensions to generalised regression
 estimation.
@@ -466,8 +472,8 @@ in that the predictions can be biased. @Tza05 have suggested a correction term
 for this bias which was then adapted for the REBLUP by @Cha14.
 
 Furthermore robust small area predictions can be addressed by changing the 
-underlying model assumptions. This is most natural in the situation where the
-original distributional assumption, for example a normal distribution, is
+underlying model assumptions. This is most natural in the situation where the 
+original distributional assumption, for example a normal distribution, is 
 implausible and needs to be replaced. Choices can fall on symmetric 
 distributions with more probability mass on the tails or on non-symmetric 
 distributions. @Bel06 for example use a Bayesian approach and choose a 
@@ -479,14 +485,18 @@ based on a multivariate t-distribution.
 Although most of the references focus on robust small area prediction under unit
 level models, several possibilities have been explored for area level models.
 @Bel06 and @Hua06 both use the t-distribution to model the random effect in the
-FH model within the context of poverty mapping. @Xie07 also use a hierarchical 
-Bayes approach using a t-distribution to predict the proportion of overweight 
-individuals in small areas. @Fab10 explore the possibility to use exponential 
-power distributions to model the random effect; put simply, this is a normal 
-distribution where the skewness and kurtosis are parameterised such that this 
-distribution can be used to model heavy tails or non-symmetry. They also use a 
-Baysian approach. @Ger10 and @Cha15 propose to use the FH model but replace the 
-distribution of the random effects with a mixture distribution. This essentially
-means that they have to detect which observations are outliers and fit a
-seperate model. All these studies can claim some advantages for their respective
-method when outliers are present.
+  FH model within the context of poverty mapping. @Xie07 also use a hierarchical
+  Bayes approach using a t-distribution to predict the proportion of overweight 
+  individuals in small areas. @Fab10 explore the possibility to use exponential
+  power distributions to model the random effect; put simply, this is a normal 
+  distribution where the skewness and kurtosis are parameterised such that this 
+  distribution can be used to model heavy tails or non-symmetry. They also use a
+  Baysian approach. @Gho08 modify the Hirarchical Bayes and Empirical Bayes 
+  estimators by using an influence function. This is a similar approach taken as 
+  proposed in Chapter \ref{chap:rfh} however in the setting of a Baysian 
+  framework -- whereas the estimation methodology underpinning this Thesis is 
+  based on Maximum Likelihood. @Ger10 and @Cha15 propose to use the FH model but
+  replace the distribution of the random effects with a mixture distribution. 
+  This essentially means that they have to detect which observations are 
+  outliers and fit a seperate model. All these studies can claim some advantages
+  for their respective method when outliers are present.

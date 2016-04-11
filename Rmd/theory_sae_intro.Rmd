@@ -8,6 +8,7 @@ As the past 9 years show, I was completely wrong.} \\ \medskip
 \end{flushright}
 
 # Overview
+\label{sec:sae_overview}
 
 In the following I give a general overview of the field of Small Area Estimation
 (SAE) necessary in order to accomodate this thesis within the SAE field. @Rao03 

@@ -1,15 +1,16 @@
 # Unit Level Models
 \label{sec:unit_level}
 
-The Battese-Harter-Fuller (BHF) model, which can also be regarded as a linear mixed model, was introduced by @Bat88. The main focus of the present thesis 
-is the extension of area level models. However some recent advances in the 
-field, especially with respect to robust estimation methodology, have been made 
-for unit level models. In Chapter \ref{chap:rfh} these results are applied to 
-the area level; here the basic unit level model and unit level notation is 
-reviewed preparatory to more details in Section \ref{sec:saerobust} below. A
-review of unit level models in the context of linear mixed models and EBLUP 
-based predictions can be found in @Jia06 and also in @Rao03 and in @Rao15 who
-also review a variety of extensions.
+The Battese-Harter-Fuller (BHF) model, which can also be regarded as a linear
+mixed model, was introduced by @Bat88. The main focus of the present thesis is
+the extension of area level models. However some recent advances in the field,
+especially with respect to robust estimation methodology, have been made for
+unit level models. In Chapter \ref{chap:rfh} these results are applied to the
+area level; here the basic unit level model and unit level notation is reviewed
+preparatory to more details in Section \ref{sec:saerobust} below. A review of
+unit level models in the context of linear mixed models and EBLUP based
+predictions can be found in @Jia06 and also in @Rao03 and in @Rao15 who also
+review a variety of extensions.
 
 The unit level model of @Bat88 can be expressed as linear mixed model by:
 \empty{
@@ -55,12 +56,14 @@ for the ith area mean can be derived as
 \hat{\theta}_i^{BHF} = N_i^{-1} \Paran{\sum_{j \in S_i} y_{ij} + 
   \sum_{j\in R_i}(\sij{\mat{x}}^\top\hat{{\pmat\beta}} + \si{\hat{\re}})}
 \end{align}
-}where $\hat{\pmat\beta}$ denotes the BLUE of $\pmat\beta$ which is estimated using the
-sampled information. Note that this predictor is based on the auxiliary 
-information for each unit in the non-sampled part of the population. In practice
-this assumption can be relaxed by using the area means of the population which 
-needs to be available to the analyst. The unknown parameters of the model, i.e. 
-$\pmat\beta$, $\sigre$ and $\sigma_e^2$, can be estimated using standard ML and
-REML estimation techniques and are based on the sampled data.
+}where $\hat{\pmat\beta}$ denotes the BLUE of $\pmat\beta$ which is estimated
+using the sampled information. Note that this predictor is based on the
+auxiliary information for each unit in the non-sampled part of the population.
+It may be unrealistic to have such information for each observation. This
+assumption can be relaxed by using the area means of the population to make
+domain predictions; however this information needs to be available to the
+analyst. The unknown parameters of the model, i.e. $\pmat\beta$, $\sigre$ and
+$\sigma_e^2$, can be estimated using standard ML and REML estimation techniques
+and are based on the sampled data.
 
-
+- MSPE estimation?
