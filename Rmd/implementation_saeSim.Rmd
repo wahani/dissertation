@@ -123,13 +123,14 @@ from a population model in each repetition.
 
 The scope of the framework is not to opt for viewpoints. The aim is to 
 incorporate the different simulation concepts in a common framework. The *base* 
-(first component in Figure \ref{fig:flowdiagram}) of a simulation study is a
+(first component in Figure \ref{fig:flowdiagram}) of a simulation study is a 
 data table; here the question is whether this data is *fixed* or *random* over 
-simulations. Or from a more technical point of view, is the data generation (the second step in Figure \ref{fig:flowdiagram}) repeated in each repetition 
-or omitted in the study. Depending on the choice of a fixed or random population
-it is necessary to re\hyp{}compute the population target statistics like domain
-means and variances, or other statistics of interest (third component in
-Figure \ref{fig:flowdiagram}).
+simulations. Or from a more technical point of view, is the data generation (the
+second step in Figure \ref{fig:flowdiagram}) repeated in each repetition or
+omitted in the study. Depending on the choice of a fixed or random population it
+is necessary to re\hyp{}compute the population target statistics like domain 
+means and variances, or other statistics of interest (third component in Figure
+\ref{fig:flowdiagram}).
 
 The *sample\hyp{}level* is necessary when domain predictions are conducted for 
 unit-level models. Independently of how the population is treated - whether as 
@@ -142,15 +143,15 @@ the estimates.
 
 Since the sample\hyp{}level is necessary when unit level models are applied, the
 *aggregate\hyp{}level* is conducted when area level models are applied (the 
-seventh and last component in Figure \ref{fig:flowdiagram}). Area level models in
-SAE typically only use information available for domains -- in
-contrast to units. Thus the question for simulation studies for area level 
-methods is whether the data is generated on unit level and is used after the 
-aggregation (sixth component in Figure \ref{fig:flowdiagram}) or whether the
-data is generated directly on area level, i.e. drawn from an area level model. 
-Depending on whether or not unit-level data and sampling are part of the 
-simulation process, the aggregate-level follows the generation of the population
-or is based on the aggregated sample.
+seventh and last component in Figure \ref{fig:flowdiagram}). Area level models
+in SAE typically only use information available for domains -- in contrast to
+units. Thus the question for simulation studies for area level methods is
+whether the data is generated on unit level and is used after the aggregation
+(sixth component in Figure \ref{fig:flowdiagram}) or whether the data is
+generated directly on area level, i.e. drawn from an area level model. Depending
+on whether or not unit-level data and sampling are part of the simulation
+process, the aggregate-level follows the generation of the population or is
+based on the aggregated sample.
 
 Depending on the topic of research, some steps in this simulation framework can 
 be more relevant than others. The framework defines a complete list of steps
@@ -179,13 +180,13 @@ examples to implement a model based simulation.
 # Code Examples
 \label{sec:saeSim_examples}
 
-We present two applications of `saeSim`, one model-based simulation in Section
-\ref{sec:csModel} and a design-based simulation in Section \ref{sec:csDesign}.
-First, though, we introduce some basic functionalities as the pipe operator
-(`%>%`) needs some explanation. The pipe operator is designed to make otherwise
-nested expressions more readable as a line can be read from left to right,
-instead from inside out \citep{bache14}. As a simple example see the following
-lines which are equivalent with respect to their functionality:
+In this Section I want to illustrate some of the features of `saeSim` using code
+examples. Beforehand I introduce some basic functionalities since the package
+relies on the so called *pipe operator* (`%>%`) which may need some explanation.
+The pipe operator is designed to make otherwise nested expressions more readable
+as a line can be read from left to right, instead from inside out \citep{Bac14}.
+As a simple example consider the following lines which are equivalent with
+respect to their functionality:
 
 ```{r eval = FALSE}
 library("magrittr")
@@ -193,9 +194,10 @@ colMeans(matrix(rnorm(10), ncol = 2))
 rnorm(10) %>% matrix(ncol = 2) %>% colMeans
 ```
 
-In `saeSim`, we rely on this operator. Although all functions can be used
-without it, we strongly recommend its usage. The following example shows some of
-the aspects of the package:
+Code written using `saeSim` is based on the idea of passing data forward through
+a sequence of data manipulation steps. This idea is emphasised by using the pipe
+operator. The following example illustrates some design aspects of the package
+as well as the use of the pipe operator:
 
 ```{r eval = TRUE, echo=FALSE, message=FALSE}
 library("saeSim")
@@ -218,102 +220,169 @@ manner will focus on the definition of components and hide control structures.
 Any function can be passed to `sim_sample` which has a `data.frame` both as
 input and as return value. The only responsibility of that function is to draw a
 sample, which makes it easy to find, understand and reuse when published. The
-operator `%>%` is used to add new components to the setup.
+pipe operator is used to add new components to the setup.
 
-In the following we show one way how to construct a simulation in a model-based
-setting. The aim is to estimate the domain predictions under a FH model.
-Involved components are *data generation* and *computing on aggregated data*
-(cf. Figure \ref{fig:flowdiagram}). The first step is to generate the data under
-the model:
+In what follows one way of constructing a simulation in a model based setting is
+reviewed. The aim is to make domain predictions using the FH model and the
+introduced robust extension. In this example we start with a unit level
+population model. From this population samples are drawn in each iteration with
+SRSWOR where the domain specific samples sizes are: $n_i \in \{5, \dots, 15\}$.
+Considered is the case of 40 domains with 1000 units each. The first step is to
+generate the data under the following model:
+$$ 
+y_{ij} = 100 + 5 \cdot x_i + \re_i + e_{ij}
+$$
+where $x_i \sim N(0, 16)$, $\re_i \sim N(0, 4)$ and $e_{ij} \sim N(0, 32)$. The
+variance parameter of the unit level error, $e_{ij}$ is chosen to lead to
+sampling errors of the sample mean between 3 and 6 -- see Section (?) ahead for
+a more detailed presentation of a similar scenario.
 
-$$ y_i = 100 + 2 \cdot x_i + v_i + e_i,$$
-
-where $x_i \stackrel{iid}{\sim} N(0, 4^2)$, $v_i \stackrel{iid}{\sim} N(0, 1)$
-and $e_i \stackrel{indep}{\sim} N(0, \sigma_i^2)$ with $\sigma_i^2 = 0.1, 0.2,
-\dots, 4$ and $i = 1, \dots, 40$ as index for the domains. $x_i$, $v_i$ and
-$e_i$ are independent from each other. The area-level data for the simulation is
-generated in each Monte Carlo replication.
-
-In this case the *base-component* is a data frame with an id variable named
-`idD` and constructed with the function `base_id`. Any random number generator
-in `R` can be used. However, we have normally distributed variates, for which
-some predefined functions are available in the package. For the reproducibility
-of the following results we also set the seed to 1. The seed is not part of a
-simulation setup in `saeSim` but needs to be defined by the researcher.
+In this case the *base-component* is a data frame with an id variable named 
+`idD` and constructed with the function `base_id`. Any random number generator 
+in `R` can be used. For the reproducibility of the following results the seed is
+set to 1. The seed is not part of a simulation setup in `saeSim` but needs to be
+defined by the user:
 
 ```{r}
 set.seed(1)
-setup <- base_id(nDomains = 40, nUnits = 1) %>% 
-  sim_gen_x(mean = 0, sd = 4) %>%
-  sim_gen_v(mean = 0, sd = 1)
+setup <- 
+  base_id(nDomains = 40, nUnits = 1000) %>% 
+  sim_gen_generic(rnorm, sd=4, name = "x", groupVars = "idD") %>%
+  sim_gen_generic(rnorm, sd=2, name = "u", groupVars = "idD") %>%
+  sim_gen_generic(rnorm, sd=sqrt(32), name = "e")
 setup
 ```
 
-Note that if you print a simulation setup to the console, as in the above
-example, one simulation run is performed and only the first rows (the head) of
-the resulting data table are printed. This enables interactivity with the object
-itself; however, it hides the fact that the setup object is a collection of
-functions to be called. In this model the error component $e_i$ has different
-variances which is not covered by a predefined function. Thus, as a *generator
-component*, we define a function which takes a `data.frame` as input and returns
-it after adding a variable named `vardir` with the variances and the variable
-`e` with the generated random numbers:
+Note that if you print a simulation setup to the console, as in the above 
+example, one simulation run is performed and only the first rows (the head) of 
+the resulting data are printed. This enables interactivity with the object 
+itself; however, it hides the fact that the setup object is a collection of 
+functions to be called. We also can see that the variables `x` and `u` are 
+generated to be constant for all units within a domain. This is an operation
+triggered by the usage of the argument `groupVars`.
+
+Using this simulation setup we can now compute the response variable and also
+the domain mean in the population which is going to be our target variable:
 
 ```{r}
-gen_e <- function(dat) {
-  dat$vardir <- seq(0.1, 4, length.out = nrow(dat))
-  dat$e <- rnorm(nrow(dat), sd = sqrt(dat$vardir))
+setup <- setup %>%
+  sim_comp_popMean %>%
+  sim_resp_eq(y = 100 + 5 * x + u + e)
+setup
+```
+
+Here we make use of a set of preconfigured convenience functions to compute the 
+population mean in each domain. Also we can see how to add arbitrary variable 
+definitions to the setup using `sim_resp_eq` \space for creating the response
+variable. Now we can draw samples from this population model as follows:
+
+```{r}
+sampleSizes <- round(seq(5, 15, length.out = 40))
+setup <- setup %>%
+  sim_sample(sample_numbers(sampleSizes, groupVars = "idD")) %>%
+  sim_comp_n()
+setup
+```
+
+In this step `sampleSizes` is used to store the sample sizes to be drawn from 
+each domain. The function `sample_numbers` is responsible for drawing samples 
+and the additional argument `groupVars` triggers the operation to be made in 
+each domain. The default is to sample without replacement. Furthermore we 
+store the sample size as variable in the data. Since in this example we are
+interested in applying area level models we need to add an aggregation step. In
+this setting we compute the sample mean vor the response variable and the single
+regressor, `x`. Furthermore we need to add an estimator for the sampling
+variance within domains which is here implemented using a direct variance
+estimator:
+
+```{r}
+setup <- setup %>%
+  sim_agg() %>%
+  sim_comp_sample(
+    comp_var(samplingVariance = var(y) / n), 
+    by = "idD"
+  )
+setup
+```
+
+Notice that we use the function `sim_comp_agg` with the additional argument `by`
+to repeat this computation within each domain. In this example `sim_agg` will 
+compute the means in the sample for each numeric variable. Hence we arrive at a 
+data set containing 40 rows; one for each domain.
+
+So far it has been possible to utilise preconfigured features from the package.
+In this sense it is valuable to have a tested set of tools which can assist in 
+configuring the repetetive elements across simulation studies with relative 
+ease. However an important aspect of the pckage is the definition of the 
+interface between components: each component -- defined by a function -- takes a
+`data.frame` as input and returns the modified version. Making predictions using
+the FH model and its robust extension is something which is not covered by the 
+package. Hence we need to define these steps:
+
+```{r message=FALSE}
+library("saeRobust")
+comp_fh <- function(dat) {
+  modelFit <- rfh(y ~ x, dat, "samplingVariance", k = 1000)
+  dat$FH <- modelFit$reblup
   dat
 }
-setup <- setup %>% sim_gen(gen_e)
-setup
-```
 
-The last step in data generation is to construct the response variable which is
-named `y` and is added to the data. Furthermore, we add the *true* area
-statistic under the model to the data:
-
-```{r}
-setup <- setup %>% 
-  sim_resp_eq(y = 100 + 2 * x + v + e) %>%
-  sim_comp_pop(comp_var(trueStat = y - e))
-```
-
-To add the area-level predictions from a Fay-Herriot model we need to define
-another component. The function takes a `data.frame` as input and returns the
-modified version. For the estimation of the EBLUP under the FH model we use the
-function `eblupFH` from the package `sae` \citep{molina13}. To avoid naming
-conflicts between the dependencies of `sae` and the package `dplyr`
-\citep{wickham14a} we make use of the double colon operator in order to call the
-function `eblupFH` without attaching the package. Hence we define a function
-named `comp_FH` and add it to the process:
-
-```{r}
-comp_FH <- function(dat) {
-  modelFH <- sae::eblupFH(y ~ x, vardir, data = dat)
-  dat$FH <- as.numeric(modelFH$eblup)
+comp_rfh <- function(dat) {
+  modelFit <- rfh(y ~ x, dat, "samplingVariance")
+  dat$RFH <- modelFit$reblup
   dat
 }
-setup <- setup %>% sim_comp_agg(comp_FH)
-setup
+
+setup <- setup %>%
+  sim_comp_agg(comp_fh) %>%
+  sim_comp_agg(comp_rfh)
 ```
 
-The object `setup` stores all necessary information to run one iteration of the
-simulation. In the following $R = 100$ repetitions are performed. The result is
-a `list` of `data.frame`s. The function `rbind_all` from the package `dplyr` is
-used to combine the resulting `list`:
+The obove code illustrates how new components can be defined. Notice that the 
+definition of these components only need few lines of code and have a single 
+purpose. This can contribute to the reproducibility of simulation studies 
+because these components are easily understood. A main aspect contributing to
+the readibility is that these definitions are decoupled from any control
+structures.
 
-```{r}
-library("dplyr")
-simResults <- sim(setup, R = 100) %>% rbind_all
-simResults %>% select(idD, idR, simName, trueStat, y, FH)
+The object `setup` stores all necessary information to run one iteration of the 
+simulation. In the following $R = 10$ repetitions are performed. The result is a
+`list` of `data.frame`s. These results are then combinsed into a single data
+set:
+
+```{r message=FALSE, cache=TRUE, cache.path="./R/data/"}
+simResults <- sim(setup, R = 10) %>% do.call(what = rbind)
+simResults[c("idD", "idR", "popMean", "y", "FH", "RFH")] %>%
+  head
 ```
 
-An additional variable `idR` is automatically added as an ID-variable for the
-iteration as well as a variable `simName` to distinguish between scenarios. In
-`saeSim` we do not provide further tools to process the resulting data as there
-are many tools readily available in `R`. In the design-based scenario we show
-how to process the result data into graphs with only a few lines of code.
+An additional variable `idR` is automatically added as an ID-variable to
+distinguish between iterations. In `saeSim` no further tools for processing the
+resulting data are implemented. There are many tools readily available in `R` to
+that extend.
 
 # Discussion
 \label{sec:saeSim_discussion}
+
+In the previous example I illustrated how a model based simulation can be
+configuered using the `R`-package `saeSim`. A design based configuration differs
+simply by starting from sampling instead of the data generation; otherwise the
+same tools can be utilised. Code examples for a design based simulation can be
+found in @War16a. 
+
+The main *design* aspect making `saeSim` a useful tool is that simulations can
+be composed by combining different components. Furthermore it may promote a
+reasonable way for the definition of such components within the `R`-language: as
+short, single argument functions which take a `data.frame` as input and return
+it modified.
+
+The presentation of this package has not been exhaustive but focused on
+comunicating the main idea of the composition of simulation studies. Available
+features noteworthy are the generation of outlying data points. Such
+values are always generated as part of the population and hence focus on the
+presence of representative outliers as defined by @Cha86. Furthermore some
+effort went into the connection to parallel and high performance computing. With
+this ragard the package `parallelMap` \citep{Bis15} is utilised as an interface
+to `R`s parallel computing capabilities. This also includes a link to the
+package `BatchJobs` \citep{Bis15a} which can be used with many high performance
+infrastructures.
