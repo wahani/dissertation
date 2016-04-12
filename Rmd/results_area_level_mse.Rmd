@@ -1,18 +1,18 @@
-# Performance of Mean Squared Prediction Error
+# Performance of Mean Squared Prediction Error Estimators
 \label{sec:results_mse}
 
-In addition to the prediction of a target statistic we are also interested in a 
-measure of uncertainty with respect to this quantity. To this extent two MSPE 
-estimators have been proposed in Section \ref{sec:theory_rfh_mse}: an adoption 
-of the parametric bootstrap proposed by @Sin09 and an MSPE estimator based on
-the pseudolinearisation approach by @Cha11. In what follows these two MSPE
-estimators are compared in different simulation settings.
+In addition to the prediction of a target statistic we are also interested in
+estimating the measure of uncertainty surrounding this quantity. To this extent
+two MSPE estimators have been proposed in Section \ref{sec:theory_rfh_mse}: an
+adaptation of the parametric bootstrap proposed by @Sin09 and an MSPE estimator
+based on the pseudolinearisation approach of @Cha11. In what follows these two
+MSPE estimators are compared in different simulation settings.
 
-In the previously conducted simulation study we saw that the simulation setting 
-revealed advantages and disadvantages of the robust methods. With respect to the
-MSPE estimation the scenarios are chosen to be more confirmatory in terms of the
-underlying model. However the computational effort with respect to the bootstrap
-estimator is relatively high which has made it necessary to restrict the number
+In the previously conducted simulation study we saw that the simulation settings
+revealed both advantages and disadvantages of the robust methods. With respect
+to the MSPE estimation the scenarios are chosen to conform better to the
+underlying models. However the computational effort involved in the bootstrap 
+estimator is relatively high which has made it necessary to restrict the number 
 of scenarios to a minimum. Thus for each model -- the RFH, RSFH, RTFH, and RSTFH
 -- data is generated under the correct model and only a non\hyp{}outlier with an
 outlier scenario are compared.
