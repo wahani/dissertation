@@ -319,7 +319,8 @@ ease. However an important aspect of the package is the definition of the
 interface between components: each component -- defined by a function -- takes a
 `data.frame` as input and returns the modified version. Making predictions using
 the FH model and its robust extension is something which is not covered by the 
-package. Hence we need to define these steps:
+package. Here the non\hyp{}robust predictions are made by setting the
+tuning constant to a large numeric value. Hence we need to define these steps:
 
 ```{r message=FALSE}
 library("saeRobust")
@@ -343,9 +344,9 @@ setup <- setup %>%
 The above code illustrates how new components can be defined. Notice that the 
 definition of these components only need few lines of code and have a single 
 purpose. This can contribute to the reproducibility of simulation studies 
-because these components are easily understood. A main aspect contributing to
+since these components are easily understood. A main aspect contributing to
 the readability is that these definitions are decoupled from any control
-structures.
+structures which are often present in script files for simulation studies.
 
 The object `setup` stores all necessary information to run one iteration of the 
 simulation. In the following $R = 10$ repetitions are performed. The result is a
