@@ -453,11 +453,12 @@ generalised linear mixed models can be found in @Yau02.
 
 Recent extensions to to the robust methods by @Sin09 can be found in @Sch14 who 
 use a unit level model with spatially correlated random effects; they propose a 
-spatial REBLUP (SREBLUP). @Rao14 have extended the unit level mixed model to
-allow for P-splines in the fixed part of the model. It is interesting to note
-that they also report problems with their originally proposed Newton-Raphson
-algorithm and suggest using a fixed point algorithm for the variance parameters
-instead.
+spatial REBLUP (SREBLUP). @Sch16 then build on the results of @Cha14 and make
+the necessary extensions for the SREPLUP. @Rao14 have extended the unit level
+mixed model to allow for P-splines in the fixed part of the model. It is
+interesting to note that they also report problems with their originally
+proposed Newton-Raphson algorithm and suggest using a fixed point algorithm for
+the variance parameters instead.
 
 In general the approach to outlier robust predictions, as it was discussed 
 above, is but one possible approach; it is plausible to apply it in an 
