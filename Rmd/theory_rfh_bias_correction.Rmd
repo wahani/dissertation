@@ -23,9 +23,10 @@ estimation procedure since we shrink the prediction towards a global conditional
 mean. Although this may improve the overall quality of the predictions it will
 not improve the prediction for the outlying domains.
 
-In this setting we can address area level outliers in the same way as was
-already discussed by @Fay79. Following their results the idea is to bound the
-area level predictions using the known sampling variances. Hence we can modify
+In this setting we can address area level outliers in the same way as was 
+already discussed by @Fay79. Following their results the idea is to bound the 
+area level predictions using the known sampling variances -- @Efr71 and @Efr72 
+refer to this strategy as a *limited translation estimator*. Hence we can modify
 the REBLUP of equation \eq{eq:area_reblup} into a bias corrected version:
 \empty{
 \begin{align}
@@ -64,9 +65,10 @@ $\mat{u}$:
 }where $\mat{1}(j = i)$ denotes a vector where the element $j = i$ is equal to
 one and zero otherwise.
 
-This solution may be beneficial when we observe area level outliers. However it
+This solution may be beneficial when we observe area level outliers. However it 
 is unclear how this modification relates to the scenario in which we have 
 asymmetric unit level outliers. In fact this is a situation which can hardly be 
-targeted by an area level correction without additional information. In Section 
-(?) this issue is addressed again in a model based simulation study.
+targeted by an area level correction without additional information. In Chapter 
+\ref{chap:results_model_based} this issue is addressed again in model based 
+simulation studies.
 

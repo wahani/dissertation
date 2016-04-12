@@ -21,7 +21,9 @@ $\hat{\pmat\delta}^\psi$, the bootstrap samples are generated from:
 \mat{u}^* & \sim \Distr{N}(\mat{0}_n, \mat{V}_u(\hat{\pmat\delta}^\psi)) \\
 \mat{e}^* & \sim \Distr{N}(\mat{0}_n, \mat{V}_e).
 \end{align*}
-}For each bootstrap sample the target statistic is computed as:
+}Note that here $n$ can either be set to the number of domains, $D$, or for the
+temporal extensions to $DT$. For each bootstrap sample the target statistic is
+computed as:
 \empty{
 \begin{align*}
 \pmat\theta^{*(b)} = \mat{X}\hat{\pmat\beta}^\psi + \mat{Z}\mat{u}^{*(b)}.
@@ -33,12 +35,14 @@ sample. Hence the MSPE estimator is given by:
 \begin{align*}
 \widehat{MSPE}\Paran{\hat{\theta}^\psi_i} = \sum_{b = 1}^B \Paran{\hat{\theta}_i^{\psi (b)} - \theta_i^{*(b)}}^2
 \end{align*}
-}where $\hat{\theta}_i^{\psi (b)}$ denotes the robust prediction for area $i$
-using the $b$th bootstrap sample and $\theta_i^{*(b)}$ denotes the true value of the 
-respective bootstrap sample for area $i$. The extension by @Jio13 to the 
+}where $\hat{\theta}_i^{\psi (b)}$ denotes the robust prediction for area $i$ 
+using the $b$th bootstrap sample and $\theta_i^{*(b)}$ denotes the true value of
+the respective bootstrap sample for area $i$. The extension by @Jio13 to the 
 bootstrap method of @Sin09 can be applied directly when we use non\hyp{}robust 
-parameter estimates to generate the bootstrap samples. An empirical comparison
-of the different methods is given in Section (?).
+parameter estimates to generate the bootstrap samples. An empirical
+investigation of this method can be found in Section \ref{sec:results_mse} in a
+model based simulation and then in again in Chapter
+\ref{chap:results_design_based} in a design based simulation.
 
 
 ## Pseudolinearisation-based MSPE
@@ -59,7 +63,7 @@ The MSPE estimator can be formulated as:
 \empty{
 \begin{align}
 \widehat{MSPE}\Paran{\hat{\theta}^\psi_i} = 
-  \widehat{\Exp{V}}\Paran{\hat{\theta}^\psi_i} + 
+  \widehat{\Exp{V}}\Paran{\hat{\theta}^\psi_i - \theta_i} + 
   \widehat{\Exp{B}}\Paran{\hat{\theta}^\psi_i}^2 \label{eq:rfh_cct}
 \end{align}
 }where we are now interested in an estimator for the prediction variance and 
@@ -102,19 +106,19 @@ variance covariance structure $\widehat{\mat{V}}_u$ and the weights defined in
 Section \ref{sec:rfh_model_peudo_linear} for the robust area level EBLUP. The 
 bias can be estimated accordingly when we use an estimator $\hat{\theta}_i$ for 
 $\theta_i$ in \eq{eq:prediction_bias}. @Cha14 note that this estimator should be
-an unbiased estimator and they have suggested to use the unshrunken version of
-the respective method.
+an unbiased estimator and they have suggested to use the unshrunken version of 
+the respective method. For area level models it may be tempting to use the
+direct estimator since it is unbiased. However this strategy has lead to very
+unstable results. Instead the regression estimator is used.
 
 This MSPE estimator is based on the assumption that the weights are *fixed*. 
 This is of course not the case under the respective models and hence it is based
 on a *pseudo*\hyp{}linear form. This approach directly extends to the bias 
 correction when we use the derived weights of Section 
 \ref{sec:rfhbiascorrection} instead. In this case @Cha14 recommend that the 
-squared bias term in \eq{eq:rfh_cct} be omitted since the unit level correction
-leads to an approximately unbiased estimator. This may not be the case for the
-area level models since we cannot correct for a bias due to unit level
-asymmetric outliers. The estimator is evaluated in Section (?) where its
-properties are compared to the bootstrap methods presented earlier.
-
-
+squared bias term in \eq{eq:rfh_cct} be omitted since the unit level correction 
+leads to an approximately unbiased estimator. This may not be the case for the 
+area level models since we cannot correct for a bias due to unit level 
+asymmetric outliers. The estimator is evaluated in Section \ref{sec:results_mse}
+where its properties are compared to the bootstrap methods presented earlier.
 

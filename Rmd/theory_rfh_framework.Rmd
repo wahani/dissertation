@@ -96,16 +96,16 @@ given sample size the estimated sampling variance is large if outliers are
 present or, in general, if the sample is heterogenous; and it is low for areas
 in which we have a reliable direct estimator. In this case the Fay-Herriot model
 weights down unreliable direct estimators, which is why this model may be able
-to adjust itself for unit level outliers. This property is explored in section
-(?) using model based simulations.
+to adjust itself for unit level outliers. This property is explored in Section
+\ref{sec:results_unit} using model based simulations.
 
 In addition to these two scenarios it is also relevant to consider the use of 
 robust direct estimators. From a practical point of view we may only have access
-to non-robust estimators. On the other hand it may be crucial feedback for a
+to non-robust estimators. On the other hand it may be crucial feedback for a 
 data provider to additionally report robust estimates, e.g. a robust mean or a 
 median. Also it is unclear how this relates to the *self-adjusting* effect of 
-the Fay-Herriot model as it was characterized above. This aspect is addressed by
-a model based simulation study in Section (?).
+the Fay-Herriot model as it was characterized above. This aspect is also
+addressed by a model based simulation study in Section \ref{sec:results_unit}.
 
 
 ## Area Level Outliers
@@ -154,9 +154,9 @@ using robust estimation equations will reduce the impact of outlying areas and
 preserve the improvement in MSPE for the non-outlying areas. However as was 
 pointed out by @Bel06 this also means that we will have a poor fit for the 
 outlying observations. This will be partially addressed by the bias correction 
-discussed in Section (?) which means that we fall back on the direct estimator 
-for outlying areas which is only appropriate when the direct estimator has 
-sufficient precision.
+presented in Section \ref{sec:rfhbiascorrection} which means that we fall back
+on the direct estimator for outlying areas which is only appropriate when the
+direct estimator has sufficient precision.
 
 
 ## The Creation of Overly Influencial Observations
@@ -189,19 +189,21 @@ after smoothing, the direct estimators appear to be more reliable than they in
 reality are. In substance this reduces the self adjusting effect described in 
 Section \ref{sec:unit-level-outliers}.
 
-Both these scenarios are situations in which we have heterogenous variance
-estimates and where the FH model may not yield stable and reliable results.
-Especially the second scenario should not be interpreted as an argument against
+Both these scenarios are situations in which we have heterogenous variance 
+estimates and where the FH model may not yield stable and reliable results. 
+Especially the second scenario should not be interpreted as an argument against 
 smoothing or that we can ignore unstable variance estimation. Althogh the 
 variances are not smoothed the influence of observations is nevertheless bounded
-within a robust estimation procedure. And not just the influence of the direct
-estimator is so bounded but the influence of the pair of direct estimator and
-sampling variance. In fact the introduction of the robust area level model can
-be considered to have a positive effect with respect to both scenarios because
-single observations are restricted in their influence. Furthermore the robust
-model may present an alternative to smoothing strategies -- although this may
-not have been the initial intention -- without loosing the ability to weight
-down areas with unit level outliers.
+within a robust estimation procedure. And not just the influence of the direct 
+estimator is so bounded but the influence of the pair of direct estimator and 
+sampling variance. In fact the introduction of the robust area level model can 
+be considered to have a positive effect with respect to both scenarios because 
+single observations are restricted in their influence. Furthermore the robust 
+model may present an alternative to smoothing strategies -- although this may 
+not have been the initial intention -- without loosing the ability to weight 
+down areas with unit level outliers. This claim is in fact not easy to support
+by empirical evidence. It will however be further discussed in a model based
+simulation in Section \ref{sec:results_unit}.
 
 ## Outlook
 
@@ -222,8 +224,9 @@ be surprisingly unstable for area level models in that it manifested itself in
 thousands of iterations until numerical convergence was reached. A possible 
 reason may be the ratio between observations and the random effects, e.g. where
 we have $D$ areas and make $D$ predictions. However a conclusive analysis of
-these problem is not at hand.
+this problem is not at hand.
 
-Furthermore simulation studies are conducted in order to complete the link
-between unit and area level outliers and their effect on the area level
-predictions. This approach is discussed in more detail in Chapter (?).
+Furthermore simulation studies are conducted in order to complete the link 
+between unit and area level outliers and their effect on the area level 
+predictions. This approach is discussed in more detail in Chapter
+\ref{chap:results_model_based}.

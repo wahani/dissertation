@@ -469,12 +469,13 @@ equation. Details of IRWLS algorithms for robust M-estimation can also be found
 in @Mar06[pp. 104-105]. A natural choice as a starting value for the weighting 
 matrix is to set the diagonal elements to one. This will lead to the non robust 
 generalised least squares estimator in the first iteration. This solution is 
-acceptable since -- as @Mar06[pp. 104-105] note -- for a continuous choice of
-$\psi$ the algorithm is non\hyp{}sensitive to the starting values with respect to 
-convergence. Bad starting values can however increase the number of iterations. 
-Note also that this iterative algorithm has the desirable property that it 
-reduces to the GLS estimator if we set the tuning constant of $\psi_b$ to 
-infinity because of the special form of $\mat{W}_1$.
+acceptable since -- as @Mar06[pp. 104-105] note -- for a continuous choice of 
+$\psi$ the algorithm is non\hyp{}sensitive to the starting values with respect
+to convergence. Bad starting values can however increase the number of
+iterations. This property is investigated in Section
+\ref{sec:saeRobust_stability}. Note also that this iterative algorithm has the
+desirable property that it reduces to the GLS estimator if we set the tuning
+constant of $\psi_b$ to infinity because of the special form of $\mat{W}_1$.
 
 
 ### Solution for $\mat{u}$
