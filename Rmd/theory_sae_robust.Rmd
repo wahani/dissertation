@@ -134,11 +134,7 @@ With given robust estimates for $\pmat\beta$ and $\pmat\delta$, @Sin09 solve the
 robust mixed model equation \eq{eq:rmmere} proposed by @Fel86 in order to derive
 a robust EBLUP (REBLUP). Although they also suggest to use a NR algorithm which 
 is developed using a Taylor series expansion, the numerical solution appears to 
-be less problematic. 
-
-- Schmid (?) spatial algorithmis fisher scoring
-
-On the other hand @Schoch12 suggests finding solutions on 
+be less problematic. On the other hand @Schoch12 suggests finding solutions on 
 the basis of a robust version of a method of moments estimator; and a similar 
 suggestion can be found in @Rao15[196]: they propose the use of a robust version
 of \eq{eq:blupre}:
@@ -151,7 +147,7 @@ that $\hat{\mat{\re}}^\psi$ now depends on the robust parameter estimates
 $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$. From a computational point
 of view this has the obvious advantage that no iterative algorithm is needed.
 @Rao15[196] note that a disadvantage here may be that \eq{eq:reblupre} depends 
-on the composite error - $\mat{Z}\mat{\re} + \mat{e}$ - of \eq{eq:lmm} whereas 
+on the composite error -- $\mat{Z}\mat{\re} + \mat{e}$ -- of \eq{eq:lmm} whereas 
 in \eq{eq:rmmere} the influence function is applied only to $\mat{e}$. However, 
 an empirical investigation of this issue seems not to be available in the 
 literature at this time.
@@ -222,21 +218,21 @@ An extension of this approach was introduced by @Jio13 whose main concern has
 beens that the correction in \eq{eq:rbhfbc} only depends on the sampled units
 within domains. Hence they propose two alternatives. First they propose a bias 
 correction based on the results of @Cha86 which, in contrast to \eq{eq:rbhfbc}, 
-relies on $S$ instead of $S_i$ - i.e. the whole sample and not just the sampled 
+relies on $S$ instead of $S_i$ -- i.e. the whole sample and not just the sampled 
 units within domains - and they call this a fully-bias correction. The 
 second approach uses a conditional bias to account for units in the population. 
 This effectively reduces to the different treatment of the robust predictions of
 the random effects in their two approaches. In their simulation study they find 
 an improvement in terms of bias for all three bias corrections for the REBLUP in
 \eq{eq:reblupbhf}. However, especially in terms of stability measured by 
-relative efficiency - relative to the EBLUP in \eq{eq:bhfeblup} - the two 
+relative efficiency -- relative to the EBLUP in \eq{eq:bhfeblup} -- the two 
 approaches by @Jio13 show promising results in their simulation study.
 
 At this point it is important to note that for area level robust predictions the
 application of the results of @Cha14 and @Jio13 are not immediately obvious. All
 three approaches are based on some form of mean of the unit level prediction 
 error which is not available at the area level. However the underlying problem 
-of a potential bias continues to persist - also at the area level. A solution
+of a potential bias continues to persist -- also at the area level. A solution
 for robust area level predictions is discussed in Section
 \ref{sec:rfhbiascorrection}.
 
@@ -283,7 +279,7 @@ $$
 where $\hat{\theta}_{i}^{RBHF(b)}$ and $\bar{Y}_{i}^{*(b)}$ denote respectively
 the REBLUP and the bootstrap population mean of the $b$th bootstrap sample.
 @Jio13 use a very similar approach with the important difference that their
-model - from which the bootstrap samples here are drawn - depends on the
+model -- from which the bootstrap samples here are drawn -- depends on the
 non\hyp{}robust parameter estimates $\hat{\pmat\delta} = (\hat{\sigma}_\re^2,
 \hat{\sigma}_e^2)$. @Sin09 argue that they are interested in resampling the
 non\hyp{}contaminated part of the observations because the MSPE of their robust
@@ -292,21 +288,31 @@ estimator should be uneffected by outliers. @Jio13 found that the method used by
 suspect that this is because the robust parameter estimates do not reflect a
 sufficiently large part of the sample.
 
-@Jio14 propose a different bootstrap method. Their non-parametric approach is
-  different from the above in that the random effects, $\re_i^*$, and the error
-  term, $e_{ij}^*$, are drawn from a transformed set of the estimated
-  $\{\hat{\re}_i\}_{i = 1}^D$ and $\{\{\hat{e}_{ij}\}_{j = 1}^{N_i}\}_{i =
-  1}^{D}$ under a non\hyp{}robust BHF model to generate bootstrap populations. From
-  these, generated populations samples are drawn using the same sampling scheme 
-  as for the realised sample at hand. With these differences they provide 
+@Jio14 propose a different bootstrap method. Their non-parametric approach is 
+  different from the above in that the random effects, $\re_i^*$, and the error 
+  term, $e_{ij}^*$, are drawn from a transformed set of the estimated 
+  $\{\hat{\re}_i\}_{i = 1}^D$ and $\{\{\hat{e}_{ij}\}_{j = 1}^{N_i}\}_{i = 
+  1}^{D}$ under a non\hyp{}robust BHF model to generate bootstrap populations.
+  From these generated populations samples are drawn using the same sampling
+  scheme as for the realised sample at hand. With these differences they provide
   preliminary results which show very good properties in terms of relative bias 
   and relative root mean squared error of their bootstrap estimator. Albeit 
-  their results are very promising, it is not entirely clear how to adapt this
-  approach in the case of mixed linear models with correlated random effects
-  which would be needed for the spatial and temporal extensions reviewed in
+  their results are very promising, it is not entirely clear how to adapt this 
+  approach in the case of mixed linear models with correlated random effects 
+  which would be needed for the spatial and temporal extensions reviewed in 
   Section \ref{sec:theory_sae_fh_extensions}.
-  
-- An outlier robust block bootstrap for small area estimation: ... & chambers
+
+@Mok13 proposed a further extension which is to use a robust block 
+bootstrap. Similar to the approach taken by @Jio14 they also construct a set of 
+errors and random effects from which they draw their bootsrtap samples. However 
+instead of using a robust estimation method, they construct outlier robust 
+samples; this means that the way in which the bootstrap samples are constructed 
+is robust against outliers. On each sample then a non robust small area 
+estimator can be used. This approach has the interesting effect that a MSPE 
+estimator for robust domain predictions as well as the robust predictions 
+themselfes can be produced. Although the results look promising 
+it is at this time not clear how to extend their method for models with
+correlated random effects.
 
 
 ### Pseudolinearisation\hyp{}based Approach
@@ -319,12 +325,12 @@ applicability for a wide range of predictors. Their method can be used for any
 predictor which can be represented as a weighted sum of the sampled response
 vector. @Cha14 then adapted this approach for the REBLUP in \eq{eq:reblupbhf}
 and the bias corrected version in \eq{eq:rbhfbc}. They derive an analytical
-estimator to the conditional MSPE - conditional on the set of random effects -
+estimator to the conditional MSPE -- conditional on the set of random effects --
 based on a pseudolinear form of the REBLUP and extend this approach to a 
 linearisation\hyp{}based approach.
 
-Following @Cha14 the RBLUP underlying \eq{eq:reblupbhf} - i.e. with known
-parameters $\pmat\delta$ - can be represented as a weigthed sum of the sampled
+Following @Cha14 the RBLUP underlying \eq{eq:reblupbhf} -- i.e. with known
+parameters $\pmat\delta$ -- can be represented as a weigthed sum of the sampled
 response values:
 $$
 \si{\tilde{\theta}}^{RBHF} = \sum_{j \in S} \sij{\tilde{\mat{w}}}^{RBHF} y_j = \Paran{\tilde{\mat{w}}_{iS}^{RBHF}}^\top \mat{y}_S
@@ -457,8 +463,8 @@ In general the approach to outlier robust predictions, as it was discussed
 above, is but one possible approach; it is plausible to apply it in an 
 application when the analyst believes that the population model is correctly 
 specified for a substential part of the population. When the model is incorrect
-- for example in the case of a mixture distribution or in general in the context
-of non-symmteric outliers - the proposed methods can easily lead to a prediction
+-- for example in the case of a mixture distribution or in general in the context
+of non-symmteric outliers -- the proposed methods can easily lead to a prediction
 bias. However solutions have been suggested to overcome this issue. Similar 
 methods - in that they use robust estimation equations - with respect to survey 
 methods can be found in @Bea09 and @Hul99 who recommend for example a robust HT 
@@ -484,19 +490,19 @@ based on a multivariate t-distribution.
 
 Although most of the references focus on robust small area prediction under unit
 level models, several possibilities have been explored for area level models.
-@Bel06 and @Hua06 both use the t-distribution to model the random effect in the
+@Bel06 and @Hua06 both use the t-distribution to model the random effect in the 
   FH model within the context of poverty mapping. @Xie07 also use a hierarchical
   Bayes approach using a t-distribution to predict the proportion of overweight 
-  individuals in small areas. @Fab10 explore the possibility to use exponential
+  individuals in small areas. @Fab10 explore the possibility to use exponential 
   power distributions to model the random effect; put simply, this is a normal 
   distribution where the skewness and kurtosis are parameterised such that this 
   distribution can be used to model heavy tails or non-symmetry. They also use a
   Baysian approach. @Gho08 modify the Hirarchical Bayes and Empirical Bayes 
-  estimators by using an influence function. This is a similar approach taken as 
+  estimators by using an influence function. This is a similar approach taken as
   proposed in Chapter \ref{chap:rfh} however in the setting of a Baysian 
-  framework -- whereas the estimation methodology underpinning this Thesis is 
-  based on Maximum Likelihood. @Ger10 and @Cha15 propose to use the FH model but
-  replace the distribution of the random effects with a mixture distribution. 
-  This essentially means that they have to detect which observations are 
-  outliers and fit a seperate model. All these studies can claim some advantages
-  for their respective method when outliers are present.
+  framework -- whereas the estimation methodology underpinning the methods of
+  this Thesis is based on Maximum Likelihood. @Ger10 and @Cha15 propose to use
+  the FH model but replace the distribution of the random effects with a mixture
+  distribution. This essentially means that they have to detect which
+  observations are outliers and fit a seperate model. All these studies can
+  claim some advantages for their respective method when outliers are present.
