@@ -131,9 +131,9 @@ extension introduced in the literature around robust EBLUPs (REBLUPs) have been
 focused on unit level models, thus results especially to MSE estimation and bias
 correction are extended to area level models.
 
-In addition to the main focus of this thesis reference is made to certain
-supplementary material on software having relevance to this thesis. @War15
-introduces tools for simulation studies for the special case of small area
-estimation and (?) implements the methods introduced in this thesis. All the 
-results in this thesis rely on these two packages; a more detailed discussion 
-can be found in chapter (?).
+In addition to the main focus of this Thesis reference is made to certain
+supplementary material on software. @War15 introduces tools for simulation 
+studies for the special case of small area estimation and @War16 implements the 
+methods introduced in this Thesis. All results rely on these two packages; a 
+more detailed discussion of these software packages can be found in Chapter 
+\ref{chap:saeRobust} and \ref{chap:saeSim}.

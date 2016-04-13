@@ -1,4 +1,5 @@
 # Extensions to the Fay-Herriot Model
+\label{sec:rfh_model}
 
 In the following sections the models under study are reviewed. This includes the
 methods reviewed in Section \ref{sec:theory_sae_fh_extensions} and also the FH 
