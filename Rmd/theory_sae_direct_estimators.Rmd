@@ -2,7 +2,7 @@
 \label{sec:theory_sae_direct}
 
 In this Section I introduce a simple direct estimator and notation which 
-is then used throughout the thesis. The estimator is of interest as it will be
+is then used throughout the Thesis. The estimator is of interest as it will be
 used in the simulation studies in Part \ref{part:results}. @Leh09 give a more 
 comprehesive overview of direct estimators and design based methods.
 

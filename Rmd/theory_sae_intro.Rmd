@@ -11,7 +11,7 @@ As the past 9 years show, I was completely wrong.} \\ \medskip
 \label{sec:sae_overview}
 
 In the following I give a general overview of the field of Small Area Estimation
-(SAE) necessary in order to accomodate this thesis within the SAE field. @Rao03 
+(SAE) necessary in order to accomodate this Thesis within the SAE field. @Rao03 
 as well as @Rao15 give a comprehensive overview of the established methods and 
 research research published in this field. @Gho94, @Rao99, @Pfe02 and @Pfe13
 focus on the status quo and main lines of discussion within the field at their
@@ -119,13 +119,13 @@ Bayesian modelling strategies are often used in this context; see for example
   refer to a winzorisation of the Horvitz-Thompson estimator; and @Bea04
   introduces a robust extension to generalized regression estimation.
 
-Given this background, in this thesis I introduce extensions to the
+Given this background, in this Thesis I introduce extensions to the
 Fay\hyp{}Herriot area level model using a model based perspective. More
 precisely an EBLUP based approach is taken to derive predictions in a way that
 makes it possible to model spatial and temporal covariance structures in the
 random effects. These models are closely related to the results presented by
 @Mar13, who introduce spatial and temporal extensions to the Fay-Herriot model.
-However the methods in this thesis are based on an estimation procedure which is
+However the methods in this Thesis are based on an estimation procedure which is
 robust against outliers following the methodology introduced by @Sin09. The
 extension introduced in the literature around robust EBLUPs (REBLUPs) have been
 focused on unit level models, thus results especially to MSE estimation and bias

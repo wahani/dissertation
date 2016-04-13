@@ -375,6 +375,6 @@ time period.
 
 The spatial, temporal, and spatio\hyp{}temporal FH model is again the subject
 matter of Chapter \ref{chap:rfh} where it is combined with robust estimation
-methodology. Note that the review in this chapter may not be sufficient to
+methodology. Note that the review in this Chapter may not be sufficient to
 deduce the representation of these models as linear mixed models; this will be
 discussed in more detail in Section \ref{sec:rfh_model}.

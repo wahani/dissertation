@@ -10,7 +10,7 @@ against outliers. Outliers are here defined as representative outliers as in
 discussion of what exactly outlying observations on the area level are will be given
 in Section \ref{sec:rfh_framework} ahead.
 
-In the broader context of this subfield within SAE the present thesis relies
+In the broader context of this subfield within SAE the present Thesis relies
 strongly on the results of @Sin09 who propose robust estimation equations for
 linear mixed models. Their proposition focuses on the unit level model
 \eq{eq:bhf}; but the methodology builds on linear mixed models where \eq{eq:bhf}
@@ -22,7 +22,7 @@ Chapter \ref{chap:rfh} where robust extensions to the FH model are proposed.
 
 In what follows the main results around the methodology introduced by @Sin09
 are reviewed. Together with the models reviewed in Section \ref{sec:area} these
-results are the basis for the extensions proposed in this thesis. The Section is
+results are the basis for the extensions proposed in this Thesis. The Section is
 structured as follows: Section \ref{sec:robustee} reviews the methodology around
 robust estimation equations; in Section \ref{sec:robustbc} these results are
 extended to allow for a correction of the bias associated with these type of

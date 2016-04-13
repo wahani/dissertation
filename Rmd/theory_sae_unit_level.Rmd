@@ -2,7 +2,7 @@
 \label{sec:unit_level}
 
 The Battese-Harter-Fuller (BHF) model, which can also be regarded as a linear
-mixed model, was introduced by @Bat88. The main focus of the present thesis is
+mixed model, was introduced by @Bat88. The main focus of the present Thesis is
 the extension of area level models. However some recent advances in the field,
 especially with respect to robust estimation methodology, have been made for
 unit level models. In Chapter \ref{chap:rfh} these results are applied to the

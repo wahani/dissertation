@@ -28,7 +28,7 @@ unique in the population.
 generating process and of the target population is needed to be able to
 distinguish between these two types. A factor which further complicates matters
 is that area level models are often used in situations where we have no access
-to the unit level observations. With this in view the discussion in this thesis
+to the unit level observations. With this in view the discussion in this Thesis
 focuses on the case where we assume to have representative outliers or are in
 the situation where it is not possible to argue for either of these
 alternatives.

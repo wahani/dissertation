@@ -1,6 +1,6 @@
 # Outline
 
-In this final chapter I want to present a design based simulation study in which
+In this final Chapter I want to present a design based simulation study in which
 the robust and non\hyp{}robust predictions under the FH model are compared. In
 contrast to the model based simulations of Chapter
 \ref{chap:results_model_based} the following study is based on one synthetic

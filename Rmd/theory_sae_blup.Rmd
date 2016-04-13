@@ -84,7 +84,7 @@ the empirical BLUP (EBLUP) obtained is:
 \tilde{\mat\re}(\hat{\pmat\delta})$. To estimate $\pmat\delta$ a variety of estimators have
 been proposed. Commonly used estimators are based on maximum likelihood (ML) and
 restricted maximum likelihood (REML). The standard procedures in the literature 
-are not directly feasible for the robust estimators introduced in chapter 
+are not directly feasible for the robust estimators introduced in Chapter 
 \ref{chap:rfh}. Instead different algorithms are proposed. For a detailed 
 discussion of the estimation of the variance parameters see @Jia06[9-11] and the
 literature quoted there.
@@ -152,7 +152,7 @@ this method is its wide applicability as the approach is not restricted to
 predictions under linear mixed models but extend to any predictor which can be
 represented as a weighted sum of the sampled values. The approach has been extended in
 @Cha14 to robust methods in SAE and is of special interest in deriving an MSPE
-estimator for the methods proposed in this thesis. Hence these results are
+estimator for the methods proposed in this Thesis. Hence these results are
 reviewed in more detail in Section \ref{sec:theory_sae_robust_mspe}.
 
 As an alternative approach  a wide range of different resampling strategies have been
