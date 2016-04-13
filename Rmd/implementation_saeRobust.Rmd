@@ -149,7 +149,7 @@ furthermore they are time invariant in scenarios with a time dimension and are
 used as the known model parameters. The number of domains is set to $D = 40$ and
 the number of time periods -- in scenarios with a time dimension -- is set to $T
 = 10$.
-- *Outlier*: The outlier scenario imposes deterministic outliers: i. e. they are
+- *Outlier*: The outlier scenario imposes deterministic outliers: i.e. they are
 not generated randomly but are fixed at a value of $10000$ in $e_i$ for $10$ per
 cent of the domains. The outlier domains are chosen randomly in each Monte Carlo
 repetition to avoid an artificial scenario in combination with the values of

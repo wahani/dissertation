@@ -18,7 +18,7 @@ area level?
   outliers to distinguish between two common types:
 
 - Representative outliers are observations with large absolute values that are
-correctly recorded and cannot be considered unique, i. e. they represent a
+correctly recorded and cannot be considered unique, i.e. they represent a
 substantial part of the target population.
 - Non-representative outliers may be described as incorrectly collected 
 observations which should not be part of the sample, or observations which are
@@ -164,7 +164,7 @@ direct estimator has sufficient precision.
 
 The third kind of outlying observations can best be understood when framed as 
 *overly influencial observations*. They are not necessarily far away from the 
-center of the data, i. e. large in absolute values. Furthermore they cannot be 
+center of the data, i.e. large in absolute values. Furthermore they cannot be 
 understood by looking at the direct estimator alone but must be seen as
 comprising of pairs of direct estimator and sampling variance. Together they
 determine the impact of a single observation on the overall predictions under a

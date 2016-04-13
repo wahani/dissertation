@@ -264,7 +264,7 @@ modification is very similar to the idea in @Sin09 in that only the diagonal
 elements are used to standardise the residuals. In fact this modification is
 not necessary for the robust BHF model or for a robust FH model because for these
 models $\mat{V}_u$ is a diagonal matrix. This is not the case however in the
-setting of correlated random effects -- e. g. in the case of a SAR(1) or AR(1)
+setting of correlated random effects -- e.g. in the case of a SAR(1) or AR(1)
 model -- which seek to rely on this extension.
 
 Let $\tilde{\pmat\beta}^\psi$ and $\tilde{\mat{u}}^\psi$ define the solutions
