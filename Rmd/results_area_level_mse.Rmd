@@ -26,7 +26,7 @@ review is given in Section \ref{sec:theory_sae_fh_extensions}.
 
 In Section \ref{sec:results_mse_scenarios} below the simulation settings for
 each model are described in detail. Section \ref{sec:results_mse_qm} describes
-which measures are utilised to asses the performance of the MSPE estimators. A
+which measures are utilised to assess the performance of the MSPE estimators. A
 presentation of the results can be found in Section 
 \ref{sec:results_mse_results} and this is followed by a discussion of the
 results in the context of the existing literature in Section
