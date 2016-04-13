@@ -39,9 +39,9 @@ independent. The unknown model parameters are $\pmat\beta$ and $\pmat\delta =
 ## Spatial Fay-Herriot Model
 \label{sec:rfh_model_sfh}
 
-For a review of the spatial extension to the FH model see Section
-\ref{sec:theory_sae_fh_spatial}. Here model \eq{eq:sfh} is represented as linear
-mixed model and as such it can be represented as:
+For a review of the spatial extension to the FH model see Section 
+\ref{sec:theory_sae_fh_spatial}. Here model the model by @Pet06 in \eq{eq:sfh}
+is represented as linear mixed model and as such it can be represented as:
 \empty{
 \begin{align*}
 \mat{y} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\
@@ -89,7 +89,7 @@ each element in $\pmat\delta$ are given here: $\partial\mat{V} /
 
 A review of temporal extensions can be found in Section 
 \ref{sec:theory_sae_fh_temporal}. Here the representation of the temporal model
-in \eq{eq:tfh} is reviewed as a linear mixed model of the form:
+by @Rao94 in \eq{eq:tfh} is reviewed as a linear mixed model of the form:
 \empty{
 \begin{align*}
 \mat{y} & = \mat{X} \pmat\beta + \mat{Z}\mat{u} + \mat{e} \\

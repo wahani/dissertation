@@ -90,8 +90,8 @@ discussed in Section \ref{sec:eblup_mspe}. @Dat05 study the MSPE estimation
 using the results of @Pra90 for different estimations of the variance component 
 $\sigre$. They compare the method of moment estimator of @Pra90 with the 
 original estimator of @Fay79 and the maximum likelihood estimator proposed by
-@Dat00. The main finding is that for the MSPE estimation the estimator by @Fay79
-performs the best overall.
+@Dat00. The main finding is that for the MSPE estimation using the predictor by
+@Fay79 performs the best overall.
 
 A jackknife MSPE estimator for linear mixed models was introduced by @Jia02 and 
 later subjected to several refinements; see for example @Che03. @Che08 then 
@@ -229,19 +229,24 @@ can be beneficial for domain predictions. @Sin05, @Pet06, and
 \begin{align}
 \tilde{y}_{i} = \mat{x}^\top_{i}\pmat\beta + \re_{1i} + e_{i} \label{eq:sfh}
 \end{align}
-}where the only difference to model \eq{eq:fh} is the replacement of $\re_i$
-with $\re_{1i}$ to represent the random effect. In contrast to the formulation
-in model \eq{eq:fh} $u_{1i}$ now follows a simultaneous autoregressive process
-of order one (SAR(1)) which is defined by:
+}where the only difference to model \eq{eq:fh} is the replacement of $\re_i$ 
+with $\re_{1i}$ to represent the random effect. This is the model used by
+@Pra08. In contrast to the formulation in model \eq{eq:fh} $u_{1i}$ now follows
+a SAR(1), i.e. a simultaneous autoregressive process of order one, which is
+defined by:
 $$
 u_{1i} = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i}
 $$
 where $|\rho_1| < 1$ and $\epsilon_{1i} \sim \Distr{N}(0, \sigma_1^2)$ are 
 i.i.d. with $i = 1,\dots, D$. $w_{il}$ are the elements of $\mat{W}$ which is 
 the row standardized transformation of the proximity matrix $\mat{W}^0$. The 
-elements in $\mat{W}^0$ are equal to one where areas are neighboured and zero
-otherwise, it then follows that the dimension of $\mat{W}^0$ is $D \times D$.
-Using the methodology of Section \ref{sec:blup} the BLUP can be stated as:
+elements in $\mat{W}^0$ are equal to one where areas are neighboured and zero 
+otherwise, it then follows that the dimension of $\mat{W}^0$ is $D \times D$. 
+Note that this definition of $\mat{W}^0$ is but one possibility. In general the 
+choice of $\mat{W}$ must lead to a nonsingular form of $\mat{I}_D - \rho_1 
+\mat{W}$, where $\mat{I}_D$ denotes an identity matrix of order $D$, such that
+the variance structure can be identified \citep[87]{Rao15}. Using the
+methodology of Section \ref{sec:blup} the BLUP can be stated as:
 \empty{
 \begin{align*}
 \tilde{\theta}^{SFH}_{i} = \mat{x}^\top_{i}\tilde{\pmat\beta} + \tilde{\re}_{1i}
@@ -258,12 +263,15 @@ the EBLUP can be obtained by:
 the variance structure is reviewed in more detail. The MSPE for the EBLUP under
 model \eq{eq:sfh} is developed by @Pra08 who extend the results from @Pra90.
 
-A different approach to model spatial correlation structures can be seen in
-@Cha12 who use a geographically weighted regression model and derive the EBLUP
-  under this model. @Sal12 use a geographically weighted M-quantile regression 
-  model for small area predictions. @Por14 is an example how a CAR
-  process may be used in the context of the FH model, which is, additionally, extended to
-  allow for functional covariates.
+A different approach to incorporate spatial correlation structures, but for unit
+level models, can be found in @Cha12 who use a geographically weighted 
+regression model and derive the EBLUP under this model. @Sal12 use a 
+geographically weighted M-quantile regression model for small area predictions.
+@Por14 is an example how a CAR process may be used in the context of the FH 
+  model, which is, additionally, extended to allow for functional covariates.
+  The model in \eq{eq:sfh} assumes spatial stationarity of the regression
+  parameters; that is that they do nor vary spatially. Hence @Chan15 extend this
+  approach for spatial nonstationarity and derive a nonstationary EBLUP.
 
 
 ### Temporal Extensions
@@ -312,12 +320,12 @@ regression coefficients.
 ### Spatio Temporal Extensions
 \label{sec:theory_sae_fh_spatio_temporal}
 
-The subject matter of this Section is the combination of the spatial model
-\eq{eq:sfh} and temporal model \eq{eq:tfh}; this combination was first
-introduced by @Mar13. A similar approach but for a multinomial response can be
-found in @Lop15. @Sin05 use a similar approach with respect to spatial
-autocorrelation but they use a State Space Model with a Kalman filter to take
-advantage of time series data.
+The subject matter of this Section is the combination of the spatial model 
+\eq{eq:sfh} and temporal model \eq{eq:tfh}; this combination was introduced by
+@Mar13. A similar approach but for a multinomial response can be found in
+@Lop15. @Sin05 use a similar approach with respect to spatial autocorrelation
+but they use a State Space Model with a Kalman filter to take advantage of time
+series data.
 
 Following @Mar13 a spatio temporal FH model can be formulated as:
 \empty{
@@ -364,7 +372,7 @@ instead of being restricted to the geographical sense of area predictions.
 
 The use of information over time on the other hand is quite different. @Mar13 
 note that in practice we may be interested in making predictions for the current
-time period - and not the past - and use historic information as additional 
+time period -- and not the past -- and use historic information as additional 
 data. The use of historic information may lead to an improvement of parameter 
 estimates due to the increased sample size. The temporal random effect in model 
 \eq{eq:tfh} can additionally be of use in improving domain predictions. @Sin05 

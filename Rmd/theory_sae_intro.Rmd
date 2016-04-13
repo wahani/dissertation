@@ -76,7 +76,9 @@ units. These can be companies within an industry sector or individuals within a
 municipality. The area level describes models which use information on area 
 level, i.e. direct estimates for domains. A situation in which these models are 
 considered is when data can only be provided as aggregates due to factors such
-as confidentiality.
+as confidentiality. Also such methods may be useful in situations in which the 
+computational effort is high -- e.g. when complex variance structures are 
+combindes with large data sets.
 
 One class of models in particular is favoured in different variations: mixed 
 models. The Fay-Herriot (FH) model introduced by @Fay79 and the 
@@ -101,9 +103,10 @@ negative effect of a potential violation of these assumptions. The general
 problem here is that single observations can have unwanted and overly large
 impact on results. Such observations are typically called outliers. @Cha86 uses
 the term *representative* outliers to describe observations which are correctly
-recorded and can not be assumed to be unique. Non\hyp{}representative outliers,
-on the other hand, may be best described as *not correctly recorded* and should
-be imputed or generally dealt with during the editing process of survey data.
+recorded and can not be assumed to be unique in the population. 
+Non\hyp{}representative outliers, on the other hand, may be best described as 
+*not correctly recorded* and should be imputed or generally dealt with during 
+the editing process of survey data.
 
 To summarise robust methods in SAE it is necessary to distinguish between three 
 different lines of discussion. Firstly, if the distributional assumption - often a

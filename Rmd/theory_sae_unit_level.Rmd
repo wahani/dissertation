@@ -66,4 +66,9 @@ analyst. The unknown parameters of the model, i.e. $\pmat\beta$, $\sigre$ and
 $\sigma_e^2$, can be estimated using standard ML and REML estimation techniques
 and are based on the sampled data.
 
-- MSPE estimation?
+A wide range of MSPE estimators have been proposed for basic unit level small 
+area methods -- a comprehensive review of these methods can be found in
+@Rao15[179 ff]. Among these methods is an unconditional MSPE estimator which has
+been proposed by @Dat00. For the robust extension of \eq{eq:bhfeblup}, which is 
+introduced in the following Section, a number of methods are discussed in more
+depth in Section \ref{sec:robustmse}.
