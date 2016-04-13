@@ -497,13 +497,25 @@ $\pmat\beta$, and variance parameters, $\pmat\delta$:
 \end{align}
 }with suitable starting values $\mat{u}^{(0)}$. The starting values can be 
 chosen similarly to the IRWLS algorithm in that we set the diagonal elements in 
-$\mat{W}_2$ and $\mat{W}_3$ to one. Similar to the IRWLS algorithm, if the
-tuning constant of the influence function is chosen to be infinity the algorithm
-has the desirable property that it reduces to the form of the non\hyp{}robust
-estimation equation of \eq{eq:rfheere} because of the special form of
-$\mat{W}_2$ and $\mat{W}_3$, i.e. they reduce to identity matrices. And - as
-reviewed in Section \ref{sec:robustee} -- the solution to the non\hyp{}robust
-equation \eq{eq:rfheere} is equivalent the the BLUP for $\mat{u}$ given by
+$\mat{W}_2$ and $\mat{W}_3$ to one. However what I propose here is to use the
+non\hyp{}iterative but outlier robust estimator of \eq{eq:reblupre}:
+$$
+\hat{\mat{\re}}^\psi = \mat{V}_u\mat{Z}^\top\mat{V}^{-1}\mat{U}^\half\psi(\mat{r})
+$$
+to compute starting values. This estimator has been reviewed in Section 
+\ref{sec:robustee} and can be found in @Rao15[196]. Like the iterative solution 
+in \eq{eq:fp_re} it also depends on the known parameter vectors $\pmat\beta$ and
+$\pmat\delta$. Also non robust starting values showed acceptable results in the 
+simulation presented in Section \ref{sec:saeRobust_stability}; however robust 
+starting values have an significant impact on the number of iterations needed 
+when outliers are present in the data. Similar to the IRWLS algorithm for
+$\pmat\beta$, if the tuning constant of the influence function is chosen to be 
+infinity the algorithm in \eq{eq:fp_re} has the desirable property that it
+reduces to the form of the non\hyp{}robust estimation equation of
+\eq{eq:rfheere} because of the special form of $\mat{W}_2$ and $\mat{W}_3$, i.e.
+they reduce to identity matrices. And -- as reviewed in Section
+\ref{sec:robustee} -- the solution to the non\hyp{}robust equation
+\eq{eq:rfheere} is equivalent the the BLUP for $\mat{u}$ given by
 \eq{eq:blupre}.
 
 
@@ -538,16 +550,38 @@ iterative equation to solve for $\delta$ can now be formulated as:
 }for an adequate starting value $\delta^{(0)}$ and known regression coefficients
 $\pmat\beta$. If \eq{eq:rfhreed} is a convex and continuous function the fixed 
 point function converges against the true parameter regardless of the starting 
-value -- as long as they are chosen as values in the parameter space. Section
-\ref{sec:saeRobust_stability} provides some empirical results on the matter.
+value -- as long as they are chosen as values in the parameter space
+\citep[328]{Mar06}. Section \ref{sec:saeRobust_stability} provides some
+empirical results on the matter.
 
-The solution of @Chat12 is based on the idea to add $\mat{V}^{-1}\mat{V}$ to the
-term inside the trace in \eq{eq:rfhreed}. This was necessary because under the
-unit level model, $\mat{V}_e$ contains an unknown parameter. In the case of the
-FH model and its extensions $\mat{V}_e$ is assumed to be known and thus can be
-omitted. Thus the following approach is specific if the parameters in
-$\mat{V}_e$ are known but can be extended easily to the more general case.
-Starting from \eq{eq:rfhreed} we can write:
+The solution in \ref{eq:fp_delta} proved to be more robust with respect to 
+starting values especially for the variance parameters. However for the 
+correlation parameters in the spatial and temporal extensions the method often 
+needs many iterations. On the other hand starting values are not as critical
+since the correlation parameters are bounded between minus and plus one. Hence
+for the correlation parameters an Newton\hyp{}Raphson algorithm is utilised
+instead:
+\empty{
+\begin{align}
+\label{eq:nr_delta}
+\delta^{(m + 1)} = \delta^{(m)} - \frac{d(\delta^{(m)})}{d'(\delta^{(m)})}
+\end{align}
+}where $d(\cdot)$ denotes the robust estimation equation of \eq{eq:rfhreed} and 
+$d'(\cdot)$ its first derivative with respect to the parameter $\delta$. In the 
+simulation of Section \ref{sec:saeRobust_stability} it showed that a numerical 
+approximation to the derivative is sufficient and already yields satisfying 
+results. Thus the first derivative, $d'(\delta^{(m)})$, is approximated by
+$d(\delta^{(m)} - h)$ where $h$ is some small number. For a review of such
+methods see for example @Mar06[46 ff] and more generally @McC04.
+
+Now turning to the more general case where $\pmat\delta$ has more than one
+element; the solution of @Chat12 is based on the idea to add
+$\mat{V}^{-1}\mat{V}$ to the term inside the trace in \eq{eq:rfhreed}. This was
+necessary because under the unit level model, $\mat{V}_e$ contains an unknown
+parameter. In the case of the FH model and its extensions $\mat{V}_e$ is assumed
+to be known and thus can be omitted. Thus the following approach is specific if
+the parameters in $\mat{V}_e$ are known but can be extended easily to the more
+general case. Starting from \eq{eq:rfhreed} we can write:
 \empty{
 \begin{align*}
 0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
@@ -610,20 +644,22 @@ applicable when we set $\delta = \sigre$ and use the notation of Section
 
 #### Solutions for the Spatial Robust FH Model
 
-\mbox{}\newline In principle $\pmat\delta = (\rho_1, \sigma_1^2)$ under the
+\mbox{}\newline In principle $\pmat\delta = (\rho_1, \sigma_1^2)$ under the 
 spatial FH model of Section \ref{sec:rfh_model_sfh}. Hence the specific form of 
 \eq{eq:fp_delta2} needs to be derived. In this case each $\bar{V}_{ul}$ with $l 
 = 1, 2$ need to be defined. Although it is possible to find such matrices, an 
-implementation has lead to unstable results. This difficulty can be met by
-splitting the problem into finding solutions for $\delta_\sigma = (\sigma_1^2)$
+implementation has lead to unstable results. This difficulty can be met by 
+splitting the problem into finding solutions for $\delta_\sigma = (\sigma_1^2)$ 
 and $\delta_\rho = (\rho_1)$ seperately. This means that each iterative equation
-depends on the other *known* parameter. Admittedly this is numerically not
-optimal since it will lead to an increase in overall iterations. However, as I
-will show later, it leads to acceptable and stable results. For the specific
-adaptation of the iterative equations for $\pmat\delta$ this means that
-\eq{eq:fp_delta} is used to find solutions for $\delta_\sigma$ and $\delta_\rho$
-seperately; all other specifications under the spatial model can be found in
-Section \ref{sec:rfh_model_sfh}.
+depends on the other *known* parameter. Admittedly this is numerically not 
+optimal since it will lead to an increase in overall iterations. However, as 
+will be shown in Section \ref{sec:saeRobust_stability}, it leads to acceptable 
+and stable results. For the specific adaptation of the iterative equations for 
+$\pmat\delta$ this means that the iterative fixed point function
+\eq{eq:fp_delta} is used to find solutions for $\delta_\sigma$ and the
+Newton-Raphson algorithm in \eq{eq:nr_delta} for $\delta_\rho$ seperately; all
+other specifications under the spatial model can be found in Section
+\ref{sec:rfh_model_sfh}.
 
 #### Solutions for the Temporal Robust FH Model
 
@@ -635,8 +671,8 @@ case the problem is split into finding solutions for $\pmat\delta_\sigma =
 (\sigre, \sigma_2^2)$ and $\delta_\rho = (\rho_2)$. Both iterative equations
 assume known parameters of the left out elements.
 
-For $\delta_\rho$ we can simply use the iterative equation \eq{eq:fp_delta} 
-which is directly compatible with the results of Section 
+For $\delta_\rho$ we can simply use the Newton-Raphson algorithm in
+\eq{eq:nr_delta} which is directly compatible with the results of Section 
 \ref{sec:rfh_model_tfh}. For $\pmat\delta_\sigma$ we need to find 
 $\bar{\mat{V}}_{u1}$ and $\bar{\mat{V}}_{u2}$ where $\rho_2$ is treated as a 
 known parameter. Using the results of Section \ref{sec:rfh_model_tfh} we can 
@@ -704,8 +740,10 @@ similar approach as for the temporal model:
 we set $\bar{\mat{V}}_{u1} = \bar{\pmat\Omega}_1$ and $\bar{\mat{V}}_{u2} =
 \bar{\pmat\Omega}_2$ and use the results in Section \ref{sec:rfh_model_stfh}.
 
-Similarly we can derive solutions for $\pmat\delta_\rho$ with known parameters
-$\pmat\delta_\sigma$ as:
+Similarly we can derive solutions for $\pmat\delta_\rho$ with known parameters 
+$\pmat\delta_\sigma$. In this case however the presented solution has not lead
+to a stable implementation. To enable and simplify future research the
+derivation is stated here:
 \empty{
 \begin{align*}
 \mat{V}_u
@@ -753,10 +791,17 @@ $\pmat\delta_\sigma$ as:
   \end{matrix}
 \right)_{T\times T}.
 \end{align*}
-}With these results we can adapt the iterative equation \eq{eq:fp_delta2} when 
-we set $\bar{\mat{V}}_{u1} = \bar{\pmat\Omega}^*_1$ and $\bar{\mat{V}}_{u2} = 
-\bar{\pmat\Omega}^*_2$ in conjunction with the results in Section
-\ref{sec:rfh_model_stfh}.
+}As said before this solution can formally be used to adapt the iterative 
+equation \eq{eq:fp_delta2} when we set $\bar{\mat{V}}_{u1} = 
+\bar{\pmat\Omega}^*_1$ and $\bar{\mat{V}}_{u2} = \bar{\pmat\Omega}^*_2$ in 
+conjunction with the results in Section \ref{sec:rfh_model_stfh}. At present it 
+is unknown as to why this method does not yield stable results. This is why 
+instead a step-wise Newton-Raphson algorithm is used: when we split the problem 
+of finding solutions for $\pmat\delta_\rho$ into $\delta_{\rho_1} = (\rho_1)$ 
+and $\delta_{\rho_2} = (\rho_2)$ solutions can be found using the Newton-Raphson
+algorithm in \eq{eq:nr_delta} when the left out parameter is known. Although 
+this result is unsatisfying the results in Section \ref{sec:saeRobust_stability}
+show that this method produces stable and reliable results.
 
 ### Algorithm
 
@@ -769,27 +814,28 @@ the approach suggested by @Sin09 and the literature reviewed in Section
 for $\pmat\beta$, $\pmat\delta$, and $\mat{u}$ are different.
 
 1. Choose initial values $\pmat\beta^{(0)}$ and $\pmat\delta^{(0)}$ and set $m =
-0$. Initial values for $\pmat\beta$ are chosen by setting the diagonal elements
-in the weighting matrix to one. For $\pmat\delta$ an arbitrary value from the
-respective parameter space can be chosen -- see Section (?) for details.
+0$. Initial values for $\pmat\beta$ are chosen by setting the diagonal elements 
+in the weighting matrix to one. For $\pmat\delta$ an arbitrary value from the 
+respective parameter space can be chosen -- see Section
+\ref{sec:saeRobust_stability} for results.
 2. Compute $\pmat\beta^{(m + 1)}$ using equation \eq{eq:fp_beta} with given
 parameters $\pmat\delta$ until convergence is reached.
 3. With the solution of 2. for $\pmat\beta$ compute $\pmat\delta^{(m + 1)}$ 
-using the model specifc solutions for \eq{eq:fp_delta} and \eq{eq:fp_delta2}. 
-This step itself can involve two algorithms for the respective variance and 
-correlation components of the variance\hyp{}coevariance structure as was
-enunciated in Section \ref{sec:rfh_solutions_delta}.
+using the model specifc solutions for \eq{eq:fp_delta}, \eq{eq:nr_delta}, and
+\eq{eq:fp_delta2}. This step itself can involve several algorithms for the
+respective variance and correlation components of the variance
+structure as was enunciated in Section \ref{sec:rfh_solutions_delta}.
 4. Set $m = m + 1$.
-5. Repeat steps 2. to 4. until the set of parameters jointly reach convergence.
+5. Repeat steps 2. to 4. until the set of parameters jointly reach convergence. 
 Declare these solutions to be the robust parameter estimates 
 $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$. 
 6. With the solutions $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$ 
 compute $\mat{u}^{(m + 1)}$ using equation \eq{eq:fp_re} until convergence is 
-reached. The starting values are chosen by setting the diagonal elements in
-$\mat{W}_3$ to one. Declare the solution to be the robust predictions
-$\hat{\mat{u}}^\psi$.
+reached. Declare these solutions to be the robust predictors,
+$\hat{\mat{u}}^\psi$. The starting values, $\mat{u}^{(0)}$, are computed
+using the robust predictor in \eq{eq:reblupre}.
 
-The overall stopping rule is given by:
+The stopping rule used is given by:
 \empty{
 \begin{align*}
 \frac{\mid p^{(m + 1)} - p^{(m)}\mid}{p^{(m)}} & < \epsilon & \text{ for } \mid p^{(m)} \mid & > 1 \\
