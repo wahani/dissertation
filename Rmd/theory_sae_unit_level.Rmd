@@ -39,11 +39,11 @@ the sampled and non sampled units in area $i = 1, \dots, D$, respectively. Then
   \begin{pmatrix}\mat{Z}_S\\\mat{Z}_R\end{pmatrix} \pmat\re + 
   \begin{pmatrix}\mat{e}_S\\\mat{e}_R\end{pmatrix}
 \end{align*}
-}where the subscripts $R$ and $S$ denote respectively the sampled and
-non-sampled part of the model. This representation makes it clear that a
-fundamental assumption here is that the sampled units follow the population
-model. This is plausible under simple random sampling within each domain and, as
-@Rao15[79] note, also when $\mat{X}_S$ contains the variables used for sampling.
+}where the subscripts $R$ and $S$ denote respectively the sampled and 
+non-sampled part of the model. The fundamental assumption of this representation
+is that the sampled units follow the population model. This is plausible under 
+simple random sampling within each domain and, as @Rao15[79] note, also when
+$\mat{X}_S$ contains the variables used for sampling.
 
 These results can now be used to derive an EBLUP for the target statistic. In 
 principle this also happens according to Section \ref{sec:blup}; however we are 

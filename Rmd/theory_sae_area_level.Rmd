@@ -38,7 +38,7 @@ independent. Combining the sampling and the linking model thus leads to:
 ### Best Linear Unbiased Prediction
 
 Obtaining small area predictions under the model in \eq{eq:fh} can be defined as
-a linear mixed model from which a BLUP and EBLUP can be derived. Basically tha
+a linear mixed model from which a BLUP and EBLUP can be derived. Basically the
 model in \eq{eq:fh} can be viewed directly as a linear mixed model as it was
 introduced in equation \eq{eq:lmm} where $\mat{Z} = \mat{I}_D$, $\mat{V}_\re = 
 \sigre\mat{I}_D$ and $\mat{V}_e = \diag(\sigma_{e, 1}^2, \dots, \sigma_{e, 
@@ -107,8 +107,8 @@ the sampling variances, $\sige$, are known parameters. In practice this is not
 the case and these parameters are estimated using the sample data. This can mean
 that they are themselves direct estimators; but if a direct mean is considered 
 unreliable then its variance estimation cannot be considered reliable. @Fay79 
-use generalised variance functions - see @Wol07[pp. 272 ff] for a discussion of 
-these methods - instead of direct estimators. @Mai14 suggest instead to shrink 
+use generalised variance functions -- see @Wol07[pp. 272 ff] for a discussion of 
+these methods -- instead of direct estimators. @Mai14 suggest instead to shrink 
 both means and variances to account for the possibility of unstable direct 
 variance estimates and also provide an estimator of the MSPE of the predictions.
 This approach is based on a Bayesian modeling strategy. @You06 provide results 
@@ -166,7 +166,7 @@ be practical considerations, e.g. the reduction of computational demands because
 area level data is often connected with a dramatic reduction in the number of
 observations hence more complex variance structures can be modeled with less
 computational effort. Other reasons are discussed in more detail in @Nam15 who
-consider different scenarios for thie availability of auxiliary information,
+consider different scenarios for the availability of auxiliary information,
 e.g. unit and area level variables and contextual variables. Their findings show
 that overall unit level models have more potential to reduce the MSPE of domain
 predictions; this is not surprising as parameter estimation under a unit level
@@ -178,28 +178,28 @@ and the Fay-Herriot model is explicitly subject to numerous extensions. See for
 example @Cle14 for a review in disease mapping; @Gua15 for a review of methods
 used for poverty mapping; and @Ben16 for an EBLUP under a multivariate FH model.
 A comprehensive review of extensions to the FH model can be found in @Rao03[pp. 
-153 ff] and @Rao15[pp 81 ff]. The following Section reviews some advances for
-incorporating structures in space and time into the estimation process. Some of
-these results in addition to a robust extension is then the subject of Chapter
-\ref{chap:rfh}.
+153 ff] and @Rao15[pp 81 ff]. The following Section reviews some advances for 
+incorporating structures in space and time into the estimation process. Some of 
+these results in addition to a robust extension is then the subject matter of
+Chapter \ref{chap:rfh}.
 
 
 ## Spatial and Temporal Fay-Harriot Models
 \label{sec:theory_sae_fh_extensions}
 
 This Section reviews spatial and temporal extensions to the FH model. These 
-extensions are again the subject of Chapter \ref{chap:rfh} where they are then combined
-with robust estimation methodology which is reviewed in Section \ref{sec:saerobust}. In 
-principle it is intuitive that if historical data, e.g. annually repeated
-surveys, is available it should be exploited; and the same is true of spatial
-structures. From a mixed model perspective two components can be modified in
-order to take such information into account: the random effect and the model
-error term. The use of correlated random effects to allow for spatial, temporal,
-or spatio\hyp{}temporal effects may also be beneficial with respect to domain 
-predictions. In constrast to modifications to the model error this may add to 
-the improvement of domain predictions in terms of MSPE and is looked upon
-favourably in the literature. Modifying the model error can be motivated to
-account for correlated sampling errors of the direct estimators. This may be of
+extensions are again the subject of Chapter \ref{chap:rfh} where they are then
+combined with robust estimation methodology which is reviewed in Section
+\ref{sec:saerobust}. In principle it is intuitive that if historical data, e.g.
+annually repeated surveys, are available they should be exploited; and the same is
+true of spatial structures. From a mixed model perspective two components can be
+modified in order to take such information into account: the random effect and
+the model error term. The use of correlated random effects to allow for spatial,
+temporal, or spatio\hyp{}temporal effects may also be beneficial with respect to
+domain predictions. In constrast to modifications to the model error this may
+add to the improvement of domain predictions in terms of MSPE and is looked upon
+favourably in the literature. Modifying the model error can be motivated to 
+account for correlated sampling errors of the direct estimators. This may be of 
 special interest if, for example, the area level information is based on a panel
 survey.
 
@@ -279,7 +279,7 @@ correlated random effects to borrow strength for domain predictions:
 \end{align}
 }where $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D$ and $T$ are the total 
 number of areas and time periods, respectively. Here $e_{it} \sim\Distr{N}(0, 
-\sigma^2_{eit})$ are independent with known variances $\sigma_{eit}^2$. $u_{i}$ 
+\sigma^2_{eit})$ is independent with known variances $\sigma_{eit}^2$. $u_{i}$ 
 corresponds to the random effect in model \eq{eq:fh} and follows a normal 
 distribution with zero mean and variance $\sigre$. Correlation over time is now
 incorporated by adding $\re_{2it}$ which is a correlated random effect following
@@ -342,8 +342,7 @@ their respective estimates leads then to the EBLUP under model \eq{eq:stfh}:
 \begin{align}
 \hat{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\hat{\pmat\beta} + \hat{\re}_{1i} + \hat{\re}_{2it}.
 \end{align}
-}
-In contrast to @Sin05 who derive an analytical MSPE for spatio-temporal domain
+}In contrast to @Sin05 who derive an analytical MSPE for spatio-temporal domain
 predictions and @Pra08 who derive an MSPE for spatial predictions, @Mar13
 propose to use a parametric bootstrap for the estimation of the MSPE.
 

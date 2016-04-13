@@ -12,8 +12,8 @@ As the past 9 years show, I was completely wrong.} \\ \medskip
 
 In the following I give a general overview of the field of Small Area Estimation
 (SAE) necessary in order to accomodate this Thesis within the SAE field. @Rao03 
-as well as @Rao15 give a comprehensive overview of the established methods and 
-research research published in this field. @Gho94, @Rao99, @Pfe02 and @Pfe13
+as well as @Rao15 give comprehensive overviews of the established methods and 
+research published in this field. @Gho94, @Rao99, @Pfe02 and @Pfe13
 focus on the status quo and main lines of discussion within the field at their
 respective point in time.
 
@@ -22,7 +22,7 @@ predictions* of a *target statistic* for *small domains*. A *target statistic*
 can be a linear statistic such as a mean, a count, or quantiles; but it can take
 other forms: e.g. an inequality measure like the Gini coefficient for poverty
 mapping. Such statistics are produced for *small domains*, where domain refers
-to specific groups, e.g. a sector of industry, or groups defined by
+to specific groups, e.g. an industry sector, or groups defined by
 socio\hyp{}economic characteristics. Because of its frequent application to
 administrative data, domains are often defined by areas as a geographical unit.
 They are small in the sense that they comprise few or no sampled units within
@@ -56,7 +56,7 @@ and indirect techniques. The Horvitz\hyp{}Thompson (HT) estimator by @Hor52 whic
 only uses sampled units within domains, synthetic regression estimates as well
 as model assisted methods like generalized regression (GREG) estimators
 - see @Saer92 for a discussion of these methods - are examples of such
-estimators. What all these methods have in common is that they incorporate
+estimators. These methods have in common that they incorporate
 information of the sampling design into the estimation.
 
 Conceptually design based and model based methods differ in that design based
@@ -66,9 +66,9 @@ sample is drawn from a population which is but one possible realisation of a
 *superpopulation* model, and it is the parameters of that superpopulation which 
 are targeted. This difference leads to a trade-off when choosing between 
 methods: model based methods can improve domain estimation in terms of variance 
-even with small samples, however, they can not be considered design unbiased. 
+even with small samples, however, they cannot be considered design unbiased. 
 Design based methods on the other hand are design unbiased but have larger and 
-possibly unacceptably high variances for small samples (see @Leh09).
+possibly unacceptably high variances for small samples -- see @Leh09.
 
 Model based methods can be further separated into area and unit level models. 
 Observations which can be associated with a specific domain are referred to as 
@@ -89,7 +89,7 @@ in combination with different estimation methodologies, i.e. general linear
 mixed models which are typically associated with best linear unbiased predictors
 (BLUPs), empirical Bayes, and hierarchical Bayes. Although these different 
 frameworks for estimation differ with respect to optimality criteria, 
-equivalence of the different derived estimators can be shown for special cases. 
+equivalence of the derived estimators can be shown for special cases. 
 A more general discussion of mixed models in SAE can be found in @Jia06. @Rao03 
 and @Rao15 provide a comprehensive overview and comparison of the different 
 frameworks.
@@ -106,7 +106,7 @@ on the other hand, may be best described as *not correctly recorded* and should
 be imputed or generally dealt with during the editing process of survey data.
 
 To summarise robust methods in SAE it is necessary to distinguish between three 
-different lines of discussion. First, if the distributional assumption - often a
+different lines of discussion. Firstly, if the distributional assumption - often a
 Gaussian distribution - appears to be implausible then intuition demands that it
 be replaced. This often leads to the use of non-symmetric or heavy-tailed 
 distributions for the model error or the random effect. Due to their flexibility
@@ -117,7 +117,7 @@ Bayesian modelling strategies are often used in this context; see for example
   approach is to remain with the original model or method and *robustify* the
   estimation equations. In this context @Sin09 develop a robust EBLUP; @Bea09
   refer to a winzorisation of the Horvitz-Thompson estimator; and @Bea04
-  introduces a robust extension to generalized regression estimation.
+  introduces a robust extension to generalised regression estimation.
 
 Given this background, in this Thesis I introduce extensions to the
 Fay\hyp{}Herriot area level model using a model based perspective. More
@@ -131,7 +131,7 @@ extension introduced in the literature around robust EBLUPs (REBLUPs) have been
 focused on unit level models, thus results especially to MSE estimation and bias
 correction are extended to area level models.
 
-In addition to the main focus of this Thesis reference is made to certain
+In addition reference is made to certain
 supplementary material on software. @War15 introduces tools for simulation 
 studies for the special case of small area estimation and @War16 implements the 
 methods introduced in this Thesis. All results rely on these two packages; a 

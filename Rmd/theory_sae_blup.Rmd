@@ -86,7 +86,7 @@ been proposed. Commonly used estimators are based on maximum likelihood (ML) and
 restricted maximum likelihood (REML). The standard procedures in the literature 
 are not directly feasible for the robust estimators introduced in Chapter 
 \ref{chap:rfh}. Instead different algorithms are proposed. For a detailed 
-discussion of the estimation of the variance parameters see @Jia06[9-11] and the
+discussion of the estimation of the variance parameters see @Jia06 and the
 literature quoted there.
 
 ## Mean Squared Prediction Error
@@ -116,7 +116,7 @@ MSPE(\hat{\pmat\mu}) = MSPE(\pmat\mu) + \Exp{E}\Paran{\hat{\pmat\mu} - \pmat\mu}
 \begin{align*}
 MSPE(\pmat\mu) &= g_1(\pmat\delta) + g_2(\pmat\delta)
 \end{align*}
-}(cf. @Rao03[p. 98 ff]) where
+}\citep[98 ff]{Rao03}  where
 \empty{
 \begin{align*}
 g_1(\pmat\delta) &= \mat{m}^\top\Paran{\mat{V}_\re - \mat{V}_\re\mat{Z}^\top\mat{V}^{-1}\mat{Z}\mat{V}_\re}\mat{m}\\
@@ -149,7 +149,7 @@ A different approach has been taken by @Cha11 which is to define the EBLUP as a
 weighted sum of the sampled values and to derive an MSPE estimator under the
 assumption of independence between weights and sampled values. An advantage of
 this method is its wide applicability as the approach is not restricted to
-predictions under linear mixed models but extend to any predictor which can be
+predictions under linear mixed models but extends to any predictor which can be
 represented as a weighted sum of the sampled values. The approach has been extended in
 @Cha14 to robust methods in SAE and is of special interest in deriving an MSPE
 estimator for the methods proposed in this Thesis. Hence these results are

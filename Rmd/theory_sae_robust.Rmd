@@ -59,7 +59,7 @@ respectively.
 @Fel86 studied the robust estimation of $\pmat\beta$ and $\mat{\re}$ by
 modifying \eq{eq:mmeb} and \eq{eq:mmere} to restrict the influence of outlying 
 observations. He suggests the use of an influence function to restrict the 
-impact of the residuals in \eq{eq:mmeb} and \eq{eq:mmere} transforming, them 
+impact of the residuals in \eq{eq:mmeb} and \eq{eq:mmere}, transforming them 
 into:
 \empty{
 \begin{align}
@@ -68,9 +68,9 @@ into:
 \mat{Z}^\top \mat{V}_e^{-\half} \psi \Paran{\mat{V}_e^{-\half} \Paran{\mat{y}-\mat{X}\pmat\beta - \mat{Z} \mat{\re}}} - \mat{V}_\re^{-\half} \psi\Paran{\mat{V}_\re^{-\half}\mat{\re}} &= 0 \label{eq:rmmere}
 \end{align}
 }where $\psi(\cdot)$ is a bounded monotonous function. @Fel86 suggests to use
-Huber's influence function (cf. @Hub64) where $\psi_b(x) = x \min\Paran{1,
+Huber's influence function \citep{Hub64} where $\psi_b(x) = x \min\Paran{1,
 \frac{b}{|x|}}$ for a given tuning constant $b$ where a common choice for $b$ is
-1.345. @Rao03[102] suggests to use a robust version of Henderson's (cf. @Hen50)
+1.345. @Rao03[102] suggests to use a robust version of Henderson's \citep{Hen50}
 estimation equations for the unknown parameters in $\pmat\delta$; remember that
 $\mat{V} = \mat{V}(\pmat\delta)$ where $\pmat\delta$ denotes the vector of 
 unknown variance parameters.
@@ -448,10 +448,10 @@ has good repeated sampling properties - for details see the references in
 The discussion in this Section has been narrowed to the SAE field and 
 specifically around the results by @Sin09. Their results are strongly influenced
 by @Ric95 who propose robust estimation equations for linear mixed models and by
-@Hug93 who propose similar methods. A further extension of these methods to 
+@Hug93 who proposes similar methods. A further extension of these methods to 
 generalised linear mixed models can be found in @Yau02.
 
-Recent extensions to to the robust methods by @Sin09 can be found in @Sch14 who 
+Recent extensions to the robust methods by @Sin09 can be found in @Sch14 who 
 use a unit level model with spatially correlated random effects; they propose a 
 spatial REBLUP (SREBLUP). @Sch16 then build on the results of @Cha14 and make
 the necessary extensions for the SREPLUP. @Rao14 have extended the unit level
@@ -504,6 +504,7 @@ level models, several possibilities have been explored for area level models.
   framework -- whereas the estimation methodology underpinning the methods of
   this Thesis is based on Maximum Likelihood. @Ger10 and @Cha15 propose to use
   the FH model but replace the distribution of the random effects with a mixture
-  distribution. This essentially means that they have to detect which
-  observations are outliers and fit a seperate model. All these studies can
-  claim some advantages for their respective method when outliers are present.
+  distribution. This essentially means that they have to detect which 
+  observations are outliers and fit a separate model. All these studies can 
+  claim some advantages -- in terms of MSPE -- for their respective method when
+  outliers are present.
