@@ -121,9 +121,10 @@ This is of course not the case under the respective models and hence it is based
 on a *pseudo*\hyp{}linear form. This approach directly extends to the bias 
 correction when we use the derived weights of Section 
 \ref{sec:rfhbiascorrection} instead. In this case @Cha14 recommend that the 
-squared bias term in \eq{eq:rfh_cct} be omitted since the unit level correction 
-leads to an approximately unbiased estimator. This may not be the case for the 
-area level models since we cannot correct for a bias due to unit level 
-asymmetric outliers. The estimator is evaluated in Section \ref{sec:results_mse}
-where its properties are compared to the bootstrap methods presented earlier.
+squared bias term in \eq{eq:rfh_cct} can be omitted since the unit level
+correction leads to an approximately unbiased estimator. This may not be the
+case for the area level models since we cannot correct for a bias due to unit
+level asymmetric outliers. The estimator is evaluated in Section
+\ref{sec:results_mse} where its properties are compared to the bootstrap methods
+presented earlier.
 

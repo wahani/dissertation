@@ -6,7 +6,7 @@ of addressing the potential bias of a robust prediction when we suspect
 non\hyp{}symmetric outliers. @Cha14 and @Jio13 have suggested different
 corrections to the unit level REBLUP to take this prediction bias into account.
 However the methods reviewed are based on the estimation of the within domain
-prediction error; this approach is not directly applicable to area level model
+prediction error; this approach is not directly applicable to area level models
 since we may only have a single *observation* per domain. 
 
 However the general problem remains. To find a solution we need to review the 

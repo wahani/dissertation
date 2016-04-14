@@ -557,7 +557,7 @@ starting values especially for the variance parameters. However for the
 correlation parameters in the spatial and temporal extensions the method often 
 needs many iterations. On the other hand starting values are not as critical
 since the correlation parameters are bounded between minus and plus one. Hence
-for the correlation parameters an Newton\hyp{}Raphson algorithm is utilised
+for the correlation parameters a Newton\hyp{}Raphson algorithm is utilised
 instead:
 \empty{
 \begin{align}
@@ -565,8 +565,8 @@ instead:
 \delta^{(m + 1)} = \delta^{(m)} - \frac{d(\delta^{(m)})}{d'(\delta^{(m)})}
 \end{align}
 }where $d(\cdot)$ denotes the robust estimation equation of \eq{eq:rfhreed} and 
-$d'(\cdot)$ its first derivative with respect to the parameter $\delta$. In the 
-simulation of Section \ref{sec:saeRobust_stability} it showed that a numerical 
+$d'(\cdot)$ its first derivative with respect to the parameter $\delta$. The 
+simulation of Section \ref{sec:saeRobust_stability} shows that a numerical 
 approximation to the derivative is sufficient and already yields satisfying 
 results. Thus the first derivative, $d'(\delta^{(m)})$, is approximated by
 $d(\delta^{(m)} - h)$ where $h$ is some small number. For a review of such
@@ -595,7 +595,7 @@ general case. Starting from \eq{eq:rfhreed} we can write:
 \end{align*}
 }with $l = 1, \dots, Q$. Because the sum of matrices in the trace are square
 matrices we can now solve for $\pmat\delta$. To simplify the solution we can set
-$Q = 2$ since this is the case relevant for the specific area level models as
+$Q = 2$ because this is the case relevant for the specific area level models as
 will be shown later:
 \empty{
 \begin{align}
@@ -640,7 +640,7 @@ applicable when we set $\delta = \sigre$ and use the notation of Section
 \ref{sec:rfh_model_fh}.
 
 
-#### Solutions for the Spatial Robust FH Model
+#### Solutions for the Robust Spatial FH Model
 
 \mbox{}\newline In principle $\pmat\delta = (\rho_1, \sigma_1^2)$ under the 
 spatial FH model of Section \ref{sec:rfh_model_sfh}. Hence the specific form of 
@@ -659,7 +659,7 @@ Newton-Raphson algorithm in \eq{eq:nr_delta} for $\delta_\rho$ seperately; all
 other specifications under the spatial model can be found in Section
 \ref{sec:rfh_model_sfh}.
 
-#### Solutions for the Temporal Robust FH Model
+#### Solutions for the Robust Temporal FH Model
 
 \mbox{}\newline Under the temporal model of Section \ref{sec:rfh_model_tfh}
 $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$. Although not all combinations have
@@ -702,7 +702,7 @@ find these solutions thus:
 in conjunction with the results in Section \ref{sec:rfh_model_tfh} the iterative
 equation \eq{eq:fp_delta2} can be used.
 
-#### Solutions for the Spatio\hyp{}Temporal Robust FH Model
+#### Solutions for the Robust Spatio\hyp{}Temporal FH Model
 
 \mbox{}\newline For the solutions under the spatio\hyp{}temporal model of Section
 \ref{sec:rfh_model_stfh} we recall that $\pmat\delta = (\rho_1, \sigma_1^2, 
