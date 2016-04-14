@@ -42,7 +42,7 @@ but stable -- version implementing the models here under consideration. This may
 also prove useful as a vessel for robust unit level models since most of the
 software components involved are designed to be reused. E.g. the robust score
 functions, the proposed algorithms for the regression coefficients and random
-effects, as well as more general features such as the pseudo linear
+effects, as well as more general features such as the pseudolinear
 representation of a robust estimator are directly reusable as functions.
 
 In this Chapter some numerical problems and in general the stability of the 
@@ -160,7 +160,7 @@ corresponding Chapter \ref{chap:results_model_based} and referenced literature.
 
 The starting values for the regression coefficients are computed by setting the 
 values of the diagonal weighting matrix in the IRWLS algorithm to one, this
-yielding non robust starting values. All variance parameters are set to $1$ and 
+yielding non\hyp{}robust starting values. All variance parameters are set to $1$ and 
 correlation parameters to $0.01$. Starting values for the random effects are
 computed using the non iterative but robust estimator of equation 
 \eq{eq:reblupre}. The tuning constant, $k$, for the influence function is fixed 
@@ -230,7 +230,7 @@ for the outlier scenario -- see Figure \ref{fig:stability_variance_base}. This
 may suggest an over estimation of the parameter despite the fact that we area
 using a robust method; but this can be explained by the increased variability
 under the outlier scenario. To put this result in perspective, if we estimate
-the variance with a non robust method we would tend to reach values close to
+the variance with a non\hyp{}robust method we would tend to reach values close to
 $10^5$.
 
 \input{tabs/stability_fh.tex}

@@ -88,17 +88,22 @@ variance can be obtained by:
   = & \Exp{V}\Paran{\sum_{k = 1}^n w_{ik} (\mat{z}_k^\top\mat{u} + e_k) - \mat{z}_i^\top\mat{u}} \nonumber\\
   = & \Exp{V}\Paran{\sum_{k = 1}^n w_{ik} \mat{z}_k^\top\mat{u} + \sum_{k = 1}^n w_{ik} e_k - \mat{z}_i^\top\mat{u}} \nonumber\\
   = & \Exp{V}\Paran{\sum_{k = 1}^n a_{ik} \mat{z}_k^\top\mat{u} + \sum_{k = 1}^n w_{ik} e_k} \nonumber\\
-  = & \sum_{k = 1}^n a_{ik}^2 \mat{z}_k^\top \mat{V}_u \mat{z}_k + \sum_{k = 1}^n w_{ik}^2 \sigma_{ek}^2 \label{eq:prediction_variance}
+  = & \sum_{k = 1}^n a_{ik}^2 \mat{z}_k^\top \mat{V}_u \mat{z}_k 
+    + 2 \mathop{\sum\sum}_{k < l} a_{ik} a_{il} \mat{z}_k^\top \mat{V}_u \mat{z}_l \nonumber\\
+    & + \sum_{k = 1}^n w_{ik}^2 \sigma_{ek}^2 \label{eq:prediction_variance}
 \end{align}
 }where $a_{ik} = \Paran{w_{ik} - I(k = i)}$ and $I(k = i)$ denotes an indicator 
 function which is one if $k = i$ and zero otherwise. Note that we need the term 
 $\mat{z}_k^\top \mat{V}_u \mat{z}_k$ for the case of correlated random effects; 
 and in fact it reduces to $\sigre$ under the FH model. The variance of the sum 
 can be seperated as above because $\mat{u}$ and $\mat{e}$ are independent under 
-all models under consideration. The difference to the approach of @Cha11 is that
-the first term here is stated for the more general case of correlated random 
-effects; and the second term is stated for a more specific case, i.e. when 
-the sampling variances are known.
+all models under consideration. The first two terms are the variance and 
+covariance of the weighted sum of random effects -- see for example @Bam12[118]
+-- and the remaining third term is the variance due to sampling which is here
+assumed to be independent between all areas. The difference to the approach of
+@Cha11 is that the leading two terms here are stated for the more general case
+of correlated random effects; and the third term is stated for a more specific
+case, i.e. when the sampling variances are known.
 
 Following the results by @Cha14 we can now find an estimator for the conditional
 MSPE of the REBLUP by using \eq{eq:prediction_variance} with an estimated

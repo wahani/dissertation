@@ -101,10 +101,10 @@ to adjust itself for unit level outliers. This property is explored in Section
 
 In addition to these two scenarios it is also relevant to consider the use of 
 robust direct estimators. From a practical point of view we may only have access
-to non-robust estimators. On the other hand it may be crucial feedback for a 
-data provider to additionally report robust estimates, e.g. a robust mean or a 
+to non\hyp{}robust estimators. On the other hand it may be crucial feedback for
+a data provider to additionally report robust estimates, e.g. a robust mean or a
 median. Also it is unclear how this relates to the *self-adjusting* effect of 
-the Fay-Herriot model as it was characterized above. This aspect is also
+the Fay-Herriot model as it was characterized above. This aspect is also 
 addressed by a model based simulation study in Section \ref{sec:results_unit}.
 
 

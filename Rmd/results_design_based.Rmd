@@ -131,7 +131,7 @@ compared to the bootstrap we observe a higher RRMSE.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width = \textwidth]{figs/design_mspe_point}
-\caption[\label{fig:design_mspe_estimators}Performance of the Estimated Root Mean Squared Prediction Error]{Performance of the Estimated Root Mean Squared Prediction Error -- Compared are the root MSPE estimates using the methods CCT and BOOT with the MSPE under the Monte Carlo simulation.}
+\caption[Performance of the Estimated Root Mean Squared Prediction Error]{\label{fig:design_mspe_estimators}Performance of the Estimated Root Mean Squared Prediction Error -- Compared are the root MSPE estimates using the methods CCT and BOOT with the MSPE under the Monte Carlo simulation.}
 \end{figure}
 
 

@@ -315,13 +315,11 @@ RBLUP \eq{eq:area_rblup} can be rewritten into:
   & = \Paran{\mat{x}_i^\top\mat{A} + \mat{z}_i^\top \mat{B} \Paran{\mat{I}_n - \mat{X} \mat{A}}} \mat{y} \\
   & = \tilde{\mat{w}}_i^\top \mat{y}
 \end{align*}
-}where $\tilde{\mat{w}}_i$ denotes the vector of weights. 
-
-In the following I motivate the specific form of $\mat{A}$ and $\mat{B}$. Note
-that $\mat{A}(\tilde{\pmat\beta}^\psi)\mat{y} = \tilde{\pmat\beta}^\psi$ and
-that the specific form of $\mat{A}$ can be derived starting from the estimation
-equation in
-\eq{eq:rfhreeb}:
+}where $\tilde{\mat{w}}_i$ denotes the vector of weights. In the following I
+motivate the specific form of $\mat{A}$ and $\mat{B}$. Note that
+$\mat{A}(\tilde{\pmat\beta}^\psi)\mat{y} = \tilde{\pmat\beta}^\psi$ and that the
+specific form of $\mat{A}$ can be derived starting from the estimation equation
+in \eq{eq:rfhreeb}:
 \empty{
 \begin{align*}
 \mat{X}^\top\mat{V}^{-1} \mat{U}^{\half} 
@@ -468,7 +466,7 @@ $\pmat\delta$. This proposition is very similar to the IRWLS algorithm suggested
 by @Schoch12; however it depends on a differnt choice for the robust estimation
 equation. Details of IRWLS algorithms for robust M-estimation can also be found 
 in @Mar06[pp. 104-105]. A natural choice as a starting value for the weighting 
-matrix is to set the diagonal elements to one. This will lead to the non robust 
+matrix is to set the diagonal elements to one. This will lead to the non\hyp{}robust 
 generalised least squares estimator in the first iteration. This solution is 
 acceptable since -- as @Mar06[pp. 104-105] note -- for a continuous choice of 
 $\psi$ the algorithm is non\hyp{}sensitive to the starting values with respect
@@ -505,7 +503,7 @@ $$
 to compute starting values. This estimator has been reviewed in Section 
 \ref{sec:robustee} and can be found in @Rao15[196]. Like the iterative solution 
 in \eq{eq:fp_re} it also depends on the known parameter vectors $\pmat\beta$ and
-$\pmat\delta$. Also non robust starting values showed acceptable results in the 
+$\pmat\delta$. Also non\hyp{}robust starting values showed acceptable results in the 
 simulation presented in Section \ref{sec:saeRobust_stability}; however robust 
 starting values have an significant impact on the number of iterations needed 
 when outliers are present in the data. Similar to the IRWLS algorithm for
@@ -835,20 +833,27 @@ reached. Declare these solutions to be the robust predictors,
 $\hat{\mat{u}}^\psi$. The starting values, $\mat{u}^{(0)}$, are computed
 using the robust predictor in \eq{eq:reblupre}.
 
-The stopping rule used is given by:
+The stopping rule utilised to determine whether convergence is reached is 
+defined in a form which proved to be useful when we optimise many parameters at 
+the same time. Remember that in the case of the random effects $D$ or $DT$ 
+parameters are sought for at the same time. To account for this fact, let
+$\pmat{p}$ denote a parameter vector of length $P$ and $p_l$ an element with $l
+= 1, \dots, P$ then the stopping rule is defined as:
 \empty{
 \begin{align*}
-\frac{\mid p^{(m + 1)} - p^{(m)}\mid}{p^{(m)}} & < \epsilon & \text{ for } \mid p^{(m)} \mid & > 1 \\
-\mid p^{(m+1)} - p^{(m)} \mid & < \epsilon & \text{ for } \mid p^{(m)}\mid & \leq 1
+\log\Paran{1 + \frac{1}{P} \sum_{l = 1}^P \frac{\mid p_l^{(m + 1)} - p_l^{(m)}\mid}{\max(1, \mid p_l^{(m)}\mid)}} & < \epsilon 
 \end{align*}
-}where $p^{(m)}$ denotes a parameter value in the iteration $m$ and $\epsilon$ 
-is some small constant. This rule is applied to each element in the respective 
-parameter vector so that when the algorithm stops all parameter values will
-fulfill at least one of the two rules. In general the first stopping rule is 
-used and it yields the relative absolute change. This is not feasible if the
-true parameter value is 0, hence the distinction between the two cases. An
-advantage of these rules is that they are scale independent which can be
-beneficial if the true parameters have large absolute values as is pointed out 
-by @Wei14[pp. 143-144]. A general discussion of algorithms in statistics can be 
-found in @McC04 and more specifically of robust regression estimates in
-@Mar06[pp. 325 ff].
+}where $p_l^{(m)}$ denotes a parameter value in the iteration $m$ and $\epsilon$
+is some small constant. This stopping rule may appear to be artificial but it is
+motivated for the following reasons: it showed good properties when many, say
+hundreds or thousands, parameters are optimised jointly. This is so because
+first it is scaled down by taking the mean over all parameters and second by
+taking the $\log$. The one is added to avoid negative values of the logarithm.
+Inside the sum the relative absolute differences of the parameter estimates at
+iteration $m$ and $m + 1$ are computed. In fact only the relative difference is
+used when the denominator is larger than 1; otherwise the absolute difference is
+being used. Here the advantage is that it makes the comparissons scale
+independent which can be beneficial if the true parameters have large absolute
+values as is pointed out by @Wei14[pp. 143-144]. @Wei14 and @McC04 also provide
+a discussion of the choice of such stopping rules. The properties and results of
+this algorithm is the subject matter of Section \ref{sec:saeRobust_stability}.

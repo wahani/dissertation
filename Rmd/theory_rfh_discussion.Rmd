@@ -12,7 +12,7 @@ with correlated random effects.
 derive the area level REBLUPs -- the area level SREBLUP, TREBLUP, and STREBLUP
 -- in a pseudo linear form. The results are presented in a general form to
 include the general class of mixed linear models.
-- This pseudo linear representation has lead to algorithms to find solutions for
+- This pseudolinear representation has lead to algorithms to find solutions for
 the robust estimation equations. An IRWLS algorithm for $\pmat\beta$ has been
 derived as well as a fixed point algorithm for the random effects, $\mat{u}$.
 - Furthermore a simple bias correction for the robust prediction has been
@@ -23,16 +23,16 @@ correlated random effects. In this regard also the parameteric bootstrap method
 for the MSPE estimation by @Sin09 has been adapted although hardly any changes
 have been necessary in this case.
 
-The various methods and extensions are now further investigated in two ways.
-First, we will see how the robust predictors are implemented inside a software
-package in the `R`-language \citep{R}: `saeRobust` \citep{War16}. With respect
-to this implementation especially the stability of results are of interest --
-  see Chapter \ref{chap:saeRobust}. Second, these methods are used in model based
--- Chapter \ref{chap:results_model_based} -- and design based -- Chapter
-\ref{chap:results_design_based} -- simulation studies. These simulations aim at
+The various methods and extensions are now further investigated in two ways. 
+First, we will see how the robust predictors are implemented inside a software 
+package in the `R`-language \citep{R}: `saeRobust` \citep{War16}. With respect 
+to this implementation especially the stability of results are of interest -- 
+see Chapter \ref{chap:saeRobust}. Second, these methods are used in model based 
+-- Chapter \ref{chap:results_model_based} -- and design based -- Chapter 
+\ref{chap:results_design_based} -- simulation studies. These simulations aim at 
 exploring the statistical properties of the robust predictions compared to their
-non-robust counterparts. These simulation studies are conducted using the
-`R`-language and a simulation framework developed alongside this Thesis. This
-framework is implemented in the `R`-package `saeSim` \citep{War15} and some
+non\hyp{}robust counterparts. These simulation studies are conducted using the 
+`R`-language and a simulation framework developed alongside this Thesis. This 
+framework is implemented in the `R`-package `saeSim` \citep{War15} and some 
 discussion of this implementation is provided in Chapter \ref{chap:saeSim}.
 

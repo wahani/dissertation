@@ -44,7 +44,7 @@ reduced bias. This approach can be directly applied to the spatial and temporal
 extensions and thus similarly to the area level REBLUP the area level REBLUP-BC in
 \eq{eq:area_reblup_bc} acts as a placeholder for all extensions.
 
-Since we need the pseudo linear representation below, we can state
+Since we need the pseudolinear representation below, we can state
 \eq{eq:area_reblup_bc} as:
 \empty{
 \begin{align*}

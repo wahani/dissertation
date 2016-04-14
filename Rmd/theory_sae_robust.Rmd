@@ -307,7 +307,7 @@ bootstrap. Similar to the approach taken by @Jio14 they also construct a set of
 errors and random effects from which they draw their bootsrtap samples. However 
 instead of using a robust estimation method, they construct outlier robust 
 samples; this means that the way in which the bootstrap samples are constructed 
-is robust against outliers. On each sample then a non robust small area 
+is robust against outliers. On each sample then a non\hyp{}robust small area 
 estimator can be used. This approach has the interesting effect that a MSPE 
 estimator for robust domain predictions as well as the robust predictions 
 themselfes can be produced. Although the results look promising 

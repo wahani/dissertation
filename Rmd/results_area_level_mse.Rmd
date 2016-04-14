@@ -111,7 +111,7 @@ The main results of the simulation study is given in Table
 The first observation is that the CCT has not a negative bias in all cases. 
 However as we disregard the uncertainty due to the estimation of the variance 
 parameters and assume independence between the weights and the response in the 
-pseudo linear form we should expect an underestimation. For the RFH and RSFH in 
+pseudolinear form we should expect an underestimation. For the RFH and RSFH in 
 the non\hyp{}outlier scenario this is observable. Under the same scenario the 
 RTFH and RSTFH can have a positive bias since only the estimated MSPE for the 
 *current* time period is considered. In an analysis using all the time periods
