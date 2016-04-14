@@ -139,8 +139,8 @@ estimator is the sample mean.
 - FH.SM -- is the non\hyp{}robust prediction under the FH model. This model is
 based on the sample mean and uses the direct variance estimate as sampling
 variance for each domain: $\sige \coloneqq \frac{s_i^2}{n_i}$.
-- RFH.SM -- is the robust prediction based the sample mean. The same setup is
-used as for FH.SM is used.
+- RFH.SM -- is the robust prediction based the sample mean. The same setup as
+for FH.SM is used.
 - FH.SM.GVF -- is the non\hyp{}robust prediction under the FH model using a 
 generalised variance function. In contrast to FH.SM a generalised variance 
 function is used as an estimator for the sampling variance: $\sige \coloneqq 
