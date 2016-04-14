@@ -148,7 +148,7 @@ three observations we can make when studying the figures:
 \begin{figure}[htbp]
 \centering
 \includegraphics[width = \textwidth]{figs/area_level_rrmse.pdf}
-\caption[Relative Root Mean Squared Error of Spatial and Temporal REBLUPs]{\label{fig:area_level_rrmse}Relative Root Mean Squared Error of Spatial and Temporal REBLUPs}
+\caption[Relative Root Mean Squared Prediction Error of Spatial and Temporal REBLUPs]{\label{fig:area_level_rrmse}Relative Root Mean Squared Prediction Error of Spatial and Temporal REBLUPs}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -217,7 +217,7 @@ non\hyp{}robust methods. First, the ratio of variance due to the random effects
 can be increased, thus simplifying the identification of these correlation
 structures. Second, the strength of the outlier contamination can be increased.
 In a study where the mean of the outlier distribution was set to 100 the
-estimation under the TFH and STFH models yielded esults comparable to their
+estimation under the TFH and STFH models yielded results comparable to their
 robust counterparts. As was discussed earlier in such a setting these models are
 over parametrised and can thus model the mixture distribution used for inducing
 the outlier contamination.

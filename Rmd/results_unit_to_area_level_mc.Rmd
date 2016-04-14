@@ -69,7 +69,7 @@ is a i.i.d. random variable: $\re_i \sim \Distr{N}(0, \sigre)$; and
 $e_{ij}$ is also a i.i.d. random variable: $e_{ij} \sim \Distr{N}(0, 
 \sigma_e^2)$. Given this simple unit level model consider the case in which we
 draw samples with simple random sampling without replacement (SRSWOR) in each
-domain. Here we only consider the case where units are observed for all domains.
+domain. Only the case is considered where units are observed for all domains.
 The domain specific sample sizes are denoted by $n_i$. When we use the sample
 mean as a direct estimator we can derive the area level model as:
 $$

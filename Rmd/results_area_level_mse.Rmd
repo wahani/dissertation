@@ -174,7 +174,7 @@ bias. The bootstrap in contrast shows very stable results -- approximately 10
 per cent in terms of RRMSE -- over a variety of different settings. However this
 method cannot capture the variation for outlying domains. In scenarios in which 
 the respective models repeatedly yield estimates close to zero variances the 
-bootstrap will underestimate the true variation since more weights is given to 
+bootstrap will underestimate the true variation since more weight is given to 
 the linear predictor; this can be seen in Chapter
 \ref{chap:results_design_based}. This setting has been avoided -- in contrast to
 Section \ref{sec:results_predictions} -- by choosing larger values for the
