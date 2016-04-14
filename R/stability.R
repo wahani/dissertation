@@ -33,7 +33,7 @@ runs <- 500
 maxIter1 <- 100
 maxIter2 <- 1000
 maxIterParam <- 100
-cpus <- 2
+cpus <- 1 # round(parallel::detectCores() / 2)
 
 mcSettings <- if (LOCAL) {
   list(mode = "multicore", cpus = cpus, mc.preschedule = FALSE)
@@ -366,7 +366,7 @@ g2 <- ggplot(data.frame(estimate = dat$Variance, score = scores$Variance, scenar
   geom_point(aes(x = estimate, y = score)) +
   facet_grid(scenario ~ .) +
   theme$theme_thesis(fontSize) +
-  labs(x = labelParam, y = labelScore)
+  labs(x = "Variance", y = labelScore)
 
 cairo_pdf("figs/stability_variance_base.pdf", width, 1.7 * height)
 grid.arrange(g1, g2, ncol = 2, widths = c(0.4 * width, 0.6 * width))
@@ -442,7 +442,7 @@ dat <- baseData %>%
   as.data.frame
 
 out1 <- rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
-           maxIter = 100, maxIterParam = 1, maxIterRe = 1)
+           maxIter = 10000, maxIterParam = 1, maxIterRe = 1)
 
 out2 <- rfh(y ~ x, dat, "dirVar", corSAR1(testRook(domains)),
             maxIter = 100, maxIterParam = 100, maxIterRe = 1)
@@ -480,7 +480,8 @@ ggplot(dat, aes(x = i, y = V1)) +
   geom_line() +
   facet_grid(parameter ~ strategy, scales = "free_y") +
   theme$theme_thesis(14) +
-  labs(x = "Iteration", y = labelParam)
+  labs(x = "Iteration", y = labelParam) +
+  coord_cartesian(xlim = c(0, 100))
 dev.off()
 
 
