@@ -220,7 +220,7 @@ components to any step in the process. The composition of a simulation in that
 manner will focus on the definition of components and hide control structures.
 Any function can be passed to `sim_sample` which has a `data.frame` both as
 input and as return value. The only responsibility of that function is to draw a
-sample, which makes it easy to find, understand and reuse when published. The
+sample, which makes it easy to find, understand, and reuse when published. The
 pipe operator is used to add new components to the setup.
 
 In what follows one way of constructing a simulation in a model based setting is
@@ -235,7 +235,7 @@ y_{ij} = 100 + 5 \cdot x_i + \re_i + e_{ij}
 $$
 where $x_i \sim N(0, 16)$, $\re_i \sim N(0, 4)$ and $e_{ij} \sim N(0, 32)$. The 
 variance parameter of the unit level error, $e_{ij}$ is chosen to lead to 
-sampling errors of the sample mean between 3 and 6 -- see Section
+sampling errors of the sample mean between 2 and 6 -- see Section
 \ref{sec:results_unit} ahead for a more detailed presentation of a similar
 scenario.
 
