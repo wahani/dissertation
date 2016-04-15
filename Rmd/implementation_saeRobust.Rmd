@@ -409,6 +409,39 @@ against the choice of starting values.
 # Code Examples
 \label{sec:saeRobust_code_examples}
 
+```{r set-options, echo=FALSE, cache=FALSE}
+options(width = 70)
+```
+
+In this Section I present some code examples using the `R`-package `saeRobust` 
+\citep{War16} to illustrate the current state of its development. An important 
+software package implementing the SFH and STFH as well as the basic FH model in 
+the `R`-language is the `sae` package of @Mol15. They also provide several 
+examples on how to use their implementation with various data sets. For this
+purpose I adapt these examples; however the aim here is not a direct comparisson
+with the package `sae`. 
+
+```{r message=FALSE}
+library("saeRobust")
+data("grapes", package = "sae")
+data("grapesprox", package = "sae")
+
+fitRFH <- rfh(
+  grapehect ~ area + workdays - 1, 
+  data = grapes, 
+  samplingVar = "var"
+)
+
+fitRFH
+summary(fitRFH)
+
+plot(fitRFH)
+plot(predict(fitRFH, c("reblup", "reblupbc")))
+plot(mse(fitRFH))
+
+```
+
+
 
 
 # Discussion
