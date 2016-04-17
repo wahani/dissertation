@@ -406,6 +406,7 @@ estimation equation convergence is reached rapidly. The main reason may be the
 restriction of the parameter space to $\rho < |1|$ which makes it more robust
 against the choice of starting values.
 
+
 # Code Examples
 \label{sec:saeRobust_code_examples}
 
@@ -421,26 +422,205 @@ examples on how to use their implementation with various data sets. For this
 purpose I adapt these examples; however the aim here is not a direct comparisson
 with the package `sae`. 
 
-```{r message=FALSE}
+As an introductory example we can make use of the synthetic data set `grapes` 
+\citep{Mol15} which contains information on the geographical area for grape 
+production in Tuscany, Italy. The data set comprises the information of the 274 
+muniscipalities in Tuscany. The target variable is the number of hecta used for 
+grape production: `grapehect`. The sampling variance of this direct estimator is
+stored in the variable `var`; additional covariates are the area used for 
+agriculture within each muniscipality: `area`; and the average number of working
+days in the reference year (2000): `workdays`. Additionally we have the
+proximity matrix of these muniscipalities stored in `grapesprox`. 
+
+Before I illustrate the incorporation of the spatial correlation structure, we
+can see how the basic, but robust, FH model can be estimated:
+
+```{r message=FALSE, R.options=list(width=50)}
 library("saeRobust")
 data("grapes", package = "sae")
 data("grapesprox", package = "sae")
 
 fitRFH <- rfh(
-  grapehect ~ area + workdays - 1, 
+  grapehect ~ area + workdays, 
   data = grapes, 
   samplingVar = "var"
 )
 
 fitRFH
-summary(fitRFH)
-
-plot(fitRFH)
-plot(predict(fitRFH, c("reblup", "reblupbc")))
-plot(mse(fitRFH))
-
 ```
 
+\noindent The function `rfh` is the central interface to the robust prediction 
+under all models as will be illustrated below. We specify the fixed effects part
+of the model using a `formula` object in `R` and the sampling variance is 
+identified by the variable name in the data set. The simple output we see here 
+is in direct corespondence to a linear model in `R` with the additional 
+information about the estimated variance parameters.
+
+As we saw in the previous section it is relevant to check the number of
+iterations and the values of the estimation equations at their respective
+solutions:
+
+```{r}
+summary(fitRFH)
+```
+
+\noindent When we call the `summary` generic function we get detailed 
+information on the solutions and the needed iterations. Here the values of the 
+respective robust estimation equations are sufficiently close to zero. Overall 
+the algorithm needed 31 iterations. Each nested algorithm has been retricted to
+10 iterations. The optimiser for the random effects needed 9 iterations. With
+ragard to the algorithm the user has the option to specify starting values, the
+number of iterations, and numerical tolerance used in the stopping criterion.
+
+Some diagnostic plots can be obtained for the model residuals, the predictions, 
+and the MSPE estimation. They are triggered using the `plot` generic function on
+the respective data type; that is the respective object containing the fitted
+model, the prediction, or the MSPE estimation. In the following presentation the
+returned plots are modified to fit into the general theme of this Thesis.
+Beginning with the residual plots we can use:
+
+```{r}
+plot(fitRFH)
+```
+
+```{r residualPlots, echo=FALSE, message = FALSE, results='hide'}
+ggTheme <- modules::use("R/graphics/themes.R")
+library("ggplot2")
+ggPlots <- plot(fitRFH)
+g1 <- ggPlots$residuals + ggTheme$theme_thesis() + labs(title = NULL)
+g2 <- ggPlots$randomEffects + ggTheme$theme_thesis() + labs(title = NULL)
+cairo_pdf("figs/saeRobust_residuals_grapes.pdf", 6, 3)
+gridExtra::grid.arrange(g1, g2, ncol = 2)
+dev.off()
+```
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\textwidth]{figs/saeRobust_residuals_grapes.pdf}
+\caption[saeRobust: Quantile-Quantile Plots for Residuals and Random Effects -- using grapes data]{\label{fig:saeRobust_residuals_grapes}Quantile-Quantile Plots for Standardised Residuals (left) and Random Effects (right)}
+\end{figure}
+
+\noindent and obtain the Quantile\hyp{}Quantile plots in Figure \ref{fig:saeRobust_residuals_grapes}. Since the FH model and all extensions under consideration assume a heteroscedastic sampling distribution it is not meaningful to plot the estimated sampling errors -- here denoted as residuals. Thus the standardised residuals are used instead:
+$$
+\hat{e}^*_i = \hat{e}_i / \sigma_{ei}
+$$
+where $\hat{e}_i$ is the realisation under the fitted model of the sampling 
+error for area $i$. Note that this extends to all models when we set $i = 1, 
+\dots, n$ and $n$ can be equal to $D$ or $DT$ for a given model. See Section
+\ref{sec:rfh_model} for the notation and models underpinning the above
+formulation.
+
+Figure \ref{fig:saeRobust_residuals_grapes} shows here deviation from the normal distribution for residuals and random effects. In both plots we see more extreme values than we should expect; with regard to the random effects this may be a situation in which the robust estimation technique may be beneficial. We can estimate the non\hyp{}robust version by setting the tuning constant to some large value:
+
+```{r}
+rfh(
+  grapehect ~ area + workdays, 
+  data = grapes, 
+  samplingVar = "var",
+  k = 10000
+)
+```
+
+\noindent What we can observe is that the intercept and estimated variance
+parameter are estimated at a higher value than before. This indicates some
+effect of outlying observations on the non\hyp{}robust parameter estimation.
+However the differences between robust and non\hyp{}robust methods are discussed
+more thoroughly in Chapter \ref{chap:results_model_based}.
+
+To obtain the predictions we can make use of the `predict` generic function.
+Here a `data.frame` is returned containing the realised random effects, the
+direct estimator, the REBLUP, and the bias corrected REBLUP:
+
+```{r}
+predsRFH <- predict(fitRFH, c("reblup", "reblupbc"))
+head(predsRFH)
+```
+
+\noindent Now we can plot these predictions using, again, the `plot` generic function:
+
+```{r}
+plot(predsRFH)
+```
+
+```{r prediction-plots, echo=FALSE, message = FALSE, results='hide'}
+ggPlots <- plot(predsRFH)
+g1 <- ggPlots[[1]] + ggTheme$theme_thesis() + labs(title = NULL) + coord_cartesian(ylim = c(-100, 200))
+g2 <- ggPlots[[2]] + ggTheme$theme_thesis() + labs(title = NULL) + coord_cartesian(ylim = c(-100, 200)) + theme(axis.text.y = element_blank())
+cairo_pdf("figs/saeRobust_preds_grapes.pdf", 6, 3)
+gridExtra::grid.arrange(g1, g2, ncol = 2)
+dev.off()
+```
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\textwidth]{figs/saeRobust_preds_grapes.pdf}
+\caption[saeRobust: Bland-Altman Plots for Predictions -- using grapes data]{\label{fig:saeRobust_preds_grapes}Bland-Altman Plots for Predictions -- Solid line is the mean of the differences; dashed lines are the limits-of-agreements: mean plus / minus the 97.5\% quantile of the standard normal distribution times the standard deviation of the differences.}
+\end{figure}
+
+\noindent and obtain the plots in Figure \ref{fig:saeRobust_preds_grapes} where 
+for each predictor a Bland-Altman Plot \citep{Bla86} is utilised to compare the 
+direct predictor with the respective robust estimation technique. These plots 
+are inspired by @Bla86 who use a mean\hyp{}difference plot to judge whether 
+two methods of measurement are equivalent. The goal here is to compare a new 
+method to a *gold standard* in the field of Medicine. Interpreting this more 
+freely in the SAE field we want to achieve a similar feat: to understand the 
+difference between the direct estimator and an alternative modelling strategy. 
+As additional visual reference the solid line is the mean of the differences
+which may be expected to be close to zero when the REBLUP is unbiased. The 
+*limits-of-agreement*, the dashed lines, indicate larger divergence between the 
+two techniques. They are here constructed as the mean plus and minus the 97.5\% 
+quantile of the standard normal distribution times the standard deviation of the
+differences. We may suspect here that for larger values of the direct estimator
+we predict lower values using the REBLUP; although there are only few
+observations supporting this observation. Furthermore we see that the bias
+correction has no large impact on the overall presentation.
+
+Now turning to the estimation of the MSPE we make use of the function `mse` 
+which returns a `data.frame` containing the direct estimator with the sampling 
+variances as well as the REBLUP and the MSPE estimation using the 
+pseudolinear\hyp{}based approach of Section \ref{sec:rfh_mse_pseudo_linear}. The
+paramteric bootstrap of Section \ref{sec:rfh_mse_boot} can be triggered when we
+set the argument `type` to `"boot"`:
+
+```{r}
+mseRFH <- mse(fitRFH, type = "pseudo", predType = "reblup")
+head(mseRFH)
+```
+
+Again we can trigger some diagnostic plots using the `plot` generic function:
+
+```{r}
+plot(mseRFH, ylim = c(0, 400))
+```
+
+```{r prediction-mse, echo=FALSE, message = FALSE, results='hide'}
+ggPlots <- plot(mseRFH, ylim = c(0, 400))
+g1 <- ggPlots[[1]] + 
+  ggTheme$theme_thesis() + 
+  labs(title = NULL, x = "Sorted Domains", colour = NULL) +
+  theme(legend.position = c(.2, .85))
+g2 <- ggPlots[[2]] + 
+  ggTheme$theme_thesis() + 
+  labs(title = NULL, y = NULL,  x = " ") + coord_cartesian(ylim = c(0, 400)) + 
+  theme(axis.text.y = element_blank())
+cairo_pdf("figs/saeRobust_mse_grapes.pdf", 6, 3)
+gridExtra::grid.arrange(g1, g2, ncol = 2)
+dev.off()
+```
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/saeRobust_mse_grapes.pdf}
+\caption[saeRobust: Plots for Coefficient of Variation -- using grapes data]{\label{fig:saeRobust_mse_grapes}Plots for Coefficient of Variation -- direct vs. REBLUP; The domains in the left panel are sorted for the CV of the direct estimator.}
+\end{figure}
+
+\noindent to obtain the plots in Figure \ref{fig:saeRobust_mse_grapes}. The plot
+on the left hand side is similar to the one provided by @Mol15 in this example. 
+Here we plot the coefficient of variation (CV) against a sorted sequence of 
+domain identifiers. As in @Mol15 the presentation is restricted to values which 
+have a smaller CV than 400. What we can observe is a clear benefit of using the 
+REBLUP for domain predictions; here the *very unreliable* domains -- measured in
+terms of CV -- benefit the most.
 
 
 

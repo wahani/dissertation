@@ -6,6 +6,7 @@ here under consideration. Also a pseudolinearisation\hyp{}based MSPE estimator
 is derived based on the results by @Cha11.
 
 ## Parametric Bootstrap Methods
+\label{sec:rfh_mse_boot}
 
 To estimate the MSPE of the robust prediction under the BHF model in 
 \eq{eq:reblupbhf} @Sin09 have proposed a parametric bootstrap method -- see 
