@@ -69,13 +69,15 @@ estimation; they are defined as an ascending and equidistant sequence between 2
 and 6: $\sige = \frac{4 (i - 1)}{D - 1} + 2$.
 - The random effect components are generally generated from the spatio-temporal 
 model, i.e. $\re_{1i} \sim \text{SAR}(1)$ and $\re_{2it} \sim \text{AR}(1)$ -- 
-see also the more concrete presentation in Section \ref{sec:rfh_model_stfh}. 
-Models with uncorrelated random effects are deduced where the respective 
-correlation parameter is set to zero. Since the impact of outliers is our main 
-concern only those scenarios are considered where the spatial and temporal
-correlation is set to $\rho = \rho_1 = \rho_2$ and the respective variance
-parameters to $\sigma_u^2 = \sigma_1^2 = \sigma_2^2$. The concrete choices for
-$\rho$ and $\sigma_u^2$ depend on the respective scenarios as defined below.
+see also the more concrete presentation in Section \ref{sec:rfh_model_stfh}. The
+proximity matrix to generate the spatial correlation structure is of type *rook*
+\citep[250]{Biv08} and correctly specified in the estimation. Models with
+uncorrelated random effects are deduced where the respective correlation
+parameter is set to zero. Since the impact of outliers is our main concern only
+those scenarios are considered where the spatial and temporal correlation is set
+to $\rho = \rho_1 = \rho_2$ and the respective variance parameters to
+$\sigma_u^2 = \sigma_1^2 = \sigma_2^2$. The concrete choices for $\rho$ and
+$\sigma_u^2$ depend on the respective scenarios as defined below.
 
 The scenarios which are considered are defined now by the combination of spatial
 and temporal correlation in combination with the presence of outliers:
@@ -103,13 +105,13 @@ The methods to be compared are the robust spatial and temporal extensions of the
 FH model. The non\hyp{}robust methods are denoted by FH, SFH, TFH, and STFH; and
 their robust counterparts by RFH, RSFH, RTFH, and RSTFH. In fact these methods 
 were introduced as area level REBLUP, SREBLUP, TREBLUP, and STREBLUP in 
-Section \ref{sec:theory_reblup} and are here abbreviated for notational
-simplicity. Furthermore we have the bias corrected versions of the predictors
-using the correction proposed in Section \ref{sec:rfhbiascorrection}. This
-correction is only applied to the robust predictions and the respective models
-are referred to by RFH.BC, RSFH.BC, RTFH.BC, and RSTFH.BC. Furthermore the
-direct estimator is denoted by *Direct*; this is the generated value for
-$y_{iT}$.
+Section \ref{sec:theory_reblup} and are here abbreviated for notational 
+simplicity. Furthermore we have the bias corrected versions of the predictors 
+using the correction proposed in Section \ref{sec:rfhbiascorrection}. This 
+correction is only applied to the robust predictions and the respective models 
+are referred to by RFH.BC, RSFH.BC, RTFH.BC, and RSTFH.BC. The tuning constant
+for the robust predictions is fixed at 1.345. Furthermore the direct estimator
+is denoted by *Direct*; this is the generated value for $y_{iT}$.
 
 To assess the quality of the predictions under the various methods two measures
 are utilised: the relative bias (RBIAS) and the relative root mean squared
@@ -148,13 +150,13 @@ three observations we can make when studying the figures:
 \begin{figure}[htbp]
 \centering
 \includegraphics[width = \textwidth]{figs/area_level_rrmse.pdf}
-\caption[Relative Root Mean Squared Prediction Error of Spatial and Temporal REBLUPs]{\label{fig:area_level_rrmse}Relative Root Mean Squared Prediction Error of Spatial and Temporal REBLUPs}
+\caption[Relative Root Mean Squared Prediction Error of Spatial and Temporal RE\-BLUPs]{\label{fig:area_level_rrmse}Relative Root Mean Squared Prediction Error of Spatial and Temporal REBLUPs}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width = \textwidth]{figs/area_level_rbias.pdf}
-\caption[Relative BIAS of Spatial and Temporal REBLUPs]{\label{fig:area_level_rbias}Relative BIAS of Spatial and Temporal REBLUPs}
+\caption[Relative BIAS of Spatial and Temporal RE\-BLUPs]{\label{fig:area_level_rbias}Relative BIAS of Spatial and Temporal REBLUPs}
 \end{figure}
 
 1. In terms of bias the robust temporal and spatio\hyp{}temporal extensions

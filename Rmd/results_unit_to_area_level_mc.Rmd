@@ -131,7 +131,8 @@ Two measures are utilised to assess the quality of predictions: the Monte Carlo
 RRMSPE and Monte Carlo RBIAS. These quantities are computed according to Section
 \ref{sec:area_level_sim_qm}. The performance is studied for several methods; the
 non\hyp{}robust predictions under the FH model and robust prediction referred to
-as RFH. The following modelling strategies are considered:
+as RFH. For the robust predictions the tuning constant is fixed at a value of
+1.345. The following modelling strategies are considered:
 
 - SM -- denotes the sample mean. Since we sample with SRSWOR an unbiased direct
 estimator is the sample mean.
@@ -168,21 +169,21 @@ variances are estimated as for the FH.RM method.
 To summarise the results of this study consider Figure \ref{fig:unit_mse} and
 \ref{fig:unit_bias}. With these results the following observations can be made:
 
-- There is only a small advantage in using generalised variance functions as an
+1. There is only a small advantage in using generalised variance functions as an
 alternative to direct variance estimates.
-- The robust FH prediction has no additional effect under unit level outliers.
-- A robust direct estimator has no advantage over the sample mean.
+2. The robust FH prediction has no additional effect under unit level outliers.
+3. A robust direct estimator has no advantage over the sample mean.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width = \textwidth]{figs/unit_mse.pdf}
-\caption[Unit Level MSE]{\label{fig:unit_mse}ads}
+\caption[Relative Root Mean Squared Prediction Error for Domain Predictions]{\label{fig:unit_mse}Relative Root Mean Squared Prediction Error for Domain Predictions}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width = \textwidth]{figs/unit_bias.pdf}
-\caption[Unit Level BIAS]{\label{fig:unit_bias}ads}
+\caption[Relative Bias for Domain Predictions]{\label{fig:unit_bias}Relative Bias for Domain Predictions}
 \end{figure}
 
 The first observation to make is that the particular choice for the generalised

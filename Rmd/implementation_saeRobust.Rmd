@@ -497,7 +497,7 @@ dev.off()
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{figs/saeRobust_residuals_grapes.pdf}
-\caption[saeRobust: Quantile-Quantile Plots for Residuals and Random Effects -- using grapes data]{\label{fig:saeRobust_residuals_grapes}Quantile-Quantile Plots for Standardised Residuals (left) and Random Effects (right)}
+\caption[saeRobust: Quantile-Quantile Plots for Residuals and Random Effects]{\label{fig:saeRobust_residuals_grapes}Quantile-Quantile Plots for Standardised Residuals (left) and Random Effects (right)}
 \end{figure}
 
 \noindent and obtain the Quantile\hyp{}Quantile plots in Figure
@@ -560,7 +560,7 @@ dev.off()
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{figs/saeRobust_preds_grapes.pdf}
-\caption[saeRobust: Bland-Altman Plots for Predictions -- using grapes data]{\label{fig:saeRobust_preds_grapes}Bland-Altman Plots for Predictions -- Solid line is the mean of the differences; dashed lines are the limits-of-agreements: mean plus / minus the 97.5\% quantile of the standard normal distribution times the standard deviation of the differences.}
+\caption[saeRobust: Bland-Altman Plots for Predictions]{\label{fig:saeRobust_preds_grapes}Bland-Altman Plots for Predictions -- Solid line is the mean of the differences; dashed lines are the limits-of-agreements: mean plus / minus the 97.5\% quantile of the standard normal distribution times the standard deviation of the differences.}
 \end{figure}
 
 \noindent and obtain the plots in Figure \ref{fig:saeRobust_preds_grapes} where 
@@ -617,7 +617,7 @@ dev.off()
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/saeRobust_mse_grapes.pdf}
-\caption[saeRobust: Plots for Coefficient of Variation -- using grapes data]{\label{fig:saeRobust_mse_grapes}Plots for Coefficient of Variation -- direct vs. REBLUP; The domains in the left panel are sorted for the CV of the direct estimator.}
+\caption[saeRobust: Plots for Coefficient of Variation]{\label{fig:saeRobust_mse_grapes}Plots for Coefficient of Variation -- direct vs. REBLUP; The domains in the left panel are sorted for the CV of the direct estimator.}
 \end{figure}
 
 \noindent to obtain the plots in Figure \ref{fig:saeRobust_mse_grapes}. The plot

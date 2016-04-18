@@ -47,16 +47,23 @@ for all scenarios: $e_{it} \sim \Distr{N}(0, \sige)$ with $\sigma_{eit}^2 =
 \sige$ and $\sige = \frac{4 (i - 1)}{D - 1} + 2$. Furthermore a distinction is
 made between:
 
-- RFH-(0): $D = 40$ and $T = 1$; $\mat{z}_{it}^\top\mat{u} = u_i$ with $u_i \sim
-\Distr{N}(0, 9)$.
-- RSFH-(0): $D = 40$ and $T = 1$; $\mat{z}_{it}^\top\mat{u} = u_{1i}$ with
-$u_{1i} \sim SAR(1)$ where $\rho_1 = 0.5$ and $\sigma_1^2 = 9$.
-- RTFH-(0): $D = 40$ and $T = 10$; $\mat{z}_{it}^\top\mat{u} = u_{0i} + u_{2it}$
-with $u_{0i} \sim \Distr{N}(0, 9)$ and $u_{2it} \sim AR(1)$ where $\rho_2 = 0.5$
-and $\sigma_2^2 = 9$.
-- RSTFH-(0): $D = 40$ and $T = 10$; $\mat{z}_{it}^\top\mat{u} = u_{1i} +
-u_{2it}$ with $u_{1i} \sim SAR(1)$ where $\rho_1 = 0.5$ and $\sigma_1^2 = 9$ and
-$u_{2it} \sim AR(1)$ where $\rho_2 = 0.5$ and $\sigma_2^2 = 9$.
+- RFH-(0) -- denotes the non\hyp{}outlier scenario used for evaluating the MSPE
+estimators for predictions using the RFH method. Here $D = 40$ and $T = 1$;
+$\mat{z}_{it}^\top\mat{u} = u_i$ with $u_i \sim \Distr{N}(0, 9)$.
+- RSFH-(0): denotes the non\hyp{}outlier scenario for the spatial FH model. $D =
+40$ and $T = 1$; $\mat{z}_{it}^\top\mat{u} = u_{1i}$ with $u_{1i} \sim SAR(1)$
+where $\rho_1 = 0.5$ and $\sigma_1^2 = 9$. Similar to before a *rook* proximity
+matrix is used to generate the spatial structure \citep[250]{Biv08}.
+- RTFH-(0): denotes the non\hyp{}outlier scenario under a TFH model. Here $D =
+40$ and $T = 10$; $\mat{z}_{it}^\top\mat{u} = u_{0i} + u_{2it}$ with $u_{0i}
+\sim \Distr{N}(0, 9)$ and $u_{2it} \sim AR(1)$ where $\rho_2 = 0.5$ and
+$\sigma_2^2 = 9$.
+- RSTFH-(0): denotes the non\hyp{}outlier scenario under the
+spatio\hyp{}temporal FH model. Here $D = 40$ and $T = 10$;
+$\mat{z}_{it}^\top\mat{u} = u_{1i} + u_{2it}$ with $u_{1i} \sim SAR(1)$ where
+$\rho_1 = 0.5$ and $\sigma_1^2 = 9$ and $u_{2it} \sim AR(1)$ where $\rho_2 =
+0.5$ and $\sigma_2^2 = 9$. Also a proximity matrix of type *rook* is utilised to
+generate the spatial process.
 
 \noindent Here *(0)* is used to denote the non\hyp{}outlier scenario. For each
 of these scenarios one outlier scenario is considered which is denoted by *(u)*
@@ -76,9 +83,11 @@ assess the quality of these estimators the relative root mean squared error
 $i$ in the $r$th Monte Carlo repetition using method $M$. $M$ is either the
 parametric bootstrap referred to by BOOT or the pseudolinearisation based
 approach which is refereed to by CCT. Similar to the previous study, predictions
-are made for the *current* time period, which is again defined as $t = T$ for
-the respective scenario. This also means that we evaluate only the RMSPE for
-these predictions. We can then define the RRMSE as:
+are made for the *current* time period, which is again defined as $t = T$ for 
+the respective scenario. This also means that we evaluate only the RMSPE for 
+these predictions. In the bootstrap 100 repetitions are conducted; changing the
+number of repetitions did not change the results significantly. We can then
+define the RRMSE as:
 $$
 RRMSE_i^M = \sqrt{\frac{1}{R} \sum_{r = 1}^R \Paran{\frac{\widehat{RMSPE}^M_{ir} - RMSPE^M_{i}}{RMSPE^M_{i}}}^2}
 $$
@@ -94,7 +103,7 @@ $$
 These measures are computed for both MSPE estimators and for all robust 
 predictions; the respective predictors are referred to by RFH, RSFH, RTFH, and 
 RSTFH; and their bias\hyp{}corrected counterparts by RFH.BC, RSFH.BC, RTFH.BC,
-and RSTFH.BC.
+and RSTFH.BC. The tuning constant is fixed at 1.345 for all models.
 
 ## Results
 \label{sec:results_mse_results}
