@@ -1,28 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Classicthesis Typographic Thesis
-% LaTeX Template
-% Version 1.3 (15/2/14)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original author:
-% André Miede (http://www.miede.de)
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-% General Tips:
-% 1) Make sure to edit the classicthesis-config.file
-% 2) New enumeration (A., B., C., etc in small caps): \begin{aenumerate}
-% \end{aenumerate}
-% 3) For margin notes: \marginpar or \graffito{}
-% 4) Do not use bold fonts in this style, it is designed around them
-% 5) Use tables as in the examples
-% 6) See classicthesis-preamble.sty for useful commands
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %-------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %-------------------------------------------------------------------------------
@@ -71,9 +46,7 @@
 
 % \cleardoublepage\include{FrontBackMatter/Foreword} % Uncomment and create a Foreword.tex to include a foreword
 
-% \cleardoublepage\include{tex/Abstract} % Abstract page
-
-% \cleardoublepage\include{tex/Publication} % Publications from the thesis page
+\cleardoublepage\include{tex/Abstract}
 
 % \cleardoublepage\include{tex/Acknowledgments} % Acknowledgements page
 
@@ -90,9 +63,9 @@
 
 \cleardoublepage % Avoids problems with pdfbookmark
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 %	THESIS CONTENT - CHAPTERS
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
 %\ctparttext{You can put some informational part preamble text here.} % Text on
 %the Part 1 page describing  the content in Part 1
@@ -105,13 +78,10 @@
 
 %------------------------------------------------
 
-% \include{Rmd/test}
-
 \chapter{Introduction}
 \input{Rmd/introduction}
 
-% \ctparttext{This is the chapter where I want to present the theoretical concepts
-% underpinning the development of software and application.}
+%------------------------------------------------
 
 \part{Theory}\label{part:theory}
 
@@ -150,7 +120,6 @@ from the main body of observations.} \\ \medskip
 
 %------------------------------------------------
 
-% \ctparttext{This is the part where I will present all results.}
 \part{Results}\label{part:results}
 
 \chapter{Model based Simulation Studies}
@@ -165,26 +134,19 @@ from the main body of observations.} \\ \medskip
 
 \input{Rmd/results_design_based}
 
-%-------------------------------------------------------------------------------
-%	THESIS CONTENT - APPENDICES
-%-------------------------------------------------------------------------------
+\chapter{Conclusion}
+
+%------------------------------------------------
+
+\part{Appendix}
 
 \appendix
 
-\part{Conclusion \& Appendix} % New part of the thesis for the appendix
-
-%\include{Chapters/Chapter0A} % Appendix A
-%\include{Chapters/Chapter0B} % Appendix B - empty template
-
-%-------------------------------------------------------------------------------
-%	POST-CONTENT THESIS PAGES
-%-------------------------------------------------------------------------------
+\cleardoublepage\include{tex/Publication}
 
 \cleardoublepage\include{tex/Bibliography} % Bibliography
 
-%\cleardoublepage\include{tex/Colophon} % Colophon
-
-%\cleardoublepage\include{tex/Declaration} % Declaration
+\cleardoublepage\include{tex/Declaration} % Declaration
 
 %-------------------------------------------------------------------------------
 
