@@ -1,22 +1,209 @@
+- summary
+- contribution
+- open research
+
 # Theory
 
-## Summary
+This Section gives a short overview of the main findings of this Chapter.
+Furthermore I will outline how the work is continued. The main findings and
+contributions are:
 
-## Open Research Questions
+- Extensions to the approach by @Sin09 for the estimation of robust mixed linear
+models in the SAE field. This approach has been extended, for area level models
+with correlated random effects.
+- These findings have been combined with the results by @Cha11 and @Cha14 to
+derive the area level REBLUPs -- the area level SREBLUP, TREBLUP, and STREBLUP
+-- in a pseudo linear form. The results are presented in a general form to
+include the general class of mixed linear models.
+- This pseudolinear representation has lead to algorithms to find solutions for
+the robust estimation equations. An IRWLS algorithm for $\pmat\beta$ has been
+derived as well as a fixed point algorithm for the random effects, $\mat{u}$.
+- Furthermore a simple bias correction for the robust prediction has been
+adapted based on the results of @Efr72.
+- And finally the approach by @Cha11 to the estimation of the MSPE of domain
+predictions has been extended to be used with the robust area level models with
+correlated random effects. In this regard also the parameteric bootstrap method
+for the MSPE estimation by @Sin09 has been adapted although hardly any changes
+have been necessary in this case.
 
+The various methods and extensions are now further investigated in two ways. 
+First, we will see how the robust predictors are implemented inside a software 
+package in the `R`-language \citep{R}: `saeRobust` \citep{War16}. With respect 
+to this implementation especially the stability of results are of interest -- 
+see Chapter \ref{chap:saeRobust}. Second, these methods are used in model based 
+-- Chapter \ref{chap:results_model_based} -- and design based -- Chapter 
+\ref{chap:results_design_based} -- simulation studies. These simulations aim at 
+exploring the statistical properties of the robust predictions compared to their
+non\hyp{}robust counterparts. These simulation studies are conducted using the 
+`R`-language and a simulation framework developed alongside this Thesis. This 
+framework is implemented in the `R`-package `saeSim` \citep{War15} and some 
+discussion of this implementation is provided in Chapter \ref{chap:saeSim}.
 
 
 # Implementation
 
-## Summary
+In principle the results of the stability tests are promising as in both
+scenarios acceptable solutions can be found when we set the number of iterations
+to a higher value. *Acceptable* here refers to a value close to zero at the
+solution for the respective estimation equation. This however presents a trade
+off between the number of iterations, stability, and computational demand, which
+can become relevant quickly with temporal data. The key to computationally less
+demanding solutions are the choice of starting values and the restriction of the
+maximum number of iterations of the nested algorithms. To address this trade-off
+the implementation in `saeRobust` allows to set both parameters as well as the 
+number of iterations for the optimisation of the random effects.
 
-## Open Research Questions
+Starting values for the regression coefficients, the variance parameters, and 
+the random effects can be supplied by the user. And related to computational 
+demand users can run a model with only a subset of the data at hand to produce 
+better starting values and then update the analysis and continue with an updated
+data set. This can be accomplished using the `update` function. This strategy
+was originally implemented to implement the parametric bootstrap methods however
+it may also be valuable in situations with large data sets. Also it may be
+important to first optimise the model parameters and then find solutions for the
+random effects which is possible by continuing a model fitting process with
+updated parameters.
+
+Furthermore it is important to investigate the estimation equations at their 
+solutions. A common return value of such fitting procedures is to provide the 
+reason of *convergence* -- see for example the function `sae::eblupFH` in the R 
+package `sae` \citep{Mol15}. Such a value may indicate that the maximum number 
+of iterations has been exceeded or that the convergence criterion has been 
+reached. However as @McC04 notes the fact that we reach the stopping rule can be
+very misleading -- it is in fact the estimation equation we should evaluate and
+in addition the second derivative of the log-likelihood to ensure that we found
+indeed a maximum. This is supported and illustrated by the results above when
+the numerical solver reaches the stopping criterion but the value of the 
+estimation equation is not approximately zero. E.g. this happens with variance 
+estimates close to zero. For this reason a design choice in the packages output
+is to report the value of the estimation equation and furthermore each step
+during optimisation. However what is not currently provided is the possibility
+to evaluate the second derivative of the log-likelihood which may present a
+possible future extension.
+
+Two practical issues which have not been discussed in the SAE literature are 
+model selection and inference on parameter estimates for robust methods. The 
+implementation in @Schoch14 relies for example on the asymptotic normality of 
+the regression parameters. However there is little empirical evidence on using 
+such results. Specifically for area level models where we may have only a few 
+observations -- e.g. 40 -- it is not clear whether it is advisable to place 
+reliance on the results. For this reason the current version of `saeRobust` only
+supports a link to the parametric bootstrap with the function `bootstrap` to
+construct confidence intervals for the model parameters. With respect to model
+selection the actual log-likelihood function for robust methods is generally
+unknown since robust versions of its partial derivatives are used. Hence it is
+not clear how to provide information criteria for the robust methods under
+consideration -- see the discussion in @Kol16.
+
+The discussion in this Chapter focused on the properties of the implementation. 
+The statistical properties of the robust methods have not been investigated so 
+far and are the subject matter of the Chapters \ref{chap:results_model_based}
+and \ref{chap:results_design_based} in model and design based simulations. An
+important aspect of this Thesis are also the accompanying software
+implementations. With this regard also the package `saeSim` \citep{War15} can be
+seen as one result of this Thesis; it aims to simplify the process of setting up
+simulation studies and hence is introduced in the following Chapter
+\ref{chap:saeSim}.
+
+
+In the previous example I illustrated how a model based simulation can be
+configured using the `R`-package `saeSim`. A design based configuration differs
+simply by starting from sampling instead of the data generation; otherwise the
+same tools can be utilised. Code examples for a design based simulation can be
+found in @War16a. 
+
+The main *design* aspect making `saeSim` a useful tool is that simulations can
+be composed by combining different components. Furthermore it may promote a
+reasonable way for the definition of such components within the `R`-language: as
+short, single argument functions which take a `data.frame` as input and return
+it modified.
+
+The presentation of this package has not been exhaustive but focused on
+communicating the main idea of the composition of simulation studies. Available
+features noteworthy are the generation of outlying data points. Such
+values are always generated as part of the population and hence focus on the
+presence of representative outliers as defined by @Cha86. Furthermore some
+effort went into the connection to parallel and high performance computing. With
+this regard the package `parallelMap` \citep{Bis15} is utilised as an interface
+to `R`s parallel computing capabilities. This also includes a link to the
+package `BatchJobs` \citep{Bis15a} which can be used with many high performance
+infrastructures.
 
 
 
 # Results
 
-## Summary
+The aim of this study has not been to promote the use of a specific model in 
+terms of a correlation structure but rather to focus on revealing the differences 
+between the robust and non\hyp{}robust estimation methods. The benefits of
+utilising temporal autocorrelation have been demonstrated in different studies --
+see @Rao94 for the temporal model and @Mar13 for the spatio-temporal model. The
+main findings of this Section are:
 
-## Open Research Questions
+- Using an over\hyp{}parameterised model may have a positive effect in terms of
+RBIAS and RRMSPE in the presence of outliers. Although not explicitly shown
+this can be true also for the non\hyp{}robust methods. This may be due to the
+ability of the fitting process to approximate the mixture distribution.
+- The proposed bias correction may prove to be useful especially for outlying
+domains. However the choice of the width of the interval in which predictions
+can be made should be made with care in practice.
+- The robust methods have an expected positive effect in terms of RRMSPE in the
+presence of outliers. Also they may be more robust against the choice of the
+sampling variances -- however this claim needs further investigation.
+
+
+In general the performance of the MSPE estimators is promising. However the 
+concrete results strongly depend on the scenario settings. What we can observe
+is that generally the CCT for the bias correction suffers under repeated
+sampling when the prediction interval of the correction is too conservative. For
+the same reason we observe a correlation between the sampling variances and the 
+bias. The bootstrap in contrast shows very stable results -- approximately 10 
+per cent in terms of RRMSE -- over a variety of different settings. However this
+method cannot capture the variation for outlying domains. In scenarios in which 
+the respective models repeatedly yield estimates close to zero variances the 
+bootstrap will underestimate the true variation since more weight is given to 
+the linear predictor; this can be seen in Chapter
+\ref{chap:results_design_based}. This setting has been avoided -- in contrast to
+Section \ref{sec:results_predictions} -- by choosing larger values for the
+variance parameters in this study.
+
+The settings in this study have been chosen to be close to the approach taken by
+@Cha14. Although a comparison is difficult to make because of the transition 
+between area level and unit level models, some similarities in the results can
+be found. Most notably @Cha14 report values of the RRMSE for the bootstrap for
+the unit level REBLUP of approximately 10 per cent in scenarios having area
+level outliers and scenarios without contamination. This result is very close to
+what we can observe in this study. In the specific scenario above the results
+for the CCT show similar performance in terms of RRMSE to the bootstrap except
+for the bias corrected predictions. In the study conducted by @Cha14 the CCT
+method does not show as good results as we can see here; however this can
+possibly be attributed to the differences in the scenarios.
+
+There are two main reasons to consider a robust area level model. First this
+helps to make the prediction robust against area level outliers. Second it
+facilitates to protect against the overly influential observations which may
+occur upon using GVFs to smooth the sampling variances. However a more thorough
+investigation of the use of GVFs may be necessary to come to a plausible
+recommendation since the simulation setup has not shown a significant
+improvement in the overall predictions.
+
+With respect to unit level outliers we can see a self adjusting effect in the 
+robust and non\hyp{}robust prediction under the FH model. This adjustment 
+replaces the predictions for outliers with the linear predictor which
+constitutes an improvement in those cases in which this predictor is suitable,
+e.g. design unbiased. In principle we face the same problem as for robust
+methods using unit level data in that again we introduce a bias. However at
+present it is unclear how a bias correction can be developed for these
+situations when only area level data is observed. The proposed bias correction
+can have a beneficial effect when we consider area level contamination; however
+it does not provide any advantage with respect to unit level outliers.
+
+The use of robust direct estimators has not proved to be encouraging. It may be
+that to try to solve an efficiency problem of the sample mean by replacing it
+with an even less efficient estimator is the main reason here. This effect can
+well be due to the small sample sizes considered in SAE, particularly in this 
+simulation setup. These small sample sizes then lead to a less efficient 
+estimate for the domain specific mean and also its variance. Using an area level
+model has not shown itself to outweigh this effect.
+
 

@@ -1,3 +1,11 @@
+# Motivation
+
+# Locating the Contents in the Field of Small Area Estimation
+
+# Reproducing the Results
+
+# Outline
+
 This thesis introduces extensions to the Fay-Herriot Model, a frequentist
 approach to Empirical Bayes estimators (i.e. James-Stein estimators) frequently
 used in Small Area Estimation which is a sub-field within the field of
