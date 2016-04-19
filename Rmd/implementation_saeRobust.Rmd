@@ -13,18 +13,18 @@ The latter is how the approach is applied practically.} \\ \medskip
 
 In what follows the numerical properties of the software implementation are 
 investigated. The robust estimators are implemented in the package `saeRobust` 
-\citep{War16} for the R language \citep{R} which is available as supplementary 
-material to this Thesis. The main reason for providing this package is to
-simplify the process of reproducing the results presented in Part
-\ref{part:results}. A second reason is to provide an initial version of a
-software package which is ready to be used in practice -- although further
-extensions and research may be needed in order to provide a comprehensive suit
-of tools for conducting *real world* analyses. This Section provides a general
-discussion of the current version of the software but it does not aim to be a
-manual of instructions. The package itself provides documentation which can be
+\citep{War16} for the `R`\hyp{}language \citep{R} which is available as
+supplementary material to this Thesis. The main reason for providing this
+package is to simplify the process of reproducing the results presented in Part 
+\ref{part:results}. A second reason is to provide an initial version of a 
+software package which is ready to be used in practice -- although further 
+extensions and research may be needed in order to provide a comprehensive suit 
+of tools for conducting *real world* analyses. This Section provides a general 
+discussion of the current version of the software but it does not aim to be a 
+manual of instructions. The package itself provides documentation which can be 
 used for that purpose.
 
-At present several software packages are available for the R language. @Mol15
+At present several software packages are available for the `R`\hyp{}language. @Mol15
 have introduced the package `sae` which is a comprehensive collection of common
 unit level models, e.g. the BHF model reviewed in Section \ref{sec:unit_level},
 and the non\hyp{}robust spatial- and temporal extensions to the FH model
@@ -38,7 +38,7 @@ An implementation concerning robust methods for area level models is not at
 present available. Also the methods and advances reviewed in Section
 \ref{sec:robustee} have not been published in terms of software -- except for
 the results by @Schoch12. In this respect `saeRobust` aims to provide a first --
-but stable -- version implementing the models here under consideration. This may
+but stable -- version implementing the models under consideration. This may
 also prove useful as a vessel for robust unit level models since most of the
 software components involved are designed to be reused. E.g. the robust score
 functions, the proposed algorithms for the regression coefficients and random
@@ -55,7 +55,7 @@ testing data. @Zie74 has proposed simple testing matrices to this extend, and
 problems. By contrast to these approaches we are interested in the creation of a
 scenario in which spatial and temporal structures need to be identified. Here I 
 assume the correctness of the underlying subroutines in the `Matrix` package by
-@Bat16 and the R language and focus on the unknown model parameters of these 
+@Bat16 and the `R`\hyp{}language and focus on the unknown model parameters of these 
   respective models.
 
 Two scenarios are created and investigated in a Monte Carlo simulation study. 
