@@ -23,35 +23,36 @@ context is provided in Section \ref{sec:results_design_discussion}.
 \label{sec:results_design_data}
 
 The population data is a synthetic population generated using the SBS. The SBS 
-is an annual survey in the Netherlands. The data used in this study is a 
-synthetic population generated based on this survey. Furthermore the sampling 
+is an annual business survey in the Netherlands. The data used in this study is
+a synthetic population generated based on this survey. Furthermore the sampling 
 scheme used in this study is similar to that used in the SBS and also provided 
-and used without change. The context of this study is the interest in predicting
-the total tax-turnover for 20 industry domains. Possible predictor variables are
-the tax-turnover in the previous year, the size class in terms of number of
-employees, and the number of employees.
+and used without change. The context of this study is that we are interested in 
+predicting the total tax\hyp{}turnover for 20 industry domains. Possible predictor
+variables are the tax\hyp{}turnover in the previous year, the size class in terms of
+number of employees, and the number of employees.
 
 The unit level population consists of 63981 observations spread across 20 
-industry sectors. The target variable, tax turnover, has a median value in the 
-population of 0.16 million, a mean of 0.42 million, and a maximum of 83 million 
-Euro. Thus the distribution is skewed and contains unit level outliers which are
-here assumed to be representative. The domain specific population means range 
-between 0.1 and 2.9 million Euro with a median of 0.42 and a mean of 0.62. Only
-three domains have values larger than one million Euro and may be suspected to
-be outlying areas.
+industry sectors. The target variable, tax\hyp{}turnover in Euro, has a median
+value in the population of 0.16 million, a mean of 0.42 million, and a maximum
+of 83 million Euro. Thus the distribution is skewed and contains unit level
+outliers which are here assumed to be representative. The domain specific
+population means range between 0.1 and 2.9 million Euro with a median of 0.42
+and a mean of 0.62. Only three domains have values larger than one million Euro
+and may be suspected to be outlying areas.
 
-A similar sampling design to the one used in the SBS has been used to draw 500
-samples from this population. It is stratified for the size class within
-domains. Within each stratum samples are drawn with SRSWOR. In addition larger
-firms are selected with a probability of one. The sample always consists of 5074
-units. The sample sizes between domains vary between 6 and approximately 1050
-observations; however they have some variation over the 500 repetitions.
+A similar sampling design to the one used in the SBS has been used to draw 500 
+samples from this population. It is stratified for the size class within 
+domains. Within each stratum samples are drawn with simple random sampling
+without replacement (SRSWOR). In addition larger firms are selected with a
+probability of one. The sample always consists of 5074 units. The sample sizes
+between domains vary between 6 and approximately 1050 observations; however they
+have some variation over the 500 repetitions.
 
-First results showed that for an area level model it is sufficient to use only
-one predictor variable, the tax turnover of the previous year, which has the
-most predictive power in this setting. Furthermore on the area level we have
-only 20 observations, the 20 industry sectors, and even in a setting with one
-predictor we need to estimate three parameters. Hence a simple regression model
+First results showed that for an area level model it is sufficient to use only 
+one predictor variable, the tax\hyp{}turnover of the previous year, which has
+the most predictive power in this setting. Furthermore on the area level we have
+only 20 observations, the 20 industry sectors, and even in a setting with one 
+predictor we need to estimate three parameters. Hence a simple regression model 
 is estimated:
 $$
 \bar{y}_i = \beta_0 + \beta_1 \tilde{y}_{it-1} + \re_i + e_i
@@ -61,30 +62,31 @@ $\re_i$ is assumed to follow a normal distributions with zero mean and variance
 $\sigre$. The sampling error, $e_i$, is also assumed to follow a normal 
 distribution with zero mean and variance $\sige$. The direct estimator, 
 $\bar{y}_i$, is a weighted mean using the inverse first order inclusion 
-probabilities as weights, i.e. the HT estimator of Section
-\ref{sec:theory_sae_direct}. The standard error is computed using the
-approximation based on the results of @Han43 since only the first order
-inclusion probabilities are known. These standard errors are then squared and
-used as the true sampling variances, $\sige$, in the model. The regressor
-variable, $\tilde{y}_{it-1}$, is the mean value of the previous year. Here the
-population mean is used; since the target variable is tax turnover it may be
-plausible that at some point the true or realized values are known to the 
-analyst. An investigation in which also the lagged dependent variable was 
-estimated using either a HT estimator or the sample mean showed little 
-improvement over the direct estimator.
+probabilities as weights, i.e. the HT estimator \citep{Hor52}. The standard
+error is computed using the approximation based on the results of @Han43 since
+only the first order inclusion probabilities are known. These standard errors
+are then squared and used as the true sampling variances, $\sige$, in the model.
+The regressor variable, $\tilde{y}_{it-1}$, is the mean value of the previous
+year. Here the population mean is used; since the target variable is
+tax\hyp{}turnover it may be plausible that at some point the true or realized
+values are known to the analyst. An investigation in which also the lagged
+dependent variable was estimated using either a HT estimator or the sample mean 
+showed that using an area level method only brings a small advantage over the
+direct estimator.
 
-The assesment of the quality of the predictions follows along the lines of
-Section \ref{sec:area_level_sim_qm} in that the RBIAS and RRMSPE over all
-repetitions are computed. The true target statistic is the domain specific
-population mean of tax-turnover and constant over all repetitions. Predictions
-are made under the FH model comparing the standard model refered to by FH, the
-robust prediction (RFH), and the bias\hyp{}corrected robust prediction (RFH.BC).
+The assesment of the quality of the predictions follows along the lines of 
+Section \ref{sec:area_level_sim_qm} in that the RBIAS and RRMSPE over all 
+repetitions are computed. The true target statistic is the domain specific 
+population mean of tax\hyp{}turnover and constant over all repetitions.
+Predictions are made under the FH model comparing the standard model refered to
+by FH, the robust prediction (RFH), and the bias\hyp{}corrected robust
+prediction (RFH.BC).
 
 Also the MSPE estimators are compared using the RBIAS and RRMSE as they are 
-defined also in Section \ref{sec:results_mse_qm}. The target is here again the 
+defined in Section \ref{sec:results_mse_qm}. The target is here again the 
 estimated root MSPE (RMSPE). The used methods are the pseudolinearisation based 
 approach (CCT) and the parameteric bootstrap (BOOT); both are introduced in 
-Section \ref{sec:theory_rfh_mse}.
+Section \ref{sec:theory_rfh_mse}. 
 
 
 # Results
@@ -93,14 +95,21 @@ Section \ref{sec:theory_rfh_mse}.
 The performance of the predictions can be evaluated using Figure 
 \ref{fig:design_rrmspe}. The median values of the RBIAS and RRMSPE for the 
 respective method are additionally given in Table 
-\ref{tab:preds_performace_design}. A main result we can observe here is that the
-prediction can be improved in terms of MSPE using the robust and non\hyp{}robust
-methods compared to the direct estimator. This has the price of an introduced 
-bias which is present with all methods. We can also see that the robust 
-prediction can improve the prediction for approximately another two per centage 
+\ref{tab:preds_performace_design}. Here a main result is that the prediction can
+be vastly improved in terms of MSPE using the robust and non\hyp{}robust methods
+compared to the direct estimator. This is so since we use a strong predictor 
+variable which is not incorporated into the direct domain estimation. However 
+the improvement in terms of MSPE has the price of an introduced bias which con 
+be observed for the area level models; the direct estimator is 
+design\hyp{}unbiased as should be expected. We can also see that the robust 
+method can improve the prediction for approximately another two per centage 
 points in terms of RRMSPE. The bias correction cannot add any advantage over the
-robust method and is even a draw back compared to the non\hyp{}robust
-predictions.
+robust method and is even a draw back compared to the non\hyp{}robust 
+predictions. A possible explanation is that in this setting we have a strong
+predictor and also very small estimated variance paramters of the random
+effects. This means that we favor the linear predictor and hence we are as far
+away from the direct estimator as is possible using these methods. This the
+bias\hyp{}correction is applied more frequently.
 
 \begin{figure}[tbp]
 \centering
@@ -111,19 +120,19 @@ predictions.
 \input{tabs/preds_design}
 
 Turning now towards the performance of the MSPE estimators the main results can 
-be found in Table \ref{tab:mse_performace_design} and Figure
+be found in Table \ref{tab:mse_performace_design} and Figure 
 \ref{fig:design_mspe_estimators}. What we see here is that for predictions under
-the FH and RFH method the CCT and parameteric bootstrap methods perform equally
-good. Although in both cases we have a strong negative bias. This negative bias
+the FH and RFH method the CCT and parameteric bootstrap methods show similar 
+performance. In both cases we have a strong negative bias. This negative bias
 stems from the fact that the estimated variance parameter under both methods --
 FH and RFH -- are close zero. In terms of predictions this means that we
 strongly rely on the linear predictor -- and as discussed earlier we see the
-overall improvement of the predictions in terms of MSPE. However these small
-variance parameters mean that the bootstrap samples have too small variation and
-the CCT estimator also relies on this parameter; however neither the bootstrap
-nor the CCT can account for the uncertainty related to these parameter
-estimates. In terms of bias the CCT produces acceptable results for the
-predictions using RFH.BC, i.e. the robust bias corrected predictions. However
+overall improvement of the predictions in terms of MSPE. However these small 
+variance parameters mean that the bootstrap samples have too small a variation
+and also the CCT estimator relies on this parameter; however neither the
+bootstrap nor the CCT can account for the uncertainty related to these parameter
+estimates. In terms of bias the CCT produces acceptable results for the 
+predictions using RFH.BC, i.e. the robust bias corrected predictions. However 
 compared to the bootstrap we observe a higher RRMSE.
 
 \input{tabs/mse_design}
@@ -131,11 +140,36 @@ compared to the bootstrap we observe a higher RRMSE.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width = \textwidth]{figs/design_mspe_point}
-\caption[Performance of the Estimated Root Mean Squared Prediction Error]{\label{fig:design_mspe_estimators}Performance of the Estimated Root Mean Squared Prediction Error -- Compared are the root MSPE estimates using the methods CCT and BOOT with the MSPE under the Monte Carlo simulation.}
+\caption[Performance of the Estimated Root Mean Squared Prediction Error]{\label{fig:design_mspe_estimators}Performance of the Estimated Root Mean Squared Prediction Error -- Compared are the root MSPE estimates using the methods CCT and BOOT with the MSPE under the Monte Carlo simulation. The left panel shows the RMSPE estimates for the robust predictions; the right panel for the robust bias\hyp{}corrected predictions.}
 \end{figure}
 
 
 # Discussion
 \label{sec:results_design_discussion}
 
-asd
+The results of this Section show the overall beneficial effect of small area
+methods in terms of MSPE. However the point predictions also reveal an
+introduced bias; here we observe the typical variance\hyp{}bias trade\hyp{}off
+associated to mixed linear models and Emperical Bayes methods \citep{Efr72}.
+Interestingly we do not see any improvement using the bias correction technique;
+especially in terms of bias. We also see an improvement by applying the robust
+estimation technique in terms of MSPE.
+
+In this study we have both, unit and area level outliers. It remains somewhat
+intransparent if unit level outliers have an effect at all. In this example we
+have a sampling design which is highly correlated with the target variable.
+Hence we already adress the heterogeneity in the distribution of
+tax\hyp{}turnover on the unit level since we incorporate the inclusion
+propabilities. One property of the direct estimator -- also in the presence of
+outliers -- is that we expect it to be design\hyp{}unbiased. If this property is
+fullfilled then we should not expect to have an impact of asymmetric unit level
+outliers. This may not be plausible in scenarios in which the sampling design
+was chosen for a different target statistic.
+
+The results of the MSPE estimators -- CCT and BOOT -- reveal some problems in a 
+scenario in which we estimate the variance parameter to be close to zero. 
+Essentially we are here at the boundary of the parameter space of the variance. 
+At present it is not clear how to adress this issue. It may be helpful to
+incorporate the comparisson with the more established method by @Pra90 which at 
+this point remains an avenue for further research.
+
