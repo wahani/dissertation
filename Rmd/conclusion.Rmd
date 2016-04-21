@@ -1,30 +1,112 @@
-- summary
-- contribution
-- open research
-
 # Theory
 
-This Section gives a short overview of the main findings of this Chapter.
-Furthermore I will outline how the work is continued. The main findings and
-contributions are:
+Chapter (?) reveiwed the main advances in the SAE field with respect to two
+developments: First the extension of the FH model by incorporating spatial and
+temporal correlation structures into the random effects part of the model.
+Second by reviewing the current state of robust estimation methodology within
+the field. Here the presentation focused on the results for the robust
+estimation of model parameters when we consider models framed as linear mixed
+models.
 
-- Extensions to the approach by @Sin09 for the estimation of robust mixed linear
-models in the SAE field. This approach has been extended, for area level models
-with correlated random effects.
-- These findings have been combined with the results by @Cha11 and @Cha14 to
-derive the area level REBLUPs -- the area level SREBLUP, TREBLUP, and STREBLUP
--- in a pseudo linear form. The results are presented in a general form to
-include the general class of mixed linear models.
-- This pseudolinear representation has lead to algorithms to find solutions for
-the robust estimation equations. An IRWLS algorithm for $\pmat\beta$ has been
-derived as well as a fixed point algorithm for the random effects, $\mat{u}$.
-- Furthermore a simple bias correction for the robust prediction has been
-adapted based on the results of @Efr72.
+In particular the spatial extension of the FH model was reviewed which was used
+by @Pra08. Here the random effects part of the model is assumed to follow a
+simultaneous autoregressive process (SAR) of order one. Under this model @Pra08
+derived a spatial EBLUP (SEBLUP) which they applied on the survey on Life 
+Conditions in Tuscany, Italy. They aimed at predicting the mean per capita 
+income within muniscipalities. Furthermore they found that incorporating the
+unobserved spatial correlation between domains -- the SAR process -- into the
+prediction lead to an improvement in terms of MSPE; here however measured in
+terms of the domain specific coefficient of variation.
+
+The reviewed temporal extension by @Rao94 follows the idea to split the random 
+effects into a random intercept and autocorrelated process (AR) of order one. 
+The underlying data now has repeated measurements for each domain. The variation
+within domains and hence between the repeated measurements is adressed using the
+AR(1) process; the between domain variation is captured by having an additional 
+random intercept. In this context they introduced a temporal EBLUP (TEBLUP).
+Emperical results are here based on a model based simulation study. Later Sin05
+showed the advantage of incorporating temporal autocorrelation into the analysis
+where they predict the per capita comsumption expenditure using an annual
+consumer survey in India.
+
+The methods used by @Sin05 do not rely on the AR process but use a Kalman filter
+to take advantage of the temporal correlation structure instead. @Mar13 combined
+the results by @Pra08 and @Rao94; they replaced the random intercept in the 
+temporal model of @Rao94 with a SAR(1) process. Using this model they derive an 
+spatio\hyp{}temporal EBLUP (STEBLUP). They evaluate their method using the 
+Survey on Income and Living Conditions for Spain and predict two poverty
+indicators. They show results for the spatial, temporal, and their
+spatio-temporal extension to the FH model. Their results suggest that especially
+the incorporation of the correlation over time presents a beneficial effect.
+
+Next to the different possibilities to incorporate correlated random effects
+Section (?) reviewed recent advances for outlier robust predictions in the SAE
+field. The robust methodology used in this Thesis are based on the results of
+@Sin09 and @Ric95. Here the idea is to *robustify* the score functions of the
+maximum likelihood function for a given mixed linear model. Based on these
+robust estimation equations the model parameters and domain predictions can be
+derived. To this extend the residuals in the score function are bounded using an
+appropriate influence function. In various model and design based simulation
+studies the advantage of such methods have been demontrated when outliers are
+present in the data; see for example @Sin09, @Cha14, @Sch14, and @Sch16.
+
+The main contribution of this Thesis is now the combination of the robust 
+estimation methodology with the spatial and temporal extensions to the FH model.
+This connection is established in Chapter (?). Here it was distinguished between
+three types of outlying observations: unit level outliers, area level outliers, 
+and overly influencial observations. The first two types are common in the 
+robust literature and describe outlying units or outlying areas respectively. 
+The third type may be artificial in the context of area level models: they may 
+present a problem when we smooth direct variance estimators. By doing this we 
+may create observations which appear to be reliable but are in fact heavily 
+influenced by unit level outliers. Especially with respect to area level
+outliers and overly influencial observations the a robust extension to the FH
+model may present itself to be beneficial.
+
+With regard to robust area level models four models have been under
+consideration. The *standard* FH model, the spatial extension by @Pra08, the
+temporal extension by @Rao94, and the combination in the spatio\hyp{}temporal
+model by @Mar13. The result are here an area level robust EBLUP (REBLUP) which
+essentially has already been introduced by @Sin09; a area level spatial REBLUP 
+(SREBLUP) which to contrast it from @Sch11 is based on the FH model instead of 
+the BHF model; the temporal REBLUP (TREBLUP); and the spatio\hyp{}temporal 
+REBLUP (STREBLUP). Essentially these models are presented in a comprehensive
+framework for robust area level models where some additional changes have been
+made in contrast to the results by @Sin09:
+
+- The robust score function have been changed such that they can be used in the
+context of correlated random effects.
+- The robust score functions have been combined with the results by @Cha11 and
+@Cha14 to derive the area level REBLUPs -- the area level SREBLUP, TREBLUP, and
+STREBLUP -- in a pseudo linear form. The results are presented in a general form
+to include the general class of mixed linear models.
+- This pseudolinear representation has lead to an IRWLS algorithm for the 
+regression coefficients. Furthermore an algorithm for the optimisation of the 
+random effects has been proposed which is also derived from the pseudolinear
+form. Both solutions may have the advantage that they reduce to the non robust
+BLUE estimator and EBLUP for the random effects when the influence function is
+the identity.
+- Solutions for the variance parameters of the different models are sought for
+using a fixed point algorithm based on the results by @Chat12. The solutions for
+these parameters need to be tuned for each model.
+- Furthermore a simple bias correction for the robust prediction has been 
+adapted based on the results of @Efr72. This bias correction is simply the
+*limeted translation estimator* proposed by @Efr72 and may be useful when we
+suspect asymmetric outliers.
 - And finally the approach by @Cha11 to the estimation of the MSPE of domain
 predictions has been extended to be used with the robust area level models with
 correlated random effects. In this regard also the parameteric bootstrap method
 for the MSPE estimation by @Sin09 has been adapted although hardly any changes
 have been necessary in this case.
+
+These results may not only be useful for the specific models under consideration
+but present a generic framework for robust area level models which are based on
+the class of linear mixed models. The results may also be of interest outside
+the SAE field for the robust estimation of linear mixed models with correlated
+random effects.
+
+
+# Implementation
 
 The various methods and extensions are now further investigated in two ways. 
 First, we will see how the robust predictors are implemented inside a software 
@@ -38,9 +120,6 @@ non\hyp{}robust counterparts. These simulation studies are conducted using the
 `R`-language and a simulation framework developed alongside this Thesis. This 
 framework is implemented in the `R`-package `saeSim` \citep{War15} and some 
 discussion of this implementation is provided in Chapter \ref{chap:saeSim}.
-
-
-# Implementation
 
 In principle the results of the stability tests are promising as in both
 scenarios acceptable solutions can be found when we set the number of iterations
@@ -205,5 +284,32 @@ well be due to the small sample sizes considered in SAE, particularly in this
 simulation setup. These small sample sizes then lead to a less efficient 
 estimate for the domain specific mean and also its variance. Using an area level
 model has not shown itself to outweigh this effect.
+
+
+The results of this Section show the overall beneficial effect of small area
+methods in terms of MSPE. However the point predictions also reveal an
+introduced bias; here we observe the typical variance\hyp{}bias trade\hyp{}off
+associated to mixed linear models and Emperical Bayes methods \citep{Efr72}.
+Interestingly we do not see any improvement using the bias correction technique;
+especially in terms of bias. We also see an improvement by applying the robust
+estimation technique in terms of MSPE.
+
+In this study we have both, unit and area level outliers. It remains somewhat
+intransparent if unit level outliers have an effect at all. In this example we
+have a sampling design which is highly correlated with the target variable.
+Hence we already adress the heterogeneity in the distribution of
+tax\hyp{}turnover on the unit level since we incorporate the inclusion
+propabilities. One property of the direct estimator -- also in the presence of
+outliers -- is that we expect it to be design\hyp{}unbiased. If this property is
+fullfilled then we should not expect to have an impact of asymmetric unit level
+outliers. This may not be plausible in scenarios in which the sampling design
+was chosen for a different target statistic.
+
+The results of the MSPE estimators -- CCT and BOOT -- reveal some problems in a 
+scenario in which we estimate the variance parameter to be close to zero. 
+Essentially we are here at the boundary of the parameter space of the variance. 
+At present it is not clear how to adress this issue. It may be helpful to
+incorporate the comparisson with the more established method by @Pra90 which at 
+this point remains an avenue for further research.
 
 
