@@ -169,7 +169,7 @@ was chosen for a different target statistic.
 The results of the MSPE estimators -- CCT and BOOT -- reveal some problems in a 
 scenario in which we estimate the variance parameter to be close to zero. 
 Essentially we are here at the boundary of the parameter space of the variance. 
-At present it is not clear how to adress this issue. It may be helpful to
+At present it is not clear how to adress this issue. It may be helpful to 
 incorporate the comparisson with the more established method by @Pra90 which at 
-this point remains an avenue for further research.
+this point remains an avenue for further research. 
 
