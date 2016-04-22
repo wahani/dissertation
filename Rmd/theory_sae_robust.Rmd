@@ -6,9 +6,8 @@ their distributional assumptions. Serious problems with these methods can arise
 already when single outlying observations are present in the data. Hence 
 discussion and some progress has been made in connection with methods robust 
 against outliers. Outliers are here defined as representative outliers as in
-@Cha86 and already reviewed in Section \ref{sec:sae_overview}. A thorough
-discussion of what exactly outlying observations on the area level are will be given
-in Section \ref{sec:rfh_framework} ahead.
+@Cha86. A thorough discussion of what exactly outlying observations on the area
+level are will be given in Section \ref{sec:rfh_framework} ahead.
 
 In the broader context of this subfield within SAE the present Thesis relies
 strongly on the results of @Sin09 who propose robust estimation equations for
