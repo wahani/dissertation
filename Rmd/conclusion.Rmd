@@ -167,11 +167,11 @@ Overall four simulation studies have been conducted. The study in Section
 \ref{sec:results_predictions} aimed at explaining differences between robust 
 and non\hyp{}robust domain predictions in scenarios with correlated random 
 effects and area level outliers. The effect of area level outliers on the 
-non\hyp{}robust methods is that variance paramters of the random effects are 
+non\hyp{}robust methods is that variance parameters of the random effects are 
 estimated too high. This has the price of efficiency as the non\hyp{}robust 
 predictions are closer to the direct estimator. With this regard the robust
 counterparts show good properties overall. The bias correction in this setting 
-appears to have a positiv effect on the MSPE in that this quantity is smaller 
+appears to have a positive effect on the MSPE in that this quantity is smaller 
 for outlying domains. This is due to the fact that the bias for outlying domains
 is indeed reduced. However the results also indicate that its own tuning
 parameter needs to be chosen with care in practical applications. In some
@@ -198,7 +198,7 @@ the direct estimator with the smallest variance. The use of robust direct
 estimators did not show any improvement when such estimates are used in an area 
 level model; even in the presence of unit level outliers. Furthermore the use of
 a GVF may prove to be problematic in the presence of unit level outliers. This
-topic is commented on again below as the results cannot be ragarded to be
+topic is commented on again below as the results cannot be regarded to be
 conclusive but are a first assessment of the issue.
 
 In a design based simulation study presented in Chapter
@@ -220,13 +220,13 @@ FH model is estimated to be close to zero; which both methods cannot handle.
 # Remarks and Open Research Questions
 
 In a final step of discussing the results of this Thesis I want to present three
-claims. These themselfs are ambitious but show the benefits and current
+claims. These themselves are ambitious but show the benefits and current
 limitations of the results overall:
 
-1. We should favor a robust method for small area predictions.
+1. We should favour a robust method for small area predictions.
 2. Unit level outliers may or may not be present in the sample; however with
 area level information the issue cannot be tackled.
-3. Favor an established design unbiased direct estimator when there is a choice.
+3. Favour an established design unbiased direct estimator when there is a choice.
 
 Taking the results of the various model based simulation studies we may be
 tempted to conclude that we should always use robust estimation methodology. In
@@ -241,7 +241,7 @@ applications and here robust methods may present to be useful.
 However an essential point is that practical issues like measuring the overall 
 Goodness of Fit and variable selection have not been investigated yet. Hence in 
 order to make the use of such methods reliable further research is needed. A 
-further limiting point is the estimation of the MSPE. The parameteric bootstrap 
+further limiting point is the estimation of the MSPE. The parametric bootstrap 
 and pseudolinearisation based approach have proved to be useful in the model 
 based simulation; however in the design based study we saw the limitation of 
 these methods when the variance parameter of the FH model is estimated to be 
@@ -257,7 +257,7 @@ and the following is mostly based on the results of Section
 \ref{sec:results_unit}. When it is plausible to assume unbiased direct estimates
 as it is under the FH model it may be irrelevant if unit level outliers are
 considered to be asymmetric or not; on the area level this effect does not exist
-anymore. In such a case the FH model already is *robust* against unit level 
+any more. In such a case the FH model already is *robust* against unit level 
 outliers since such observations are simply an additional source of
 heterogeneity and drive the sampling variances. Domains with large sampling
 variances are weighted down already by the standard FH model. Considerable
@@ -270,7 +270,7 @@ domains containing outlying units may be framed as outlying with respect to the
 GVF. This topic is discussed in Section \ref{sec:results_unit} but this claim 
 needs more support and investigation than presented in this Thesis. The main 
 problem is that the simulation conducted in Section \ref{sec:results_unit} may 
-not present a case in which we make a *fair* comparisson since a significant
+not present a case in which we make a *fair* comparison since a significant
 benefit of the considered GVF cannot be observed.
 
 While conducting the model based simulation study of Section 
@@ -282,11 +282,11 @@ domains which do not contain outliers. Furthermore we not only need a good
 direct estimator but also for its variance. In this regard the sample mean and 
 the HT estimator showed to provide more reliable results. The problem unit level
 outliers in the context of a informative sampling design -- informative with 
-respect to the target quantitiy -- may even be solved, since the inclusion 
+respect to the target quantity -- may even be solved, since the inclusion 
 probabilities provide sufficient information with respect to account for the 
 variability in the data. Open for discussion may be the use of a robust method
 combined with a GVF; however with this respect the issues above should be
-adressed first.
+addressed first.
 
 \begin{flushright}{\slshape
 It is perfectly proper to use both classical and \\
