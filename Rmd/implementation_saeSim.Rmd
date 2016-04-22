@@ -12,109 +12,109 @@ to human beings what we want a computer to do.} \\ \medskip
 # Outline
 
 In this Chapter I want to present a framework for simulation studies within the 
-SAE field. The framework is implemented in the `R`-package `saeSim` \citep{War15}.
-At this point it is important to note that the following content has in part
-been published as an article: \citetitle{War16a} -- @War16a. Here a shorter 
-version of this article is presented. Content which is related to a general 
-introduction to the SAE field is omitted; in contrast to the article code 
-examples use the SAE methods implemented in `saeRobust` \citep{War16} instead of
-`sae` \citep{Mol15}. Furthermore text passages have been changed to integrate
-the content into the general line of argumentation of this Thesis.
+SAE field. The framework is implemented in the `R`-package `saeSim`
+\citep{War15}. It should be noted that the content here presented has in part 
+been previously published as an Article: \citetitle{War16a} -- @War16a. Here a
+shorter version of that Article is presented. Content specific to a general 
+introduction to the SAE field is not included here; in contrast to the code 
+examples presented in the Article here the SAE methods implemented in
+`saeRobust` \citep{War16} are applied instead of of the utilities in `sae`
+\citep{Mol15}. Furthermore where appropriate text passages have been altered to
+integrate the content into the general context of this Thesis.
 
-The set of tools contributed by the package `saeSim` are motivated by providing 
-an infrastructure which makes it easier to reproduce results of model and design
-based simulation studies. Reproducible research aims at the availability of the 
-full academic research, which is the article combined with the full 
-computational environment, including data and source code. Open source tools 
-like the `R`\hyp{}language \citep{R} and \LaTeX \space can be used in tight 
-integration to combine the statistical analysis with the written words in an 
-article. This can be achieved by using tools like `knitr` \citep{Xie13}, 
-`sweave` \citep{Lei02}, and more recently `rmarkdown` \citep{All14}. Such tools 
-can assist in making research more reproducible. The tools provided by `saeSim`
-aim at simplifying the process of writing the source code for a simulation 
-study; in the context of reproducible research this may prove to be useful in
-the development of script files as well as in the setting of the tools discussed
-earlier.
+The set of tools available in the package `saeSim` have been designed to provide
+an infrastructure which makes it easier to reproduce the results of model and 
+design based simulation studies. Reproducibility here comprises the availability
+of the full academic research, including data and the source code. Open source 
+tools like the `R`\hyp{}language \citep{R} and \LaTeX \space can be used in 
+tight integration to combine the statistical analysis with the written words in 
+an article. This can be achieved by using tools like `knitr` \citep{Xie13}, 
+`sweave` \citep{Lei02}, and, more recently, `rmarkdown` \citep{All14}. Such
+tools can assist in making research more reproducible. The tools provided by
+`saeSim` aim at simplifying the process of writing the source code for a
+simulation study; in the context of reproducible research this may prove to be
+useful in the development of script files as well as in combination with the
+tools discussed earlier.
 
-Real data is often very sensitive and governed by strict confidentiality rules. 
-Synthetic data generation mechanisms can be used to provide safe data which can 
-be made publicly available -- for a more thorough discussion see @Alf11 and
-@Kol11. @Bur14 interpret this as an open research philosophy. Such synthetic
-data sets can be used to test newly proposed statistical methods in a
-close-to-reality framework. In general, simulation studies in statistics can be
-divided into two concepts:
+Real data is often very sensitive and can be subject to strict confidentiality
+restrictions. Synthetic data generation mechanisms can be used to provide safe
+data which can be made publicly available -- for a more detailed discussion see
+@Rub93, @Alf11 and @Kol11. @Bur14 describe this as an open research philosophy.
+  Such synthetic data sets can be used to test newly proposed statistical
+  methods in a close\hyp{}to\hyp{}reality framework. In general, simulation studies in
+  statistics can be divided into two concepts:
 
-- Design-based: The simulation study is based on true or synthetic data of a 
-fixed population. Then, samples are selected repeatedly from the underlying 
+- Design based: Hre the simulation study is based on true or synthetic data of a
+fixed population. Samples are then selected repeatedly from the underlying 
 finite population and different estimation methods are applied in each 
-replication. The estimates so obtained are compared to the true values of the 
-population, for instance, in terms of relative bias (RBIAS) and relative root
+replication. The estimates so obtained are compared to the true population 
+values in terms of, for instance, the relative bias (RBIAS) and relative root
 mean squared prediction error (RRMSPE).
-- Model-based: The simulation study uses data directly drawn from a model.
+- Model based: Here the simulation study uses data drawn directly from a model.
 In each iteration the population is generated from a model and a sample is
 selected according to a specific sampling scheme. The sample is used to estimate
 the target statistic for which quality measures (like the RBIAS and RRMSPE)
 are derived.
 
-Further discussion regarding model- and design-based simulations can be found in
-@Mue03, @Sal10, and @Alf10.
+Further discussion partaining to model and design based simulations can be found
+in @Mue03, @Sal10, and @Alf10.
 
 A closely related software packages in the `R`-language is `simFrame`
 \citep{Alf10} which helps to configure simulation studies in a reproducible
 environment. It includes a wide range of features -- like data generation,
 sampling schemes, outlier contamination mechanisms, and missing values -- and
-has been originally developed for simulations in the context of survey
+was originally developed for simulations in the context of survey
 statistics but is now designed to be as general as possible \citep{Alf10}. The
 package `simPop` \citep{Alf14} supports the generation of synthetic population
 data. This can be a suitable environment in scenarios where the reproducibility
 of results and confidentiality issues play an important role.
 
-In contrast to `simFrame` the package `saeSim` is different in 
-design and has a focus on assisting applications in the SAE field. Most 
-importantly it is based on a framework which is mapped into the software
-package. This framework defines the overall structure and aims to unify the
-shared elements between simulation studies. A simulation is here defined
-as a stream of data to be manipulated in a sequence of steps. Furthermore it
-provides the definition of the interface between these steps. The package 
-`saeSim` maps this framework into the `R`-language and combines it with commonly 
-used facilities in this context; e.g. tools for data generation, sampling, and a
-link to the parallel computing capabilities in `R`.
+Compared to `simFrame` the package `saeSim` is different in design and its main 
+focus is to assist applications in the SAE field. Most importantly it is based 
+on a framework which is mapped into the software package. This framework defines
+the overall structure and aims for unifying the shared elements between
+simulation studies. A simulation is here defined as a stream of data to be
+manipulated in a sequence of steps. Furthermore it provides the definition of
+the interface between these steps. The package `saeSim` maps this framework into
+the `R`-language and combines it with commonly used facilities in this context;
+e.g. tools for data generation, sampling, and a link to the parallel computing 
+capabilities in `R`.
 
-The framework is more concretely presented in the following Section 
-\ref{sec:saeSim_framework}. This presentation is followed by code examples in 
-Section \ref{sec:saeSim_examples} implementing a simple model-based simulation
-study to illustrate the capabilities of the package. Section
+The framework is presented more concretely in the following Section 
+\ref{sec:saeSim_framework}. This is followed by code examples in Section
+\ref{sec:saeSim_examples} implementing a simple model based simulation study
+designed to illustrate the capabilities of the package. Section 
 \ref{sec:saeSim_discussion} concludes this Chapter with a brief discussion.
 
 
 # A Simulation Framework
 \label{sec:saeSim_framework}
 
-The framework strongly relies on the idea to describe a simulation as a process 
+The framework strongly relies on the idea of describing a simulation as a process 
 of data manipulation. Independent of simulation studies, @Wic15 and @Wic16
 promote this idea by providing tools for cleaning and transforming data. In
 those frameworks every defined function takes a `data.frame` as input and 
 returns it modified. This leads to a natural connection between all defined 
-functions since the result of one function can be directly passed to the next as
+functions, since the result of one function can be directly passed to the next as
 an argument. The symbioses of these packages with the pipe operator, `%>%`, from
 the package `magrittr` \citep{Bac14} only emphasizes this process.
 
 In `saeSim` this approach is extended to simulation studies in the SAE field.
-The main focus is the description of a simulation as a process of data
+The main focus here is the description of a simulation as a process of data
 manipulation. Each step in this process can be defined as a self contained
 component -- a function in `R` -- and thus can be easily replaced, extended, and
 reused.
 
-Simulation studies address three different levels; these are the population, the
-sample, and data on aggregated level. Figure \ref{fig:flowdiagram} illustrates 
-these levels. The left column describes the steps of data manipulation, the 
-right column presents the function names in `saeSim` to define the corresponding
-steps. The *population\hyp{}level* defines the data on which a study is 
-conducted and may be based on real population data, a synthetic population, or 
-randomly generated variates from a model. In the context of a design\hyp{}based 
-simulation a simulation study is based on true or synthetic data of *one* 
-population. In model\hyp{}based simulations the population can be randomly drawn
-from a population model in each repetition.
+Simulation studies address three different levels: these are the population, the
+sample, and the data on aggregated level. Figure \ref{fig:flowdiagram}
+illustrates these levels. The left column describes the steps in the data
+manipulation, the right column presents the function names used in `saeSim` to
+define the corresponding steps. The *population\hyp{}level* defines the data on
+which the study is conducted and may be based on real population data, a
+synthetic population, or randomly generated variates from a model. In the 
+context of a design based simulation the simulation study would be based on true
+or synthetic data of *one* population. In model based simulations the population
+can be randomly drawn from a population model in each repetition.
 
 \begin{figure}[htbp]
 \centering
@@ -126,24 +126,24 @@ The scope of the framework is not to opt for viewpoints. The aim is to
 incorporate the different simulation concepts in a common framework. The *base* 
 (first component in Figure \ref{fig:flowdiagram}) of a simulation study is a 
 data table; here the question is whether this data is *fixed* or *random* over 
-simulations. Or from a more technical point of view, is the data generation (the
+repetitions: or from a more technical point of view, is the data generation (the
 second step in Figure \ref{fig:flowdiagram}) repeated in each repetition or
 omitted in the study. Depending on the choice of a fixed or random population it
 is necessary to re\hyp{}compute the population target statistics like domain 
-means and variances, or other statistics of interest (third component in Figure
+means and variances, and other statistics of interest (third component in Figure
 \ref{fig:flowdiagram}).
 
 The *sample\hyp{}level* is necessary when domain predictions are conducted for 
 unit-level models. Independently of how the population is treated - whether as 
-fixed or random - this phase consists of two steps: Firstly, drawing a sample 
-according to a specific sampling scheme. Secondly, conducting computations on 
-the samples (fourth and fifth component in Figure \ref{fig:flowdiagram}). Given
-a sample, small area methods are applied. Of interest are, for instance, 
-estimated model parameters, domain predictions, or measures of uncertainty for
-the estimates.
+fixed or random - this phase consists of two steps: firstly, of drawing a sample
+according to a specific sampling scheme and secondly, of conducting computations
+on the samples (fourth and fifth component in Figure \ref{fig:flowdiagram}).
+Given the sample, small area methods are applied. Of interest here are, for
+instance, estimated model parameters, domain predictions, or measures of
+uncertainty for the predictions.
 
 Since the sample\hyp{}level is necessary when unit level models are applied, the
-*aggregate\hyp{}level* is conducted when area level models are applied (the 
+*aggregate\hyp{}level* is relevant when area level models are applied (the 
 seventh and last component in Figure \ref{fig:flowdiagram}). Area level models
 in SAE typically only use information available for domains -- in contrast to
 units. Thus the question for simulation studies for area level methods is
@@ -154,17 +154,17 @@ on whether or not unit-level data and sampling are part of the simulation
 process, the aggregate-level follows the generation of the population or is
 based on the aggregated sample.
 
-Depending on the topic of research, some steps in this simulation framework can 
-be more relevant than others. The framework defines a complete list of steps
-which may be of interest. Single components may be omitted if not relevant in
-specific applications. For example *data generation* is not relevant if we have
-population data, or the *sample\hyp{}level* is not used when the sample is
-directly drawn from the model.
+Depending on the scope of the research, some steps in this simulation framework
+can be more relevant than others. The framework defines a complete list of steps
+which may be relevant. Single components may be omitted if they are not
+relevant in specific applications. For example *data generation* is not relevant
+if we have population data; or the *sample\hyp{}level* is not used when the
+sample is directly drawn from the model.
 
-Seen this way, `saeSim` maps the different steps into `R`. Two layers with 
+Seen in this way, `saeSim` maps the different steps into `R`. Two layers with 
 separate responsibilities need to be discussed. The first is *how* different 
-simulation components can be combined, and the second is *when* they are 
-applied. Regarding the first, in `saeSim` an emphasis is put on the interface of
+simulation components can be combined; and the second is *when* they are 
+applied. Regarding the first, in `saeSim` the emphasis is on the interface of 
 each component. To be precise, functions are used which take a `data.frame` as 
 argument and have a `data.frame` as return value. The return value of one 
 component is the input of the next. This definition of interfaces is used for 
@@ -173,8 +173,8 @@ all existing tools in `saeSim`. The second column in Figure
 accessed. It is important to note that the functions in Figure 
 \ref{fig:flowdiagram} control the process, the second layer, i.e. *when* 
 components are applied. Each of these functions take a simulation setup object 
-to be modified and a function with the discussed interface as arguments. To 
-illustrate these implementation details the following Section gives some code 
+to be modified and a function with the interface discussed above as arguments.
+To illustrate these implementation details the following Section gives some code
 examples to implement a model based simulation.
 
 
@@ -182,12 +182,12 @@ examples to implement a model based simulation.
 \label{sec:saeSim_examples}
 
 In this Section I want to illustrate some of the features of `saeSim` using code
-examples. Beforehand I introduce some basic functionalities since the package
+examples. To begin with I introduce some basic functionalities since the package
 relies on the so called *pipe operator* (`%>%`) which may need some explanation.
 The pipe operator is designed to make otherwise nested expressions more readable
 as a line can be read from left to right, instead from inside out \citep{Bac14}.
-As a simple example consider the following lines which are equivalent with
-respect to their functionality:
+As a simple example consider the following lines which are equivalent in terms
+of their functionality:
 
 ```{r eval = FALSE}
 library("magrittr")
@@ -211,39 +211,39 @@ setup2 <- sim_base_lm() %>% sim_sample(sample_fraction(0.05))
 ```
 
 Without knowing anything about the setup defined in `sim_base_lm` we notice that
-`setup1` and `setup2` only differ in the applied sampling scheme. `sim_sample`
-is responsible as a control when a function is applied (after the
-population-level) and `sample_number(5)` and `sample_fraction(0.05)` define the
-explicit way of drawing samples. Separating the responsibility of each component
-into what is applied and when it is applied makes it possible to add new
-components to any step in the process. The composition of a simulation in that
-manner will focus on the definition of components and hide control structures.
-Any function can be passed to `sim_sample` which has a `data.frame` both as
-input and as return value. The only responsibility of that function is to draw a
-sample, which makes it easy to find, understand, and reuse when published. The
-pipe operator is used to add new components to the setup.
+`setup1` and `setup2` only differ in the sampling scheme applied. `sim_sample` 
+operates as a control when a function is applied (after the population-level)
+and `sample_number(5)` and `sample_fraction(0.05)` define the explicit ways of
+drawing samples. Separating the responsibility of each component into what is
+applied and when it is applied makes it possible to add new components to any
+step in the process. The composition of a simulation in this manner will focus
+on the definition of components and hide control structures. Any function can be
+passed to `sim_sample` which has a `data.frame` both as an input and as return
+value. The only responsibility of that function is to draw a sample -- which
+makes it easy to find, understand, and reuse when published. The pipe operator
+is used to add new components to the setup.
 
 In what follows one way of constructing a simulation in a model based setting is
-reviewed. The aim is to make domain predictions using the FH model and the
-introduced robust extension. In this example we start with a unit level
-population model. From this population samples are drawn in each iteration with
-SRSWOR where the domain specific sample sizes are: $n_i \in \{5, \dots, 15\}$.
-Considered is the case of 40 domains with 1000 units each. The first step is to
-generate the data under the following model:
+reviewed. The aim is to make domain predictions using the FH model and the 
+robust extension introduced. In this example we start with a unit level 
+population model. From this population samples are drawn in each iteration with 
+SRSWOR where the domain specific sample sizes are: $n_i \in \{5, \dots, 15\}$. 
+Considered here is the case of 40 domains with 1000 units each. The first step
+is to generate the data under the following model:
 $$ 
 y_{ij} = 100 + 5 \cdot x_i + \re_i + e_{ij}
 $$
 where $x_i \sim N(0, 16)$, $\re_i \sim N(0, 4)$ and $e_{ij} \sim N(0, 32)$. The 
-variance parameter of the unit level error, $e_{ij}$ is chosen to lead to 
-sampling errors of the sample mean between 2 and 6 -- see Section
-\ref{sec:results_unit} ahead for a more detailed presentation of a similar
+variance parameter of the unit level error, $e_{ij}$ is chosen such as to lead
+to sampling errors of the sample mean between 2 and 6 -- see Section 
+\ref{sec:results_unit} below for a more detailed presentation of a similar 
 scenario.
 
 In this case the *base-component* is a data frame with an id variable named 
 `idD` and constructed with the function `base_id`. Any random number generator 
 in `R` can be used. For the reproducibility of the following results the seed is
-set to 1. The seed is not part of a simulation setup in `saeSim` but needs to be
-defined by the user:
+set to one. The seed is not part of a simulation setup in `saeSim` but needs to
+be defined by the user:
 
 ```{r}
 set.seed(1)
@@ -259,7 +259,7 @@ Note that if you print a simulation setup to the console, as in the above
 example, one simulation run is performed and only the first rows (the head) of 
 the resulting data are printed. This enables interactivity with the object 
 itself; however, it hides the fact that the setup object is a collection of 
-functions to be called. We also can see that the variables `x` and `u` are 
+functions to be called. We can also see that the variables `x` and `u` are 
 generated to be constant for all units within a domain. This is an operation
 triggered by the usage of the argument `groupVars`.
 
@@ -289,12 +289,12 @@ setup
 In this step `sampleSizes` is used to store the sample sizes to be drawn from 
 each domain. The function `sample_numbers` is responsible for drawing samples 
 and the additional argument `groupVars` triggers the operation to be made in 
-each domain. The default is to sample without replacement. Furthermore we 
+each domain. The default is to draw samples without replacement. Furthermore we 
 store the sample size as variable in the data. Since in this example we are
 interested in applying area level models we need to add an aggregation step. In
 this setting we compute the sample mean for the response variable and the single
 regressor, `x`. Furthermore we need to add an estimator for the sampling
-variance within domains which is here implemented using a direct variance
+variance within the domains which is here implemented using a direct variance
 estimator:
 
 ```{r}
@@ -310,17 +310,18 @@ setup
 Notice that we use the function `sim_comp_agg` with the additional argument `by`
 to repeat this computation within each domain. In this example `sim_agg` will 
 compute the means in the sample for each numeric variable. Hence we arrive at a 
-data set containing 40 rows; one for each domain.
+data set containing 40 rows: one for each domain.
 
-So far it has been possible to utilise preconfigured features from the package.
-In this sense it is valuable to have a tested set of tools which can assist in 
-configuring the repetitive elements across simulation studies with relative 
-ease. However an important aspect of the package is the definition of the 
-interface between components: each component -- defined by a function -- takes a
-`data.frame` as input and returns the modified version. Making predictions using
-the FH model and its robust extension is something which is not covered by the 
-package. Here the non\hyp{}robust predictions are made by setting the
-tuning constant to a large numeric value. Hence we need to define these steps:
+Thus far it has been possible to utilise preconfigured features from the
+package. In this sense it is useful to have a tested set of tools which can
+assist in configuring with relative ease the repetitive elements across
+simulation studies. However an important aspect of the package is the definition
+of the interface between components: each component -- defined by a function --
+takes a `data.frame` as input and returns the modified version. Making
+predictions using the FH model and its robust extension is something which is
+not covered by the package. Here the non\hyp{}robust predictions are made by
+setting the tuning constant to a large numeric value. Hence we need to define
+these steps:
 
 ```{r message=FALSE}
 library("saeRobust")
@@ -342,14 +343,14 @@ setup <- setup %>%
 ```
 
 The above code illustrates how new components can be defined. Notice that the 
-definition of these components only need few lines of code and have a single 
+definition of these components only need a few lines of code and have a single 
 purpose. This can contribute to the reproducibility of simulation studies 
 since these components are easily understood. A main aspect contributing to
 the readability is that these definitions are decoupled from any control
 structures which are often present in script files for simulation studies.
 
 The object `setup` stores all necessary information to run one iteration of the 
-simulation. In the following $R = 10$ repetitions are performed. The result is a
+simulation. In what follows $R = 10$ repetitions are performed. The result is a
 `list` of `data.frame`s. These results are then combined into a single data
 set:
 
@@ -359,33 +360,34 @@ simResults[c("idD", "idR", "popMean", "y", "FH", "RFH")] %>%
   head
 ```
 
-An additional variable `idR` is automatically added as an ID-variable to
-distinguish between iterations. In `saeSim` no further tools for processing the
-resulting data are implemented. There are many tools readily available in `R` to
-that extend.
+An additional variable `idR` is automatically added as an ID-variable to 
+distinguish between iterations. In `saeSim` no further tools for processing the 
+resulting data are implemented. There are many tools readily available in `R`
+for that purpose.
 
 # Discussion
 \label{sec:saeSim_discussion}
 
-In the previous example I illustrated how a model based simulation can be
-configured using the `R`-package `saeSim`. A design based configuration differs
-simply by starting from sampling instead of the data generation; otherwise the
-same tools can be utilised. Code examples for a design based simulation can be
-found in @War16a. 
+In the previous example I illustrated how a model based simulation can be 
+configured using the `R`-package `saeSim`. A design based configuration differs 
+simply in that it starts with sampling instead of with data generation;
+otherwise the same tools can be utilised. Code examples for a design based
+simulation can be found in @War16a.
 
-The main *design* aspect making `saeSim` a useful tool is that simulations can
-be composed by combining different components. Furthermore it may promote a
-reasonable way for the definition of such components within the `R`-language: as
-short, single argument functions which take a `data.frame` as input and return
+The main *design* aspect making `saeSim` a useful tool is that simulations can 
+be composed by combining different components. Furthermore it may contribute
+towards a reasonable way for defining such components within the `R`-language:
+as short single argument functions which take a `data.frame` as input and return
 it modified.
 
-The presentation of this package has not been exhaustive but focused on
-communicating the main idea of the composition of simulation studies. Available
-features noteworthy are the generation of outlying data points. Such
-values are always generated as part of the population and hence focus on the
-presence of representative outliers as defined by @Cha86. Furthermore some
-effort went into the connection to parallel and high performance computing. With
-this regard the package `parallelMap` \citep{Bis15} is utilised as an interface
-to `R`s parallel computing capabilities. This also includes a link to the
-package `BatchJobs` \citep{Bis15a} which can be used with many high performance
+The presentation of this package here has not been exhaustive but has focused on
+communicating the main idea in the composition of simulation studies. Other
+features which are available and worthy of note are the generation of outlying
+data points. Such values are always generated as part of the population and
+hence focus on the presence of representative outliers as defined by @Cha86.
+Furthermore some effort has gone into building a connection to parallel and high
+performance computing facilities. In this regard the package `parallelMap`
+\citep{Bis15} is utilised as an interface to `R`s parallel computing 
+capabilities. This also includes a link to the package `BatchJobs` 
+\citep{Bis15a} which can be used in conjunction with many high performance
 infrastructures.

@@ -138,7 +138,7 @@ Since the weights for the bias correction -- see Section
 \ref{sec:rfhbiascorrection} -- are also used for estimating the MSPE more weight
 is given to the sampling variance. This leads to more unstable results over all.
 This may be less relevant in an application in which we can choose the width of 
-the interval. Also this effect was observed in the model\hyp{}based simulation
+the interval. Also this effect was observed in the model based simulation
 in Section \ref{sec:results_predictions}.
 
 The third observation we can make is that the CCT only has a small advantage in
@@ -146,7 +146,7 @@ terms of bias and MSE for the outlying observations. In general the results
 regarding the performance of the MSPE estimators are very sensitive with respect
 to the choices made for the simulation setting. Here the bias we can make in a
 prediction is relatively small since the mean for outlying domains is shifted by
-9 units compared to an overall intercept of 100. In the design\hyp{}based study
+9 units compared to an overall intercept of 100. In the design based study
 of Chapter \ref{chap:results_design_based} we will observe outlying observations which are multiple times
 larger than the main body of observations. Hence the benefit in terms of bias
 depends largely on the magnitude of the intercept of the outlying observations.

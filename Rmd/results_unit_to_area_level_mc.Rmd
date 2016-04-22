@@ -91,7 +91,7 @@ The model underlying the Monte Carlo study is given by:
 $$y_{ij} = 100 + 5 x_i + \re_i + e_{ij}$$
 
 - The regressor, $x_i$, is a deterministic sequence defined as in the 
-model\hyp{}based scenarios before: $x_i = \frac{i}{2D} + 1$.
+model based scenarios before: $x_i = \frac{i}{2D} + 1$.
 - From this model a population is generated in each Monte Carlo repetition. Each
 domain is of size $N_i = 1000$ and we consider $D = 40$ as before.
 - Samples are drawn with SRSWOR in each domain. The sample sizes are defined as 
