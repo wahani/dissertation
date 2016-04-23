@@ -1,14 +1,14 @@
 # Extensions to the Fay-Herriot Model
 \label{sec:rfh_model}
 
-In the following sections the models under study are reviewed. This includes the
-methods reviewed in Section \ref{sec:theory_sae_fh_extensions} and also the FH 
-model. These models will be framed in the context of linear mixed models since 
-the robust estimation equations are -- where possible -- stated for the general 
-case of linear mixed models. For the case particularly of optimisation of the
-model specifc variance parameters it will be necessary to give some results for
-each model. In these situations the following sections will act as a reference
-points in order to maintain the flow of the arguments.
+In the following sections the models under consideration are reviewed. This 
+includes the methods reviewed in Section \ref{sec:theory_sae_fh_extensions} as
+well as the FH model. These models will be framed in the context of linear mixed
+models since the robust estimation equations are -- where possible -- stated for
+the general case of linear mixed models. For the particular optimisation
+strategies of the model specific variance parameters it will be necessary to give
+some results for each model. In these situations the following sections will act
+as reference points in order to maintain the flow of the arguments.
 
 ## Fay-Herriot Model
 \label{sec:rfh_model_fh}
@@ -40,7 +40,7 @@ independent. The unknown model parameters are $\pmat\beta$ and $\pmat\delta =
 \label{sec:rfh_model_sfh}
 
 For a review of the spatial extension to the FH model see Section 
-\ref{sec:theory_sae_fh_spatial}. Here model the model by @Pet06 in \eq{eq:sfh}
+\ref{sec:theory_sae_fh_spatial}. Here the model by @Pet06 in \eq{eq:sfh}
 is represented as linear mixed model and as such it can be represented as:
 \empty{
 \begin{align*}
@@ -70,7 +70,7 @@ to the following distribution of $\mat{u}_1$:
 }thus $\mat{V}_u = \sigma_{1}^2 \pmat\Omega_1(\rho_1)$. Furthermore $\mat{u}_1$
 and $\mat{e}$ are independent. The unknown model parameters are $\pmat\beta$ and
 $\pmat\delta = (\rho_1, \sigma_1^2)$. Because the results will be needed in
-later sections the partial derivates of $\mat{V}(\pmat\delta)$ with respect to
+later sections the partial derivatives of $\mat{V}(\pmat\delta)$ with respect to
 each element in $\pmat\delta$ are given here: $\partial\mat{V} / 
 \partial\sigma_1^2 = \pmat\Omega_1(\rho_1)$ and
 \empty{
@@ -105,13 +105,13 @@ is a $T \times 1$ vector of ones, and $\mat{Z}_2 = \mat{I}_{DT}$; $\mat{u} =
 $\mat{e}$ is the $(DT \times 1)$ vector of sampling errors. Note that
 $\mat{u}_0$ denotes the vector of random effects similar to the FH model in that
 $\mat{u}_0 \sim \Distr{N}(\mat{0}_D, \sigre\mat{I}_D)$. $\mat{u}_2$ is a $(DT
-\times 1)$ vector of autocorrelated random effects following a AR(1):
+\times 1)$ vector of autocorrelated random effects following an AR(1):
 $$
 \re_{2it} = \rho_2 \re_{2i, t-1} + \epsilon_{2it}
 $$
-with $i = 1, \dots, D$ and $t = 1, \dots, T$, where $\rho_2$ is the auto
-correlation coefficient with $|\rho_2| < 1$ and $\epsilon_{2it} \sim
-\Distr{N}(0, \sigma_2^2)$. Furthermore $\mat{u}_0$, $\mat{u}_2$ and $\mat{e}$
+with $i = 1, \dots, D$ and $t = 1, \dots, T$, where $\rho_2$ is the
+autocorrelation coefficient with $|\rho_2| < 1$ and $\epsilon_{2it} \sim 
+\Distr{N}(0, \sigma_2^2)$. Furthermore $\mat{u}_0$, $\mat{u}_2$ and $\mat{e}$ 
 are pairwise independent. The distribution of $\mat{u}_2$ is given by:
 \empty{
 \begin{align*}
@@ -135,7 +135,7 @@ with $i = 1, \dots, D$. Thus $\mat{V}_u = \mat{V}_u(\pmat\delta) =
 covariance matrix of $\mat{u}$; and $\mat{V}_e = \Diag{\{\{\sigma_{eit}^2\}_{t =
 1}^T\}_{i = 1}^D}$ is the covariance matrix of $\mat{e}$ with known
 sampling variances for each time period and area. Hence the unknown model 
-parameters are $\pmat\beta$ and $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$. The partial derivates of $\mat{V}(\pmat\delta)$ with respect to the variance parameters are then given by:
+parameters are $\pmat\beta$ and $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$. The partial derivatives of $\mat{V}(\pmat\delta)$ with respect to the variance parameters are then given by:
 $\partial\mat{V} / \partial\sigre = \mat{Z}_1\mat{I}_D\mat{Z}_1^\top$, 
 $\partial\mat{V} / \partial\sigma_2^2 = \pmat\Omega_2$, and
 \empty{
@@ -192,12 +192,11 @@ and
 }
 
 
-
 # Robust Predictions under Area Level Models
 \label{sec:theory_reblup}
 
-The concrete approach for the outlier robust predictions the under area level
-models is set out hereunder. The approach is kept in confomity with the general
+The concrete approach for the outlier robust predictions under area level
+models is set out hereunder. The approach is kept in conformity with the general
 notation for linear mixed models where the spatio and temporal extensions can be
 framed as special cases within this class of models.
 
@@ -236,7 +235,7 @@ $\mat{U} = \mat{U}(\pmat\delta)$ is the matrix containing the diagonal elements
 of $\mat{V}$. Furthermore $\psi_b(x) = x \min\Paran{1, \frac{b}{|x|}}$ is the 
 influence function proposed by @Hub64 for a given tuning constant $b$ where a 
 common choice for $b$ is 1.345 -- see @Sin09. These robust estimation equations 
-have been utilised also for the area level models under consideration here. A 
+have been utilised also for the area level models under consideration. A 
 difference will be to find solutions to these equations as outlined later in
 this Section.
 
@@ -282,7 +281,7 @@ temporal and spatio\hyp{}temporal model $DT$. Here $\mat{x}_i$ denotes the $(P
 \times 1)$ vector of auxiliary information for the $i$th observation and
 $\mat{z}_i$ similarly the column vector containing the $i$th row in $\mat{Z}$
 where the form of $\mat{Z}$ depends on the specific model. Here 
-\eq{eq:area_rblup} acts as a placeholder for the area level spatial RBLUP 
+\eq{eq:area_rblup} acts as a place-holder for the area level spatial RBLUP 
 (SRBLUP), the temporal RBLUP (TRBLUP), and the spatio\hyp{}temporal RBLUP 
 (STRBLUP). The RBLUP depends on the unknown variance parameters, $\pmat\delta$,
 which need to be estimated. If we replace $\pmat\delta$ with the robust
@@ -359,7 +358,7 @@ To derive $\mat{B}$ note that:
 \end{align*}
 }and that the approach taken is similar as for $\mat{A}$. However the form of 
 $\mat{B}$ is different from the approach by @Cha14 because of the different 
-estimation equation for the random effects \eq{eq:rfheere}. This different form 
+estimation equations for the random effects \eq{eq:rfheere}. This different form 
 simplifies the form of the two weighting matrices -- $\mat{W}_2$ and $\mat{W}_3$
 in the equations below -- as they are also diagonal matrices. Thus starting
 from \eq{eq:rfheere} the specific form of $\mat{B}$ can be derived as:
@@ -446,7 +445,7 @@ proposed by @Cha11 -- this is presented in Section
 ### Solution for $\pmat\beta$
 
 For the solutions of the robust estimation equations I begin with the solution
-for the regression coefficients. Recall that:
+for the regression coefficients. Recall from the pseudolinear representation that:
 \empty{
 \begin{align*}
 \pmat\beta = \mat{A}(\pmat\beta)\mat{y}
@@ -461,9 +460,9 @@ least squares (IRWLS) algorithm to solve \eq{eq:rfhreeb} for $\pmat\beta$:
   & = \mat{A}\Paran{\pmat\beta^{(m)}}\mat{y} \nonumber\\
   & = \Paran{\mat{X}^\top\mat{V}^{-1} \mat{W}_1(\pmat\beta^{(m)}) \mat{X}}^{-1} \mat{X}^\top\mat{V}^{-1} \mat{W}_1(\pmat\beta^{(m)}) \mat{y} \label{eq:fp_beta}
 \end{align}
-}for adequate starting values $\pmat\beta^{(0)}$ and known variance parameters
+}with adequate starting values $\pmat\beta^{(0)}$ and known variance parameters
 $\pmat\delta$. This proposition is very similar to the IRWLS algorithm suggested
-by @Schoch12; however it depends on a differnt choice for the robust estimation
+by @Schoch12; however it depends on a different choice for the robust estimation
 equation. Details of IRWLS algorithms for robust M-estimation can also be found 
 in @Mar06[pp. 104-105]. A natural choice as a starting value for the weighting 
 matrix is to set the diagonal elements to one. This will lead to the non\hyp{}robust 
@@ -505,7 +504,7 @@ to compute starting values. This estimator has been reviewed in Section
 in \eq{eq:fp_re} it also depends on the known parameter vectors $\pmat\beta$ and
 $\pmat\delta$. Also non\hyp{}robust starting values showed acceptable results in the 
 simulation presented in Section \ref{sec:saeRobust_stability}; however robust 
-starting values have an significant impact on the number of iterations needed 
+starting values have a significant impact on the number of iterations needed 
 when outliers are present in the data. Similar to the IRWLS algorithm for
 $\pmat\beta$, if the tuning constant of the influence function is chosen to be 
 infinity the algorithm in \eq{eq:fp_re} has the desirable property that it
@@ -513,7 +512,7 @@ reduces to the form of the non\hyp{}robust estimation equation of
 \eq{eq:rfheere} because of the special form of $\mat{W}_2$ and $\mat{W}_3$, i.e.
 they reduce to identity matrices. And -- as reviewed in Section
 \ref{sec:robustee} -- the solution to the non\hyp{}robust equation
-\eq{eq:rfheere} is equivalent the the BLUP for $\mat{u}$ given by
+\eq{eq:rfheere} is equivalent to the BLUP for $\mat{u}$ given by
 \eq{eq:blupre}.
 
 
@@ -572,20 +571,21 @@ results. Thus the first derivative, $d'(\delta^{(m)})$, is approximated by
 $d(\delta^{(m)} - h)$ where $h$ is some small number. For a review of such
 methods see for example @Mar06[46 ff] and more generally @McC04.
 
-Now turning to the more general case where $\pmat\delta$ has more than one
-element; the solution of @Chat12 is based on the idea to add
-$\mat{V}^{-1}\mat{V}$ to the term inside the trace in \eq{eq:rfhreed}. This was
-necessary because under the unit level model, $\mat{V}_e$ contains an unknown
-parameter. In the case of the FH model and its extensions $\mat{V}_e$ is assumed
-to be known and thus can be omitted. Thus the following approach is specific if
-the parameters in $\mat{V}_e$ are known but can be extended easily to the more
-general case. Starting from \eq{eq:rfhreed} we can write:
+Now turning to the more general case where $\pmat\delta$ has more than one 
+element; the solution of @Chat12 is based on the idea to add 
+$\mat{V}^{-1}\mat{V}$ to the term inside the trace in \eq{eq:rfhreed}. This was 
+necessary because under the unit level model, $\mat{V}_e$ contains an unknown 
+parameter. In the case of the FH model and its extensions, $\mat{V}_e$ is
+assumed to be known and thus can be omitted. The following approach is specific
+if the parameters in $\mat{V}_e$ are known but can be extended easily to the
+more general case. Starting from \eq{eq:rfhreed} we can write:
 \empty{
 \begin{align*}
 0 = & \psi(\mat{r})^\top \mat{U}^{\half}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) \\
   & - \tr\left(\mat{K}\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l} (\mat{Z}\mat{V}_u\mat{Z}^\top)^{-1} (\mat{Z}\mat{V}_u\mat{Z}^\top)\right) 
 \end{align*}
-}with $l = 1, \dots, Q$ where now we need to find matrices $\bar{\mat{V}}_{ul}$ such that:
+}with $l = 1, \dots, Q$ where we now need to find matrices $\bar{\mat{V}}_{ul}$
+such that:
 \empty{
 \begin{align*}
 0 = & 
@@ -645,36 +645,37 @@ applicable when we set $\delta = \sigre$ and use the notation of Section
 \mbox{}\newline In principle $\pmat\delta = (\rho_1, \sigma_1^2)$ under the 
 spatial FH model of Section \ref{sec:rfh_model_sfh}. Hence the specific form of 
 \eq{eq:fp_delta2} needs to be derived. In this case each $\bar{V}_{ul}$ with $l 
-= 1, 2$ need to be defined. Although it is possible to find such matrices, an 
+= 1, 2$ needs to be defined. Although it is possible to find such matrices, an 
 implementation has lead to unstable results. This difficulty can be met by 
 splitting the problem into finding solutions for $\delta_\sigma = (\sigma_1^2)$ 
-and $\delta_\rho = (\rho_1)$ seperately. This means that each iterative equation
+and $\delta_\rho = (\rho_1)$ separately. This means that each iterative equation
 depends on the other *known* parameter. Admittedly this is numerically not 
 optimal since it will lead to an increase in overall iterations. However, as 
 will be shown in Section \ref{sec:saeRobust_stability}, it leads to acceptable 
 and stable results. For the specific adaptation of the iterative equations for 
 $\pmat\delta$ this means that the iterative fixed point function
 \eq{eq:fp_delta} is used to find solutions for $\delta_\sigma$ and the
-Newton-Raphson algorithm in \eq{eq:nr_delta} for $\delta_\rho$ seperately; all
+Newton-Raphson algorithm in \eq{eq:nr_delta} for $\delta_\rho$ separately; all
 other specifications under the spatial model can be found in Section
 \ref{sec:rfh_model_sfh}.
 
 #### Solutions for the Robust Temporal FH Model
 
-\mbox{}\newline Under the temporal model of Section \ref{sec:rfh_model_tfh}
-$\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$. Although not all combinations have
-been empirically validated the same numerical problems may be suspected to arise when we
-try to optimise the variance and the correlation parameter jointly. Hence in this
-case the problem is split into finding solutions for $\pmat\delta_\sigma =
-(\sigre, \sigma_2^2)$ and $\delta_\rho = (\rho_2)$. Both iterative equations
-assume known parameters of the left out elements.
+\mbox{}\newline Under the temporal model of Section \ref{sec:rfh_model_tfh} the
+variance parameters are defined as $\pmat\delta = (\sigre, \rho_2, \sigma_2^2)$.
+Although not all combinations have been empirically validated the same numerical
+problems may be suspected to arise when we try to optimise the variance and the
+correlation parameter jointly. Hence in this case the problem is split into
+finding solutions for $\pmat\delta_\sigma = (\sigre, \sigma_2^2)$ and
+$\delta_\rho = (\rho_2)$. Both iterative equations assume known parameters of
+the left out elements.
 
 For $\delta_\rho$ we can simply use the Newton-Raphson algorithm in
 \eq{eq:nr_delta} which is directly compatible with the results of Section 
 \ref{sec:rfh_model_tfh}. For $\pmat\delta_\sigma$ we need to find 
 $\bar{\mat{V}}_{u1}$ and $\bar{\mat{V}}_{u2}$ where $\rho_2$ is treated as a 
 known parameter. Using the results of Section \ref{sec:rfh_model_tfh} we can 
-find these solutions thus:
+find these solutions:
 \empty{
 \begin{align*}
 \mat{V}_u
@@ -819,14 +820,14 @@ respective parameter space can be chosen -- see Section
 2. Compute $\pmat\beta^{(m + 1)}$ using equation \eq{eq:fp_beta} with given
 parameters $\pmat\delta$ until convergence is reached.
 3. With the solution of 2. for $\pmat\beta$ compute $\pmat\delta^{(m + 1)}$ 
-using the model specifc solutions for \eq{eq:fp_delta}, \eq{eq:nr_delta}, and
+using the model specific solutions for \eq{eq:fp_delta}, \eq{eq:nr_delta}, and
 \eq{eq:fp_delta2}. This step itself can involve several algorithms for the
 respective variance and correlation components of the variance
 structure as was enunciated in Section \ref{sec:rfh_solutions_delta}.
 4. Set $m = m + 1$.
-5. Repeat steps 2. to 4. until the set of parameters jointly reach convergence. 
-Declare these solutions to be the robust parameter estimates 
-$\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$. 
+5. Repeat steps 2. to 4. until the set of parameters jointly reaches
+convergence. Declare these solutions to be the robust parameter estimates 
+$\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$.
 6. With the solutions $\hat{\pmat\beta}^\psi$ and $\hat{\pmat\delta}^\psi$ 
 compute $\mat{u}^{(m + 1)}$ using equation \eq{eq:fp_re} until convergence is 
 reached. Declare these solutions to be the robust predictors,
@@ -845,15 +846,15 @@ $\pmat{p}$ denote a parameter vector of length $P$ and $p_l$ an element with $l
 \end{align*}
 }where $p_l^{(m)}$ denotes a parameter value in the iteration $m$ and $\epsilon$
 is some small constant. This stopping rule may appear to be artificial but it is
-motivated for the following reasons: it showed good properties when many, say
-hundreds or thousands, parameters are optimised jointly. This is so because
-first it is scaled down by taking the mean over all parameters and second by
-taking the $\log$. The one is added to avoid negative values of the logarithm.
-Inside the sum the relative absolute differences of the parameter estimates at
-iteration $m$ and $m + 1$ are computed. In fact only the relative difference is
+motivated for the following reasons: it shows good properties when many, say 
+hundreds or thousands, parameters are optimised jointly. This is so because 
+first it is scaled down by taking the mean over all parameters and second by 
+taking the $\log$. The one is added to avoid negative values of the logarithm. 
+Inside the sum the relative absolute differences of the parameter estimates at 
+iteration $m$ and $m + 1$ are computed. In fact only the relative difference is 
 used when the denominator is larger than 1; otherwise the absolute difference is
-being used. Here the advantage is that it makes the comparissons scale
-independent which can be beneficial if the true parameters have large absolute
-values as is pointed out by @Wei14[pp. 143-144]. @Wei14 and @McC04 also provide
-a discussion of the choice of such stopping rules. The properties and results of
-this algorithm is the subject matter of Section \ref{sec:saeRobust_stability}.
+being used. Here the advantage of the relative difference is that the numerical
+precision is independent of the magnitude of the parameters, as is pointed out
+by @Wei14[pp. 143-144]. @Wei14 and @McC04 also provide a discussion of the
+choice of such stopping rules. The properties and results of this algorithm is
+the subject matter of Section \ref{sec:saeRobust_stability}.

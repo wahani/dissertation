@@ -57,7 +57,7 @@ the existing literature mainly focuses on dealing with area level outliers since
 they lead to a simple extension of the FH model -- see for example @Dat95 and
 @Xie07.
 
-In contrast to this way of classification I want to distiguish between *three* 
+In contrast to this way of classification I want to distinguish between *three* 
 types of outlying observations and furthermore to illustrate that it may be 
 possible to distinguish between unit and area level outliers. In the following 
 sections these types are characterised as a preliminary to the study of robust
@@ -83,7 +83,7 @@ have poor properties when the target is the *true* sampling error especially in
 the context of outliers. This problem has stimulated the recent discussion
 around smoothing the variance estimates prior to using them in a Fay-Herriot
 model -- see Section \ref{sec:theory_sae_fh_mspe} for a review of this
-discussion. However, unit level outliers may lead to *outlying estimates of the
+debate. However, unit level outliers may lead to *outlying estimates of the
 standard errors*, which in turn may have an unwanted effect on the smoothing of
 these parameters. This situation is further discussed in Section
 \ref{sec:overly-influencial-observations}.
@@ -91,9 +91,9 @@ these parameters. This situation is further discussed in Section
 Second, we may consider the direct variance estimators not as having an
 informative quantity for the *true* sampling error as it is assumed under the FH
 model, but as informative about the unit level sample instead. This is an
-important aspect because these estimates give an index of reliablility. For a
+important aspect because these estimates give an index of reliability. For a
 given sample size the estimated sampling variance is large if outliers are
-present or, in general, if the sample is heterogenous; and it is low for areas
+present or, in general, if the sample is heterogeneous; and it is low for areas
 in which we have a reliable direct estimator. In this case the Fay-Herriot model
 weights down unreliable direct estimators, which is why this model may be able
 to adjust itself for unit level outliers. This property is explored in Section
@@ -164,11 +164,10 @@ direct estimator has sufficient precision.
 
 The third kind of outlying observations can best be understood when framed as 
 *overly influencial observations*. They are not necessarily far away from the 
-center of the data, i.e. large in absolute values. Furthermore they cannot be 
-understood by looking at the direct estimator alone but must be seen as
-comprising of pairs of direct estimator and sampling variance. Together they
-determine the impact of a single observation on the overall predictions under a
-FH model.
+centre of the data, i.e. large in absolute values. Furthermore they cannot be 
+understood by looking at the direct estimator alone but must be seen as pairs of
+direct estimator and sampling variance. Together they determine the impact of a
+single observation on the overall predictions under a FH model.
 
 To be able to distinguish them from area and unit level outliers let us consider
 two hypothetical scenarios from which these values can arise:
@@ -176,7 +175,7 @@ two hypothetical scenarios from which these values can arise:
 - There are no outliers present and the unit level population model is correctly
 specified as a linear mixed model. However the sample sizes for most areas are
 very small and only for very few domains do we have sufficient sample size to
-support reliable direct domain predictions. This may result in heterogenous area
+support reliable direct domain predictions. This may result in heterogeneous area
 level information with respect to estimated sampling variances. And the effect
 can be that direct estimates of domains with sufficient sample size will
 dominate the global mean and thus effectively become the value we are shrinking
@@ -189,20 +188,20 @@ after smoothing, the direct estimators appear to be more reliable than they in
 reality are. In substance this reduces the self adjusting effect described in 
 Section \ref{sec:unit-level-outliers}.
 
-Both these scenarios are situations in which we have heterogenous variance 
+Both these scenarios are situations in which we have heterogeneous variance 
 estimates and where the FH model may not yield stable and reliable results. 
 Especially the second scenario should not be interpreted as an argument against 
-smoothing or that we can ignore unstable variance estimation. Althogh the 
+smoothing or that we can ignore unstable variance estimation. Although the 
 variances are not smoothed the influence of observations is nevertheless bounded
 within a robust estimation procedure. And not just the influence of the direct 
-estimator is so bounded but the influence of the pair of direct estimator and 
-sampling variance. In fact the introduction of the robust area level model can 
-be considered to have a positive effect with respect to both scenarios because 
-single observations are restricted in their influence. Furthermore the robust 
-model may present an alternative to smoothing strategies -- although this may 
-not have been the initial intention -- without loosing the ability to weight 
-down areas with unit level outliers. This claim is in fact not easy to support
-by empirical evidence. It will however be further discussed in a model based
+estimator is bounded but the influence of the pair of direct estimator and 
+sampling variance as well. In fact the introduction of the robust area level
+model can be considered to have a positive effect with respect to both scenarios
+because single observations are restricted in their influence. Furthermore the
+robust model may present an alternative to smoothing strategies -- although this
+may not have been the initial intention -- without loosing the ability to weight
+down areas with unit level outliers. This claim is in fact not easy to support 
+by empirical evidence. It will however be further discussed in a model based 
 simulation in Section \ref{sec:results_unit}.
 
 ## Outlook
@@ -226,7 +225,7 @@ reason may be the ratio between observations and the random effects, e.g. where
 we have $D$ areas and make $D$ predictions. However a conclusive analysis of
 this problem is not at hand.
 
-Furthermore simulation studies are conducted in order to complete the link 
+In addition simulation studies are conducted in order to complete the link 
 between unit and area level outliers and their effect on the area level 
 predictions. This approach is discussed in more detail in Chapter
 \ref{chap:results_model_based}.

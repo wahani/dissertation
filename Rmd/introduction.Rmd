@@ -138,7 +138,7 @@ methods introduced in this Thesis. All results rely on these two packages; a
 more detailed discussion of these software packages can be found in Chapter 
 \ref{chap:saeRobust} and \ref{chap:saeSim}.
 
-The thesis is seperated into three main parts. \ref{part:theory} *Theory*
+The Thesis is seperated into three main parts. \ref{part:theory} *Theory*
 introduces the underlying esimation methodology, i.e. linear mixed models, a
 review of model based methods in Small Area Estimation as well as outlier robust
 extensions within the field. Given these results extensions to existing
