@@ -14,7 +14,7 @@ different kinds of outliers observable at the area level. In Section
 \ref{sec:rfh_framework} we distiguished between two types: area level and unit 
 level outliers. Following @Bel06 area level outliers are values with large 
 absolute values in the random effect and thus are values for which the synthetic
-regression estimator is a poor fit. Independetly of this question @Fay79 refer 
+regression estimator is a poor fit. Independently of this question @Fay79 refer 
 to @Efr71 and @Efr72 who argue that the Bayes Estimator and the Emperical Bayes 
 Estimator may improve the overall prediction performance but may be ill suited 
 for specific domains. In essence this also describes the situation in which area
@@ -41,7 +41,7 @@ the REBLUP of equation \eq{eq:area_reblup} into a bias corrected version:
 }with $i = 1, \dots, n$ where $c$ is a constant. @Fay79 suggest to set $c =
 \sigma_{ei}$ to balance the tradeoff between loss in efficiency and gain in
 reduced bias. This approach can be directly applied to the spatial and temporal
-extensions and thus similarly to the area level REBLUP the area level REBLUP-BC in
+extensions and thus to the area level REBLUP; the area level REBLUP-BC in
 \eq{eq:area_reblup_bc} acts as a placeholder for all extensions.
 
 Since we need the pseudolinear representation below, we can state

@@ -2,7 +2,7 @@
 \label{sec:theory_rfh_mse}
 
 In this Section the parametric bootstrap by @Sin09 is adapted for the methods 
-here under consideration. Also a pseudolinearisation\hyp{}based MSPE estimator
+under consideration. Also a pseudolinearisation\hyp{}based MSPE estimator
 is derived based on the results by @Cha11.
 
 ## Parametric Bootstrap Methods
@@ -40,10 +40,10 @@ sample. Hence the MSPE estimator is given by:
 using the $b$th bootstrap sample and $\theta_i^{*(b)}$ denotes the true value of
 the respective bootstrap sample for area $i$. The extension by @Jio13 to the 
 bootstrap method of @Sin09 can be applied directly when we use non\hyp{}robust 
-parameter estimates to generate the bootstrap samples. An empirical
-investigation of this method can be found in Section \ref{sec:results_mse} in a
-model based simulation and then in again in Chapter
-\ref{chap:results_design_based} in a design based simulation.
+parameter estimates to generate the bootstrap samples. An empirical 
+investigation of this method can be found in Section \ref{sec:results_mse} in a 
+model based simulation and then again in Chapter \ref{chap:results_design_based}
+in a design based simulation.
 
 
 ## Pseudolinearisation-based MSPE
@@ -52,7 +52,7 @@ model based simulation and then in again in Chapter
 In the following I propose to adapt the results of @Cha11 -- the 
 pseudolinearisation\hyp{}based approach to MSPE estimation -- for the models 
 under consideration. This idea was adapted for the robust prediction under the
-BHF model in @Cha14 and extended to account for the extra variablility
+BHF model in @Cha14 and extended to account for the extra variability
 associated with the estimation of the variance parameters $\pmat\delta$. In
 principle the extension would be desirable but is not being adapted for the
 models under consideration; this can be an avenue for further research but at
@@ -97,7 +97,7 @@ variance can be obtained by:
 function which is one if $k = i$ and zero otherwise. Note that we need the term 
 $\mat{z}_k^\top \mat{V}_u \mat{z}_k$ for the case of correlated random effects; 
 and in fact it reduces to $\sigre$ under the FH model. The variance of the sum 
-can be seperated as above because $\mat{u}$ and $\mat{e}$ are independent under 
+can be separated as above because $\mat{u}$ and $\mat{e}$ are independent under 
 all models under consideration. The first two terms are the variance and 
 covariance of the weighted sum of random effects -- see for example @Bam12[118]
 -- and the remaining third term is the variance due to sampling which is here

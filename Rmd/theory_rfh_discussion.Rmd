@@ -1,13 +1,12 @@
 # Discussion
 \label{sec:rfh_discussion}
 
-This Section gives a short overview of the main findings of this Chapter.
-Furthermore I will outline how the work is continued. The main findings and
-contributions are:
+This Section gives a short overview of the main findings of this Chapter. 
+Furthermore I will outline how the remaining parts of this Thesis connect to
+these findings. As a summary I want to highlight the following items:
 
-- Extensions to the approach by @Sin09 for the estimation of robust mixed linear
-models in the SAE field. This approach has been extended, for area level models
-with correlated random effects.
+- The approach by @Sin09 for the estimation of robust mixed linear models in the
+SAE field has been modified to account for the case correlated random effects.
 - These findings have been combined with the results by @Cha11 and @Cha14 to
 derive the area level REBLUPs -- the area level SREBLUP, TREBLUP, and STREBLUP
 -- in a pseudo linear form. The results are presented in a general form to
@@ -17,22 +16,23 @@ the robust estimation equations. An IRWLS algorithm for $\pmat\beta$ has been
 derived as well as a fixed point algorithm for the random effects, $\mat{u}$.
 - Furthermore a simple bias correction for the robust prediction has been
 adapted based on the results of @Efr72.
-- And finally the approach by @Cha11 to the estimation of the MSPE of domain
-predictions has been extended to be used with the robust area level models with
-correlated random effects. In this regard also the parameteric bootstrap method
-for the MSPE estimation by @Sin09 has been adapted although hardly any changes
+- And finally the approach by @Cha11 to the estimation of the MSPE of domain 
+predictions has been extended to be used with the robust area level models with 
+correlated random effects. In this regard also the parameteric bootstrap method 
+for the MSPE estimation by @Sin09 has been adapted although hardly any changes 
 have been necessary in this case.
 
 The various methods and extensions are now further investigated in two ways. 
-First, we will see how the robust predictors are implemented inside a software 
-package in the `R`-language \citep{R}: `saeRobust` \citep{War16}. With respect 
-to this implementation especially the stability of results are of interest -- 
-see Chapter \ref{chap:saeRobust}. Second, these methods are used in model based 
--- Chapter \ref{chap:results_model_based} -- and design based -- Chapter 
+First, it will be described how the robust predictors are implemented inside a
+software package in the `R`-language \citep{R}: `saeRobust` \citep{War16}. In
+this case especially the stability of the algorithms are of interest -- see
+Chapter \ref{chap:saeRobust}. Second, these methods are used in model based --
+Chapter \ref{chap:results_model_based} -- and design based -- Chapter 
 \ref{chap:results_design_based} -- simulation studies. These simulations aim at 
 exploring the statistical properties of the robust predictions compared to their
 non\hyp{}robust counterparts. These simulation studies are conducted using the 
 `R`-language and a simulation framework developed alongside this Thesis. This 
 framework is implemented in the `R`-package `saeSim` \citep{War15} and some 
-discussion of this implementation is provided in Chapter \ref{chap:saeSim}.
+discussion regarding this implementation is provided in Chapter 
+\ref{chap:saeSim}.
 
