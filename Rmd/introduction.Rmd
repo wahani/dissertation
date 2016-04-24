@@ -1,5 +1,19 @@
 # Motivation
 
+The demand for reliable small area statistics from sample surveys has
+substantially grown over the last decades due to their use in public and private
+sectors. The importance of the field of Small Area Estimation (SAE) can be
+explained by the increasing demand for reliable estimates by policy makers and
+in official statistics. Results may be used for fund allocation, health
+programs, agriculture, or poverty mapping to name only a few of the fields of
+application. Traditionally such estimates rely on survey data; but as the target
+domains become more diverse, reliable estimates are connected to an increasing
+demand for sampled units within the domains. The conflict between the demand for
+more diverse domains as against the cost and feasibility for larger samples is
+the factor that stimulates the progress within the field as this supplies the
+mechanism for optimising the ratio between sampled units and the reliability of
+estimates.
+
 The main endevour Small Area Estimation tries to solve is to produce *reliable 
 predictions* of a *target statistic* for *small domains*. A *target statistic* 
 can be a linear statistic such as a mean, a count, or quantiles; but it can take
@@ -12,45 +26,78 @@ They are small in the sense that they comprise few or no sampled units within
 these domains. This has the effect that a direct estimation, i.e. an estimation
 which only relies on the information available within domains, tends to be not
 reliable. *Reliability* is here measured either by the variance or mean squared
-error of the predictions.
+error of the predictions (MSPE).
 
 Small Area Estimation tries to improve such domain predictions, often in terms
 of mean squared error, by *borrowing strength* from other domains. This can 
 happen by taking additional information from other data sources into account,
 like census and register information. Also structures in the data, like spatial
-or temporal correlation, can be exploited to improve a prediction.
+or temporal correlation, can be exploited to improve a prediction. 
 
-The importance of the field can be explained by the increasing demand for 
-reliable estimates by policy makers and in official statistics. Results may be 
-used for fund allocation, health programs, agriculture, or poverty mapping to 
-name only a few of the fields of application. Traditionally such estimates rely 
-on survey data; but as the target domains become more diverse, reliable 
-estimates are connected to an increasing demand for sampled units within the 
-domains. The conflict between the demand for more diverse domains as against the
-cost and feasibility for larger samples is the factor that stimulates the
-progress within the field as this supplies the mechanism for optimising the
-ratio between sampled units and the reliability of estimates.
+Since applications in the SAE field are often related to official statistic
+especially the incorporation of spatial and temporal correlation structures are
+highly relevant. Such applications have often a geographical dimension since
+predictions by official statistics are often produced on a regional basis. The
+Nomenclature of Units for Territorial Statistics (NUTS) \citep{EuroStat} is a
+hirarchical system to define regions in the European Union in different
+granularity. Since such classifications are based on a geographical dimension we
+may take advantage of the fact that neighbouring districts are similar; hence
+the incorporation of spatial information.
+
+Official statistics is often interested in producing up-to-date statistics and
+that means often historic information is available since these predictions are
+produced on an anual basis. Such information can be exploited and may a
+significant and overall positive impact on the precission of predictions.
+
+As examples for such applications @Pra08 make predictions based on the survey on 
+Life Conditions in Tuscany, Italy. They aimed at predicting the mean per capita 
+income within municipalities. Furthermore they found that incorporating the 
+unobserved spatial correlation between domains into their predictions improved 
+the precission of these quantities. A combination of incorporating spatial and 
+temporal correlation can be found in @Mar13. They make predictions for two
+poverty indicators based on the Survey on Income and Living Conditions for
+Spain. Their results suggest that especially the incorporation of the
+correlation over time presents a beneficial effect in terms of precission.
+
+With this regard, methods using spatial and temporal correlation structures are 
+being used more and more routinely in applications. This is also indicated by 
+the availability of their software implementations which can be, for example, 
+found as packages in the `R`\hyp{}language. @Mol15 provide implementations for
+commonly used methods in the SAE field; including models incorporating spatial
+and temporal correlation.
+
+These methods often rely on strong distributional assumptions which provides the
+additional advantage of a gain in precission; however such methods can easily be
+influenced by single observations. Such observations may be framed as 
+*outlying*. Hence it can be advantaguous to use methods which can be assumed to 
+be more robust against the influence of such outlying observations. In this 
+regard the present Thesis aims at combining robust estimation methodology in 
+combination with the use of various spatial and temporal correlation structures.
+The remaining part of this Intruduction provides aon overview to frame this Thesis in the SAE field -- Section \ref{sec:intro_sae} -- and furthermore presents more
+precisely how this endevour is approached -- Section \ref{sec:intro_outline}.
 
 
 # Locating the Contents in the Field of Small Area Estimation
+\label{sec:intro_sae}
 
 In the following I give a general overview of the field of Small Area Estimation
-(SAE) necessary in order to accomodate this Thesis within the SAE field. @Rao03 
-as well as @Rao15 give comprehensive overviews of the established methods and 
-research published in this field. @Gho94, @Rao99, @Pfe02 and @Pfe13
-focus on the status quo and main lines of discussion within the field at their
-respective point in time.
+necessary in order to accomodate this Thesis within the field. For a general
+overview of the field, @Rao03 as well as @Rao15 give comprehensive overviews of
+the established methods and research published. @Gho94, @Rao99, @Pfe02 and
+@Pfe13 focus on the status quo and main lines of discussion within the field at
+their respective point in time.
 
-In general small area methods are divided into two categories: design based and 
-model based methods. Design based methods can be considered the traditional 
-methodology for analysing survey data; a comprehensive overview of these methods
-for SAE can be found in @Leh09. Design based methods comprise different direct
-and indirect techniques. The Horvitz\hyp{}Thompson (HT) estimator by @Hor52 which
-only uses sampled units within domains, synthetic regression estimates as well
-as model assisted methods like generalized regression (GREG) estimators
-- see @Saer92 for a discussion of these methods - are examples of such
-estimators. These methods have in common that they incorporate
-information of the sampling design into the estimation.
+In general small area methods may be divided into two categories: design based
+and model based methods. This distinction is essentially not distinct but
+provides a frame for the discussion. Design based methods can be considered the
+traditional methodology for analysing survey data; a comprehensive overview of
+these methods for SAE can be found in @Leh09. Design based methods comprise
+different direct and indirect techniques. The Horvitz\hyp{}Thompson (HT)
+estimator by @Hor52 which only uses sampled units within domains, synthetic
+regression estimates as well as model assisted methods like generalized
+regression (GREG) estimators - see @Saer92 for a discussion of these methods -
+are examples of such estimators. These methods have in common that they
+incorporate information of the sampling design into the estimation.
 
 Conceptually design based and model based methods differ in that design based
 methods are used to optimally estimate a target parameter of a fixed and finite 
@@ -102,9 +149,9 @@ Non\hyp{}representative outliers, on the other hand, may be best described as
 the editing process of survey data.
 
 To summarise robust methods in SAE it is necessary to distinguish between three 
-different lines of discussion. Firstly, if the distributional assumption - often a
-Gaussian distribution - appears to be implausible then intuition demands that it
-be replaced. This often leads to the use of non-symmetric or heavy-tailed 
+different lines of discussion. Firstly, if the distributional assumption - often
+a Gaussian distribution - appears to be implausible then intuition demands that
+it be replaced. This often leads to the use of non-symmetric or heavy-tailed 
 distributions for the model error or the random effect. Due to their flexibility
 Bayesian modelling strategies are often used in this context; see for example
 @Dat95 and @Bel06. Secondly, methods are applied which are *naturally* more 
@@ -115,21 +162,38 @@ Bayesian modelling strategies are often used in this context; see for example
   refer to a winzorisation of the Horvitz-Thompson estimator; and @Bea04
   introduces a robust extension to generalised regression estimation.
 
-Given this background, in this Thesis I introduce extensions to the
-Fay\hyp{}Herriot area level model using a model based perspective. More
-precisely an EBLUP based approach is taken to derive predictions in a way that
-makes it possible to model spatial and temporal covariance structures in the
-random effects. These models are closely related to the results presented by
-@Mar13, who introduce spatial and temporal extensions to the Fay-Herriot model.
-However the methods in this Thesis are based on an estimation procedure which is
-robust against outliers following the methodology introduced by @Sin09. The
-extension introduced in the literature around robust EBLUPs (REBLUPs) have been
-focused on unit level models, thus results especially to MSE estimation and bias
-correction are extended to area level models.
+Given this background, in this Thesis I introduce extensions to the 
+Fay\hyp{}Herriot area level model. More precisely an EBLUP based approach is 
+taken to derive predictions in a way that makes it possible to model spatial and
+temporal covariance structures in the random effects. Namely these are the 
+methods introduced by @Rao94 for incorporating temporal correlation; @Pra08 for 
+incorporating spatial correlation; and @Mar13 who introduce the combination of 
+the former. In contrast to these methods, in this Thesis the estimation 
+procedure is based on robust methodology to derive area level robust 
+predictions. The concrete approach is based on the methodology of @Sin09 who 
+extended the approach by @Ric95 to the SAE field. This will lead to an area 
+level robust EBLUP (REBLUP) which is simply a special case when using the
+results of @Sin09; and in addition an area level spatial REBLUP (SREBLUP) which
+to contrast it from @Sch11 is based on an area level model instead on an unit
+level model; a temporal REBLUP (TREBLUP); and a spatio\hyp{}temporal REBLUP 
+(STREBLUP).
+
+Some extensions introduced in the literature around REBLUPs have been focused on
+unit level models, thus results especially to MSPE estimation and bias 
+correction are extended to area level models. In this regard the parametric
+bootstrap by @Sin09 is adapted to obtain estimates for the domain sepcific MSPE.
+Furthermore an analytical solution is presented which is based on a pseudolinear
+form of the area level REBLUPs. This approach extends the results of @Cha11 to
+area level models and combines them with the results of @Cha14 for robust
+predictions. In addition I present a simple correction for the bias associated
+with robust predictions. This correction is based on the *limited translation
+estimator* of @Efr72 and has already been used also by @Fay79 with a somewhat
+similar goal.
 
 # Reproducing the Results
 
 # Outline
+\label{sec:intro_outline}
 
 In addition reference is made to certain
 supplementary material on software. @War15 introduces tools for simulation 
