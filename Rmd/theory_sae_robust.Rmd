@@ -111,16 +111,16 @@ $\mat{V}$.
 
 In order to find solutions for $\pmat\beta$ and $\pmat\delta$ based on the 
 robust estimation equations \eq{eq:reeb} and \eq{eq:reed} @Sin09 propose 
-Newton-Raphson algorithms. @Sch11 and @Schoch12 have reported numerical problems
-with this approach; and different alternative solutions have been investigated.
-@Sch11 proposes to find the minimum of the squared estimation equations in 
-\eq{eq:reed} for all variance parameters; and this was further optimised by
-@Aue15 giving stable and satisfying results. @Schoch12 uses instead an 
-iteratively re-weighted least squares (IRWLS) algorithm for a solution of 
-\eq{eq:reeb} which also yields satisfactory results. A further proposition has 
-been offered by @Chat12 which is to derive a system of fixed point equations 
-based on \eq{eq:reed}: she derives a stable algorithm - using a fixed point 
-algorithm - for $\pmat\delta$.
+Newton-Raphson algorithms based on a Taylor series expansion. @Sch11 and
+@Schoch12 have reported numerical problems with this approach; and different 
+alternative solutions have been investigated. @Sch11 proposes to find the 
+minimum of the squared estimation equations in \eq{eq:reed} for all variance 
+parameters; and this was further optimised by @Aue15 giving stable and 
+satisfying results. @Schoch12 uses instead an iteratively re-weighted least 
+squares (IRWLS) algorithm for a solution of \eq{eq:reeb} which also yields 
+satisfactory results. A further proposition has been offered by @Chat12 which is
+to derive a system of fixed point equations based on \eq{eq:reed}: she derives a
+stable algorithm -- using a fixed point algorithm -- for $\pmat\delta$.
 
 The main advantage of these alternatives may be that they do not rely on the
 derivatives of the estimation equations, which was already a known concern in
@@ -172,7 +172,7 @@ introduction of a bias. This can also happen in the case of different outlier
 robust estimation approaches as already noted, for example by @Tza05, in the
 context of M-quantile regression. In general a bias can be introduced if
 outliers in $\mat{\re}$ or $\mat{e}$ are present but are not drawn from a
-distribution with zero mean or from an asymmetric distribution.
+distribution with zero mean or are from an asymmetric distribution.
 
 This may be viewed as a contrast to the situation say in which we have a well
 behaved population model following, for example, the Gaussian Linear Mixed 
@@ -214,11 +214,11 @@ $\psi_b$; this introduces the possibility to compute a potential prediction bias
 for each area.
 
 An extension of this approach was introduced by @Jio13 whose main concern has
-beens that the correction in \eq{eq:rbhfbc} only depends on the sampled units
+been that the correction in \eq{eq:rbhfbc} only depends on the sampled units
 within domains. Hence they propose two alternatives. First they propose a bias 
 correction based on the results of @Cha86 which, in contrast to \eq{eq:rbhfbc}, 
 relies on $S$ instead of $S_i$ -- i.e. the whole sample and not just the sampled 
-units within domains - and they call this a fully-bias correction. The 
+units within domains -- and they call this a fully-bias correction. The 
 second approach uses a conditional bias to account for units in the population. 
 This effectively reduces to the different treatment of the robust predictions of
 the random effects in their two approaches. In their simulation study they find 
@@ -462,14 +462,14 @@ the variance parameters instead.
 In general the approach to outlier robust predictions, as it was discussed 
 above, is but one possible approach; it is plausible to apply it in an 
 application when the analyst believes that the population model is correctly 
-specified for a substential part of the population. When the model is incorrect
--- for example in the case of a mixture distribution or in general in the context
-of non-symmteric outliers -- the proposed methods can easily lead to a prediction
-bias. However solutions have been suggested to overcome this issue. Similar 
-methods - in that they use robust estimation equations - with respect to survey 
-methods can be found in @Bea09 and @Hul99 who recommend for example a robust HT 
-estimator; and @Bea04 has introduced robust extensions to generalised regression
-estimation.
+specified for a substential part of the population. When the model is incorrect 
+-- for example in the case of a mixture distribution or in general in the
+context of non-symmteric outliers -- the proposed methods can easily lead to a
+prediction bias. However solutions have been suggested to overcome this issue.
+Similar methods -- in that they use robust estimation equations -- with respect
+to survey methods can be found in @Bea09 and @Hul99 who recommend for example a
+robust HT estimator; and @Bea04 has introduced robust extensions to generalised
+regression estimation.
 
 A different approach to robust small area predictions can be found in @Cha06 and
 in @Tza10 which is to model a conditional quantile instead of a conditional 
