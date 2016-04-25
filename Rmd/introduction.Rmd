@@ -106,7 +106,7 @@ population. Model based methods rely instead on the idea that an observed
 sample is drawn from a population which is but one possible realisation of a 
 *superpopulation* model, and it is the parameters of that superpopulation which 
 are targeted. This difference leads to a trade-off when choosing between 
-methods: model based methods can improve domain estimation in terms of variance 
+methods: model based methods can improve domain predictions in terms of variance 
 even with small samples; however they cannot be considered design unbiased. 
 Design based methods on the other hand are design unbiased but have larger and 
 possibly unacceptably high variances for small samples -- see @Leh09.
