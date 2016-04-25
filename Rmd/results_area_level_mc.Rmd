@@ -1,45 +1,45 @@
 # Performance of Robust Area Level Predictions
 \label{sec:results_predictions}
 
-In this Section we investigate the statistical properties of the proposed
-predictors. Using model based simulation studies empirical bias and mean squared
-prediction error are compared over a variety of simulation scenarios as well as
-between the spatial and temporal extensions of the FH model. The proposed
-methods for estimating the MSPE of predictions will be presented separately in
-Section \ref{sec:results_mse}.
+In this Section I investigate the statistical properties of the proposed 
+predictors. Using model based simulation studies the empirical bias and mean
+squared prediction error are compared over a variety of simulation scenarios as
+well as between the spatial and temporal extensions of the FH model. The
+proposed methods for estimating the MSPE of predictions will be presented
+separately in Section \ref{sec:results_mse}.
 
 The simulation scenarios are developed under an area level model; thus we
-consider the situation in which we know the true sampling variances and we
-generate the Monte Carlo sample directly from the area level model. This is in
-conceptual contrast to the setting in Section \ref{sec:results_unit} where we
-consider the situation where we estimate the sampling variances as part of the
-study and thus need to generate the data on the unit level. However the area
-level perspective is considered in the literature for evaluating area level
+consider the situation in which we know the true sampling variances and we 
+generate the Monte Carlo sample directly from the area level model. This is in 
+conceptual contrast to the setting in Section \ref{sec:results_unit} where we 
+consider the situation in which the sampling variances are estimated as part of
+the study and thus need to generate the data on the unit level. However the area
+level perspective is considered in the literature for evaluating area level 
 models -- see for example @Fab10 and @Mar13 -- and hence this will be considered
 first.
 
 Although the area level perspective on the data generating process may be 
-incomplete -- in that we assume the sampling variances to be known -- it is,
-despite this, the model under consideration. It presents the possibility of
-studying the performance of the estimation procedures where the model
-assumptions appear to be violated due to outlying observations. However in this
-setting we are limited to the study of area level outliers since it is not
-obvious how we can simulate unit level outliers into an area level data
-generating process -- see also Section \ref{sec:rfh_framework} for a discussion
-of unit and area level outliers.
+incomplete -- in that we assume the sampling variances to be known -- it is the
+model under consideration. It presents the possibility of studying the
+performance of the estimation procedures where the model assumptions appear to
+be violated due to outlying observations. However in this setting we are limited
+to the study of area level outliers since it is not obvious how we can simulate
+unit level outliers into an area level data generating process -- see also
+Section \ref{sec:rfh_framework} for a discussion of unit and area level
+outliers.
 
 Since several models with various correlation structures have been considered it
 is tempting to investigate a multitude of specifications. In this respect some 
 choices have been made to restrict the presentation of results to a concise set 
 to support the understanding of different model specifications in the context of
 outliers. Although we will see some benefits in utilising spatial and temporal 
-correlation structures, the study does not aim at showing the superiority of
-such methods but focuses on the effect of outliers instead. With respect to
-outliers we will only consider non\hyp{}symmetric outliers since they represent
-the realistic use scenario. The choices of the simulation settings are presented
-in Section \ref{sec:area_level_sim_setting} in detail; the results are then 
-presented in Section \ref{sec:area_level_sim_results}; this is followed by a
-discussion taking other literature into account in Section 
+correlation structures, the study does not aim at showing the superiority of 
+such methods but focuses on the effect of outliers instead. We will only
+consider non\hyp{}symmetric outliers since they represent the realistic
+use\hyp{}case scenario. The choices of the simulation settings are presented in
+Section \ref{sec:area_level_sim_setting}; the results are then presented in
+Section \ref{sec:area_level_sim_results}; this is followed by a discussion
+taking other literature into account in Section 
 \ref{sec:area_level_sim_results}.
 
 
@@ -61,7 +61,7 @@ with $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D = 40$ and $T = 10$. The
 *current* time period is defined to be $t = T$.
 
 - The single regressor, $x_i$, is a deterministic sequence defined by $x_i = 
-\frac{i}{2D} + 1$. This is a similar setting to the choice made by @Mar13;
+\frac{i}{2D} + 1$. This is a similar setting to the choices made by @Mar13;
 however the specification here it is constant over time.
 - The sampling errors, $e_{it}$, are drawn from $e_{it} \sim \Distr{N}(0, 
 \sige)$. The sampling variances, $\sigma_{eit}^2 = \sige$, are known during the 
@@ -113,14 +113,14 @@ are referred to by RFH.BC, RSFH.BC, RTFH.BC, and RSTFH.BC. The tuning constant
 for the robust predictions is fixed at 1.345. Furthermore the direct estimator
 is denoted by *Direct*; this is the generated value for $y_{iT}$.
 
-To assess the quality of the predictions under the various methods two measures
-are utilised: the relative bias (RBIAS) and the relative root mean squared
-prediction error (RRMSPE). These measures are computed over all realisations of
-the Monte Carlo repetitions; overall $R = 500$ repetitions have been conducted.
+To assess the quality of the predictions under the various methods two measures 
+are utilised: the relative bias (RBIAS) and the relative root mean squared 
+prediction error (RRMSPE). These measures are computed over all realisations of 
+the Monte Carlo repetitions; in total $R = 500$ repetitions have been conducted.
 Let $\hat{\theta}^M_{ir}$ denote the prediction for the $i$th area in the $r$th 
-repetition with $r = 1, \dots, R$ under the model $M$ where $M$ is one of the 
-models under consideration, e.g. the RFH model. The Monte Carlo RRMSPE is here 
-defined as:
+repetition with $r = 1, \dots, R$ under the model $M$ where $M$ is one of the
+considered models, e.g. the RFH model. The Monte Carlo RRMSPE is here defined
+as:
 $$
 \text{RRMSPE}_i^M = \sqrt{\frac{1}{R}\sum_{r = 1}^R \Paran{\frac{\hat{\theta}^M_{ir} - \theta_{ir}}{\theta_{ir}}}^2}
 $$
@@ -180,16 +180,16 @@ SFH models where no difference in terms of MSPE is visible -- even in the
 scenarios *(0.5, 0)* and *(0.5, u)*.
 
 The inability to identify this spatial effect results in a similar result as was
-evident in Figure \ref{fig:stability_variance_spatio_temporal} where we observed
+evident in Figure \ref{fig:stability_variance_spatio_temporal}. There we observed
 that under contamination the temporal correlation structure is influenced by
 outliers and at the same time the spatial structure has been identified
 correctly. Here we observe a similar effect: yet in contrast the spatial
 structure captures the outlier contamination and the temporal autocorrelation
 can be identified correctly. So in contrast to the stability tests the effect
 has changed due to the different nature of outlying areas; in Section
-\ref{sec:saeRobust_stability} outliers are single observations; here outlying
-areas include all observations over time. This thus results in the ability of
-the temporal models to borrow strength from the correctly identified temporal 
+\ref{sec:saeRobust_stability} outliers are single observations; here outlying 
+areas include all observations over time. Thus in the results we see the ability
+of the temporal models to borrow strength from the correctly identified temporal
 autocorrelation. The reduced bias for outlying areas is due to the spatial 
 correlation structure used for the prediction of such domains. In fact this 
 effect would not only be present for the robust methods but also for the 
@@ -197,7 +197,7 @@ non\hyp{}robust methods. Basically we have an over parametrised model -- since
 the signal of the spatial correlation is too weak -- which captures the mixture 
 distribution used to induce the outlier contamination.
 
-Now the question is why does the non\hyp{}robust methods seem to be less beneficial 
+Now the question is why do non\hyp{}robust methods seem to be less beneficial 
 in terms of MSPE even when there are no outliers; this is the second 
 observation. As this result is surprising a comparison has been made 
 using the implementation from the R-package `sae` \citep{Mol15} to rule out 
@@ -224,7 +224,7 @@ robust counterparts. As was discussed earlier in such a setting these models are
 over parametrised and can thus model the mixture distribution used for inducing
 the outlier contamination.
 
-Still open to question in this line of argumentation is the problem why the
+Still open to question in this line of argumentation is the problem of why the
 predictions under the RTFH and RSTFH models do not suffer from a similar fate.
 The concrete mechanism explaining the difference is unknown at present. In
 various simulations the robust methods have revealed to be less sensitive to the
@@ -265,7 +265,7 @@ this can be true also for the non\hyp{}robust methods. This may be due to the
 ability of the fitting process to approximate the mixture distribution.
 - The proposed bias correction may prove to be useful especially for outlying
 domains. However the choice of the width of the interval in which predictions
-can be made should be made with care in practice.
+can be made should be handled with care in practice.
 - The robust methods have an expected positive effect in terms of RRMSPE in the
 presence of outliers. Also they may be more robust against the choice of the
 sampling variances -- however this claim needs further investigation.
