@@ -34,16 +34,16 @@ the EBLUP in \eq{eq:tfh} of @Rao94. Robust methods in the SAE field are
 implemented in the package `rsae` \citep{Schoch14} which implements the methods 
 introduced in @Schoch12 reviewed in Section \ref{sec:robustee}.
 
-An implementation concerning robust methods for area level models is not at
-present available. Also the methods and advances reviewed in Section
-\ref{sec:robustee} have not been published in terms of software -- except for
+An implementation concerning robust methods for area level models is not
+available at present. Also the methods and advances reviewed in Section 
+\ref{sec:robustee} have not been published in terms of software -- except for 
 the results by @Schoch12. In this respect `saeRobust` aims to provide a first --
-but stable -- version implementing the models under consideration. This may
-also prove useful as a vessel for robust unit level models since most of the
-software components involved are designed to be reused. E.g. the robust score
-functions, the proposed algorithms for the regression coefficients and random
-effects, as well as more general features such as the pseudolinear
-representation of a robust estimator are directly reusable as functions.
+but stable -- version implementing the models under consideration. This may also
+prove useful as a vessel for robust unit level models since most of the software
+components involved are designed to be reused. E.g. the robust score functions,
+the proposed algorithms for the regression coefficients and random effects, as
+well as more general features such as the pseudolinear representation of a
+robust estimator are directly reusable as functions.
 
 In this Chapter some numerical problems and in general the stability of the 
 software implementation is investigated. This analysis is strongly influenced by
@@ -63,7 +63,7 @@ Both suffer from bad starting values as the solutions should not be influenced
 by the choice of these values. In one of the scenarios we can then see if and to
 what extent results vary when we impose very extreme values in the data. In this
 respect the current implementation does find solutions under both scenarios 
-without software failure; however this is as a result of conducting this study
+without software failure; however this is a result of conducting this study
 by tuning the implementation. *Finding solutions* refers to the implemented 
 algorithm being able to find solutions to the estimation equations in 
 \eq{eq:rfhreeb}, \eq{eq:rfhreed}, and \eq{eq:rfheere}. Hence some references are
@@ -82,7 +82,7 @@ are mentioned in Section \ref{sec:saeRobust_discussion}.
 \label{sec:saeRobust_stability}
 
 To find a stable implementation various configurations of the algorithm have 
-been investigated. This include the order of the nested algorithms as well as 
+been investigated. This includes the order of the nested algorithms as well as 
 starting values and boundaries. A main concern has been the stability with
 respect to software failure in combination with the ability to find solutions to
 the estimation equations. This leads to some choices which increase the number
@@ -96,12 +96,12 @@ To avoid confusion in discussing the results some details on the implementation
 which are not part of the algorithms of Section \ref{sec:rfh_solutions}
 themselves are given here.
 
-The implementations of algorithms where the parameter space is known to have
-restrictions have modified return values. Thus the correlation parameter of the 
+The implementations of algorithms where the parameter space is known to be
+restricted have modified return values. Thus the correlation parameter of the 
 spatial and temporal extensions are bounded between $10^{-5} - 1$ and $1 - 
 10^{-5}$; and all variance parameters have a lower bound of $10^{-5}$ to avoid 
-zero or negative variance parameters -- see also the discussion in @Rao15[151
-ff]. These restrictions are mostly relevant in optimisations with bad starting
+zero or negative variance parameters -- see also the discussion in @Rao15[151 
+ff]. These restrictions are mostly relevant in optimisations with bad starting 
 values; and they mainly prevent software failures. In these situations they also
 enable the algorithm to find solutions at all.
 
@@ -109,7 +109,7 @@ The algorithm for the model parameters, i.e. the parameter in the fixed effects
 part and the variance components, is nested. This means that solutions for the 
 regression coefficients are found in a separate algorithm; also solutions for 
 the variance parameter are sought for in one or more individual algorithms. 
-These algorithms are then iterated over until all model parameter jointly reach 
+These algorithms are then iterated over until all model parameters jointly reach 
 the stopping rule given in Section \ref{sec:rfh_algorithm}. This means
 that we observe an overall number of iterations as well as a number of
 iterations for each nested algorithm. Hence we have two maximum numbers of
@@ -133,7 +133,7 @@ optimisation strategy are discussed below. $500$ Monte Carlo repetitions are
 conducted for each scenario. The following two scenarios are compared:
 
 - *Base*: The basic scenario is an area level scenario in which we draw random
-numbers form:
+numbers from:
 \empty{
 \begin{align*}
 y_i & = 100 + 10 x_i + \mat{z}_i^\top \mat{u} + e_i \\
@@ -144,9 +144,9 @@ e_i & \sim \Distr{N}\Paran{0, \sige}
 }where $\mat{V}_u$ and $\mat{z}_i$ for each model are chosen correctly. This 
 means that each model is specified with the correct variance structure during 
 testing. The variance parameters in all the models are set to $100$ and
-correlation parameters set to $0.5$. The sampling variances, $\sige$, are
-generated as an equidistant sequence of real numbers between $25$ and $225$,
-furthermore they are time invariant in scenarios with a time dimension and are 
+correlation parameters are set to $0.5$. The sampling variances, $\sige$, are
+generated as an equidistant sequence of real numbers between $25$ and $225$.
+Furthermore they are time invariant in scenarios with a time dimension and are 
 used as the known model parameters. The number of domains is set to $D = 40$ and
 the number of time periods -- in scenarios with a time dimension -- is set to $T
 = 10$. In scenarios with spatial correlation the proximity matrix is defined as
@@ -154,17 +154,18 @@ type *rook* \citep[250]{Biv08}. This means that each domain has two neighbouring
 units; with an exception being the first and last domain which only have one 
 neighbouring unit. This definition is used for data generation as well as during
 the parameter estimation.
-- *Outlier*: The outlier scenario imposes deterministic outliers: i.\-e. they are
-not generated randomly but are fixed at a value of $10000$ in $e_i$ for $10$ per
-cent of the domains. The outlier domains are chosen randomly in each Monte Carlo
-repetition to avoid an artificial scenario in combination with the values of
-$\sige$. The choice of the value $10000$ is arbitrary and may give rise to a
-numerically challenging situation. However it is more extreme than scenarios
-typically considered in the literature when studying robust methods -- see the
-corresponding Chapter \ref{chap:results_model_based} and referenced literature.
+- *Outlier*: The outlier scenario imposes deterministic outliers: i.e.
+\linebreak they are not generated randomly but are fixed at a value of $10000$
+in $e_i$ for $10$ per cent of the domains. The outlier domains are chosen
+randomly in each Monte Carlo repetition to avoid an artificial scenario in
+combination with the values of $\sige$. The choice of the value $10000$ is
+arbitrary and may give rise to a numerically challenging situation. However it
+is more extreme than scenarios typically considered in the literature when
+studying robust methods -- see the corresponding Chapter
+\ref{chap:results_model_based} and referenced literature.
 
 The starting values for the regression coefficients are computed by setting the 
-values of the diagonal weighting matrix in the IRWLS algorithm to one, this 
+values of the diagonal weighting matrix in the IRWLS algorithm to one,  
 yielding non\hyp{}robust starting values. All variance parameters are set to one
 and correlation parameters to zero. Starting values for the random effects are 
 computed using the non iterative but robust estimator of equation 
@@ -174,7 +175,7 @@ $1.345$.
 ## Results
 
 In order to avoid unnecessary repetition for each separate model, the solutions 
-for the regression coefficients and random effects for the RFH model are 
+for the regression coefficients and random effects for the RFH models are 
 discussed in more detail. The solutions for the spatial and temporal extensions
 then focus on the specific solutions for the variance components. Furthermore it
 should be noted that figures with kernel density estimates omit the labels of
@@ -218,33 +219,32 @@ in the data which explains this effect.
 \end{figure}
 
 The estimation of the variance parameter $\sigre$ yields stable results overall 
-in the sense that the algorithms converge. A known issue also present here is
-that we can estimate values close to zero as can be seen in Figure
-\ref{fig:stability_variance_base}. This effect is more visible under the *Base*
-scenario in combination with a situation where we have a non optimal ratio
-between observations and variability in the data resulting in a wide range of
+in the sense that the algorithms converge. A known issue also present here is 
+that we can estimate values close to zero as can be seen in Figure 
+\ref{fig:stability_variance_base}. This effect is more visible under the *Base* 
+scenario in combination with a situation where we have a non optimal ratio 
+between observations and variability in the data resulting in a wide range of 
 solutions -- between $0$ and $200$. The right hand side of Figure 
 \ref{fig:stability_variance_base} also indicates that the algorithm may reach 
 the stopping rule; however the value of the estimation equation is not 
-satisfactory -- again we would expect values close to zero -- when the solution
-for the parameter is close to zero. In this regard evaluating the value of the 
-estimation equation may supply a good indicator for the quality of the solution.
+satisfactory -- again we would expect values close to zero -- when the solution 
+for the parameter is close to zero. In this regard the value of the estimation
+equation may be a good indicator for the quality of the solution.
 
-Similar to the case of the intercept we can observe on average higher estimates
-for the outlier scenario -- see Figure \ref{fig:stability_variance_base}. This
-may suggest an over estimation of the parameter despite the fact that we area
-using a robust method; but this can be explained by the increased variability
-under the outlier scenario. To put this result in perspective, if we estimate
-the variance with a non\hyp{}robust method we would tend to reach values close to
-$10^5$.
+Similar to the case of the intercept we can observe on average higher estimates 
+for the outlier scenario -- see Figure \ref{fig:stability_variance_base}. This 
+may suggest an overestimation of the parameter despite the fact that we are 
+using a robust method; but this can be explained by the increased variability 
+under the outlier scenario. To put this result in perspective: when we estimate 
+the variance with a non\hyp{}robust method we would tend to reach values close
+to $10^5$.
 
 \input{tabs/stability_fh.tex}
 
-All the results presented so far have been solutions in which the stopping rule
-to indicate convergence has been reached. Neither the optimisation in the base 
-scenario nor in the outlier scenario have reached the maximum of the allowed 
-iterations -- see Table \ref{tab:stability_fh}. In most cases few iterations are 
-needed.
+In all the results presented so far the stopping rule to indicate convergence
+has been reached. Neither the optimisation in the base scenario nor in the
+outlier scenario has reached the maximum of the allowed iterations -- see Table
+\ref{tab:stability_fh}. In most cases few iterations are needed.
 
 These overall iterations represent only part of the solution. We can observe
 that the optimisation is more involved in the case of the outlier scenario to
@@ -261,14 +261,14 @@ both cases where bad starting values are involved.
 The solutions for the random effects on the other hand present more concern.
 Although in most cases $1000$ iterations are sufficient we still observe very
 high median values, especially for the outlier scenario. With this effect in
-mind consider Figure \ref{fig:stability_random_effect_base} which shows the
-median of the predicted random effect in each solution. Given their
-distributional assumption we should expect values around zero which can be
-confirmed for the base scenario. Also there seems to be no relationship between
-the solution for the variance, $\sigre$, and the median random effect. It seems
-though that this is different under the outlier scenario. One possible
-explanation is that the prediction of the random effect compensates the over
-estimation of the intercept -- thus we observe negative median values of the
+mind consider Figure \ref{fig:stability_random_effect_base} which shows the 
+median of the predicted random effect in each solution. Given their 
+distributional assumption we should expect values around zero which can be 
+confirmed for the base scenario. Also there seems to be no relationship between 
+the solution for the variance, $\sigre$, and the median random effect. Though
+this is appears to be different under the outlier scenario. One possible 
+explanation is that the prediction of the random effect compensates the over 
+estimation of the intercept -- thus we observe negative median values of the 
 random effects.
 
 \begin{figure}[tbp]
@@ -304,16 +304,16 @@ Most of these effects are also present in the case of the spatial and temporal
 extensions to the FH model. Hence the main interest in the following discussion 
 centres around the extensions with respect to the robust estimates of the
 variance parameters. When we look at Figure \ref{fig:stability_variance_spatial}
-we are comparing directly the estimates of the correlation parameter and the
-variance. Remember that these results are for a scenario based now on a model
-with spatial correlation and a true correlation parameter of $0.5$ with a 
-variance of $100$. Two effects can be seen similar to what was discussed
-earlier. First in the base scenario we estimate variance parameters close to
-zero which coincides with larger values for the estimation equation as before.
-Furthermore we observe a higher value for the variance parameter and a lower
-value for the correlation parameter in the outlier scenario. What happens is
-that the additional variation due to the outliers is captured by the variance
-component and the spatial correlation structure is somewhat shadowed.
+we are directly comparing the estimates of the correlation parameter and the 
+variance. Remember that these results are for a scenario based on a model with
+spatial correlation and a true correlation parameter of $0.5$ with a variance of
+$100$. Two effects can be seen similar to what was discussed earlier. First in
+the base scenario we estimate variance parameters close to zero which coincides
+with larger values for the estimation equation as before. Furthermore we observe
+a higher value for the variance parameter and a lower value for the correlation
+parameter in the outlier scenario. What happens is that the additional variation
+due to the outliers is captured by the variance component and the spatial
+correlation structure is somewhat shadowed.
 
 \begin{figure}[htbp]
 \centering
@@ -321,8 +321,8 @@ component and the spatial correlation structure is somewhat shadowed.
 \caption[SFH -- Stability Tests of Parameter Estimates under the Spatial FH Model]{\label{fig:stability_variance_spatial}SFH -- Parameter Estimates: Variance Components -- Robust parameter estimation under the spatial FH model.}
 \end{figure}
 
-As stated earlier the overall algorithm has a maximum number of iterations of
-$100$ as well as has each nested algorithm -- referred to as the *100 Iter*
+As stated earlier the overall algorithm has a maximum number of $100$ iterations 
+as well as has each nested algorithm -- referred to as the *100 Iter*
 strategy. This is a setting suboptimal with respect to the number of iterations;
 however it is one which has proofed to be without a single software failure
 during the simulation. Figure \ref{fig:stability_convergence_spatial}
@@ -342,16 +342,16 @@ correlation parameter compared to $232$ for the *1 Iter* strategy.
 Studying Figure \ref{fig:stability_convergence_spatial} further we can observe 
 how the choice of the number of iterations changes the overall behaviour. In the
 left panels we see that we start from a large initial estimate for the variance 
-and a lower initial for the correlation parameter. This happens because in the
-first iteration all the variation is captured by the variance parameter since
-the correlation parameter is fixed at its initial value of zero. In each
-further iteration the relationship between correlation parameter and variance is
+and a lower for the correlation parameter. This happens because in the first
+iteration all the variation is captured by the variance parameter since the
+correlation parameter is fixed at its initial value of zero. In each further
+iteration the relationship between correlation parameter and variance is 
 balanced out. The evolution in the right hand side panels presents a different 
-path since here each algorithm only has one step. In this setting the
-correlation parameter has a higher initial estimate and the variance a lower
-one. Both strategies yield approximately the same solutions as indicated by the
-figure. The panel on the right side of the correlation parameter also reveals
-that the algorithm can be unstable when we have bad starting values.
+path since here each algorithm only has one step. In this setting the 
+correlation parameter has a higher initial estimate and the variance a lower 
+one. Both strategies yield approximately the same solutions as indicated by the 
+figure. The panel on the right hand side for the correlation parameter also
+reveals that the algorithm can be unstable when we have bad starting values.
 
 The *1 Iter* strategy often needs fewer iterations -- which is a trade\hyp{}off 
 with a software failure rate of approximately 10 per cent in these testing 
@@ -400,7 +400,7 @@ reached in all cases. The main reason for this result is the choice of the
 starting values. Allowing for more iterations leads to better results in all 
 cases. One positive aspect is that the overall number of iterations is kept 
 relatively low in most scenarios. Furthermore the algorithm for the correlation 
-parameter in the AR(1) as well as the SAR(1) show very promising behaviour.
+parameter in the AR(1) as well as the SAR(1) shows very promising behaviour.
 Although they are based on a numeric approximation of the derivative of the
 estimation equation convergence is reached rapidly. The main reason may be the
 restriction of the parameter space to $\rho < |1|$ which makes it more robust
@@ -419,8 +419,7 @@ In this Section I present some code examples using the `R`-package `saeRobust`
 software package implementing the SFH and STFH as well as the basic FH model in 
 the `R`-language is the `sae` package of @Mol15. They also provide several 
 examples on how to use their implementation with various data sets. For this
-purpose I adapt these examples; however the aim here is not a direct comparison
-with the package `sae`. 
+purpose I adapt these examples.
 
 As an introductory example we can make use of the synthetic data set `grapes` 
 \citep{Mol15} which contains information on the geographical area for grape 
@@ -684,8 +683,8 @@ scenarios acceptable solutions can be found when we set the number of iterations
 to a higher value. *Acceptable* here refers to a value close to zero at the
 solution for the respective estimation equation. This however presents a trade
 off between the number of iterations, stability, and computational demand, which
-can become relevant quickly with temporal data. The key to computationally less
-demanding solutions are the choice of starting values and the restriction of the
+can become relevant with temporal data. The key to computationally less
+demanding solutions is the choice of starting values and the restriction of the
 maximum number of iterations of the nested algorithms. To address this trade-off
 the implementation in `saeRobust` allows to set both parameters as well as the 
 number of iterations for the optimisation of the random effects.
@@ -712,8 +711,8 @@ in addition the second derivative of the log-likelihood to ensure that we found
 indeed a maximum. This is supported and illustrated by the results above when
 the numerical solver reaches the stopping criterion but the value of the 
 estimation equation is not approximately zero. E.g. this happens with variance 
-estimates close to zero. For this reason a design choice in the packages output
-is to report the value of the estimation equation and furthermore each step
+estimates close to zero. For this reason a design choice in the package's output
+is to report the value of the estimation equation as well as each step
 during optimisation. However what is not currently provided is the possibility
 to evaluate the second derivative of the log-likelihood which may present a
 possible future extension.
@@ -724,19 +723,18 @@ implementation in @Schoch14 relies for example on the asymptotic normality of
 the regression parameters. However there is little empirical evidence on using 
 such results. Specifically for area level models where we may have only a few 
 observations -- e.g. 40 -- it is not clear whether it is advisable to place 
-reliance on the results. For this reason the current version of `saeRobust` only
-supports a link to the parametric bootstrap with the function `bootstrap` to
-construct confidence intervals for the model parameters. With respect to model
-selection the actual log-likelihood function for robust methods is generally
-unknown since robust versions of its partial derivatives are used. Hence it is
-not clear how to provide information criteria for the robust methods under
-consideration -- see the discussion in @Kol16.
+reliance on such results. For this reason the current version of `saeRobust`
+only supports a link to the parametric bootstrap with the function `bootstrap`.
+With respect to model selection the actual log-likelihood function for robust
+methods is generally unknown since robust versions of its partial derivatives
+are used. Hence it is not clear how to provide information criteria for the
+robust methods under consideration -- see the discussion in @Kol16.
 
 The discussion in this Chapter focused on the properties of the implementation. 
 The statistical properties of the robust methods have not been investigated so 
 far and are the subject matter of the Chapters \ref{chap:results_model_based}
 and \ref{chap:results_design_based} in model and design based simulations. An
-important aspect of this Thesis are also the accompanying software
+important aspect of this Thesis are the accompanying software
 implementations. With this regard also the package `saeSim` \citep{War15} can be
 seen as one result of this Thesis; it aims to simplify the process of setting up
 simulation studies and hence is introduced in the following Chapter

@@ -579,7 +579,7 @@ dev.off()
 
 
 # Tables --- FH
-tableOrder <- c("row", "scenario", "first", "second", "remaining", "max", "converged")
+tableOrder <- c("row", "Scenario", "First", "Second", "Remaining", "Max", "Converged")
 
 makeTable <- function(result1, result2, name1, name2) {
 
@@ -591,24 +591,24 @@ makeTable <- function(result1, result2, name1, name2) {
   overall <- iterList[[1]] %>%
     mutar(
       row ~ name2[1],
-      first ~ NA_real_,
-      second ~ NA_real_,
-      remaining ~ median(i),
-      max ~ max(i),
-      converged ~ (runs - sum(i == maxIter1)) / runs,
-      by = "scenario"
+      First ~ NA_real_,
+      Second ~ NA_real_,
+      Remaining ~ median(i),
+      Max ~ max(i),
+      Converged ~ (runs - sum(i == maxIter1)) / runs,
+      by = "Scenario"
     )
 
   tabs <- map(ML(iterList, name2[-1]), f(iter, n) ~ {
     iter %>%
       mutar(
         row ~ n,
-        first ~ median(iterations[i == 1]),
-        second ~ median(iterations[i == 2]),
-        remaining ~ median(iterations[i > 2]),
-        max ~ max(iterations),
-        converged ~ NA_real_,
-        by = "scenario"
+        First ~ median(iterations[i == 1]),
+        Second ~ median(iterations[i == 2]),
+        Remaining ~ median(iterations[i > 2]),
+        Max ~ max(iterations),
+        Converged ~ NA_real_,
+        by = "Scenario"
       )
   })
 
@@ -624,8 +624,8 @@ extractIterations <- function(resultList, type, identifier) {
     map(as.data.frame) %>%
     magrittr::set_names(NULL) %>%
     bindRows(id = "R") %>%
-    mutar(scenario ~ identifier) %>%
-    mutar(iterations ~ n(), by = c("R", "i", "scenario"))
+    mutar(Scenario ~ identifier) %>%
+    mutar(iterations ~ n(), by = c("R", "i", "Scenario"))
 }
 
 coefTab <- makeTable(
@@ -642,12 +642,12 @@ iterRe <- rbind(
 re <- iterRe %>%
   mutar(
     row ~ "Random Effect",
-    first ~ NA_real_,
-    second ~ NA_real_,
-    remaining ~ median(i),
-    max ~ max(i),
-    converged ~ (runs - sum(i == maxIter2)) / runs,
-    by = "scenario"
+    First ~ NA_real_,
+    Second ~ NA_real_,
+    Remaining ~ median(i),
+    Max ~ max(i),
+    Converged ~ (runs - sum(i == maxIter2)) / runs,
+    by = "Scenario"
   )
 
 tableDat <- rbind(coefTab, re)
