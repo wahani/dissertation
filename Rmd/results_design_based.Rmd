@@ -5,11 +5,11 @@ the robust and non\hyp{}robust predictions under the FH model are compared. In
 contrast to the model based simulations of Chapter 
 \ref{chap:results_model_based} the following study is based on one synthetic 
 population. The data is generated and provided by Statistics Netherlands (CBS) 
-and based on the Structural Business Survey (SBS). The target domains here are 
-industry sectors and the target statistic is the annual tax\hyp{}turnover within 
-the domains. Using this data we can study several effects on the domain
-predictions in a more realistic setting. In particular we will see how domain
-predictions are influenced by outlying units and domains in combination with a
+and is based on the Structural Business Survey (SBS). The target domains here
+are industry sectors and the target statistic is the annual tax\hyp{}turnover
+within the domains. Using this data we can study several effects on the domain 
+predictions in a more realistic setting. In particular we will see how domain 
+predictions are influenced by outlying units and domains in combination with a 
 sampling design.
 
 More details on the data and aim of the study from a contextual point of view 
@@ -23,9 +23,8 @@ context is provided in Section \ref{sec:results_design_discussion}.
 \label{sec:results_design_data}
 
 The population data is a synthetic population, generated using the SBS. The SBS 
-is an annual business survey in the Netherlands. The data used in the present
-study is a synthetic population generated from that survey. Furthermore the
-sampling scheme used in this study is similar to that used in the SBS and it is
+is an annual business survey in the Netherlands. Furthermore the
+sampling scheme used in this study is similar to that applied in the SBS and it is
 provided and used without any change. The context of this study is the
 prediction of the total tax\hyp{}turnover for 20 industry domains. Possible
 predictor variables are the tax\hyp{}turnover in the previous year, the size
@@ -70,7 +69,7 @@ The regressor variable, $\tilde{y}_{it-1}$, is the mean value of the previous
 year. Here the population mean is used; since the target variable is
 tax\hyp{}turnover it may be plausible that at some point the true or realized
 values are known to the analyst. An investigation in which also the lagged
-dependent variable was estimated using either a HT estimator or the sample mean 
+dependent variable was estimated using either the HT estimator or the sample mean 
 showed that using an area level method only brings a small advantage over the
 direct estimator.
 
@@ -97,7 +96,7 @@ The performance of the predictions can be evaluated using Figure
 respective method are also additionally given in Table 
 \ref{tab:preds_performace_design}. Here a main result is that the prediction can
 be vastly improved in terms of MSPE using the robust and non\hyp{}robust methods
-compared with the direct estimator. This is so since we use a strong predictor 
+compared with the direct estimation. This is so since we use a strong predictor 
 variable which is not incorporated into the direct domain estimation. However 
 the improvement in terms of MSPE has the price of an introduced bias which can 
 be observed for the area level models; the direct estimator is 
