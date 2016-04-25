@@ -12,7 +12,7 @@ In the previously conducted simulation study we saw that the simulation settings
 revealed both advantages and disadvantages of the robust methods. With respect 
 to the MSPE estimation the scenarios are chosen to conform better to the 
 underlying models. However the computational effort involved in the bootstrap 
-estimator is relatively high; this has made it necessary to restrict the number 
+estimator is relatively high; this made it necessary to restrict the number 
 of scenarios to a minimum. Thus for each model -- the RFH, RSFH, RTFH, and RSTFH
 -- data is generated under the correct model and only non\hyp{}outlier are
 compared to outlier scenarios.
@@ -108,7 +108,7 @@ and RSTFH.BC. The tuning constant is fixed at 1.345 for all models.
 ## Results
 \label{sec:results_mse_results}
 
-The main results of the simulation study is given in Table
+The main results of the simulation study are given in Table
 \ref{tab:mse_performace}. The following observed items need to be discussed:
 
 1. The CCT has not a negative bias for all estimators.
@@ -120,8 +120,8 @@ The main results of the simulation study is given in Table
 The first observation is that the CCT has not a negative bias in all cases. 
 However as we disregard the uncertainty due to the estimation of the variance 
 parameters and assume independence between the weights and the response in the 
-pseudolinear form we should expect an underestimation. For the RFH and RSFH in 
-the non\hyp{}outlier scenario this is observable. Under the same scenario the 
+pseudolinear form we should expect an underestimation. This is observable for the RFH and RSFH in 
+the non\hyp{}outlier scenario. Under the same scenario the 
 RTFH and RSTFH can have a positive bias since only the estimated MSPE for the 
 *current* time period is considered. In an analysis using all the time periods
 the median RBIAS is indeed negative. The estimation for regular domains under
@@ -175,19 +175,18 @@ the scenario.
 \label{sec:results_mse_discussion}
 
 In general the performance of the MSPE estimators is promising. However the 
-concrete results strongly depend on the scenario settings. What we can observe
-is that generally the CCT for the bias correction suffers under repeated
-sampling when the prediction interval of the correction is too conservative. For
-the same reason we observe a correlation between the sampling variances and the 
-bias. The bootstrap in contrast shows very stable results -- approximately 10 
-per cent in terms of RRMSE -- over a variety of different settings. However this
-method cannot capture the variation for outlying domains. In scenarios in which 
-the respective models repeatedly yield estimates close to zero variances the 
-bootstrap will underestimate the true variation since more weight is given to 
-the linear predictor; this can be seen in Chapter
-\ref{chap:results_design_based}. This setting has been avoided -- in contrast to
-Section \ref{sec:results_predictions} -- by choosing larger values for the
-variance parameters in this study.
+concrete results strongly depend on the scenario settings. In general the CCT
+for the bias correction suffers under repeated sampling when the prediction
+interval of the correction is too conservative. For the same reason we observe a
+correlation between the sampling variances and the bias. The bootstrap in
+contrast shows very stable results -- approximately 10 per cent in terms of
+RRMSE -- over a variety of different settings. However this method cannot
+capture the variation for outlying domains. In scenarios in which the respective
+models repeatedly yield estimates close to zero variances the bootstrap will
+underestimate the true variation since more weight is given to the linear
+predictor; this can be seen in Chapter \ref{chap:results_design_based}. This
+setting has been avoided -- in contrast to Section \ref{sec:results_predictions}
+-- by choosing larger values for the variance parameters in this study.
 
 The settings in this study have been chosen to be close to the approach taken by
 @Cha14. Although a comparison is difficult to make because of the transition 

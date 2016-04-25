@@ -42,15 +42,15 @@ and excludes the spatial and temporal extensions. In principle these results
 should apply to these extensions also; however this remains an avenue for
 further research.
 
-The present study is structured as follows: the following Section 
-\ref{sec:results_unit_level_model} completes the formal link between the unit 
-and area level. Essentially we need to specify what assumptions have been made
-with respect to the unit level population model in order to establish a coherent
-link between the population level, the sampled level, and the area level. Based
-on these results Section \ref{sec:results_unit_sim_setting} presents the
-simulation settings, Section \ref{sec:results_unit_measures} the investigated
-estimation strategies; then in Section \ref{sec:results_unit_results} the
-results of the Monte Carlo Simulation are presented.
+The present study is structured as follows: Section 
+\ref{sec:results_unit_level_model} completes the formal link between unit and
+area level. Essentially we need to specify what assumptions have been made with
+respect to the unit level population model in order to establish a coherent link
+between the population level, the sampled level, and the area level. Based on
+these results Section \ref{sec:results_unit_sim_setting} presents the simulation
+settings, Section \ref{sec:results_unit_measures} the investigated estimation
+strategies; then in Section \ref{sec:results_unit_results} the results of the
+Monte Carlo Simulation are presented.
 
 
 ## A Unit Level Population Model
@@ -119,7 +119,7 @@ to one otherwise. I.e. 10 per cent of the areas have 20 per cent of unit level
 observations which are generated from the outlier distribution. 
 - *(0, e-sym)* -- symmetric unit level outliers. This scenario is the same as
 *(0, e)* with the unit level outlier distribution replaced by $\Distr{N}(0,
-200)$. Hence here symmetric unit level outliers are imposed.
+200)$ -- hence symmetric unit level outliers are imposed.
 - *(u, e)* -- unit and area level outliers. The area level contamination is
 imposed as in *(u, 0)* and the unit level contamination as in *(0, e)*.
 
@@ -140,7 +140,7 @@ estimator is the sample mean.
 - FH.SM -- is the non\hyp{}robust prediction under the FH model. This model is
 based on the sample mean and uses the direct variance estimate as sampling
 variance for each domain: $\sige \coloneqq \frac{s_i^2}{n_i}$.
-- RFH.SM -- is the robust prediction based the sample mean. The same setup as
+- RFH.SM -- is the robust prediction based on the sample mean. The same setup as
 for FH.SM is used.
 - FH.SM.GVF -- is the non\hyp{}robust prediction under the FH model using a 
 generalised variance function. In contrast to FH.SM a generalised variance 
@@ -202,17 +202,17 @@ simulation setting.
 Some differences when using GVFs can be observed with respect to the RBIAS. In a
 scenario with non\hyp{}symmetric unit level outliers we can observe an increase
 of the RBIAS. What happens here is that the overall variance is smoothed. Hence 
-smaller sampling variances, $\sige$, are assigned to the the outlying domains 
+smaller sampling variances, $\sige$, are assigned to the outlying domains 
 making them appear to be more reliable measurements. This results in a stronger
-impact of the outlying domains on the predictions and thus an increase in bias.
+impact of the outlying domains on the predictions and thus in an increase in bias.
 In Section \ref{sec:overly-influencial-observations} this effect is referred to
 as the *creation of overly influential observations*.
 
-In the simulation scenario here considered the unit level outlier contamination
-does not influence the estimation of the GVF. In a different setting with a
-stronger contamination the GVF can be expected to overestimate the true sampling
-variances. In preliminary experiments this leads to a loss in efficiency in terms
-of RRMSPE.
+In this simulation scenario the unit level outlier contamination does not
+influence the estimation of the GVF. In a different setting with a stronger
+contamination the GVF can be expected to overestimate the true sampling 
+variances. In preliminary experiments this leads to a loss in efficiency in
+terms of RRMSPE.
 
 The second observation is that the robust prediction under an FH model does not 
 improve the predictions under unit level contamination. The results under 
@@ -220,10 +220,10 @@ symmetric unit level contamination show that the FH model has a self adjusting
 effect as was described in Section \ref{sec:unit-level-outliers}. The prediction
 mechanism under the FH model gives more weight to the linear predictor for the
 outlying domains since we observe a larger sampling variance for these type of
-outliers. This is not an undesirable property so long as the linear prediction
+outliers. This is not an undesirable property as long as the linear prediction
 is a good fit for these observations. When we compare these results with the
 non\hyp{}symmetric outlier scenario -- *(0, e)* -- we can see that the effect of
-unit level contamination on the prediction is small overall. This is so for all
+unit level contamination on the prediction is small overall. This holds for all
 modelling strategies except when using GVFs for the reasons outlined above.
 However in these situations we introduce a bias for the outlying domains. In
 contrast to the bias correction for unit level models -- see Section 
@@ -232,30 +232,29 @@ level data.
 
 The use of the RFH model is limited when we consider unit level contamination. 
 The self adjusting effect of the FH model is in general also present in the 
-robust prediction. When we consider the use of the GVF it can happen,
-particularly with more extreme outlier contamination, that the RFH model becomes
-preferable. This is so because we create overly influential observations which,
-from their design, do not differ from area level outlier -- at least from the
-area level perspective.
+robust prediction. When we consider the use of the GVF it can happen -- 
+particularly with more extreme outlier contamination -- that the RFH model
+becomes preferable. This is so because we create overly influential observations
+which, from their design, do not differ from area level outlier -- at least from
+the area level perspective.
 
-The third observation is that a robust direct estimator, here the median, has no
-additional advantage over the sample mean. Here several points need to be 
-mentioned. First, using a robust estimator may be problematic when we consider 
-small samples in that the median will itself have an even higher variance than 
-the sample mean. The additional gain with respect to the unit level
-contamination does not seem to outweigh this shortcoming -- at least in the
-scenarios considered. This is also true when we consider this same symmetric
-unit level outlier setting in all instead of only in a small number of domains.
-Second, the variance estimation of a robust direct method is usually also
-problematic, again, because we are considering small samples. In practice it may
-be desirable to use a bootstrap for estimating the variance of the sample
-median. With these small samples the results have been disappointing and have
-not lead to an improvement in the area level predictions. Hence the MAD seems to
-provide a sensible alternative. Third, it may be argued that a different robust
-method should be considered. An M-type estimator for the sample mean, in
-conjunction with a robust variance estimator, has also been considered. Compared
-to the median very similar results have been obtained in this case; consequently
-these results have been omitted here.
+The third observation is that a robust direct estimator, in this case the 
+median, has no additional advantage over the sample mean. Here several points 
+need to be mentioned. First, using a robust estimator may be problematic when we
+consider small samples in that the median will itself have an even higher 
+variance than the sample mean. The additional gain with respect to the unit 
+level contamination does not seem to outweigh this shortcoming -- at least in 
+the scenarios considered. This is also true when we consider the same symmetric 
+unit level outlier setting in all domains. Second, the variance estimation of a
+robust direct method is usually also problematic, again, because we are
+considering small samples. In practice it may be desirable to use a bootstrap
+for estimating the variance of the sample median. With these small samples the
+results have been disappointing and have not lead to an improvement in the area
+level predictions. Hence the MAD seems to provide a sensible alternative. Third,
+it may be argued that a different robust method should be considered. An M-type
+estimator for the sample mean, in conjunction with a robust variance estimator,
+has also been considered. Compared to the median very similar results have been
+obtained in this case; consequently these results have been omitted here.
 
 
 ## Discussion
@@ -280,7 +279,7 @@ can have a beneficial effect when we consider area level contamination; however
 it does not provide any advantage with respect to unit level outliers.
 
 The use of robust direct estimators has not proved to be encouraging. It may be
-that to try to solve an efficiency problem of the sample mean by replacing it
+that trying to solve an efficiency problem of the sample mean by replacing it
 with an even less efficient estimator is the main reason here. This effect can
 well be due to the small sample sizes considered in SAE, particularly in this 
 simulation setup. These small sample sizes then lead to a less efficient 
