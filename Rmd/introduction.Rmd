@@ -166,18 +166,18 @@ introduces a robust extension to generalised regression estimation.
 Given this background, in this Thesis I introduce extensions to the 
 Fay\hyp{}Herriot area level model. More precisely an EBLUP based approach is 
 taken to derive predictions in a way that makes it possible to model spatial and
-temporal covariance structures in the random effects. These are the methods
+temporal covariance structures in the random effects. These are the methods 
 introduced by @Rao94 for incorporating temporal correlation; and by @Pra08 for 
-incorporating spatial correlation; and by @Mar13 who introduce the combination
+incorporating spatial correlation; and by @Mar13 who introduce the combination 
 of these two. In contrast to these methods, in this Thesis the estimation 
 procedure is based on robust methodology for deriving area level robust 
-predictions. The approach here is based on the methodology of @Sin09 who have 
+predictions. The approach is based on the methodology of @Sin09 who have 
 extended the approach of @Ric95 to the SAE field. This will lead (i) to an area 
-level robust EBLUP (REBLUP) which is simply a special case of using the results
-of @Sin09; (ii) to an area level spatial REBLUP (SREBLUP) which to contrast it
-from @Sch11 is based on an area level model instead of on a unit level model;
-(iii) to a temporal REBLUP (TREBLUP); and (iv) to a spatio\hyp{}temporal REBLUP 
-(STREBLUP).
+level robust EBLUP (REBLUP) which is simply a special case of using the results 
+of @Sin09; (ii) to an area level spatial REBLUP (SREBLUP) which -- to contrast
+it from @Sch11 -- is based on an area level model instead of on a unit level
+model; (iii) to a temporal REBLUP (TREBLUP); and (iv) to a spatio\hyp{}temporal
+REBLUP (STREBLUP).
 
 Some extensions introduced in the literature around REBLUPs have focused on unit
 level models; thus results especially for MSPE estimation and bias correction
@@ -191,37 +191,44 @@ with robust predictions. This correction is based on the *limited translation
 estimator* of @Efr72 and has already been used by @Fay79 with a somewhat similar
 goal.
 
-# Reproducing the Results
 
 # Outline
 \label{sec:intro_outline}
 
-In addition reference is made to certain
-supplementary material on software. @War15 introduces tools for simulation 
-studies for the special case of small area estimation and @War16 implements the 
-methods introduced in this Thesis. All results rely on these two packages; a 
-more detailed discussion of these software packages can be found in Chapter 
-\ref{chap:saeRobust} and \ref{chap:saeSim}.
+The overall structure of Thesis is devided into three parts. Part I comprises
+the methodological foundation underpinning the proposed REBLUPs. In Part II I 
+will introduce two software packages which have been developed alongside this 
+Thesis. Then in Part III the statistical properties of the predictions based on 
+the proposed REBLUPs are investigated in several model and design based
+simulation studies.
 
-The Thesis is seperated into three main parts. \ref{part:theory} *Theory*
-introduces the underlying esimation methodology, i.e. linear mixed models, a
-review of model based methods in Small Area Estimation as well as outlier robust
-extensions within the field. Given these results extensions to existing
-methodology is introduced in the form of a robustified Fay-Herriot estimator
-with optional spatial and temporal correlated random effects. A special interest
-lies in the concrete implementation of such (robust) estimators, and to meet
-this focus several algorithms are proposed. (MSE, bias-correction)
+Part I includes a literature review in Section \ref{chap:sae}
 
-\ref{part:implementation} *Implementation* introduces three main aspects: The 
-verification that the implementation (in terms of software) is correct; How to 
-evaluate the numerical accuracy and stability of the introduced algorithms; And 
-which results to report to judge the quality of the numerical solution.
+# Reproducing the Results
 
-In \ref{part:results} *Results* the properties of the estimators are 
-investigated in simulations and in the context of part 
-\ref{part:implementation}. The numerical properties are devided into accuracy
-and stability. Statistical properties are shown for the most reliable
-implementations using model and design based simulation studies.
+Some offort went into the possibility to reproduce the results presented in this
+Thesis. All outcome of the simulation studies are preduced using the 
+`R`\hyp{}language \citep{R} which is freely available. Two `R`\hyp{}packages are
+provided as supplemantary material to this Thesis: `saeRobust` \citep{War16} and
+`saeSim` \citep{War15} which are subject to discussion later in this Thesis. The
+package `saeRobust` implements the statistical methods here developed and
+`saeSim` provides a simulation framework which is utilised for implementing the
+studies below.
 
+To provide the option to reconcile the results with their source code, the files 
+implementing the simulation studies are also part of the supplementary material. 
+Running these files is possible however the computations should expected to
+take a considerable amount of time. This can be speeded up by lowering the
+number of iterations in simulations in order to make the computation more
+transparent. To set up the computational environment inside the
+`R`\hyp{}language the file `00Dependencies.R` can be used; in that file all
+installation instructions necessary are listed since various additional packages
+have been used -- e.g. for data manipulation and graphics.
 
+It should be possible to reproduce all results related to model based
+simulations. For reproducing the design based simulation study in Chapter
+\ref{chap:results_design_based} it would be necessary to deliver the sysnthetic
+population here used; however the copyright does not grand me permission in
+order to do so. The source file implementing the simulation is included
+nonetheless.
 
