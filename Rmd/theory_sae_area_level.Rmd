@@ -39,13 +39,13 @@ independent. Combining the sampling and the linking model thus leads to:
 
 Obtaining small area predictions under the model in \eq{eq:fh} can be defined as
 a linear mixed model from which a BLUP and EBLUP can be derived. Basically the
-model in \eq{eq:fh} can be viewed directly as a linear mixed model as it was
+model in \eq{eq:fh} can be viewed directly as a linear mixed model as it was 
 introduced in equation \eq{eq:lmm} where $\mat{Z} = \mat{I}_D$, $\mat{V}_\re = 
-\sigre\mat{I}_D$ and $\mat{V}_e = \diag(\sigma_{e, 1}^2, \dots, \sigma_{e, 
-D}^2)$ with $\mat{I}_D$ being a $(D\times D)$ identity matrix. The vector of 
-unknown variance parameters in this case is a scalar, such that $\pmat\delta =
-\sigre$ since $\sige$ is assumed to be known. The BLUP under the Fay-Herriot
-model, defined in equation \eq{eq:blup}, can then be obtained by setting
+\sigre\mat{I}_D$ and $\mat{V}_e = \diag(\{\sige\}_{i = 1}^D)$ with $\mat{I}_D$
+being a $(D\times D)$ identity matrix. The vector of unknown variance parameters
+in this case is a scalar, such that $\pmat\delta = \sigre$ since $\sige$ is
+assumed to be known. The BLUP under the Fay-Herriot model, defined in equation
+\eq{eq:blup}, can then be obtained by setting
 $\tilde{\mu}_i = \tilde{\theta}_i^{FH}$,
 $\mat{l}_i^\top = \mat{x}_i^\top$, $\mat{m}^\top_i = 1$ and $y_i = \tilde{y}_i$:
 \empty{
@@ -134,7 +134,7 @@ stabilise the sampling variances by using generalised variance functions or
 other smoothing techniques. Albeit these parameters are assumed to be known they
 can have a large impact on the validity of domain predictions. In Section
 \ref{sec:rfh_framework} I show how the robust FH model relates to this
-discussion in terms of stability and MSPE.
+discussion.
 
 The response variable, $\tilde{y}_i$, denotes a direct estimator. This is, of 
 course, not necessarily the sample mean but can be any other statistic. An 
@@ -157,7 +157,7 @@ One of the main motivations to consider area level models is based on the
 availability of data. Especially with census or administrative data it may not
 be possible to give unit level information directly to the analyst due to
 reasons of confidentiality. Thus only aggregates, i.e. direct domain
-estimations, are available. Even with the availability of information there are
+predictions, are available. Even with the availability of information there are
 other reasons to consider. One is the integration of sampling weights which in
 general is not directly feasible in model based methodology. Area level models
 present a way to at least incorporate design weights into the direct estimation
@@ -170,11 +170,11 @@ consider different scenarios for the availability of auxiliary information,
 e.g. unit and area level variables and contextual variables. Their findings show
 that overall unit level models have more potential to reduce the MSPE of domain
 predictions; this is not surprising as parameter estimation under a unit level
-model uses more information and thus is more precise. This leaves the
+model uses more information and thus is more precise. This may leave the
 availability of data as the main reason to consider area level models.
 
 Area level models in Small Area Estimation have been used in many applications 
-and the Fay-Herriot model is explicitly subject to numerous extensions. See for 
+and the Fay-Herriot model is subject to numerous extensions. See for 
 example @Cle14 for a review in disease mapping; @Gua15 for a review of methods
 used for poverty mapping; and @Ben16 for an EBLUP under a multivariate FH model.
 A comprehensive review of extensions to the FH model can be found in @Rao03[pp. 
@@ -239,7 +239,7 @@ u_{1i} = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i}
 $$
 where $|\rho_1| < 1$ and $\epsilon_{1i} \sim \Distr{N}(0, \sigma_1^2)$ are 
 i.i.d. with $i = 1,\dots, D$. $w_{il}$ are the elements of $\mat{W}$ which is 
-the row standardized transformation of the proximity matrix $\mat{W}^0$. The 
+the row standardised transformation of the proximity matrix $\mat{W}^0$. The 
 elements in $\mat{W}^0$ are equal to one where areas are neighboured and zero 
 otherwise, it then follows that the dimension of $\mat{W}^0$ is $D \times D$. 
 Note that this definition of $\mat{W}^0$ is but one possibility. In general the 
@@ -270,17 +270,17 @@ geographically weighted M-quantile regression model for small area predictions.
 @Por14 is an example how a CAR process may be used in the context of the FH 
   model, which is, additionally, extended to allow for functional covariates.
   The model in \eq{eq:sfh} assumes spatial stationarity of the regression
-  parameters; that is that they do nor vary spatially. Hence @Chan15 extend this
+  parameters; that is that they do not vary spatially. Hence @Chan15 extend this
   approach for spatial nonstationarity and derive a nonstationary EBLUP.
 
 
 ### Temporal Extensions
 \label{sec:theory_sae_fh_temporal}
 
-An early extension by @Cho89 allows for an autoregressive process in the error
+An early extension by @Cho89 allows for an autoregressive process in the error 
 term, which, in the context of the FH model, is one way to account for 
-correlated sampling errors. @Rao94 then introduced a model to use auto
-correlated random effects to borrow strength for domain predictions:
+correlated sampling errors. @Rao94 then introduced a model to use autocorrelated
+random effects to borrow strength for domain predictions:
 \empty{
 \begin{align}
 \tilde{y}_{it} = \mat{x}^\top_{it}\pmat\beta + \re_{i} + \re_{2it} + e_{it} \label{eq:tfh}
@@ -295,7 +295,7 @@ an AR(1), i.e. an autoregressive process of order one:
 $$
 \re_{2it} = \rho_2 \re_{2i, t-1} + \epsilon_{2it}
 $$
-where $\rho_2$ is the auto correlation coefficient with $|\rho_2| < 1$ and 
+where $\rho_2$ is the autocorrelation coefficient with $|\rho_2| < 1$ and 
 $\epsilon_{2it} \sim \Distr{N}(0, \sigma_2^2)$ being i.i.d. with $i = 1, \dots,
 D$ and $t = 1, \dots, T$. The BLUP under model \eq{eq:tfh} can then be defined
 as:
@@ -303,14 +303,14 @@ as:
 \begin{align*}
 \tilde{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\tilde{\pmat\beta} + \tilde{\re}_{i} + \tilde{\re}_{2it}
 \end{align*}
-}where the variance parameters $\delta = (\sigma_u^2, \rho_2, \sigma_2^2)$ are 
+}where the variance parameters $\pmat\delta = (\sigma_u^2, \rho_2, \sigma_2^2)$ are 
 assumed to be known. Replacing these parameters with their respective estimates
 the EBLUP can be obtained:
 \empty{
 \begin{align}
 \hat{\theta}^{TFH}_{it} = \mat{x}^\top_{it}\hat{\pmat\beta} + \hat{u}_{i} + \hat{u}_{2it}.
 \end{align}
-}@Rao94 used a method of moments estimator for the elements in $\delta$.
+}@Rao94 used a method of moments estimator for the elements in $\pmat\delta$.
 Extensions to this model have been made by @Dat02 who replace the AR(1) process
 with a random walk. @Sin91 use a random slope model instead of correlated random
 effects, but also use an AR(1) to describe the variation of the random
@@ -343,7 +343,7 @@ be defined by:
 \begin{align*}
 \tilde{\theta}^{STFH}_{it} = \mat{x}^\top_{it}\tilde{\pmat\beta} + \tilde{\re}_{1i} + \tilde{\re}_{2it}.
 \end{align*}
-}@Mar13 have used an REML estimator for the unknown variance components $\pmat\delta = 
+}@Mar13 have used a REML estimator for the unknown variance components $\pmat\delta = 
 (\rho_1, \sigma_1^2, \rho_2, \sigma_2^2)$. Replacing the unknown components with
 their respective estimates leads then to the EBLUP under model \eq{eq:stfh}:
 \empty{
@@ -380,8 +380,8 @@ note that this is especially the case if the historic information, often itself
 a prediction, is more reliable than the available information of the current
 time period.
 
-The spatial, temporal, and spatio\hyp{}temporal FH model is again the subject
-matter of Chapter \ref{chap:rfh} where it is combined with robust estimation
+The spatial, temporal, and spatio\hyp{}temporal FH models are again the subject
+matter of Chapter \ref{chap:rfh} where they are combined with robust estimation
 methodology. Note that the review in this Chapter may not be sufficient to
 deduce the representation of these models as linear mixed models; this will be
 discussed in more detail in Section \ref{sec:rfh_model}.
