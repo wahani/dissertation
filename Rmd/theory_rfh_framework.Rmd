@@ -9,7 +9,7 @@ these methodologies are being used for area level models. Section
 level models. Here it is noteworthy that those studies focused on how outliers
 can be dealt with in the context of hierarchical Bayes. In what follows the
 robust estimation methodology of @Sin09 is adapted to area level models which
-lead to outlier robust predictions under mixed linear models. Before the robust
+leads to outlier robust predictions under mixed linear models. Before the robust
 methods are discussed the different scenarios in which we may be interested in
 using robust methods are first described; i.e. what exactly are outliers at the
 area level?
@@ -28,7 +28,7 @@ unique in the population.
 generating process and of the target population is needed to be able to
 distinguish between these two types. A factor which further complicates matters
 is that area level models are often used in situations where we have no access
-to the unit level observations. With this in view the discussion in this Thesis
+to unit level data. With this in view the discussion in this Thesis
 focuses on the case where we assume to have representative outliers or are in
 the situation where it is not possible to argue for either of these
 alternatives.
@@ -80,7 +80,7 @@ known variance structure two conflicting effects need to be considered. First,
 we use an obviously unreliable estimator for the sampling error and assume that
 such values can be used as the *true* variance parameters. Such estimators will
 have poor properties when the target is the *true* sampling error especially in
-the context of outliers. This problem has stimulated the recent discussion
+the context of outliers. This problem has stimulated the discussion
 around smoothing the variance estimates prior to using them in a Fay-Herriot
 model -- see Section \ref{sec:theory_sae_fh_mspe} for a review of this
 debate. However, unit level outliers may lead to *outlying estimates of the
@@ -105,13 +105,13 @@ to non\hyp{}robust estimators. On the other hand it may be crucial feedback for
 a data provider to additionally report robust estimates, e.g. a robust mean or a
 median. Also it is unclear how this relates to the *self-adjusting* effect of 
 the Fay-Herriot model as it was characterized above. This aspect is also 
-addressed by a model based simulation study in Section \ref{sec:results_unit}.
+addressed in the a model based simulation study in Section \ref{sec:results_unit}.
 
 
 ## Area Level Outliers
 \label{sec:area-level-outliers}
 
-Area-level outliers are domains or areas which are far away from the main body
+Area level outliers are domains or areas which are far away from the main body
 of the observations. The source of such observations are not single units
 influencing the direct estimator, but the fact that there exist domains which
 are substantially different.
@@ -193,16 +193,12 @@ estimates and where the FH model may not yield stable and reliable results.
 Especially the second scenario should not be interpreted as an argument against 
 smoothing or that we can ignore unstable variance estimation. Although the 
 variances are not smoothed the influence of observations is nevertheless bounded
-within a robust estimation procedure. And not just the influence of the direct 
-estimator is bounded but the influence of the pair of direct estimator and 
-sampling variance as well. In fact the introduction of the robust area level
-model can be considered to have a positive effect with respect to both scenarios
-because single observations are restricted in their influence. Furthermore the
-robust model may present an alternative to smoothing strategies -- although this
-may not have been the initial intention -- without loosing the ability to weight
-down areas with unit level outliers. This claim is in fact not easy to support 
-by empirical evidence. It will however be further discussed in a model based 
-simulation in Section \ref{sec:results_unit}.
+within a robust estimation procedure. Here the robust model may present an
+alternative to smoothing strategies -- although this may not have been the
+initial intention -- without loosing the ability to weight down areas with unit
+level outliers. This claim is in fact not easy to support by empirical evidence.
+It will however be further discussed in a model based simulation in Section
+\ref{sec:results_unit}.
 
 ## Outlook
 
