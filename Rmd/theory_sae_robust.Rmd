@@ -1,8 +1,8 @@
 # Robust Methods in Small Area Estimation
 \label{sec:saerobust}
 
-The quality of predictions using model based methods are strongly dependent upon
-their distributional assumptions. Serious problems with these methods can arise 
+The quality of predictions using model based methods is strongly dependent upon
+the distributional assumptions. Serious problems with these methods can arise 
 already when single outlying observations are present in the data. Hence 
 discussion and some progress has been made in connection with methods robust 
 against outliers. Outliers are here defined as representative outliers as in
@@ -24,7 +24,7 @@ are reviewed. Together with the models reviewed in Section \ref{sec:area} these
 results are the basis for the extensions proposed in this Thesis. The Section is
 structured as follows: Section \ref{sec:robustee} reviews the methodology around
 robust estimation equations; in Section \ref{sec:robustbc} these results are
-extended to allow for a correction of the bias associated with these type of
+extended to allow for a correction of the bias associated with this type of
 robust predictions; then in Section \ref{sec:robustmse} different possibilities
 to estimate the MSPE of the area level predictions are described; and in Section
 \ref{sec:robustdiscussion} these results are embedded in a broader context of
@@ -91,7 +91,7 @@ log-likelihood of $\mat{y}$ with respect to $\pmat\beta$ and $\pmat\delta$ are:
 }for $l = 1, \dots, Q$ where $Q$ denotes the total number of variance parameters
 in $\pmat\delta$. These estimation equations are now modified in order to 
 restrict the influence of outlying observations similar to \eq{eq:rmmeb} in that
-the residuals have bounded influence using, in addition, an influence function 
+the residuals have bounded influence using an influence function 
 denoted by $\psi(\cdot)$:
 \empty{
 \begin{align}
@@ -100,9 +100,9 @@ denoted by $\psi(\cdot)$:
 \label{eq:reed}
 \psi(\mat{r})^\top\mat{U}^{\frac{1}{2}}\mat{V}^{-1}
 \frac{\partial\mat{V}}{\partial\delta_l}
-\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) - \tr\left(K\mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\right) & = 0
+\mat{V}^{-1}\mat{U}^{\frac{1}{2}} \psi(\mat{r}) - \tr\left(\mat{K} \mat{V}^{-1}\frac{\partial\mat{V}}{\partial\delta_l}\right) & = 0
 \end{align}
-}where $K = \Exp{E}(\psi_b^2(z)) \mat{I}_n$ is a diagonal matrix of the same
+}where $\mat{K} = \Exp{E}(\psi_b^2(z)) \mat{I}_n$ is a diagonal matrix of the same
 order as $\mat{V}$ with $z$ following a standard normal distribution; and
 $\mat{r} = \mat{r}(\pmat\beta) = \mat{U}^{-\half} (\mat{y} - \mat{X}\pmat\beta)$
 denotes the vector of the standardised residuals and $\mat{U} =
@@ -240,12 +240,11 @@ for robust area level predictions is discussed in Section
 \label{sec:robustmse}
 
 One of the challenging problems in this discipline is the estimation of the MSPE
-in model based SAE (cf. @Pfe13). This is only aggravated with the combination of
+in model based SAE \citep{Pfe13}. This is only aggravated with the combination of
 robust estimation methodology so that @Sin09 initially proposed a bootstrap
 instead of an analytical solution. In Section 
 \ref{sec:theory_sae_robust_bootstrap} below existing bootstrap methods in this
-context are reviewed of which two are adapted for the models introduced
-subsequently. Then in Section \ref{sec:theory_sae_robust_mspe} one analytical
+context are reviewed. Then in Section \ref{sec:theory_sae_robust_mspe} one analytical
 solution is presented based on a pseudolinear representation of the REBLUP which
 also allows the estimation of the MSPE of the bias corrected REBLUP.
 
@@ -278,7 +277,7 @@ $$
 where $\hat{\theta}_{i}^{RBHF(b)}$ and $\bar{Y}_{i}^{*(b)}$ denote respectively
 the REBLUP and the bootstrap population mean of the $b$th bootstrap sample.
 @Jio13 use a very similar approach with the important difference that their
-model -- from which the bootstrap samples here are drawn -- depends on the
+model -- from which the bootstrap samples are drawn -- depends on the
 non\hyp{}robust parameter estimates $\hat{\pmat\delta} = (\hat{\sigma}_\re^2,
 \hat{\sigma}_e^2)$. @Sin09 argue that they are interested in resampling the
 non\hyp{}contaminated part of the observations because the MSPE of their robust
@@ -310,7 +309,7 @@ is robust against outliers. On each sample then a non\hyp{}robust small area
 estimator can be used. This approach has the interesting effect that a MSPE 
 estimator for robust domain predictions as well as the robust predictions 
 themselfes can be produced. Although the results look promising 
-it is at this time not clear how to extend their method for models with
+it is at this time, again, not clear how to extend their method for models with
 correlated random effects.
 
 
@@ -401,7 +400,7 @@ $$
 $$
 is an estimator of the conditional prediction variance with $a_{ij} = N_i
 w_{ij}^{RBHF} - I\Paran{j \in i}$ where $I\Paran{j \in i}$ denotes an indicator
-function if observation $j$ is in the $i$th area; and
+function for when observation $j$ is in the $i$th area; and
 $$
 \widehat{\Exp{B}}\Paran{\si{\widehat{\theta}}^{RBHF}} =
   \sum_{j \in S} \hat{w}_{ij}^{RBHF} \hat{\mu}_j - N_i^{-1} \sum_{j \in \Paran{R_i \cup S_i}} \hat{\mu}_j
@@ -411,7 +410,7 @@ an unbiased estimator of the the conditional expectation $\mu_j =
 \Exp{E}\Paran{y_j | \mat{x}_j, \mat{\re}^\psi}$ and $\lambda_j = 1 - 2\phi_{jj}
 + \sum_{k \in S}\phi^2_{kj}$ is a scaling constant.
 
-Due to the shrinkage effect associated with EBLUPs, @Cha11 suggest recommend the
+Due to the shrinkage effect associated with EBLUPs, @Cha11 suggest the
 use of the unshrunken version of the EBLUP under the BHF model for 
 $\hat{\mu}_j$. The approach can be utilised to derive an analytical MSPE 
 estimator for the bias corrected version of the REBLUP. @Cha14 do this by 
@@ -426,7 +425,7 @@ the estimation of the variance components. @Cha14 hence note that this is a
 first order approximation to the actual MSPE estimator of the REBLUP. A second
 note is that this approach involves an increase in the MSE of the MSPE
 estimator. However, @Cha14 argue that in realistic applications this approach
-has good repeated sampling properties - for details see the references in
+has good repeated sampling properties -- for details see the references in
 @Cha14.
 
 @Cha14 also provide a linearisation-based approach to the estimation of the
