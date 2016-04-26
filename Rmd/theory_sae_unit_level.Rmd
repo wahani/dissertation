@@ -9,7 +9,7 @@ unit level models. In Chapter \ref{chap:rfh} these results are applied to the
 area level; here the basic unit level model and unit level notation is reviewed
 preparatory to more details in Section \ref{sec:saerobust} below. A review of
 unit level models in the context of linear mixed models and EBLUP based
-predictions can be found in @Jia06 and also in @Rao03 and in @Rao15 who also
+predictions can be found in @Jia06, @Rao03, and in @Rao15 who also
 review a variety of extensions.
 
 The unit level model of @Bat88 can be expressed as linear mixed model by:
