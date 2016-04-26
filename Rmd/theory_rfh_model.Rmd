@@ -56,10 +56,11 @@ vector of spatially correlated random effects following a SAR(1):
 u_{1i} & = \rho_1 \sum_{l\neq i}w_{il} u_{1l} + \epsilon_{1i} \\
 \epsilon_{1i} & \sim \Distr{N}(0, \sigma_1^2) \text{ i.i.d.}
 \end{align*}
-}with $i = 1, \dots, D$, where $w_{il}$ are the elements of the row
-standardised proximity matrix $\mat{W}$. Let $\mat{W}^0$ denote the proximity
-matrix then one possible definition of $\mat{W}^0$ is that the elements are
-equal to one if area $i$ and $l$ are neighboured and zero otherwise. This leads
+}with $i = 1, \dots, D$, where $w_{il}$ are the elements of the row standardised
+proximity matrix $\mat{W}$. Let $\mat{W}^0$ denote the proximity matrix then one
+possible definition of $\mat{W}^0$ is that the elements are equal to one if area
+$i$ and $l$ are neighboured and zero otherwise -- see Section
+\ref{sec:theory_sae_fh_spatial} for a discussion of such definitions. This leads
 to the following distribution of $\mat{u}_1$:
 \empty{
 \begin{align*}
@@ -520,9 +521,9 @@ they reduce to identity matrices. And -- as reviewed in Section
 \label{sec:rfh_solutions_delta}
 
 An algorithm to solve the robust estimation equation \eq{eq:rfhreed} for 
-$\pmat\delta$ was derived by @Chat12 for the case of the robust BHF model 
-\eq{eq:reblupbhf}. That approach is adapted for the robust area level models
-under consideration here to derive fixed point equations for the variance 
+$\pmat\delta$ was derived by @Chat12 for the case of the robust BHF model in
+\eq{eq:reblupbhf}. This approach is adapted for the robust area level models
+under consideration to derive fixed point equations for the variance 
 parameters based on \eq{eq:rfhreed}. In order to stay as general as possible and
 yet present simple solutions it is necessary to distinguish between two cases.
 First when $\pmat\delta$ is a scalar under a given model. Second when
@@ -673,7 +674,7 @@ the left out elements.
 For $\delta_\rho$ we can simply use the Newton-Raphson algorithm in
 \eq{eq:nr_delta} which is directly compatible with the results of Section 
 \ref{sec:rfh_model_tfh}. For $\pmat\delta_\sigma$ we need to find 
-$\bar{\mat{V}}_{u1}$ and $\bar{\mat{V}}_{u2}$ where $\rho_2$ is treated as a 
+$\bar{\mat{V}}_{u1}$ and $\bar{\mat{V}}_{u2}$ where $\rho_2$ is treated as  
 known parameter. Using the results of Section \ref{sec:rfh_model_tfh} we can 
 find these solutions:
 \empty{
@@ -853,8 +854,8 @@ taking the $\log$. The one is added to avoid negative values of the logarithm.
 Inside the sum the relative absolute differences of the parameter estimates at 
 iteration $m$ and $m + 1$ are computed. In fact only the relative difference is 
 used when the denominator is larger than 1; otherwise the absolute difference is
-being used. Here the advantage of the relative difference is that the numerical
-precision is independent of the magnitude of the parameters, as is pointed out
-by @Wei14[pp. 143-144]. @Wei14 and @McC04 also provide a discussion of the
-choice of such stopping rules. The properties and results of this algorithm is
-the subject matter of Section \ref{sec:saeRobust_stability}.
+being used. Here the advantage of the relative difference is that the numerical 
+precision is independent of the magnitude of the true parameters -- this is also
+pointed out by @Wei14[pp. 143-144]. @Wei14 and @McC04 also provide a discussion
+of the choice of such stopping rules. The properties and results of this
+algorithm is the subject matter of Section \ref{sec:saeRobust_stability}.
