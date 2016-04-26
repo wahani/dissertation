@@ -1,9 +1,19 @@
+
+\begin{flushright}{\slshape
+I have gone so far as to say if you (or someone else) \\
+aren’t writing software for your methods, \\
+they don’t really exist.
+} \\ \medskip
+--- \textcite{Lee13}
+\end{flushright}
+
+
 # Motivation
 
 The demand for reliable small area statistics from sample surveys has grown
 substantially over the past decades due to their growing use in public and
 private sectors. The importance of the field of Small Area Estimation (SAE) can
-be explained by the expanding demand for reliable estimates by policy makers and
+be explained by the increasing need for reliable estimates by policy makers and
 in official statistics. Results may be used for fund allocation, health 
 programs, agriculture, or poverty mapping to name only a few of the fields of 
 application. Traditionally such estimates have relied on survey data; but as the
@@ -13,7 +23,7 @@ more diverse domains and the cost and feasibility of larger samples is the
 factor that stimulates the progress within the field; it supplies the mechanism
 for optimising the ratio between sampled units and the reliability of estimates.
 
-It is the main endevour of Small Area Estimation to try to produce *reliable 
+It is the main endeavour of Small Area Estimation to try to produce *reliable 
 predictions* of a *target statistic* for *small domains*. A *target statistic* 
 can be a statistic such as a mean, a count, or quantiles; but it can take other
 forms: e.g. an inequality measure like the Gini coefficient for poverty mapping.
@@ -38,14 +48,14 @@ the incorporation of spatial and temporal correlation structures are highly
 relevant. Such applications have often a geographical dimension since 
 predictions by official statistics are often produced on a regional basis. The 
 Nomenclature of units for territorial statistics (NUTS) \citep{NUTS} is a 
-hirarchical system to define regions in the European Union in different 
+hierarchical system to define regions in the European Union in different 
 granularity. Since such classifications are based on a geographical dimension we
 may take advantage of the fact that neighbouring districts may have similarities
 -- hence the incorporation of spatial information.
 
 Official statistics is often interested in producing up-to-date statistics and 
 this often means that information over a time frame is available since these
-predictions may be produced on an anual basis. Such information can be exploited
+predictions may be produced on an annual basis. Such information can be exploited
 and may have a significant and overall positive impact on the precision of
 predictions.
 
@@ -69,7 +79,7 @@ temporal correlation.
 These methods often rely on strong distributional assumptions which provides the
 additional advantage of a gain in precision; however such methods can easily be 
 influenced by single observations. Such observations may be framed as 
-*outlying*. Hence it can be advantaguous to use methods which can be assumed to 
+*outlying*. Hence it can be advantageous to use methods which can be assumed to 
 be more robust against the influence of such outlying observations. In this 
 context the present Thesis aims at combining robust estimation methodology with
 the use of various spatial and temporal correlation structures. The remaining
@@ -82,10 +92,10 @@ precisely its mechanics -- Section \ref{sec:intro_outline}.
 \label{sec:intro_sae}
 
 In the following I give a general overview of the field of Small Area Estimation
-to the extent necessary necessary to accomodate this Thesis within the SAE
+to the extent necessary to accommodate this Thesis within the SAE
 field. For a general overview of the field, @Rao03 as well as @Rao15 give
 comprehensive overviews of the established methods and the published research.
-@Gho94, @Rao99, @Pfe02 and @Pfe13 focus on the status quo and main lines of
+@Gho94, @Rao99, @Pfe02, and @Pfe13 focus on the status quo and main lines of
 discussion within the field at their respective point in time.
 
 In general small area methods may be divided into two categories: design based 
@@ -182,7 +192,7 @@ REBLUP (STREBLUP).
 Some extensions introduced in the literature around REBLUPs have focused on unit
 level models; thus results especially for MSPE estimation and bias correction
 are extended to area level models. In this regard the parametric bootstrap by
-@Sin09 is here adapted to obtain estimates for the domain sepcific MSPE. 
+@Sin09 is here adapted to obtain estimates for the domain specific MSPE. 
 Furthermore an analytical solution is presented which is based on a pseudolinear
 form of the area level REBLUPs. This approach extends the results of @Cha11 to 
 area level models and combines them with the results of @Cha14 for robust 
@@ -195,22 +205,84 @@ goal.
 # Outline
 \label{sec:intro_outline}
 
-The overall structure of Thesis is devided into three parts. Part I comprises
-the methodological foundation underpinning the proposed REBLUPs. In Part II I 
-will introduce two software packages which have been developed alongside this 
-Thesis. Then in Part III the statistical properties of the predictions based on 
-the proposed REBLUPs are investigated in several model and design based
-simulation studies.
+The overall structure of Thesis is divided into three parts. Part
+\ref{part:theory} comprises the methodological foundation underpinning the
+proposed REBLUPs. In Part \ref{part:implementation} I will introduce two
+software packages which have been developed alongside this Thesis. Then in Part
+\ref{part:results} the statistical properties of the predictions based on the
+proposed REBLUPs are investigated in several model and design based simulation
+studies.
 
-Part I includes a literature review in Section \ref{chap:sae}
+Part \ref{part:theory} includes a literature review in Chapter \ref{chap:review}
+which gives the methodological background underpinning the results and
+extensions around the robust extensions to area level models in Chapter
+\ref{chap:rfh}. The review includes the basic foundation in the form of direct
+domain estimation in Section \ref{sec:theory_sae_direct} and predictions using
+linear mixed models in Section \ref{sec:blup}. Framed as linear mixed models the
+FH model and the spatial and temporal extensions are reviewed in Section
+\ref{sec:area}. Then the robust methodology around robust predictions under
+linear mixed models in the SAE field is reviewed in Section \ref{sec:saerobust}.
+These results are often based on unit level models; hence the BHF model and unit
+level notation is introduced in \ref{sec:unit_level}.
+
+Based on these results I establish a coherent framework for robust predictions 
+using spatial and temporal area level models in Chapter \ref{chap:rfh}. These 
+predictions are framed as area level robust best linear unbiased predictions. 
+The models under consideration are merely special cases in this framework and 
+results are given in general notation for linear mixed models where possible. 
+This includes the framework presented in Section \ref{sec:rfh_model}, the bias 
+correction in Section \ref{sec:rfhbiascorrection}, and the MSPE estimators in 
+Section \ref{sec:theory_rfh_mse}. The main motivation to consider robust area 
+level models are outlying areas; however different kinds of outlying 
+observations can be defined. A discussion of what *outliers* are with respect to
+area level models is given in Seciton \ref{sec:rfh_framework} as it presents the
+main motivation for the sebsequent presented framework.
+
+In Part \ref{part:implementation} I continue the presentation of robust area 
+liner mixed models; however the presentation now changes to the implementation 
+side of these methods. The introduced methods of Chapter \ref{chap:rfh} are 
+implemented in the `R`\hyp{}package `saeRobust` \citep{War16} which is provided 
+as supplementary material to this Thesis. In Chapter \ref{chap:saeRobust} the 
+numerical properties of the proposed estimators are investigated. Furthermore 
+code examples are given to illustrate the possibility to use these methods in a 
+data analysis. The results in Part \ref{part:results} are based on simulation 
+studies and to that extent a simulation framework and its implementation is 
+presented in Chapter \ref{chap:saeSim}. Here a simulation study is framed as a 
+sequence of data manipulation steps and this idea is implemented in the 
+`R`\hyp{}package `saeSim` \citep{War15}. The aim of the package is to provide 
+tools and most importantly a convention how to conduct simulations in the SAE 
+field. In that I hope to promote the publication of source code and simplify the
+process of understanding such code -- at least with respect to simulation
+studies in this field.
+
+In the final Part \ref{part:results} model and design based simulation studies 
+are conducted. The model based studies aim at explaining how the robust 
+predictions differ from their non\hyp{}robust counterparts -- Chapter
+\ref{chap:results_design_based}. Here differing settings are investigated:
+Section \ref{sec:results_predictions} investigates the performace of the robust
+predictions in area level scenarios, and in Section \ref{sec:results_mse} the
+performance of the MSPE estimators is the subject matter. Both of which rely on
+the generation of area level data and in this setting only area level outliers
+are considered. This perspective is then changed in Section
+\ref{sec:results_unit} where the data is simulated beginning with a unit level
+population model. This opens up the possibility to incorporate also unit level
+outliers into the discussion. The discussion is then continued in Chapter
+\ref{chap:results_design_based} by providing results for a design based 
+simulation. Here the atarget is the tax\hyp{}turnover in 20 industry domains in 
+the Netherlands. This analysis is based on a synthetic unit level population 
+which now presents the interesting combination of an informative sampling 
+design, unit level outliers, and area level outliers. A summary of the main
+findings and contributions of this Thesis as well as avenues for further
+research are then prestend in Chapter \ref{chap:conclusion}.
+
 
 # Reproducing the Results
 
-Some offort went into the possibility to reproduce the results presented in this
-Thesis. All outcome of the simulation studies are preduced using the 
+Some effort went into the possibility to reproduce the results presented in this
+Thesis. All outcome of the simulation studies are produced using the 
 `R`\hyp{}language \citep{R} which is freely available. Two `R`\hyp{}packages are
-provided as supplemantary material to this Thesis: `saeRobust` \citep{War16} and
-`saeSim` \citep{War15} which are subject to discussion later in this Thesis. The
+provided as supplementary material to this Thesis: `saeRobust` and
+`saeSim` which are subject to discussion later in this Thesis. The
 package `saeRobust` implements the statistical methods here developed and
 `saeSim` provides a simulation framework which is utilised for implementing the
 studies below.
@@ -227,7 +299,7 @@ have been used -- e.g. for data manipulation and graphics.
 
 It should be possible to reproduce all results related to model based
 simulations. For reproducing the design based simulation study in Chapter
-\ref{chap:results_design_based} it would be necessary to deliver the sysnthetic
+\ref{chap:results_design_based} it would be necessary to deliver the synthetic
 population here used; however the copyright does not grand me permission in
 order to do so. The source file implementing the simulation is included
 nonetheless.

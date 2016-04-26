@@ -22,7 +22,7 @@ context is provided in Section \ref{sec:results_design_discussion}.
 # The Synthetic Population
 \label{sec:results_design_data}
 
-The population data is a synthetic population, generated using the SBS. The SBS 
+The population data is a synthetic population generated using the SBS. The SBS 
 is an annual business survey in the Netherlands. Furthermore the
 sampling scheme used in this study is similar to that applied in the SBS and it is
 provided and used without any change. The context of this study is the
