@@ -2,12 +2,12 @@
 \label{sec:blup}
 
 This Section gives a general overview of linear mixed models and the best linear
-unbiased prediction (BLUP) and empirical BLUP (EBLUP). The unit and area level
-models introduced here are based on this class of models and the robust
-methodology is based on a robustified EBLUP. The original model dates back to
-@Hen50 and an early comprehensive overview can be found in @Sea71. @Jia06 review
-liner mixed models in the context of SAE and the main results can also be found
-in @Rao03 and @Rao15.
+unbiased prediction (BLUP) and empirical BLUP (EBLUP). The unit and area level 
+models introduced later in this Chapter are based on this class of models and
+the robust methodology is based on a *robustified* EBLUP. The original model 
+dates back to @Hen50 and an early comprehensive overview can be found in @Sea71.
+@Jia06 review liner mixed models in the context of SAE and the main results can
+also be found in @Rao03 and @Rao15.
 
 ## Linear Mixed Models
 
@@ -19,12 +19,12 @@ Following @Rao15[98 ff] a linear mixed model can be expressed by:
 \end{align}
 }where
 $\mat{y}$ is the $(n \times 1)$ vector of response values; $\mat{X}$ is a
-$(n \times P)$ matrix containing auxiliary and deterministic information;
+$(n \times P)$ matrix containing deterministic auxiliary information;
 $\pmat\beta$ is the $(P \times 1)$ vector of regression coefficients; $\mat{Z}$ is a
 known matrix and $\mat{\re}$ is a vector of random effects, such that $\mat{Z\re}$ is
 of dimension $(n \times 1)$; $\mat{e}$ is the $(n \times 1)$ vector of model
 errors. Note that $\mat{\re}$ and $\mat{e}$ are both random variables where the
-basic assumption is that both have mean zero and finite variances. Furthermore,
+basic assumption is that both have mean zero and finite variances. Furthermore
 they are assumed to be independent.
 
 If, in addition, $\mat{\re}$ and $\mat{e}$ are assumed to follow a normal
@@ -35,13 +35,13 @@ distribution of $\mat{y}$ can then be derived as a multivariate normal of the fo
 \mat{y} &\sim \Distr{N}\Paran{\mat{X}\pmat{\beta}, \mat{V}} \\
 \mat{y} | \mat{\re} &\sim \Distr{N}\Paran{\mat{X}\pmat{\beta} + \mat{Z}\mat{\re}, \mat{V}_e}
 \end{align*}
-}where
-$\mat{V} = \mat{Z}\mat{V}_\re\mat{Z}^\top + \mat{V}_e$ with $\mat{V}_\re$
-and $\mat{V}_e$ being the variance covariance matrices of $\mat{\re}$ and
-$\mat{e}$, respectively. Such variance structure typically depend on some unknown
-dispersion parameters. To be more precise: $\mat{V}_\re =
-\mat{V}_\re(\pmat{\delta}_\re)$ and $\mat{V}_e = \mat{V}_e(\pmat{\delta}_e)$ such that
-$\mat{V} = \mat{V}(\pmat{\delta})$ with $\pmat{\delta} = (\pmat{\delta}_\re, \pmat{\delta}_e)$.
+}where $\mat{V} = \mat{Z}\mat{V}_\re\mat{Z}^\top + \mat{V}_e$ with $\mat{V}_\re$
+and $\mat{V}_e$ being the variance matrices of $\mat{\re}$ and $\mat{e}$,
+respectively. Such variance structures typically depend on some unknown 
+dispersion parameters. To be more precise: $\mat{V}_\re = 
+\mat{V}_\re(\pmat{\delta}_\re)$ and $\mat{V}_e = \mat{V}_e(\pmat{\delta}_e)$
+such that $\mat{V} = \mat{V}(\pmat{\delta})$ with $\pmat{\delta} =
+(\pmat{\delta}_\re, \pmat{\delta}_e)$.
 
 ## Best Linear Unbiased Prediction
 
@@ -82,14 +82,12 @@ the empirical BLUP (EBLUP) obtained is:
 \label{eq:eblup}
 \hat{\pmat\mu} = \hat{\pmat\mu}(\hat{\pmat\delta}) = \mat{l}^\top \hat{\pmat\beta} + \mat{m}^\top \hat{\mat{\re}}
 \end{align}
-}where $\hat{\pmat\beta} = \tilde{\pmat\beta}(\hat{\pmat\delta})$ and
-$\hat{\mat\re} = \tilde{\mat\re}(\hat{\pmat\delta})$. To estimate $\pmat\delta$
-a variety of estimators have been proposed. Commonly used estimators are based
-on maximum likelihood (ML) and restricted maximum likelihood (REML). The
-standard procedures in the literature are not directly feasible for the robust
-estimators introduced in Chapter \ref{chap:rfh}. Instead different algorithms
-are proposed. For a detailed discussion of the estimation of the variance
-parameters see also @Jia06 and the literature quoted there.
+}where $\hat{\pmat\beta} = \tilde{\pmat\beta}(\hat{\pmat\delta})$ and 
+$\hat{\mat\re} = \tilde{\mat\re}(\hat{\pmat\delta})$. To estimate $\pmat\delta$ 
+a variety of estimators have been proposed. Commonly used estimators are based 
+on maximum likelihood (ML) and restricted maximum likelihood (REML). For a
+detailed discussion of the estimation of the variance parameters see also @Jia06
+and the literature quoted there.
 
 ## Mean Squared Prediction Error
 \label{sec:eblup_mspe}
@@ -103,7 +101,7 @@ which the existing literature can be extended. In general the estimation of the
 MSPE can be identified as one of the challenging problems in model based SAE
 \citep{Pfe13}. Two approaches are taken in the literature: The analytical 
 identification of the MSPE and different resampling strategies. More detailed 
-reviews of these strategies can be found in @Rao03[p. 95 ff], @Jia06[p. 13 ff]
+reviews of these strategies can be found in @Rao03[p. 95 ff], @Jia06,
 and in @Dat09.
 
 Early results can be found in @Kac84 who propose an approximation to the MSPE
@@ -118,16 +116,16 @@ MSPE(\hat{\pmat\mu}) = MSPE(\pmat\mu) + \Exp{E}\Paran{\hat{\pmat\mu} - \pmat\mu}
 \begin{align*}
 MSPE(\pmat\mu) &= g_1(\pmat\delta) + g_2(\pmat\delta)
 \end{align*}
-}\citep[98 ff]{Rao03}  where
+}where
 \empty{
 \begin{align*}
 g_1(\pmat\delta) &= \mat{m}^\top\Paran{\mat{V}_\re - \mat{V}_\re\mat{Z}^\top\mat{V}^{-1}\mat{Z}\mat{V}_\re}\mat{m}\\
 g_2(\pmat\delta) &= \mat{d}^\top \Paran{\mat{X}^\top\mat{V}^{-1}\mat{X}} \mat{d}
 \end{align*}
-}with $\mat{d}^\top = \mat{l}^\top - \mat{b}^\top\mat{X}$ and $\mat{b}^\top =
-\mat{m}^\top\mat{V}_\re\mat{Z}^\top\mat{V}^{-1}$. The second term in equation
-\eq{eq:mspe_eblup} was approximated by @Kac84 using a Taylor series
-approximation. @Pra90 have used instead the approximation by
+}with $\mat{d}^\top = \mat{l}^\top - \mat{b}^\top\mat{X}$ and $\mat{b}^\top = 
+\mat{m}^\top\mat{V}_\re\mat{Z}^\top\mat{V}^{-1}$ \citep[98 ff]{Rao03}. The
+second term in equation \eq{eq:mspe_eblup} was approximated by @Kac84 using a
+Taylor series approximation. @Pra90 have used instead the approximation by
 \empty{
 \begin{align*}
 \Exp{E}\Paran{\hat{\pmat\mu} - \pmat\mu}^2 &\approx g_3(\pmat\delta) \\
@@ -140,7 +138,7 @@ g_3(\pmat\delta) &= \tr\Paran{\frac{\partial \mat{b}^\top}{\partial \pmat\delta}
 }with $\mat{V}_{\hat{\pmat\delta}}$ being the asymptotic covariance matrix of 
 $\hat{\pmat\delta}$. The derived MSPE depends on the unknown parameter vector 
 $\pmat\delta$. @Pra90 used a moment estimator for $\pmat\delta$ and replaced the
-above formulae so that an estimator of the MSPE can be defined as 
+above formulae such that an estimator of the MSPE can be defined as 
 $\widehat{MSPE}(\hat{\pmat\mu}) = g_1(\hat{\pmat\delta}) + 
 g_2(\hat{\pmat\delta}) + g_3(\hat{\pmat\delta})$. @Dat00 extended this approach 
 for a wider range of models in SAE including ML and REML estimators. An overview
