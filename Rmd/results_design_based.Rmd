@@ -57,17 +57,17 @@ $$
 \bar{y}_i = \beta_0 + \beta_1 \tilde{y}_{it-1} + \re_i + e_i
 $$
 which is here assumed to follow the FH model. Here $i = 1, \dots, 20$ and 
-$\re_i$ is assumed to follow a normal distributions with zero mean and variance 
+$\re_i$ is assumed to follow a normal distribution with zero mean and variance 
 $\sigre$. The sampling error, $e_i$, is also assumed to follow a normal 
 distribution with zero mean and variance $\sige$. The direct estimator, 
-$\bar{y}_i$, is a weighted mean using the inverse first order inclusion 
+$\bar{y}_i$, is a weighted mean using the inverse of the first order inclusion 
 probabilities as weights, i.e. the HT estimator \citep{Hor52}. The standard
 error is computed using the approximation based on the results of @Han43 since
 only the first order inclusion probabilities are known. These standard errors
 are then squared and used as the true sampling variances, $\sige$, in the model.
 The regressor variable, $\tilde{y}_{it-1}$, is the mean value of the previous
 year. Here the population mean is used; since the target variable is
-tax\hyp{}turnover it may be plausible that at some point the true or realized
+tax\hyp{}turnover it may be plausible that at some point the true or realised
 values are known to the analyst. An investigation in which also the lagged
 dependent variable was estimated using either the HT estimator or the sample mean 
 showed that using an area level method only brings a small advantage over the
@@ -81,7 +81,7 @@ Predictions are made under the FH model comparing the standard model referred to
 by FH, the robust prediction (RFH), and the bias\hyp{}corrected robust
 prediction (RFH.BC).
 
-Also the MSPE estimators are compared using the RBIAS and RRMSE as they are 
+Also the MSPE estimators are compared using the RBIAS and \linebreak RRMSE as they are 
 defined in Section \ref{sec:results_mse_qm}. The target here is again the 
 estimated root MSPE (RMSPE). The methods used are the pseudolinearisation based 
 approach (CCT) and the parametric bootstrap (BOOT); both are introduced in 
@@ -107,7 +107,7 @@ robust method and can even be a draw back compared to the non\hyp{}robust
 predictions. A possible explanation is that in this setting we have a strong
 predictor and also very small estimated variance parameters of the random
 effects. This means that we favour the linear predictor and hence we are as far
-away from the direct estimator as is possible using these methods. This the
+away from the direct estimator as is possible using these methods. Thus the
 bias\hyp{}correction is applied more frequently.
 
 \begin{figure}[tbp]
@@ -146,13 +146,13 @@ compared to the bootstrap we observe a higher RRMSE.
 # Discussion
 \label{sec:results_design_discussion}
 
-The results of this Section show the overall beneficial effect of small area
+The results of this Chapter show the overall beneficial effect of small area
 methods in terms of MSPE. However the point predictions also reveal an
 introduced bias; here we observe the typical variance\hyp{}bias trade\hyp{}off
-associated to mixed linear models and Empirical Bayes methods \citep{Efr72}.
+associated to mixed linear models and Empirical Bayes methods \citep{Efr72}. 
 Interestingly we do not see any improvement using the bias correction technique;
-especially in terms of bias. We also see an improvement by applying the robust
-estimation technique in terms of MSPE.
+especially in terms of bias. However we do see an improvement by applying the
+robust estimation technique in terms of MSPE.
 
 In this study we have both, unit and area level outliers. It remains somewhat
 in-transparent if unit level outliers have an effect at all. In this example we
@@ -168,7 +168,7 @@ was chosen for a different target statistic.
 The results of the MSPE estimators -- CCT and BOOT -- reveal some problems in a 
 scenario in which we estimate the variance parameter to be close to zero. 
 Essentially we are here at the boundary of the parameter space of the variance. 
-At present it is not clear how to dress this issue. It may be helpful to 
+At present it is not clear how to adress this issue. It may be helpful to 
 incorporate the comparison with the more established method by @Pra90 which at 
 this point remains an avenue for further research. 
 
