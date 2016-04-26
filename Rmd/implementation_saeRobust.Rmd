@@ -112,13 +112,11 @@ the variance parameter are sought for in one or more individual algorithms.
 These algorithms are then iterated over until all model parameters jointly reach 
 the stopping rule given in Section \ref{sec:rfh_algorithm}. This means
 that we observe an overall number of iterations as well as a number of
-iterations for each nested algorithm. Hence we have two maximum numbers of
-iterations as additional stopping rules: one for each nested algorithm and one
-for the overall optimisation.
-
-The value for $\epsilon$ in the convergence criterion given in Section 
-\ref{sec:rfh_algorithm} is set to $10^{-6}$ to guarantee sufficient numerical 
-accuracy.
+iterations for each nested algorithm. Hence we have two maximum numbers of 
+iterations as additional stopping rules: one for each nested algorithm and one 
+for the overall optimisation. The value for $\epsilon$ in the convergence
+criterion given in Section \ref{sec:rfh_algorithm} is set to $10^{-6}$ to
+guarantee sufficient numerical accuracy.
 
 
 ## Testing Scenarios
@@ -206,8 +204,8 @@ performance regardless of the scenario.
 \end{figure}
 
 A distinction between the two scenarios manifests itself in the different 
-estimations of the intercept parameter. Although on average a robust estimation
-technique is applied a higher intercept is estimated in the outlier scenario.
+estimations of the intercept parameter. Although a robust estimation technique
+is applied on average a higher intercept is estimated in the outlier scenario. 
 The reason we observe this effect is that outlying domains are not removed but 
 weighted down, hence on average more observations with higher values are present
 in the data which explains this effect.
@@ -415,11 +413,11 @@ options(width = 70)
 ```
 
 In this Section I present some code examples using the `R`-package `saeRobust` 
-\citep{War16} to illustrate the current state of its development. An important 
-software package implementing the SFH and STFH as well as the basic FH model in 
-the `R`-language is the `sae` package of @Mol15. They also provide several 
-examples on how to use their implementation with various data sets. For this
-purpose I adapt these examples.
+to illustrate the current state of its development. An important software
+package implementing the SFH and STFH as well as the basic FH model in the
+`R`-language is the `sae` package of @Mol15. They also provide several examples
+on how to use their implementation with various data sets. For this purpose I
+adapt these examples.
 
 As an introductory example we can make use of the synthetic data set `grapes` 
 \citep{Mol15} which contains information on the geographical area for grape 
@@ -499,7 +497,7 @@ dev.off()
 \caption[saeRobust: Quantile-Quantile Plots for Residuals and Random Effects]{\label{fig:saeRobust_residuals_grapes}Quantile-Quantile Plots for Standardised Residuals (left) and Random Effects (right)}
 \end{figure}
 
-\noindent and obtain the Quantile\hyp{}Quantile plots in Figure
+\noindent and obtain the quantile\hyp{}quantile plots in Figure
 \ref{fig:saeRobust_residuals_grapes}. Since the FH model and all extensions
 under consideration assume a heteroscedastic sampling distribution it is not
 meaningful to plot the estimated sampling errors -- here denoted as residuals.
@@ -528,9 +526,9 @@ rfh(
 )
 ```
 
-\noindent What we can observe is that the intercept and estimated variance 
-parameter are estimated at a higher value than before. This is an indicates that
-outlying observations may have an effect on the parameter parameter estimation.
+\noindent What we can observe is that the intercept and variance parameter are
+estimated at a higher value than before. This is an indicates that outlying
+observations may have an effect on the parameter parameter estimation.
 
 To obtain the predictions we can make use of the `predict` generic function.
 Here a `data.frame` is returned containing the realised random effects, the
@@ -578,7 +576,7 @@ quantile of the standard normal distribution times the standard deviation of the
 differences. We may suspect here that for larger values of the direct estimator
 we predict lower values using the REBLUP; although there are only few
 observations supporting this observation. Furthermore we see that the bias
-correction has no impact on the overall presentation.
+correction has little impact on the overall presentation.
 
 Now turning to the estimation of the MSPE we make use of the function `mse` 
 which returns a `data.frame` containing the direct estimator with the sampling 
@@ -627,14 +625,14 @@ than 400. What we can observe is a clear benefit of using the REBLUP for domain
 predictions; here the *very unreliable* domains -- measured in terms of CV --
 benefit the most.
 
-The above presented methods, that is the `mse`, `predict`, and `plot` methods, 
+The above presented methods, that are the `mse`, `predict`, and `plot` methods, 
 are implemeted for the robust estimation of the standard FH model -- as
 presented above -- and furthermore the spatial and temporal extensions. The same
 function names can be used. From the perspective taken in `saeRobust` we
 estimate a robust FH model with varying variance structures. Hence the
 specification of the variance is simply an argument to the function `rfh`. This
 design choice is close to the functionality implemented for example in the
-package `nlme` @Pin16 for nonlinear mixed effects models. 
+package `nlme` \citep{Pin16} for nonlinear mixed effects models. 
 
 As an example I present the same analysis as above for the robust estimation of
 the spatial FH model. From the previous analysis we have an initial estimate for
@@ -655,7 +653,7 @@ fitRSFH
 \noindent Remember that `grapeprox` is the row standardised proximity matrix
 also supplied by the package `sae`. In this case an additional parameter,
 `correlation`, is added to the output. The analysis can now be continued using
-the previously used methods but is omitted as their are no new features of
+the previously used methods but is omitted as there are no new features of
 `saeRobust` to be discovered. To trigger the estimation of the temporal model we
 can make use of `corAR1` and for the spatio\hyp{}temporal model we can use
 `corSAR1AR1` to specify the respective correlation structure in the random
@@ -663,9 +661,8 @@ effects.
 
 Additional features which have been ommitted from the presentation so far are 
 for example the possibility to compute the MSPE using the parameteric bootstrap.
-This can be done by using the `mse` and specifying the `type` argument. This is 
-not done by default since the computation can be timeconsuming. As an example
-for such a call consider the following code necessary:
+This can be done using the function `mse` and by setting the argument `type`
+to `"boot"`. As an example consider the following code:
 
 ```{r eval = FALSE}
 mse(fitRSFH, type = "boot", B = 50)
@@ -694,7 +691,7 @@ the random effects can be supplied by the user. And related to computational
 demand users can run a model with only a subset of the data at hand to produce 
 better starting values and then update the analysis and continue with an updated
 data set. This can be accomplished using the `update` function. This strategy
-was originally implemented to implement the parametric bootstrap methods however
+was originally implemented to implement the parametric bootstrap method however
 it may also be valuable in situations with large data sets. Also it may be
 important to first optimise the model parameters and then find solutions for the
 random effects which is possible by continuing a model fitting process with
@@ -703,7 +700,7 @@ updated parameters.
 Furthermore it is important to investigate the estimation equations at their 
 solutions. A common return value of such fitting procedures is to provide the 
 reason of *convergence* -- see for example the function `sae::eblupFH` in the R 
-package `sae` \citep{Mol15}. Such a value may indicate that the maximum number 
+package `sae`. Such a value may indicate that the maximum number 
 of iterations has been exceeded or that the convergence criterion has been 
 reached. However as @McC04 notes the fact that we reach the stopping rule can be
 very misleading -- it is in fact the estimation equation we should evaluate and
@@ -728,13 +725,13 @@ only supports a link to the parametric bootstrap with the function `bootstrap`.
 With respect to model selection the actual log-likelihood function for robust
 methods is generally unknown since robust versions of its partial derivatives
 are used. Hence it is not clear how to provide information criteria for the
-robust methods under consideration -- see the discussion in @Kol16.
+robust methods under consideration -- see also the discussion in @Kol16.
 
 The discussion in this Chapter focused on the properties of the implementation. 
 The statistical properties of the robust methods have not been investigated so 
 far and are the subject matter of the Chapters \ref{chap:results_model_based}
 and \ref{chap:results_design_based} in model and design based simulations. An
-important aspect of this Thesis are the accompanying software
+important outcome of this Thesis are the accompanying software
 implementations. With this regard also the package `saeSim` \citep{War15} can be
 seen as one result of this Thesis; it aims to simplify the process of setting up
 simulation studies and hence is introduced in the following Chapter
