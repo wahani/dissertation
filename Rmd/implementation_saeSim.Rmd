@@ -26,7 +26,7 @@ The set of tools available in the package `saeSim` have been designed to provide
 an infrastructure which makes it easier to reproduce the results of model and 
 design based simulation studies. Reproducibility here comprises the availability
 of the full academic research, including data and the source code. Open source 
-tools like the `R`\hyp{}language \citep{R} and \LaTeX \space can be used in 
+tools like the `R`\hyp{}language and \LaTeX \space can be used in 
 tight integration to combine the statistical analysis with the written words in 
 an article. This can be achieved by using tools like `knitr` \citep{Xie13}, 
 `sweave` \citep{Lei02}, and, more recently, `rmarkdown` \citep{All14}. Such
@@ -34,17 +34,17 @@ tools can assist in making research more reproducible. The tools provided by
 `saeSim` aim at simplifying the process of writing the source code for a
 simulation study; in the context of reproducible research this may prove to be
 useful in the development of script files as well as in combination with the
-tools discussed earlier.
+tools discussed above.
 
 Real data is often very sensitive and can be subject to strict confidentiality
 restrictions. Synthetic data generation mechanisms can be used to provide safe
 data which can be made publicly available -- for a more detailed discussion see
-@Rub93, @Alf11 and @Kol11. @Bur14 describe this as an open research philosophy.
+@Rub93, @Alf11, and @Kol11. @Bur14 describe this as an open research philosophy.
   Such synthetic data sets can be used to test newly proposed statistical
   methods in a close\hyp{}to\hyp{}reality framework. In general, simulation studies in
   statistics can be divided into two concepts:
 
-- Design based: Hre the simulation study is based on true or synthetic data of a
+- Design based: Here the simulation study is based on true or synthetic data of a
 fixed population. Samples are then selected repeatedly from the underlying 
 finite population and different estimation methods are applied in each 
 replication. The estimates so obtained are compared to the true population 
@@ -134,13 +134,13 @@ means and variances, and other statistics of interest (third component in Figure
 \ref{fig:flowdiagram}).
 
 The *sample\hyp{}level* is necessary when domain predictions are conducted for 
-unit-level models. Independently of how the population is treated - whether as 
-fixed or random - this phase consists of two steps: firstly, of drawing a sample
-according to a specific sampling scheme and secondly, of conducting computations
-on the samples (fourth and fifth component in Figure \ref{fig:flowdiagram}).
-Given the sample, small area methods are applied. Of interest here are, for
-instance, estimated model parameters, domain predictions, or measures of
-uncertainty for the predictions.
+unit-level models. Independently of how the population is treated -- whether as 
+fixed or random -- this phase consists of two steps: firstly, of drawing a
+sample according to a specific sampling scheme and secondly, of conducting
+computations on the samples (fourth and fifth component in Figure
+\ref{fig:flowdiagram}). Given the sample, small area methods are applied. Of
+interest here are, for instance, estimated model parameters, domain predictions,
+or measures of uncertainty for the predictions.
 
 Since the sample\hyp{}level is necessary when unit level models are applied, the
 *aggregate\hyp{}level* is relevant when area level models are applied (the 
