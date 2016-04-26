@@ -2,7 +2,7 @@
 \label{sec:results_predictions}
 
 In this Section I investigate the statistical properties of the proposed 
-predictors. Using model based simulation studies the empirical bias and mean
+predictors. Using model based simulation studies the empirical bias and the mean
 squared prediction error are compared over a variety of simulation scenarios as
 well as between the spatial and temporal extensions of the FH model. The
 proposed methods for estimating the MSPE of predictions will be presented
@@ -62,7 +62,7 @@ with $i = 1, \dots, D$ and $t = 1, \dots, T$ where $D = 40$ and $T = 10$. The
 
 - The single regressor, $x_i$, is a deterministic sequence defined by $x_i = 
 \frac{i}{2D} + 1$. This is a similar setting to the choices made by @Mar13;
-however the specification here it is constant over time.
+however the specification here is constant over time.
 - The sampling errors, $e_{it}$, are drawn from $e_{it} \sim \Distr{N}(0, 
 \sige)$. The sampling variances, $\sigma_{eit}^2 = \sige$, are known during the 
 estimation; they are defined as an ascending and equidistant sequence between 2 
@@ -175,11 +175,11 @@ variance which is due to the spatial correlation structure; this variation has a
 variance parameter set to $\sigma_1^2 = 2$ which is small compared to the 
 overall variance in the data. Also the small sample size of $D = 40$ may have an
 effect -- the more data we have the easier it is to identify small effects or in
-this case correlation structure. This is also present when comparing the FH and
-SFH models where no difference in terms of MSPE is visible -- even in the
+this case a correlation structure. This is also present when comparing the FH
+and SFH models where no difference in terms of MSPE is visible -- even in the 
 scenarios *(0.5, 0)* and *(0.5, u)*.
 
-The inability to identify this spatial effect results in a similar result as was
+The inability to identify this spatial effect leads to a similar result as was
 evident in Figure \ref{fig:stability_variance_spatio_temporal}. There we observed
 that under contamination the temporal correlation structure is influenced by
 outliers and at the same time the spatial structure has been identified

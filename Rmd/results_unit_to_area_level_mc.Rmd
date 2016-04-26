@@ -23,7 +23,8 @@ require scrutiny:
 - Under the FH model we specify an area level model with a heteroscedastic 
 sampling distribution. The model does not explain the source for this 
 heteroscedasticity. In what follows two different sources are induced: one is 
-the sample size varying across domains, and the other unit level outliers.
+the sample size varying across domains, and the other source are unit level
+outliers.
 - When we begin from the unit level we may ask what the true sampling variance 
 is; under the model this quantity is assumed to be known. In practice these 
 values are estimated and are themselves unreliable if the target is the 
@@ -57,16 +58,15 @@ Monte Carlo Simulation are presented.
 \label{sec:results_unit_level_model}
 
 In the following the unit level population model assumed for this study is 
-presented. In contrast to the BHF model reviewed in Section \ref{sec:unit_level}
-here we do not need the distinction between sampled and non\hyp{}sampled units.
-Hence we begin with a liner mixed model for the population of the form:
+presented. Hence we begin with a liner mixed model for the population of the
+form:
 $$
 y_{ij} = x_i^\top \beta + \re_i + e_{ij}
 $$
 with $i = 1, \dots, D$ and $j = 1, \dots, N_i$. Here $x_i$ is a vector of 
 auxiliary information and $\beta$ the vector of regression coefficients; $\re_i$
-is a i.i.d. random variable: $\re_i \sim \Distr{N}(0, \sigre)$; and 
-$e_{ij}$ is also a i.i.d. random variable: $e_{ij} \sim \Distr{N}(0, 
+is an i.i.d. random variable: $\re_i \sim \Distr{N}(0, \sigre)$; and 
+$e_{ij}$ is also an i.i.d. random variable: $e_{ij} \sim \Distr{N}(0, 
 \sigma_e^2)$. Given this simple unit level model consider the case in which we
 draw samples with simple random sampling without replacement (SRSWOR) in each
 domain. Only the case is considered where units are observed for all domains.
@@ -81,8 +81,8 @@ i.i.d. with $\bar{e}_i \sim \Distr{N}(0, \sige)$ where $\sige =
 \frac{\sigma_e^2}{n_i}$. In this simple setting $x_i$ and $\re_i$ are the same 
 for the unit and area level since they are constant within domains. Also we see 
 in the definition of $\sige$ that the only source for the heteroscedasticity are
-the sample sizes, $n_i$. An additional source for heteroscedastic sample errors
-may also be induced by unit level outliers.
+the sample sizes, $n_i$. An additional source for heteroscedastic sampling
+errors may also be induced by unit level outliers.
 
 ## Simulation Scenarios
 \label{sec:results_unit_sim_setting}
@@ -127,11 +127,11 @@ imposed as in *(u, 0)* and the unit level contamination as in *(0, e)*.
 ## Quality Measures and Considered Methods
 \label{sec:results_unit_measures}
 
-Two measures are utilised to assess the quality of predictions: the Monte Carlo 
-RRMSPE and Monte Carlo RBIAS. These quantities are computed according to Section
+Two measures are utilised to assess the quality of predictions: the RRMSPE and
+RBIAS. These quantities are computed according to Section 
 \ref{sec:area_level_sim_qm}. The performance is studied for several methods; the
 non\hyp{}robust predictions under the FH model and robust prediction referred to
-as RFH. For the robust predictions the tuning constant is fixed at a value of
+as RFH. For the robust predictions the tuning constant is fixed at a value of 
 1.345. The following modelling strategies are considered:
 
 - SM -- denotes the sample mean. Since we sample with SRSWOR an unbiased direct
@@ -143,7 +143,7 @@ variance for each domain: $\sige \coloneqq \frac{s_i^2}{n_i}$.
 - RFH.SM -- is the robust prediction based on the sample mean. The same setup as
 for FH.SM is used.
 - FH.SM.GVF -- is the non\hyp{}robust prediction under the FH model using a 
-generalised variance function. In contrast to FH.SM a generalised variance 
+generalised variance function (GVF). In contrast to FH.SM a generalised variance 
 function is used as an estimator for the sampling variance: $\sige \coloneqq 
 \frac{\tilde{s}^2}{n_i}$ with
 $$
@@ -186,17 +186,17 @@ alternative to direct variance estimates.
 \caption[Relative Bias for Domain Predictions]{\label{fig:unit_bias}Relative Bias for Domain Predictions}
 \end{figure}
 
-The first observation to make is that the particular choice for the generalised
-variance function (GVF) does not show a significant gain in performance.
+The first observation to make is that the particular choice for the generalised 
+variance function does not show a significant gain in performance.
 @Wol07[272-273] points out that the main benefits in using GVFs may be to reduce
 the computational effort, to ease the communication of results, and achieve some
 gain in stability. He argues that we can expect a gain in stability since 
 instead of many parameters -- one for each domain -- fewer and hence more stable
-parameters can be estimated. However he also notes that there is no theoretical
-underpinning for this claim. The discussion in Section
-\ref{sec:theory_sae_fh_mspe} showed that despite this lack of theory the use of
+parameters can be estimated. However he also notes that there is no theoretical 
+underpinning for this claim. The discussion in Section 
+\ref{sec:theory_sae_fh_mspe} showed that despite this lack of theory the use of 
 generalised variance functions is often preferred in practical applications. 
-Hence it may well be that we tend to observe results which are specific to this
+Hence it may well be that we tend to observe results which are specific to this 
 simulation setting.
 
 Some differences when using GVFs can be observed with respect to the RBIAS. In a
@@ -235,8 +235,8 @@ The self adjusting effect of the FH model is in general also present in the
 robust prediction. When we consider the use of the GVF it can happen -- 
 particularly with more extreme outlier contamination -- that the RFH model
 becomes preferable. This is so because we create overly influential observations
-which, from their design, do not differ from area level outlier -- at least from
-the area level perspective.
+which, from their design, do not differ from area level outliers -- at least
+from the area level perspective.
 
 The third observation is that a robust direct estimator, in this case the 
 median, has no additional advantage over the sample mean. Here several points 
@@ -249,7 +249,7 @@ unit level outlier setting in all domains. Second, the variance estimation of a
 robust direct method is usually also problematic, again, because we are
 considering small samples. In practice it may be desirable to use a bootstrap
 for estimating the variance of the sample median. With these small samples the
-results have been disappointing and have not lead to an improvement in the area
+results have been disappointing and have not led to an improvement in the area
 level predictions. Hence the MAD seems to provide a sensible alternative. Third,
 it may be argued that a different robust method should be considered. An M-type
 estimator for the sample mean, in conjunction with a robust variance estimator,
@@ -271,7 +271,7 @@ With respect to unit level outliers we can see a self adjusting effect in the
 robust and non\hyp{}robust prediction under the FH model. This adjustment 
 replaces the predictions for outliers with the linear predictor which
 constitutes an improvement in those cases in which this predictor is suitable,
-e.g. design unbiased. In principle we face the same problem as for robust
+i.e. unbiased. In principle we face the same problem as for robust
 methods using unit level data in that again we introduce a bias. However at
 present it is unclear how a bias correction can be developed for these
 situations when only area level data is observed. The proposed bias correction

@@ -21,8 +21,9 @@ The results for the non\hyp{}robust methods are omitted in order to reduce the
 number of necessary comparisons. In principle a comparison with established 
 methods like the MSPE estimator of @Pra90 can be useful. However the MSPE 
 estimators associated with the non\hyp{}robust predictors are too diverse and
-have on that account been omitted from the discussion here. The corresponding
-review is given in Section \ref{sec:theory_sae_fh_extensions}.
+have on that account been omitted from the discussion here. The corresponding 
+review of these methods is provided in Section
+\ref{sec:theory_sae_fh_extensions}.
 
 In Section \ref{sec:results_mse_scenarios} below the simulation settings for
 each model are described in detail. Section \ref{sec:results_mse_qm} describes
@@ -82,12 +83,12 @@ assess the quality of these estimators the relative root mean squared error
 *true* values. Let $\widehat{RMSPE}^M_{ir}$ denote the estimated RMSPE for area
 $i$ in the $r$th Monte Carlo repetition using method $M$. $M$ is either the
 parametric bootstrap referred to by BOOT or the pseudolinearisation based
-approach which is refereed to by CCT. Similar to the previous study, predictions
+approach which is referred to by CCT. Similar to the previous study, predictions
 are made for the *current* time period, which is again defined as $t = T$ for 
 the respective scenario. This also means that we evaluate only the RMSPE for 
-these predictions. In the bootstrap 100 repetitions are conducted; changing the
-number of repetitions did not change the results significantly. We can then
-define the RRMSE as:
+these predictions. In the bootstrap 100 repetitions are conducted; changing the 
+number of repetitions did not change the results significantly. Overall 500
+repetitions are conducted. We can then define the RRMSE as:
 $$
 RRMSE_i^M = \sqrt{\frac{1}{R} \sum_{r = 1}^R \Paran{\frac{\widehat{RMSPE}^M_{ir} - RMSPE^M_{i}}{RMSPE^M_{i}}}^2}
 $$
@@ -109,7 +110,7 @@ and RSTFH.BC. The tuning constant is fixed at 1.345 for all models.
 \label{sec:results_mse_results}
 
 The main results of the simulation study are given in Table
-\ref{tab:mse_performace}. The following observed items need to be discussed:
+\ref{tab:mse_performace}. The following observations need to be discussed:
 
 1. The CCT has not a negative bias for all estimators.
 2. The CCT has a high MSE for the bias corrected predictors.
@@ -178,8 +179,8 @@ In general the performance of the MSPE estimators is promising. However the
 concrete results strongly depend on the scenario settings. In general the CCT
 for the bias correction suffers under repeated sampling when the prediction
 interval of the correction is too conservative. For the same reason we observe a
-correlation between the sampling variances and the bias. The bootstrap in
-contrast shows very stable results -- approximately 10 per cent in terms of
+correlation between the sampling variances and the bias. The bootstrap, in
+contrast, shows very stable results -- approximately 10 per cent in terms of
 RRMSE -- over a variety of different settings. However this method cannot
 capture the variation for outlying domains. In scenarios in which the respective
 models repeatedly yield estimates close to zero variances the bootstrap will
