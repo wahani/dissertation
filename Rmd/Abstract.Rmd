@@ -9,15 +9,15 @@ predictions is based on the estimation methodology around robust empirical best
 linear unbiased prdictions (REBLUPs).
 
 With regard to robust area level models four such models are under 
-consideration: the FH model, the spatial extension by @Pra08, the temporal 
-extension by @Rao94, and the spatio\hyp{}temporal model by @Mar13. These methods
-are extended to obtain (i) an area level robust EBLUP (REBLUP) which is the 
-direct result of applying the results of @Sin09; (ii) an area level spatial 
-REBLUP (SREBLUP); (iii) a temporal REBLUP (TREBLUP); and (iv) a 
+consideration: the FH model \citep{Fay79}, the spatial extension by @Pra08, the
+temporal extension by @Rao94, and the spatio\hyp{}temporal model by @Mar13.
+These methods are extended to obtain (i) an area level robust EBLUP (REBLUP)
+which is the direct result of applying the results of @Sin09; (ii) an area level
+spatial REBLUP (SREBLUP); (iii) a temporal REBLUP (TREBLUP); and (iv) a 
 spatio\hyp{}temporal REBLUP (STREBLUP). I present these methods in a 
 comprehensive framework of robust area level models. For the estimation of the 
 MSPE I adapt the parametric bootstrap method from \textcite{Sin09} as well as 
-the analytical solution based on a pseudolinear form of @Cha11. In this context
+the analytical solution based on a pseudolinear form of @Cha11. In this context 
 also a bias correction based on the *limited translation estimator* of @Efr72 is
 adapted to account for a potential bias associated to robust methods.
 

@@ -1,1 +1,55 @@
-Zusammenfassung
+Die Nachfrage nach zuverlässigen Statistiken für kleine Gebiete hat in den 
+vergangenen Jahrzehnten stark zugenommen. Ein Grund dafür ist der Bedarf solcher
+Statistiken in der amtlichen Statistik. Oft basieren Ergebnisse auf Umfragedaten
+und die Hauptaufgabe des Forschungsfeldes der *Small Area Estimation* ist es die
+Vorhersagewerte mit Bezug auf den mittleren quadratischen Vorhersagefehler
+(MSPE) zu optimieren -- selbst wenn nur wenige Beobachtungen innerhalb einzelner
+Gebiete zur Verfügung stehen. In dieser Arbeit werden dazu räumliche und
+zeitliche Erweiterungen des Fay-Herriot (FH) Models genutzt. Diese Modelle 
+basieren auf starken Verteilungsannahmen und in diesem Zusammenhang können die 
+Ergebnisse leicht durch einzelne Beobachtungen beeinflusst werden. Hierzu werden
+deshalb räumliche und zeitliche Erweiterungen des FH Modells mit 
+Ausreißer-robuster Schätzmethodik kombiniert.
+
+Die Modelle die hierbei genutzt werden sind das FH Modell \citep{Fay79}, die 
+räumliche Erweiterung von @Pra08, die zeitliche Erweiterung von @Rao94 und die 
+räumlich-zeitliche Erweiterung von @Mar13. Basierend auf diesen Modellen werden 
+robuste alternativen eingeführt. Diese sind eingebettet in die Klasse der 
+gemischten linearen Modelle. In der Kombination ergeben sich damit robuste 
+empirische beste lineare unverzerrte Prediktoren (REBLUPs). Das sind (1) der 
+Area Level REBLUP basierend auf den Ergebnissen von @Sin09, (2) ein räumlicher 
+REBLUP (SREBLUP), (3) ein zeitlicher REBLUP (TREBLUP), und (4) ein 
+räumich-zeitlicher REBLUP (STREBLUP). Diese verschiedenen Erweiterungen werden 
+in einem gemeinsamen Rahmen von robusten Area\hyp{}Level\hyp{}Modellen
+dargestellt, wobei dieser auf gemischten linearen Modellen aufsetzt. Zur
+Schätzung des MSPE werden ein parametrisches Bootstrap Verfahren nach @Sin09
+verwendet und die Ergebnisse von @Cha11 für Area Level Modelle erweitert. Zudem
+wird eine einfache Korrektur des Vorhersagefehlers -- der bei der Verwendung
+robuster Verfahren auftrteten kann -- vorgeschlagen. Diese Korrektur basiert auf
+dem *limited translation estimator* von @Efr72.
+
+Zusätzlich zu der methodischen Erweiterung von robusten gemischten linearen 
+Modellen werden auch die entsprechenden Implementierungen in Form von Software 
+Paketen vorgestellt. Das `R`-Paket `saeRobust` @War16 beinhaltet Funktionen um 
+alle eingeführten Verfahren in der Praxis anzuwenden. Zudem werden einige 
+numerische Eigenschaften der Implementierung dargelegt sowie typische Grafiken 
+um die Güte von Ergebnissen beurteilen zu können. Außerdem wird das Paket
+`saeSim` \citep{War15} vorgestellt. Hierbei handelt es sich um ein `R`-Paket
+welches das Aufsetzen von Simulationsstudien vereinfacht. Dabei werden Werkzeuge
+zur Datengenerierung, Stihprobenziehung und die Möglichkeit des parallelen
+Rechnens gegeben.
+
+Die eingeführten Methoden werden außerdem in model- und designbasierten 
+Simulationsstudien untersucht. Dabei sollen die statistischen eigenschaften der 
+Punktschätzungen und auch die der MSPE Schätzung dargelegt werden. Diese 
+Untersuchungen basieren auf Daten, die direkt auf der Gebietsebene generiert 
+werden. Um sowohl einzelne Beobachtungen als auch gesammte Gebiete als Ausreißer
+untersuchen zu können, werden in einer weiteren Simulation Beobachtungen einer 
+Population simuliert. Der Vorteil dabei ist, dass gesamte Prozess der 
+Datengenerierung bis hin zu der Anwendung von Area\hyp{}Level\hyp{}Methoden
+abgebildet werden kann. In einer designbasierten Studie sollen dann die
+Steuereinnahmen in 20 Industriesektoren vorhergesagt werden. Diese Studie nutzt
+eine synthetischen Population welche auf dem *Structural Business Survey* in den
+Niederlanden basiert. Diese Untersuchg ist besonders wichtig, da sie eine 
+informative Stichprobenziehung sowie Ausreißer auf Idividualebene und
+Gebietsebene beinhaltet.
