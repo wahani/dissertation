@@ -119,7 +119,7 @@ can be randomly drawn from a population model in each repetition.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/flowdiagram.pdf}
-\caption[Process of Simulation]{\label{fig:flowdiagram}Process of Simulation -- Left column are the steps in a simulation. Right column are the corresponding function names to represent those steps in \texttt{R}.} 
+\caption[Process of Simulation]{\label{fig:flowdiagram}Process of Simulation -- Left column contains the steps in a simulation. Right column contains the corresponding function names to represent those steps in \texttt{R}.} 
 \end{figure}
 
 The scope of the framework is not to opt for viewpoints. The aim is to 

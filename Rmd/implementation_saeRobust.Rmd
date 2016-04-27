@@ -614,7 +614,7 @@ dev.off()
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figs/saeRobust_mse_grapes.pdf}
-\caption[saeRobust: Plots for Coefficient of Variation]{\label{fig:saeRobust_mse_grapes}Plots for Coefficient of Variation -- direct vs. REBLUP; The domains in the left panel are sorted for the CV of the direct estimator.}
+\caption[saeRobust: Plots for Coefficient of Variation]{\label{fig:saeRobust_mse_grapes}Plots for Coefficient of Variation -- direct vs. REBLUP. The domains in the left panel are sorted for the CV of the direct estimator.}
 \end{figure}
 
 \noindent to obtain the plots in Figure \ref{fig:saeRobust_mse_grapes}. The plot
