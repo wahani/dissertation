@@ -21,23 +21,23 @@ the analytical solution based on a pseudolinear form of @Cha11. In this context
 also a bias correction based on the *limited translation estimator* of @Efr72 is
 adapted to account for a potential bias associated to robust methods.
 
-In addition to these robust methods their implementation in the `R`\hyp{}package
-`saeRobust` \citep{War16} is investigated. The package provides an initial 
-version to apply the developed methodology. In this regard some numerical 
-stability tests are performed and also basic features like diagnostic plots for 
-model residuals are reviewed. Also an outcome of this Thesis is the package 
-`saeSim` \citep{War15} which provides a framework for simulation studies within 
-the `R`\hyp{}language. It aims at simplifying the configuration of such studies
-by providing tools for data generation, sampling, and a link to the parallel
-computing fascilities in the `R`\hyp{}language.
+In addition to the development of these robust methods their implementation in 
+the `R`\hyp{}package `saeRobust` \citep{War16} is investigated. The package 
+provides an initial version for the application of the developed methodology. In
+this regard some numerical stability tests are performed and also basic features
+like diagnostic plots for model residuals are reviewed. Also an outcome of this 
+Thesis is the package `saeSim` \citep{War15} which provides a framework for 
+simulation studies within the `R`\hyp{}language. It aims at simplifying the 
+configuration of such studies by providing tools for data generation, sampling, 
+and a link to the parallel computing fascilities in the `R`\hyp{}language.
 
 The methods under consideration are then further investigated in model and
-design based simulation studies. Here the performace of the predictions and the
+design based simulation studies. Here the performance of the predictions and the
 MSPE estimators are studied when area level outliers are present. Furthermore I
 discuss how unit level outliers as well as area level outliers may effect domain
 predictions based on area level models. This discussion is continued in the
 context of a design based simulation. In this study a synthetic population is
-utilised based on a the Structural Business Survey in the Netherlands. Here the
+utilised based on the Structural Business Survey in the Netherlands. Here the
 tax\hyp{}turnover in 20 industry sectors is targeted. This data includes unit
 level outliers, area level outliers, as well as an informative sampling design.
 
