@@ -1,0 +1,43 @@
+The demand for reliable small area statistics from sample surveys has grown
+substantially over the past decades due to their growing use in public and
+private sectors. The field of Small Area Estimation aims at producing such
+statistics. In this Thesis I consider several spatial and temporal extensions to
+the Fay-Herriot (FH) Model to improve the mean squared prediction error (MSPE) of
+predictions for small domains. Such predictions can be influenced by single
+observations in the data; hence the estimation of the model parameters and
+predictions is based on the estimation methodology around robust empirical best
+linear unbiased prdictions (REBLUPs).
+
+With regard to robust area level models four such models are under 
+consideration: the FH model, the spatial extension by @Pra08, the temporal 
+extension by @Rao94, and the spatio\hyp{}temporal model by @Mar13. These methods
+are extended to obtain (i) an area level robust EBLUP (REBLUP) which is the 
+direct result of applying the results of @Sin09; (ii) an area level spatial 
+REBLUP (SREBLUP); (iii) a temporal REBLUP (TREBLUP); and (iv) a 
+spatio\hyp{}temporal REBLUP (STREBLUP). I present these methods in a 
+comprehensive framework of robust area level models. For the estimation of the 
+MSPE I adapt the parametric bootstrap method from \textcite{Sin09} as well as 
+the analytical solution based on a pseudolinear form of @Cha11. In this context
+also a bias correction based on the *limited translation estimator* of @Efr72 is
+adapted to account for a potential bias associated to robust methods.
+
+In addition to these robust methods their implementation in the `R`\hyp{}package
+`saeRobust` \citep{War16} is investigated. The package provides an initial 
+version to apply the developed methodology. In this regard some numerical 
+stability tests are performed and also basic features like diagnostic plots for 
+model residuals are reviewed. Also an outcome of this Thesis is the package 
+`saeSim` \citep{War15} which provides a framework for simulation studies within 
+the `R`\hyp{}language. It aims at simplifying the configuration of such studies
+by providing tools for data generation, sampling, and a link to the parallel
+computing fascilities in the `R`\hyp{}language.
+
+The methods under consideration are then further investigated in model and
+design based simulation studies. Here the performace of the predictions and the
+MSPE estimators are studied when area level outliers are present. Furthermore I
+discuss how unit level outliers as well as area level outliers may effect domain
+predictions based on area level models. This discussion is continued in the
+context of a design based simulation. In this study a synthetic population is
+utilised based on a the Structural Business Survey in the Netherlands. Here the
+tax\hyp{}turnover in 20 industry sectors is targeted. This data includes unit
+level outliers, area level outliers, as well as an informative sampling design.
+

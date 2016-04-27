@@ -23,12 +23,12 @@ more diverse domains and the cost and feasibility of larger samples is the
 factor that stimulates the progress within the field; it supplies the mechanism
 for optimising the ratio between sampled units and the reliability of estimates.
 
-It is the main endeavour of Small Area Estimation to try to produce *reliable 
+It is the main endeavour of Small Area Estimation to produce *reliable 
 predictions* of a *target statistic* for *small domains*. A *target statistic* 
 can be a statistic such as a mean, a count, or quantiles; but it can take other
 forms: e.g. an inequality measure like the Gini coefficient for poverty mapping.
 Such statistics are produced for *small domains* where domain refers to
-specific groups, like e.g. an industry sector, or groups defined by 
+specific groups, e.g. an industry sector, or groups defined by 
 socio\hyp{}economic characteristics. Because of its frequent application to 
 administrative data, domains are often defined by areas as a geographical unit. 
 They are small in the sense that they comprise few or no sampled units within 
@@ -258,7 +258,7 @@ studies in this field.
 In the final Part \ref{part:results} model and design based simulation studies 
 are conducted. The model based studies aim at explaining how the robust 
 predictions differ from their non\hyp{}robust counterparts -- Chapter
-\ref{chap:results_design_based}. Here differing settings are investigated:
+\ref{chap:results_model_based}. Here differing settings are investigated:
 Section \ref{sec:results_predictions} investigates the performace of the robust
 predictions in area level scenarios, and in Section \ref{sec:results_mse} the
 performance of the MSPE estimators is the subject matter. Both of which rely on
