@@ -1,3 +1,11 @@
+# Title: Stability Tests for saeRobust
+# Author: Sebastian Warnholz
+#
+# Intructions:
+# Run 00Dependencies.R first. Use 'runs' to reduce the number of iterations. Set
+# recompute* to TRUE when the results are not cached. Check cpus for parallel
+# computing.
+
 .libPaths("~/R/x86_64-redhat-linux-gnu-library/3.2")
 library("modules")
 library("saeRobust")

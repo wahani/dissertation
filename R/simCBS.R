@@ -1,3 +1,11 @@
+# Title: Design based Simulation using the CBS data
+# Author: Sebastian Warnholz
+#
+# Intructions:
+# Run 00Dependencies.R first. Use 'runs' to reduce the number of iterations. Set
+# recompute* to TRUE when the results are not cached. Check cpus for parallel
+# computing.
+
 # (0) Loading libraries
 ################################################################################
 
